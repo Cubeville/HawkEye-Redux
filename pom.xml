@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.cubeville</groupId>
+  <artifactId>hawkeye</artifactId>
+  <name>HawkEye</name>
+  <packaging>pom</packaging>
+  <version>2.0.0-SNAPSHOT</version>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Dependency versions -->
+    <hawkeye-version>2.0.0-SNAPSHOT</hawkeye-version>
+    <bukkit-version>1.4.5-R0.3-SNAPSHOT</bukkit-version>
+    <workbench-version>0.0.1-SNAPSHOT</workbench-version>
+  </properties>
+
+  <ciManagement>
+    <system>jenkins</system>
+    <url>http://ci.goalieguy6.com</url>
+  </ciManagement>
+
+  <distributionManagement>
+    <repository>
+      <id>goalieguy6-repo</id>
+      <url>http://repo.goalieguy6.com/content/repositories/releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>goalieguy6-repo</id>
+      <url>http://repo.goalieguy6.com/content/repositories/snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <modules>
+    <module>api</module>
+    <module>core</module>
+    <module>impl/bukkit</module>
+    <!-- <module>impl/workbench</module> -->
+  </modules>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>${project.name}-${project.version}</finalName>
+    <defaultGoal>clean package install</defaultGoal>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.0</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>1.0-beta-6</version>
+      </extension>
+    </extensions>
+  </build>
+
+</project>
