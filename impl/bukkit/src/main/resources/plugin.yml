@@ -1,0 +1,7 @@
+name: HawkEye
+version: ${project.version}
+main: org.cubeville.hawkeye.bukkit.HawkEyePlugin
+author: Cubeville
+authors: [GoalieGuy6]
+softdepend: [WorldEdit]
+description: Data logging plugin
