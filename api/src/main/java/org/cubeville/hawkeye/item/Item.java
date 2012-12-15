@@ -170,9 +170,19 @@ public enum Item {
 	RECORD_11(2266),
 	RECORD_WAIT(2267);
 
+	/**
+	 * Item id
+	 */
 	private final int id;
+
+	/**
+	 * Custom item data class
+	 */
 	private final Class<? extends ItemData> dataClass;
 
+	/**
+	 * Mapping of ids to item for quick access
+	 */
 	private static final Map<Integer, Item> idMap = new HashMap<Integer, Item>(values().length);
 
 	private Item(int id) {
@@ -184,14 +194,30 @@ public enum Item {
 		this.dataClass = dataClass;
 	}
 
+	/**
+	 * Gets the id of this item
+	 *
+	 * @return This item's id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Gets whether or not this item stores custom item data
+	 *
+	 * @return True if item has custom data to store, false if not
+	 */
 	public boolean hasItemData() {
 		return dataClass != null;
 	}
 
+	/**
+	 * Gets an item by its id
+	 *
+	 * @param id Id of item to get
+	 * @return Item with the specified id or null if it doesn't exist
+	 */
 	public static Item getById(int id) {
 		return idMap.containsKey(id) ? idMap.get(id) : null;
 	}

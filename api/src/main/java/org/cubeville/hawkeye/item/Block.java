@@ -157,9 +157,19 @@ public enum Block {
 	SKULL(144, MobHeadItemData.class),
 	ANVIL(145, BasicItemData.class);
 
+	/**
+	 * Block id
+	 */
 	private final int id;
+
+	/**
+	 * Custom item data class
+	 */
 	private final Class<? extends ItemData> dataClass;
 
+	/**
+	 * Mapping of ids to blocks for quick access
+	 */
 	private static final Map<Integer, Block> idMap = new HashMap<Integer, Block>(values().length);
 
 	private Block(int id) {
@@ -171,14 +181,30 @@ public enum Block {
 		this.dataClass = dataClass;
 	}
 
+	/**
+	 * Gets the item id of this block
+	 *
+	 * @return This block's id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Gets whether or not this block stores custom item data
+	 *
+	 * @return True if block has custom data to store, false if not
+	 */
 	public boolean hasItemData() {
 		return dataClass != null;
 	}
 
+	/**
+	 * Gets a block by its id
+	 *
+	 * @param id Id of block to get
+	 * @return Block with the specified id or null if it doesn't exist
+	 */
 	public static Block getById(int id) {
 		return idMap.containsKey(id) ? idMap.get(id) : null;
 	}
