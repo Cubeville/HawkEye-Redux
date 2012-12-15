@@ -6,6 +6,7 @@ import java.util.Map;
 import org.cubeville.hawkeye.item.data.BasicItemData;
 import org.cubeville.hawkeye.item.data.ItemData;
 import org.cubeville.hawkeye.item.data.MobHeadItemData;
+import org.cubeville.hawkeye.item.data.SignItemData;
 
 public enum Block {
 
@@ -72,12 +73,12 @@ public enum Block {
 	SOIL(60, BasicItemData.class),
 	FURNACE(61),
 	BURNING_FURNACE(62),
-	SIGN_POST(63, BasicItemData.class),
+	SIGN_POST(63, SignItemData.class),
 	WOODEN_DOOR(64, BasicItemData.class),
 	LADDER(65, BasicItemData.class),
 	RAILS(66, BasicItemData.class),
 	COBBLESTONE_STAIRS(67, BasicItemData.class),
-	WALL_SIGN(68, BasicItemData.class),
+	WALL_SIGN(68, SignItemData.class),
 	LEVER(69, BasicItemData.class),
 	STONE_PLATE(70, BasicItemData.class),
 	IRON_DOOR_BLOCK(71, BasicItemData.class),
@@ -152,7 +153,7 @@ public enum Block {
 	FLOWER_POT(140, BasicItemData.class),
 	CARROT(141),
 	POTATO(142),
-	WOOD_BUTTON(143),
+	WOOD_BUTTON(143, BasicItemData.class),
 	SKULL(144, MobHeadItemData.class),
 	ANVIL(145, BasicItemData.class);
 
