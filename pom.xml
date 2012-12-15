@@ -16,6 +16,9 @@
     <!-- Server implementation versions -->
     <bukkit-version>1.4.5-R0.3-SNAPSHOT</bukkit-version>
     <workbench-version>0.0.1-SNAPSHOT</workbench-version>
+    
+    <!-- Dependency versions -->
+    <snakeyaml-version>1.11</snakeyaml-version>
   </properties>
 
   <ciManagement>
