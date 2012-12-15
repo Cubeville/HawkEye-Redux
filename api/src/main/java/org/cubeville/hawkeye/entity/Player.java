@@ -28,4 +28,11 @@ public abstract class Player implements CommandSender {
 		return true;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Player)) return false;
+
+		return getName().equals(((Player) obj).getName());
+	}
+
 }
