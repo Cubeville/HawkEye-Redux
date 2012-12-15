@@ -10,10 +10,15 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <!-- Dependency versions -->
+    <!-- Plugin version -->
     <hawkeye-version>2.0.0-SNAPSHOT</hawkeye-version>
+    
+    <!-- Server implementation versions -->
     <bukkit-version>1.4.5-R0.3-SNAPSHOT</bukkit-version>
     <workbench-version>0.0.1-SNAPSHOT</workbench-version>
+    
+    <!-- Other dependency versions -->
+    <bonecp-version>0.8.0-rc1</bonecp-version>
   </properties>
 
   <ciManagement>
@@ -72,14 +77,6 @@
         </configuration>
       </plugin>
     </plugins>
-
-    <extensions>
-      <extension>
-        <groupId>org.apache.maven.wagon</groupId>
-        <artifactId>wagon-ssh</artifactId>
-        <version>1.0-beta-6</version>
-      </extension>
-    </extensions>
   </build>
 
 </project>
