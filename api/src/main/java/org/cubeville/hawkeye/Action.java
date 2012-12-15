@@ -66,6 +66,10 @@ public enum Action {
 	 */
 	PLAYER_DEATH_ITEMS,
 	/**
+	 * Player killed a mob
+	 */
+	PLAYER_MOB_KILL,
+	/**
 	 * Player used lava bucket
 	 */
 	LAVA_BUCKET,
