@@ -137,14 +137,43 @@ public class Location {
 	}
 
 	@Override
+	public int hashCode() {
+		int hash = 1;
+
+		hash = 31 * hash + (world == null ? 0 : world.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		hash = 31 * hash + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(y);
+		hash = 31 * hash + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(z);
+		hash = 31 * hash + (int) (temp ^ (temp >>> 32));
+
+		return hash;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
+		if (obj == null) return false;
 		if (!(obj instanceof Location)) return false;
 		Location other = (Location) obj;
 
-		return getWorld().getName() == other.getWorld().getName()
-				&& getX() == other.getX()
-				&& getY() == other.getY()
-				&& getZ() == other.getZ();
+		if (world == null) {
+			if (other.world != null) return false;
+		} else if (!world.equals(other.world)) {
+			return false;
+		}
+
+		if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)) return false;
+		if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)) return false;
+		if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) return false;
+
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Location[world=" + world + ",x=" + x + ",y=" + y + ",z=" + z + "]";
 	}
 
 }
