@@ -16,9 +16,6 @@
     <!-- Server implementation versions -->
     <bukkit-version>1.4.5-R0.3-SNAPSHOT</bukkit-version>
     <workbench-version>0.0.1-SNAPSHOT</workbench-version>
-    
-    <!-- Other dependency versions -->
-    <bonecp-version>0.8.0-rc1</bonecp-version>
   </properties>
 
   <ciManagement>
