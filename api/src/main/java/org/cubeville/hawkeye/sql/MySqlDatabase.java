@@ -3,6 +3,9 @@ package org.cubeville.hawkeye.sql;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * MySQL database manager backed by a basic connection pool
+ */
 public class MySqlDatabase implements Database {
 
 	/**
@@ -20,6 +23,7 @@ public class MySqlDatabase implements Database {
 	 */
 	@Override
 	public boolean connect(String hostname, String port, String database, String username, String password, String prefix) throws DatabaseException {
+		// Load the driver
 		try {
 			Class.forName(DRIVER_CLASS);
 		} catch (Exception ex) {
@@ -29,6 +33,7 @@ public class MySqlDatabase implements Database {
 		// Build the jdbc url
 		String dbUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + database;
 
+		// Attempt to establish a connection
 		try {
 			manager = new ConnectionManager(dbUrl, username, password);
 		} catch (SQLException ex) {

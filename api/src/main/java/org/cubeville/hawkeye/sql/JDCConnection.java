@@ -69,10 +69,20 @@ public class JDCConnection implements Connection {
 		timestamp = 0;
 	}
 
+	/**
+	 * Gets the underlying connection object
+	 *
+	 * @return Database connection
+	 */
 	protected Connection getConnection() {
 		return conn;
 	}
 
+	/**
+	 * Leases this connection
+	 *
+	 * @return True if connection was leased, false if already leased
+	 */
 	public synchronized boolean lease() {
 		if (inuse) {
 			return false;
@@ -83,18 +93,36 @@ public class JDCConnection implements Connection {
 		}
 	}
 
+	/**
+	 * Expires this connection's current lease
+	 */
 	protected void expireLease() {
 		inuse = false;
 	}
 
+	/**
+	 * Returns whether or not this connection is currently leased (in use)
+	 *
+	 * @return True if connection is in use, false if not
+	 */
 	public boolean inUse() {
 		return inuse;
 	}
 
+	/**
+	 * Returns when this connection was last leased
+	 *
+	 * @return Connection's last lease time
+	 */
 	public long getLastUse() {
 		return timestamp;
 	}
 
+	/**
+	 * Checks if this connection is still valid
+	 *
+	 * @return True if connection is valid, false if not
+	 */
 	public boolean validate() {
 		try {
 			conn.getMetaData();
@@ -104,6 +132,9 @@ public class JDCConnection implements Connection {
 		return true;
 	}
 
+	/**
+	 * Expires the lease on this connection
+	 */
 	@Override
 	public void close() throws SQLException {
 		pool.returnConnection(this);

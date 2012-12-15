@@ -1,5 +1,8 @@
 package org.cubeville.hawkeye.sql;
 
+/**
+ * Represents an exception thrown by the database manager
+ */
 public class DatabaseException extends Exception {
 
 	private static final long serialVersionUID = -7616468708256365694L;
