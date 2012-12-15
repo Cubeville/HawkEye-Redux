@@ -1,5 +1,7 @@
 package org.cubeville.hawkeye;
 
+import org.cubeville.hawkeye.command.ConsoleCommandSender;
+
 public interface ServerInterface {
 
 	/**
@@ -25,5 +27,12 @@ public interface ServerInterface {
 	 * @param id Id of the task to cancel
 	 */
 	void cancelTask(int id);
+
+	/**
+	 * Gets the server console
+	 *
+	 * @return Server's console command sender
+	 */
+	ConsoleCommandSender getConsoleSender();
 
 }
