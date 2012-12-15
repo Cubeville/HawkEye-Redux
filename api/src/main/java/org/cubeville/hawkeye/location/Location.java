@@ -136,4 +136,15 @@ public class Location {
 		return (int) z;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Location)) return false;
+		Location other = (Location) obj;
+
+		return getWorld().getName() == other.getWorld().getName()
+				&& getX() == other.getX()
+				&& getY() == other.getY()
+				&& getZ() == other.getZ();
+	}
+
 }

@@ -73,4 +73,15 @@ public abstract class Block {
 	 */
 	public abstract int getZ();
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Block)) return false;
+		Block other = (Block) obj;
+
+		return getWorld().getName() == other.getWorld().getName()
+				&& getX() == other.getX()
+				&& getY() == other.getY()
+				&& getZ() == other.getZ();
+	}
+
 }
