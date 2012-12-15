@@ -1,8 +1,8 @@
 package org.cubeville.hawkeye.entity;
 
 import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.location.Location;
 import org.cubeville.hawkeye.location.World;
-import org.cubeville.hawkeye.location.WorldVector;
 
 public abstract class Player implements CommandSender {
 
@@ -11,7 +11,7 @@ public abstract class Player implements CommandSender {
 	 *
 	 * @return Player's position
 	 */
-	public abstract WorldVector getPosition();
+	public abstract Location getPosition();
 
 	/**
 	 * Gets this player's world
