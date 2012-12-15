@@ -1,5 +1,8 @@
 package org.cubeville.hawkeye.item.data;
 
+/**
+ * ItemData implementation to store the durability of tools/armor
+ */
 public class DurabilityItemData implements ItemData {
 
 	/**

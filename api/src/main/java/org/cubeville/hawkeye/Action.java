@@ -153,8 +153,15 @@ public enum Action {
 	/**
 	 * Structure grown by bonemeal
 	 */
-	STRUCTURE_BONEMEAL;
+	STRUCTURE_BONEMEAL,
+	/**
+	 * Custom action for other plugins to log custom data under
+	 */
+	CUSTOM;
 
+	/**
+	 * Log entry data class
+	 */
 	private final Class<? extends Entry> dataClass;
 
 	/**

@@ -1,5 +1,8 @@
 package org.cubeville.hawkeye.item.data;
 
+/**
+ * ItemData implementation to store basic item data (i.e. rotation, wool color)
+ */
 public class BasicItemData implements ItemData {
 
 	/**

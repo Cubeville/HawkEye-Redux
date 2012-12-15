@@ -1,5 +1,8 @@
 package org.cubeville.hawkeye.item.data;
 
+/**
+ * ItemData implementation to store the text written on signs
+ */
 public class SignItemData extends BasicItemData {
 
 	private String[] lines;
