@@ -18,7 +18,15 @@
 
 package org.cubeville.hawkeye.search;
 
+import org.cubeville.hawkeye.command.CommandSender;
+
 public interface SearchManager {
+
+	/**
+	 * Gets an SQL query based on parameters provided by the command sender
+	 * @return
+	 */
+	String getQuery(String params, CommandSender sender);
 
 	/**
 	 * Registers a search parameter
