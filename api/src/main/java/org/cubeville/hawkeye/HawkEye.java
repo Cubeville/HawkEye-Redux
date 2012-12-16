@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
+import org.cubeville.hawkeye.config.Configuration;
 
 public class HawkEye {
 
@@ -56,6 +57,10 @@ public class HawkEye {
 
 	public static ServerInterface getServerInterface() {
 		return engine.getServerInterface();
+	}
+
+	public static Configuration getConfig() {
+		return engine.getConfig();
 	}
 
 	public static ConsoleCommandSender getConsoleSender() {

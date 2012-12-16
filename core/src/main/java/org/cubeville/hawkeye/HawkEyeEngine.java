@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
+import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
 import org.cubeville.hawkeye.session.SessionManager;
@@ -28,9 +29,18 @@ public class HawkEyeEngine implements PluginEngine {
 
 	private final ServerInterface server;
 
-	public HawkEyeEngine(ServerInterface server) {
+	private final Configuration config;
+	private final Database database;
+	private final SessionManager sessionManager;
+
+	public HawkEyeEngine(ServerInterface server, Configuration config) {
 		HawkEye.setEngine(this);
 		this.server = server;
+		this.config = config;
+
+		// TODO Set these up
+		database = null;
+		sessionManager = null;
 	}
 
 	@Override
@@ -40,20 +50,23 @@ public class HawkEyeEngine implements PluginEngine {
 	}
 
 	@Override
+	public ServerInterface getServerInterface() {
+		return server;
+	}
+
+	@Override
+	public Configuration getConfig() {
+		return config;
+	}
+
+	@Override
 	public Database getDatabase() {
-		// TODO Auto-generated method stub
-		return null;
+		return database;
 	}
 
 	@Override
 	public SessionManager getSessionManager() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ServerInterface getServerInterface() {
-		return server;
+		return sessionManager;
 	}
 
 	@Override

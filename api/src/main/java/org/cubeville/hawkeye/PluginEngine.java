@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
+import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
 import org.cubeville.hawkeye.session.SessionManager;
@@ -37,6 +38,20 @@ public interface PluginEngine {
 	String getVersion();
 
 	/**
+	 * Gets the server compatibility layer
+	 *
+	 * @return Server interface
+	 */
+	ServerInterface getServerInterface();
+
+	/**
+	 * Gets the plugin configuration
+	 *
+	 * @return Plugin configuration
+	 */
+	Configuration getConfig();
+
+	/**
 	 * Gets the HawkEye database
 	 *
 	 * @return Database
@@ -49,13 +64,6 @@ public interface PluginEngine {
 	 * @return Sesssion manager
 	 */
 	SessionManager getSessionManager();
-
-	/**
-	 * Gets the server compatibility layer
-	 *
-	 * @return Server interface
-	 */
-	ServerInterface getServerInterface();
 
 	/**
 	 * Gets the server's console sender
