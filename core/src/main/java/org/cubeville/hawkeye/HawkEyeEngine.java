@@ -23,14 +23,32 @@ import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
 import org.cubeville.hawkeye.session.SessionManager;
+import org.cubeville.hawkeye.session.SimpleSessionFactory;
+import org.cubeville.hawkeye.session.SimpleSessionManager;
 import org.cubeville.hawkeye.sql.Database;
+import org.cubeville.hawkeye.sql.DatabaseException;
+import org.cubeville.hawkeye.sql.MySqlDatabase;
 
 public class HawkEyeEngine implements PluginEngine {
 
+	/**
+	 * Server compatibility layer
+	 */
 	private final ServerInterface server;
 
+	/**
+	 * Plugin configuration
+	 */
 	private final Configuration config;
+
+	/**
+	 * Database
+	 */
 	private final Database database;
+
+	/**
+	 * Session manager
+	 */
 	private final SessionManager sessionManager;
 
 	public HawkEyeEngine(ServerInterface server, Configuration config) {
@@ -38,15 +56,29 @@ public class HawkEyeEngine implements PluginEngine {
 		this.server = server;
 		this.config = config;
 
-		// TODO Set these up
-		database = null;
-		sessionManager = null;
+		database = new MySqlDatabase();
+		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
+
+		// TODO Run this in a thread
+		try {
+			database.connect(
+				config.getString("database.hostname"),
+				config.getString("database.port"),
+				config.getString("database.database"),
+				config.getString("database.username"),
+				config.getString("database.password"),
+				config.getString("database.prefix")
+			);
+		} catch (DatabaseException ex) {
+			// TODO Handle this better
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
 	public String getVersion() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Get version automagically
+		return "2.0.0-SNAPSHOT";
 	}
 
 	@Override
