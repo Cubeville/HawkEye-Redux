@@ -16,32 +16,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.command;
+package org.cubeville.hawkeye.session;
 
-public abstract class ConsoleCommandSender implements CommandSender {
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final String getName() {
-		return "*CONSOLE";
+import org.cubeville.hawkeye.command.CommandSender;
+
+public class SimpleSessionManager implements SessionManager {
+
+	private final SessionFactory factory;
+	private final Map<String, Session> sessions = new ConcurrentHashMap<String, Session>();
+
+	public SimpleSessionManager(SessionFactory factory) {
+		this.factory = factory;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public final String getDisplayName() {
-		return "*Console";
-	}
+	public Session getSession(CommandSender owner) {
+		Session session = sessions.get(owner.getName());
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final boolean isPlayer() {
-		return false;
+		if (session == null) {
+			session = factory.createSession(owner);
+			sessions.put(owner.getName(), session);
+		}
+
+		return session;
 	}
 
 }

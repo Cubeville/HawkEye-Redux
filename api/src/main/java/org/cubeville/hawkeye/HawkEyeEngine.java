@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye;
 
+import org.cubeville.hawkeye.session.SessionManager;
 import org.cubeville.hawkeye.sql.Database;
 
 /**
@@ -45,5 +46,12 @@ public interface HawkEyeEngine {
 	 * @return Database
 	 */
 	Database getDatabase();
+
+	/**
+	 * Gets the session manager
+	 *
+	 * @return Sesssion manager
+	 */
+	SessionManager getSessionManager();
 
 }

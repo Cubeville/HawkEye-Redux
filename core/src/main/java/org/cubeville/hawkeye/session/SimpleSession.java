@@ -16,32 +16,47 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.command;
+package org.cubeville.hawkeye.session;
 
-public abstract class ConsoleCommandSender implements CommandSender {
+import java.util.HashMap;
+import java.util.Map;
+
+import org.cubeville.hawkeye.command.CommandSender;
+
+public class SimpleSession implements Session {
 
 	/**
-	 * {@inheritDoc}
+	 * The owner of this session
 	 */
-	@Override
-	public final String getName() {
-		return "*CONSOLE";
+	private final CommandSender owner;
+
+	/**
+	 * Attribute store
+	 */
+	private final Map<String, Object> attributes = new HashMap<String, Object>();
+
+	protected SimpleSession(CommandSender owner) {
+		this.owner = owner;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public final String getDisplayName() {
-		return "*Console";
+	public CommandSender getOwner() {
+		return owner;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
-	public final boolean isPlayer() {
-		return false;
+	public Object getAttribute(String name) {
+		return attributes.containsKey(name) ? attributes.get(name) : null;
+	}
+
+	@Override
+	public void setAttribute(String name, Object value) {
+		attributes.put(name, value);
+	}
+
+	@Override
+	public void clearAttributes() {
+		attributes.clear();
 	}
 
 }

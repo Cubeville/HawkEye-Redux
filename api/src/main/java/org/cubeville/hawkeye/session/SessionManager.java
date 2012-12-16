@@ -16,32 +16,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.command;
+package org.cubeville.hawkeye.session;
 
-public abstract class ConsoleCommandSender implements CommandSender {
+import org.cubeville.hawkeye.command.CommandSender;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final String getName() {
-		return "*CONSOLE";
-	}
+public interface SessionManager {
 
 	/**
-	 * {@inheritDoc}
+	 * Gets a user's session
+	 *
+	 * @param type Type of session to get
+	 * @param owner Session owner
+	 * @return Owner's session of specified type
 	 */
-	@Override
-	public final String getDisplayName() {
-		return "*Console";
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public final boolean isPlayer() {
-		return false;
-	}
+	Session getSession(CommandSender owner);
 
 }

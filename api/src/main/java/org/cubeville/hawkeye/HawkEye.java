@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye;
 
+import org.cubeville.hawkeye.command.ConsoleCommandSender;
+
 public class HawkEye {
 
 	private static HawkEyeEngine engine;
@@ -47,6 +49,14 @@ public class HawkEye {
 		}
 
 		HawkEye.engine = engine;
+	}
+
+	public static ServerInterface getServerInterface() {
+		return engine.getServerInterface();
+	}
+
+	public static ConsoleCommandSender getConsoleSender() {
+		return engine.getServerInterface().getConsoleSender();
 	}
 
 }
