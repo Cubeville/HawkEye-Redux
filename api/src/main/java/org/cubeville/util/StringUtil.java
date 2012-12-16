@@ -18,6 +18,8 @@
 
 package org.cubeville.util;
 
+import java.util.List;
+
 public class StringUtil {
 
 	/**
@@ -50,6 +52,14 @@ public class StringUtil {
 		}
 
 		return output.toString();
+	}
+
+	public static String buildString(List<String> args, String separator) {
+		return buildString(args, separator, 0);
+	}
+
+	public static String buildString(List<String> args, String separator, int startIndex) {
+		return buildString(args.toArray(new String[args.size()]), separator, startIndex);
 	}
 
 }
