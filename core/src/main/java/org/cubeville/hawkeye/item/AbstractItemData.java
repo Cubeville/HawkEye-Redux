@@ -1,11 +1,12 @@
 package org.cubeville.hawkeye.item;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractItemData implements ItemData {
 
-	public AbstractItemData(String data) {
+	protected AbstractItemData() { }
+
+	protected AbstractItemData(String data) {
 		String[] pieces = data.split("\\^");
 
 		for (String piece : pieces) {
@@ -55,8 +56,6 @@ public abstract class AbstractItemData implements ItemData {
 	private void processEnchantments(String value) {
 		String[] pieces = value.split(";");
 
-		Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
-
 		for (int i = 0; i < pieces.length; i++) {
 			String[] data = pieces[i].split(",");
 			if (data.length != 2) continue;
@@ -64,13 +63,11 @@ public abstract class AbstractItemData implements ItemData {
 			try {
 				Enchantment enchant = Enchantment.getById(Integer.valueOf(data[0]));
 				int level = Integer.valueOf(data[1]);
-				enchantments.put(enchant, level);
+				addEnchantment(enchant, level);
 			} catch (NumberFormatException ex) {
 				continue;
 			}
 		}
-
-		setEnchantments(enchantments);
 	}
 
 	protected abstract int getId();
@@ -87,7 +84,9 @@ public abstract class AbstractItemData implements ItemData {
 
 	protected abstract Map<Enchantment, Integer> getEnchantments();
 
-	protected abstract void setEnchantments(Map<Enchantment, Integer> enchantments);
+	protected abstract void addEnchantment(Enchantment enchantment, int level);
+
+	protected abstract void removeEnchantment(Enchantment enchantment);
 
 	@Override
 	public String serialize() {
