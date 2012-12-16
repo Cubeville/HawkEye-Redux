@@ -22,7 +22,7 @@ import org.cubeville.hawkeye.command.ConsoleCommandSender;
 
 public class HawkEye {
 
-	private static HawkEyeEngine engine;
+	private static PluginEngine engine;
 
 	/**
 	 * No instantiation
@@ -34,7 +34,7 @@ public class HawkEye {
 	 *
 	 * @return HawkEye engine instance
 	 */
-	public static HawkEyeEngine getEngine() {
+	public static PluginEngine getEngine() {
 		return engine;
 	}
 
@@ -43,7 +43,7 @@ public class HawkEye {
 	 *
 	 * @param engine HawkEye engine instance
 	 */
-	public static void setEngine(HawkEyeEngine engine) {
+	public static void setEngine(PluginEngine engine) {
 		if (HawkEye.engine != null) {
 			throw new UnsupportedOperationException("HawkEye engine can only be defined once");
 		}
@@ -56,7 +56,7 @@ public class HawkEye {
 	}
 
 	public static ConsoleCommandSender getConsoleSender() {
-		return engine.getServerInterface().getConsoleSender();
+		return engine.getConsoleSender();
 	}
 
 }

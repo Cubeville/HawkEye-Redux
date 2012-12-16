@@ -19,6 +19,8 @@
 package org.cubeville.hawkeye;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
+import org.cubeville.hawkeye.entity.Player;
+import org.cubeville.hawkeye.location.World;
 
 public interface ServerInterface {
 
@@ -52,5 +54,21 @@ public interface ServerInterface {
 	 * @return Server's console command sender
 	 */
 	ConsoleCommandSender getConsoleSender();
+
+	/**
+	 * Gets the specified player
+	 *
+	 * @param name Name of player to get
+	 * @return Player
+	 */
+	Player getPlayer(String name);
+
+	/**
+	 * Gets the specified world
+	 *
+	 * @param name Name of world to get
+	 * @return World
+	 */
+	World getWorld(String name);
 
 }

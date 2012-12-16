@@ -18,13 +18,16 @@
 
 package org.cubeville.hawkeye;
 
+import org.cubeville.hawkeye.command.ConsoleCommandSender;
+import org.cubeville.hawkeye.entity.Player;
+import org.cubeville.hawkeye.location.World;
 import org.cubeville.hawkeye.session.SessionManager;
 import org.cubeville.hawkeye.sql.Database;
 
 /**
  * Main plugin engine interface
  */
-public interface HawkEyeEngine {
+public interface PluginEngine {
 
 	/**
 	 * Gets the HawkEye version
@@ -32,13 +35,6 @@ public interface HawkEyeEngine {
 	 * @return HawkEye version
 	 */
 	String getVersion();
-
-	/**
-	 * Gets the server compatibility layer
-	 *
-	 * @return Server interface
-	 */
-	ServerInterface getServerInterface();
 
 	/**
 	 * Gets the HawkEye database
@@ -53,5 +49,35 @@ public interface HawkEyeEngine {
 	 * @return Sesssion manager
 	 */
 	SessionManager getSessionManager();
+
+	/**
+	 * Gets the server compatibility layer
+	 *
+	 * @return Server interface
+	 */
+	ServerInterface getServerInterface();
+
+	/**
+	 * Gets the server's console sender
+	 *
+	 * @return Console sender
+	 */
+	ConsoleCommandSender getConsoleSender();
+
+	/**
+	 * Gets the specified player
+	 *
+	 * @param name Name of player to get
+	 * @return Player
+	 */
+	Player getPlayer(String name);
+
+	/**
+	 * Gets the specified world
+	 *
+	 * @param name Name of world to get
+	 * @return World
+	 */
+	World getWorld(String name);
 
 }
