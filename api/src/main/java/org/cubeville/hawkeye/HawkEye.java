@@ -22,6 +22,7 @@ import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
+import org.cubeville.hawkeye.search.SearchManager;
 import org.cubeville.hawkeye.session.SessionManager;
 import org.cubeville.hawkeye.sql.Database;
 
@@ -89,10 +90,19 @@ public class HawkEye {
 	/**
 	 * Gets the session manager
 	 *
-	 * @return Sesssion manager
+	 * @return Session manager
 	 */
 	public SessionManager getSessionManager() {
 		return engine.getSessionManager();
+	}
+
+	/**
+	 * Gets the search manager
+	 *
+	 * @return Search manager
+	 */
+	public SearchManager getSearchManager() {
+		return engine.getSearchManager();
 	}
 
 	/**
