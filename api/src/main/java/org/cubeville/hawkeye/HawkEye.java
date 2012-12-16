@@ -20,6 +20,10 @@ package org.cubeville.hawkeye;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.Configuration;
+import org.cubeville.hawkeye.entity.Player;
+import org.cubeville.hawkeye.location.World;
+import org.cubeville.hawkeye.session.SessionManager;
+import org.cubeville.hawkeye.sql.Database;
 
 public class HawkEye {
 
@@ -55,16 +59,69 @@ public class HawkEye {
 		HawkEye.engine = engine;
 	}
 
+	/**
+	 * Gets the server compatibility layer
+	 *
+	 * @return Server interface
+	 */
 	public static ServerInterface getServerInterface() {
 		return engine.getServerInterface();
 	}
 
+	/**
+	 * Gets the plugin configuration
+	 *
+	 * @return Plugin configuration
+	 */
 	public static Configuration getConfig() {
 		return engine.getConfig();
 	}
 
+	/**
+	 * Gets the HawkEye database
+	 *
+	 * @return Database
+	 */
+	public Database getDatabase() {
+		return engine.getDatabase();
+	}
+
+	/**
+	 * Gets the session manager
+	 *
+	 * @return Sesssion manager
+	 */
+	public SessionManager getSessionManager() {
+		return engine.getSessionManager();
+	}
+
+	/**
+	 * Gets the server's console sender
+	 *
+	 * @return Console sender
+	 */
 	public static ConsoleCommandSender getConsoleSender() {
 		return engine.getConsoleSender();
+	}
+
+	/**
+	 * Gets the specified player
+	 *
+	 * @param name Name of player to get
+	 * @return Player
+	 */
+	public Player getPlayer(String name) {
+		return engine.getPlayer(name);
+	}
+
+	/**
+	 * Gets the specified world
+	 *
+	 * @param name Name of world to get
+	 * @return World
+	 */
+	public World getWorld(String name) {
+		return engine.getWorld(name);
 	}
 
 }
