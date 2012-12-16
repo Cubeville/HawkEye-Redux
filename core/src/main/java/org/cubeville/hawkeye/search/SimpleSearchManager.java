@@ -18,9 +18,12 @@
 
 package org.cubeville.hawkeye.search;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.search.parsers.ActionParser;
 import org.cubeville.hawkeye.search.parsers.BlockParser;
 import org.cubeville.hawkeye.search.parsers.FilterParser;
@@ -29,17 +32,18 @@ import org.cubeville.hawkeye.search.parsers.PlayerParser;
 import org.cubeville.hawkeye.search.parsers.RadiusParser;
 import org.cubeville.hawkeye.search.parsers.TimeParser;
 import org.cubeville.hawkeye.search.parsers.WorldParser;
+import org.cubeville.util.StringUtil;
 
 public class SimpleSearchManager implements SearchManager {
 
+	private final ParameterParser defaultParser;
 	private final Map<String, ParameterParser> parameters = new HashMap<String, ParameterParser>();
 
 	public SimpleSearchManager() {
-		PlayerParser parser = new PlayerParser();
-
 		// If no parameter is specified it will fallback to the default parser
-		registerParameter("default", parser);
-		registerParameter("p", parser);
+		defaultParser = new PlayerParser();
+		registerParameter("default", defaultParser);
+		registerParameter("p", defaultParser);
 
 		registerParameter("r", new RadiusParser());
 		registerParameter("t", new TimeParser());
@@ -48,6 +52,43 @@ public class SimpleSearchManager implements SearchManager {
 		registerParameter("f", new FilterParser());
 		registerParameter("l", new LocationParser());
 		registerParameter("w", new WorldParser());
+	}
+
+	@Override
+	public String getQuery(String params, CommandSender sender) {
+		String query = "SELECT * FROM `table` WHERE ";
+		// TODO Rename table and stuff
+
+		String[] parts = params.split(" ");
+		List<String> conditions = new ArrayList<String>();
+		// Default condition so it doesn't break if no parameters are processed
+		conditions.add("true");
+
+		for (int i = 0; i < parts.length; i++) {
+			String param = parts[i];
+			ParameterParser parser;
+
+			if (param.isEmpty()) continue;
+
+			String[] paramParts = param.split(":", 2);
+			String key = paramParts.length == 1 ? "default" : paramParts[0].toLowerCase();
+			String value = paramParts.length == 1 ? paramParts[0] : paramParts[1];
+
+			if (key.equalsIgnoreCase("default")) {
+				parser = defaultParser;
+			} else {
+				parser = parameters.get(key);
+			}
+
+			// TODO Throw some type of invalid parameter error
+			if (parser == null) continue;
+
+			conditions.add(parser.process(value, sender));
+		}
+
+		query += "(" + StringUtil.buildString(conditions, ") AND (") + ")";
+
+		return query;
 	}
 
 	@Override
