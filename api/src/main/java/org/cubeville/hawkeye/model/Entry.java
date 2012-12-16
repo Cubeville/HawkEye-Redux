@@ -26,6 +26,13 @@ import org.cubeville.hawkeye.Action;
 public interface Entry {
 
 	/**
+	 * Gets the name of the user who performed this action
+	 *
+	 * @return Username
+	 */
+	String getUser();
+
+	/**
 	 * Gets the type of action stored in this entry
 	 *
 	 * @return Entry action
