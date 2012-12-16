@@ -55,6 +55,11 @@ public class SimpleSession implements Session {
 	}
 
 	@Override
+	public void removeAttribute(String name) {
+		attributes.remove(name);
+	}
+
+	@Override
 	public void clearAttributes() {
 		attributes.clear();
 	}

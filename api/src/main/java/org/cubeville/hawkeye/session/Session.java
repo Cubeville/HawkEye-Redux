@@ -46,6 +46,13 @@ public interface Session {
 	void setAttribute(String name, Object value);
 
 	/**
+	 * Removes an attribute stored in this session
+	 *
+	 * @param name Name of attribute to clear
+	 */
+	void removeAttribute(String name);
+
+	/**
 	 * Clears all attributes stored in this session
 	 */
 	void clearAttributes();
