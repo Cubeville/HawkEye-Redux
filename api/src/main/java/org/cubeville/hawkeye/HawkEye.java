@@ -22,6 +22,9 @@ import org.cubeville.hawkeye.command.ConsoleCommandSender;
 
 public class HawkEye {
 
+	/**
+	 * Plugin engine
+	 */
 	private static PluginEngine engine;
 
 	/**
