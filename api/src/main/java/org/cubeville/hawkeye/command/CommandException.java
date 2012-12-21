@@ -18,23 +18,27 @@
 
 package org.cubeville.hawkeye.command;
 
-public interface CommandManager {
+/**
+ * Represents an exception thrown by a command
+ */
+public class CommandException extends Exception {
 
-	/**
-	 * Registers all annotated command methods in the specified object
-	 *
-	 * @param obj Object to register commands of
-	 */
-	void registerCommands(Object obj);
+	private static final long serialVersionUID = 4289400669815931997L;
 
-	/**
-	 * Attempts to execute a command
-	 *
-	 * @param command Command to execute
-	 * @param args Arguments specified by command sender
-	 * @param sender Who sent the command
-	 * @throws CommandException If the command could not be handled properly
-	 */
-	void execute(String command, String[] args, CommandSender sender) throws CommandException;
+	public CommandException() {
+		super();
+	}
+
+	public CommandException(String message) {
+		super(message);
+	}
+
+	public CommandException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public CommandException(Throwable cause) {
+		super(cause);
+	}
 
 }
