@@ -28,25 +28,25 @@ import org.cubeville.util.StringUtil;
 public class CommandData {
 
 	private final String command;
-	private final String[] originalArgs;
 	private final List<String> processedArgs;
 	private final Set<Character> flags;
 
-	public CommandData(String args) {
-		this(args.split(" "));
+	public CommandData(String command, String args) {
+		this(command, args.split(" "));
 	}
 
-	public CommandData(String[] args) {
-		originalArgs = args;
-
+	public CommandData(String command, String[] args) {
 		processedArgs = new LinkedList<String>();
 		flags = new HashSet<Character>();
 
-		command = args[0];
-		for (int i = 1; i < args.length; i++) {
+		// Remove leading slash
+		this.command = command.startsWith("/") ? command.substring(1) : command;
+
+		for (int i = 0; i < args.length; i++) {
 			String arg = args[i];
 			if (arg.length() == 0) continue;
 
+			// Arguments starting with '-' are assumed to be flags
 			if (arg.charAt(0) == '-' && arg.length() >= 2) {
 				for (int j = 1; j < arg.length(); j++) {
 					flags.add(arg.charAt(j));
@@ -55,6 +55,7 @@ public class CommandData {
 				continue;
 			}
 
+			// Not a flag, regular arg
 			processedArgs.add(arg);
 		}
 	}

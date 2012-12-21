@@ -10,7 +10,7 @@ public class CommandTest {
 
 	@Test
 	public void testCommandFlags() {
-		CommandData data = new CommandData("/cmd -ab -c");
+		CommandData data = new CommandData("/cmd", "-ab -c");
 
 		assertEquals(data.length(), 0);
 		assertTrue(data.hasFlag('a'));
@@ -21,7 +21,7 @@ public class CommandTest {
 
 	@Test
 	public void testCommandArgs() {
-		CommandData data = new CommandData("/cmd arg1 2 arg3 4.5 arg5");
+		CommandData data = new CommandData("/cmd", "arg1 2 arg3 4.5 arg5");
 
 		assertEquals(data.length(), 5);
 		assertEquals("arg1", data.getString(0));
@@ -33,7 +33,7 @@ public class CommandTest {
 
 	@Test
 	public void testCommandComplex() {
-		CommandData data = new CommandData("/cmd -a arg1 -b arg2 -c arg3");
+		CommandData data = new CommandData("/cmd", "-a arg1 -b arg2 -c arg3");
 
 		assertEquals(data.length(), 3);
 		assertEquals("arg1", data.getString(0));
