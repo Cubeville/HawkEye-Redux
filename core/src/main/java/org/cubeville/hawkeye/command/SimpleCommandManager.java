@@ -31,12 +31,19 @@ public class SimpleCommandManager implements CommandManager {
 	 */
 	private final Map<String, Triplet<Command, Method, Object>> commands;
 
+	/**
+	 * Mapping of aliases to the actual command
+	 */
+	private final Map<String, String> aliases;
+
 	public SimpleCommandManager() {
 		commands = new HashMap<String, Triplet<Command, Method, Object>>();
+		aliases = new HashMap<String, String>();
 	}
 
 	@Override
 	public void registerCommands(Object obj) {
+		// Get the object's methods via reflection
 		Class<?> clazz = obj.getClass();
 
 		for (Method method : clazz.getMethods()) {
@@ -50,9 +57,18 @@ public class SimpleCommandManager implements CommandManager {
 			Command info = method.getAnnotation(Command.class);
 			if (!validateCommand(info)) continue;
 
+			// Make sure method is accessible
+			method.setAccessible(true);
+
 			// Register command execution data
 			Triplet<Command, Method, Object> command = Triplet.of(info, method, obj);
 			commands.put(info.command(), command);
+
+			// Register aliases
+			// No existing alias check is done so they may be overridden
+			for (String alias : info.aliases()) {
+				aliases.put(alias, info.command());
+			}
 		}
 	}
 
