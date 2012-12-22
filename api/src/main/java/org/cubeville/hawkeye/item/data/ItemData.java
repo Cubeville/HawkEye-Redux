@@ -16,20 +16,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
-
-import org.cubeville.hawkeye.Action;
+package org.cubeville.hawkeye.item.data;
 
 /**
- * Represents a log entry that can be stored in the database
+ * Interface to attach to custom item data classes
+ *
+ * ItemData implementations are used to store custom data about an item/block,
+ * for example the data value of a deleted block, the contents of a removed
+ * chest, enchantments/durability on an item, etc.
  */
-public interface Entry {
-
-	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
-	 */
-	Action getAction();
+public interface ItemData {
 
 }

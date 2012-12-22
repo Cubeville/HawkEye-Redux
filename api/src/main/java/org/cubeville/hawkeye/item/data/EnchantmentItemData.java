@@ -16,20 +16,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
-
-import org.cubeville.hawkeye.Action;
+package org.cubeville.hawkeye.item.data;
 
 /**
- * Represents a log entry that can be stored in the database
+ * ItemData implementation to store the enchantments on tools/armor
  */
-public interface Entry {
+public class EnchantmentItemData extends DurabilityItemData {
 
-	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
-	 */
-	Action getAction();
+	public EnchantmentItemData(short durability) {
+		super(durability);
+	}
 
 }

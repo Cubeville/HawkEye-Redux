@@ -16,20 +16,38 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
-
-import org.cubeville.hawkeye.Action;
+package org.cubeville.hawkeye.item.data;
 
 /**
- * Represents a log entry that can be stored in the database
+ * ItemData implementation to store basic item data (i.e. rotation, wool color)
  */
-public interface Entry {
+public class BasicItemData implements ItemData {
 
 	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
+	 * Holds item data (i.e. dye color)
 	 */
-	Action getAction();
+	private byte data;
+
+	public BasicItemData(byte data) {
+		this.data = data;
+	}
+
+	/**
+	 * Sets this item's data
+	 *
+	 * @param data New data value
+	 */
+	public void setData(byte data) {
+		this.data = data;
+	}
+
+	/**
+	 * Gets this item's data
+	 *
+	 * @return This item's data
+	 */
+	public byte getData() {
+		return data;
+	}
 
 }

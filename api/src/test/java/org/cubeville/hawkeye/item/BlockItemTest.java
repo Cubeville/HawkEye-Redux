@@ -1,6 +1,7 @@
 package org.cubeville.hawkeye.item;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -12,21 +13,14 @@ public class BlockItemTest {
 	@Test
 	public void getBlockById() {
 		for (Block block : Block.values()) {
-			assertThat(Block.getById(block.getId()), is(block));
+			assertEquals(Block.getById(block.getId()), block);
 		}
 	}
 
 	@Test
 	public void getItemById() {
 		for (Item item : Item.values()) {
-			assertThat(Item.getById(item.getId()), is(item));
-		}
-	}
-
-	@Test
-	public void getEnchantmentById() {
-		for (Enchantment enchantment : Enchantment.values()) {
-			assertThat(Enchantment.getById(enchantment.getId()), is(enchantment));
+			assertEquals(Item.getById(item.getId()), item);
 		}
 	}
 

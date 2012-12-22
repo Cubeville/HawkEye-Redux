@@ -16,20 +16,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
-
-import org.cubeville.hawkeye.Action;
+package org.cubeville.hawkeye.item.data;
 
 /**
- * Represents a log entry that can be stored in the database
+ * ItemData implementation to store the text written on signs
  */
-public interface Entry {
+public class SignItemData extends BasicItemData {
 
-	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
-	 */
-	Action getAction();
+	private String[] lines;
+
+	public SignItemData(byte data, String[] lines) {
+		super(data);
+		this.lines = lines;
+	}
+
+	public void setLines(String[] lines) {
+		this.lines = lines;
+	}
+
+	public String[] getLines() {
+		return lines;
+	}
+
+	public void setLine(int i, String line) {
+		lines[i] = line;
+	}
+
+	public String getLine(int i) {
+		return lines[i];
+	}
 
 }

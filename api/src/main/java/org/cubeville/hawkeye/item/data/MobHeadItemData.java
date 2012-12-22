@@ -16,20 +16,38 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
-
-import org.cubeville.hawkeye.Action;
+package org.cubeville.hawkeye.item.data;
 
 /**
- * Represents a log entry that can be stored in the database
+ * ItemData implementation to store the rotation and owner of player skulls
  */
-public interface Entry {
+public class MobHeadItemData extends BasicItemData {
 
 	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
+	 * Owner of this mob head
 	 */
-	Action getAction();
+	private String owner;
+
+	public MobHeadItemData(byte data, String owner) {
+		super(data);
+		this.owner = owner;
+	}
+
+	/**
+	 * Sets the owner of this mob head
+	 *
+	 * @param owner New owner
+	 */
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	/**
+	 * Gets the owner of this mob head
+	 * @return This mob head's owner
+	 */
+	public String getOwner() {
+		return owner;
+	}
 
 }

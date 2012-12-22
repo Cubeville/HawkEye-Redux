@@ -16,20 +16,38 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
-
-import org.cubeville.hawkeye.Action;
+package org.cubeville.hawkeye.item.data;
 
 /**
- * Represents a log entry that can be stored in the database
+ * ItemData implementation to store the durability of tools/armor
  */
-public interface Entry {
+public class DurabilityItemData implements ItemData {
 
 	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
+	 * Holds item durability (i.e. for tools/armor)
 	 */
-	Action getAction();
+	private short durability;
+
+	public DurabilityItemData(short durability) {
+		this.durability = durability;
+	}
+
+	/**
+	 * Sets this item's durability
+	 *
+	 * @param durability Durability level
+	 */
+	public void setDurability(short durability) {
+		this.durability = durability;
+	}
+
+	/**
+	 * Gets this item's durability
+	 *
+	 * @return This item's durability level
+	 */
+	public short getDurability() {
+		return durability;
+	}
 
 }

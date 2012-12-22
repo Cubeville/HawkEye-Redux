@@ -16,24 +16,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item;
+package org.cubeville.hawkeye.item.data;
 
 /**
- * Interface representing item data that can be serialized for storage
- *
- * Any class implementing this interface should also provide the following:
- *  - A constructor accepting a String
+ * ItemData implementation to store the contents of written books
  */
-public interface ItemData {
-
-	/**
-	 * Creates a string representation of this item data
-	 *
-	 * The class implementing this interface should be able to reconstruct an
-	 * identical item when this string is passed into its constructor.
-	 *
-	 * @return String representing this item data
-	 */
-	String serialize();
+public class BookItemData implements ItemData {
 
 }
