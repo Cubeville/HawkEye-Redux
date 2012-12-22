@@ -121,6 +121,15 @@ public class CommandData {
 	}
 
 	/**
+	 * Returns a set of all defined flags
+	 *
+	 * @return Set of defined flags
+	 */
+	public Set<Character> getFlags() {
+		return flags;
+	}
+
+	/**
 	 * Checks if a flag was defined
 	 *
 	 * @param flag Flag to check for

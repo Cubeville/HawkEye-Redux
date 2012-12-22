@@ -125,11 +125,34 @@ public class SimpleCommandManager implements CommandManager {
 			// Command not registered
 			if (!commands.containsKey(base)) return;
 
+			CommandData data = new CommandData(base, args);
 			Triplet<Command, Method, Object> info = commands.get(base);
+			Command cmd = info.getLeft();
+
+			// Check number of arguments
+			if (data.length() < cmd.min()) {
+				// TODO Throw exception
+			}
+
+			if (cmd.max() != -1 && data.length() > cmd.max()) {
+				// TODO Throw exception
+			}
+
+			// Check flags
+			Set<Character> validFlags = new HashSet<Character>();
+			for (char flag : cmd.flags().toCharArray()) {
+				validFlags.add(flag);
+			}
+
+			for (char flag : data.getFlags()) {
+				if (validFlags.contains(flag)) {
+					// TODO Throw exception
+				}
+			}
 
 			// Execute command
 			try {
-				info.getMiddle().invoke(info.getRight(), sender, new CommandData(base, args));
+				info.getMiddle().invoke(info.getRight(), sender, data);
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
