@@ -1,5 +1,5 @@
 /*
- * HawkEye
+ * HawkEye Redux
  * Copyright (C) 2012 Cubeville <http://www.cubeville.org> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
