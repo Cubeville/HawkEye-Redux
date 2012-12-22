@@ -1,6 +1,16 @@
+# Eclipse
 .classpath
 .project
 .settings/
 bin/
+
+# Maven
 target/
 dependency-reduced-pom.xml
+
+# Vim
+*~
+*.sw[op]
+
+# Mac Sucks
+.DS_Store
