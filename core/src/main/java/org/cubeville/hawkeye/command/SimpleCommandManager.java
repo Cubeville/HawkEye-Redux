@@ -128,6 +128,12 @@ public class SimpleCommandManager implements CommandManager {
 			CommandData data = new CommandData(base, args);
 			Triplet<Command, Method, Object> info = commands.get(base);
 			Command cmd = info.getLeft();
+			Method method = info.getMiddle();
+
+			// Check permission nodes
+			if (!hasPermission(method, sender)) {
+				// TODO Throw exception
+			}
 
 			// Check number of arguments
 			if (data.length() < cmd.min()) {
@@ -152,7 +158,7 @@ public class SimpleCommandManager implements CommandManager {
 
 			// Execute command
 			try {
-				info.getMiddle().invoke(info.getRight(), sender, data);
+				method.invoke(info.getRight(), sender, data);
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -200,6 +206,25 @@ public class SimpleCommandManager implements CommandManager {
 		if (command.max() != -1 && command.min() > command.max()) return false;
 
 		return true;
+	}
+
+	/**
+	 * Checks if a sender has permission to execute a command
+	 *
+	 * @param method Command method to run permission check on
+	 * @param sender Command sender to check permission for
+	 * @return True if sender can execute command, false if not
+	 */
+	private boolean hasPermission(Method method, CommandSender sender) {
+		// No permission specified default true
+		if (!method.isAnnotationPresent(CommandPermission.class)) return true;
+
+		// True if sender has one or more of the specified nodes
+		for (String node : method.getAnnotation(CommandPermission.class).value()) {
+			if (sender.hasPermission(node)) return true;
+		}
+
+		return false;
 	}
 
 }
