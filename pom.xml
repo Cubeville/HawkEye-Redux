@@ -46,6 +46,13 @@
     <module>impl/bukkit</module>
     <!-- <module>impl/workbench</module> -->
   </modules>
+  
+  <repositories>
+    <repository>
+      <id>goalieguy6-repo</id>
+      <url>http://repo.goalieguy6.com/content/gropus/public</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
