@@ -40,7 +40,7 @@ public class SimpleCommandManager implements CommandManager {
 	private final Map<String, String> aliases;
 
 	/**
-	 * Nested commands
+	 * Nested command map (key is command, value is a set of valid subcommands)
 	 */
 	private final Map<String, Set<String>> nested;
 
@@ -73,12 +73,14 @@ public class SimpleCommandManager implements CommandManager {
 			Triplet<Command, Method, Object> command = Triplet.of(info, method, obj);
 
 			// Process nested commands
+			// Loop should allow for infinite levels of nesting
 			String base = "";
 			String[] parts = info.command().split(" ");
 			for (int i = 0; i < parts.length; i++) {
 				if (i > 0) base += " ";
 				base += parts[i];
 
+				// Reached last level
 				if ((i + 1) == parts.length) break;
 
 				Set<String> nest = nested.get(base);
@@ -115,7 +117,7 @@ public class SimpleCommandManager implements CommandManager {
 			Set<String> nest = nested.get(base);
 			String next = ((i + 1) == parts.length) ? "" : parts[i + 1];
 
-			// No more nested commands
+			// Full command found, separate base command from arguments
 			if (nest == null || !nest.contains(next)) {
 				args = new String[parts.length - (i + 1)];
 				System.arraycopy(parts, i + 1, args, 0, parts.length - (i + 1));
@@ -125,6 +127,7 @@ public class SimpleCommandManager implements CommandManager {
 			// Command not registered
 			if (!commands.containsKey(base)) return;
 
+			// Get command details
 			CommandData data = new CommandData(base, args);
 			Triplet<Command, Method, Object> info = commands.get(base);
 			Command cmd = info.getLeft();
