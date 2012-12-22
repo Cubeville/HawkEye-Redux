@@ -19,17 +19,16 @@
 package org.cubeville.hawkeye.item.data;
 
 /**
- * ItemData implementation to store the rotation and owner of player skulls
+ * ItemData implementation to store the owner of player skulls
  */
-public class MobHeadItemData extends BasicItemData {
+public class MobHeadItemData implements ItemData {
 
 	/**
 	 * Owner of this mob head
 	 */
 	private String owner;
 
-	public MobHeadItemData(byte data, String owner) {
-		super(data);
+	public MobHeadItemData(String owner) {
 		this.owner = owner;
 	}
 

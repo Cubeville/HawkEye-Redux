@@ -21,7 +21,6 @@ package org.cubeville.hawkeye.item;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cubeville.hawkeye.item.data.BasicItemData;
 import org.cubeville.hawkeye.item.data.BookItemData;
 import org.cubeville.hawkeye.item.data.ColoredArmorItemData;
 import org.cubeville.hawkeye.item.data.DurabilityItemData;
@@ -40,7 +39,7 @@ public enum Item {
 	APPLE(260),
 	BOW(261, DurabilityItemData.class),
 	ARROW(262),
-	COAL(263, BasicItemData.class),
+	COAL(263),
 	DIAMOND(264),
 	IRON_INGOT(265),
 	GOLD_INGOT(266),
@@ -128,7 +127,7 @@ public enum Item {
 	GLOWSTONE_DUST(348),
 	RAW_FISH(349),
 	COOKED_FISH(350),
-	INK_SACK(351, BasicItemData.class),
+	INK_SACK(351),
 	BONE(352),
 	SUGAR(353),
 	CAKE(354),
@@ -150,7 +149,7 @@ public enum Item {
 	GHAST_TEAR(370),
 	GOLD_NUGGET(371),
 	NETHER_STALK(372),
-	POTION(373, BasicItemData.class),
+	POTION(373),
 	GLASS_BOTTLE(374),
 	SPIDER_EYE(375),
 	FERMENTED_SPIDER_EYE(376),
@@ -160,7 +159,7 @@ public enum Item {
 	CAULDRON(380),
 	EYE_OF_ENDER(381),
 	GLISTERING_MELON(382),
-	SPAWN_EGG(383, BasicItemData.class),
+	SPAWN_EGG(383),
 	EXP_BOTTLE(384),
 	FIRE_CHARGE(385),
 	BOOK_AND_QUILL(386, BookItemData.class),
