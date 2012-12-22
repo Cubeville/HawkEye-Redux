@@ -18,33 +18,6 @@
 
 package org.cubeville.hawkeye.model;
 
-import org.cubeville.hawkeye.Action;
-import org.cubeville.hawkeye.location.Location;
-
-/**
- * Represents a log entry that can be stored in the database
- */
-public interface Entry {
-
-	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
-	 */
-	Action getAction();
-
-	/**
-	 * Gets the player who performed this action
-	 *
-	 * @return Player's name
-	 */
-	String getPlayer();
-
-	/**
-	 * Gets the location this action was performed at
-	 *
-	 * @return Location action occurred at
-	 */
-	Location getLocation();
+public interface BlockState {
 
 }

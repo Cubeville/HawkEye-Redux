@@ -18,33 +18,28 @@
 
 package org.cubeville.hawkeye.model;
 
-import org.cubeville.hawkeye.Action;
-import org.cubeville.hawkeye.location.Location;
+import org.cubeville.hawkeye.location.Block;
 
-/**
- * Represents a log entry that can be stored in the database
- */
-public interface Entry {
+public interface BlockEntry extends Entry, Modifiable {
 
 	/**
-	 * Gets the type of action stored in this entry
+	 * Gets the block this action was performed on
 	 *
-	 * @return Entry action
+	 * @return Block that was modified
 	 */
-	Action getAction();
+	Block getBlock();
 
 	/**
-	 * Gets the player who performed this action
+	 * Gets the state of this entry before it was modified
 	 *
-	 * @return Player's name
+	 * @return Block state before modification
 	 */
-	String getPlayer();
+	BlockState getOldBlockState();
 
 	/**
-	 * Gets the location this action was performed at
+	 * Gets the state of this entry after it was modified
 	 *
-	 * @return Location action occurred at
+	 * @return Block state after modification
 	 */
-	Location getLocation();
-
+	BlockState getNewBlockState();
 }
