@@ -71,32 +71,39 @@ public class SimpleCommandManager implements CommandManager {
 
 			// Register command execution data
 			Triplet<Command, Method, Object> command = Triplet.of(info, method, obj);
-
-			// Process nested commands
-			// Loop should allow for infinite levels of nesting
-			String base = "";
-			String[] parts = info.command().split(" ");
-			for (int i = 0; i < parts.length; i++) {
-				if (i > 0) base += " ";
-				base += parts[i];
-
-				// Reached last level
-				if ((i + 1) == parts.length) break;
-
-				Set<String> nest = nested.get(base);
-				if (nest == null) nest = new HashSet<String>();
-
-				nest.add(parts[i + 1]);
-				nested.put(base, nest);
-			}
-
+			registerNested(info.command());
 			commands.put(info.command(), command);
 
 			// Register aliases
 			// No existing alias check is done so they may be overridden
 			for (String alias : info.aliases()) {
+				registerNested(alias);
 				aliases.put(alias, info.command());
 			}
+		}
+	}
+
+	/**
+	 * Registers nested commands
+	 *
+	 * @param command Command to register
+	 */
+	private void registerNested(String command) {
+		// Loop should allow for infinite levels of nesting
+		String base = "";
+		String[] parts = command.split(" ");
+		for (int i = 0; i < parts.length; i++) {
+			if (i > 0) base += " ";
+			base += parts[i];
+
+			// Reached last level
+			if ((i + 1) == parts.length) break;
+
+			Set<String> nest = nested.get(base);
+			if (nest == null) nest = new HashSet<String>();
+
+			nest.add(parts[i + 1]);
+			nested.put(base, nest);
 		}
 	}
 
@@ -124,8 +131,13 @@ public class SimpleCommandManager implements CommandManager {
 				break;
 			}
 
+			// Check if alias
+			if (!commands.containsKey(base) && aliases.containsKey(base)) {
+				base = aliases.get(base);
+			}
+
 			// Command not registered
-			if (!commands.containsKey(base)) return;
+			if (commands.containsKey(base)) return;
 
 			// Get command details
 			CommandData data = new CommandData(base, args);
