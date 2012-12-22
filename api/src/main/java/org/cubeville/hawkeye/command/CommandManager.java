@@ -31,10 +31,9 @@ public interface CommandManager {
 	 * Attempts to execute a command
 	 *
 	 * @param command Command to execute
-	 * @param args Arguments specified by command sender
 	 * @param sender Who sent the command
 	 * @throws CommandException If the command could not be handled properly
 	 */
-	void execute(String command, String[] args, CommandSender sender) throws CommandException;
+	void execute(String command, CommandSender sender) throws CommandException;
 
 }

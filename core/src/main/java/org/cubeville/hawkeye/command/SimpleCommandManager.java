@@ -18,9 +18,12 @@
 
 package org.cubeville.hawkeye.command;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.cubeville.util.Triplet;
 
@@ -36,9 +39,15 @@ public class SimpleCommandManager implements CommandManager {
 	 */
 	private final Map<String, String> aliases;
 
+	/**
+	 * Nested commands
+	 */
+	private final Map<String, Set<String>> nested;
+
 	public SimpleCommandManager() {
 		commands = new HashMap<String, Triplet<Command, Method, Object>>();
 		aliases = new HashMap<String, String>();
+		nested = new HashMap<String, Set<String>>();
 	}
 
 	@Override
@@ -62,6 +71,23 @@ public class SimpleCommandManager implements CommandManager {
 
 			// Register command execution data
 			Triplet<Command, Method, Object> command = Triplet.of(info, method, obj);
+
+			// Process nested commands
+			String base = "";
+			String[] parts = info.command().split(" ");
+			for (int i = 0; i < parts.length; i++) {
+				if (i > 0) base += " ";
+				base += parts[i];
+
+				if ((i + 1) == parts.length) break;
+
+				Set<String> nest = nested.get(base);
+				if (nest == null) nest = new HashSet<String>();
+
+				nest.add(parts[i + 1]);
+				nested.put(base, nest);
+			}
+
 			commands.put(info.command(), command);
 
 			// Register aliases
@@ -73,8 +99,49 @@ public class SimpleCommandManager implements CommandManager {
 	}
 
 	@Override
-	public void execute(String command, String[] args, CommandSender sender) throws CommandException {
-		// TODO Auto-generated method stub
+	public void execute(String command, CommandSender sender) throws CommandException {
+		// Remove leading slash
+		if (command.startsWith("/")) command = command.substring(1);
+
+		String base = "";
+		String[] args = new String[0];
+
+		// Check what command is being run (loop to find nested commands)
+		String[] parts = command.split(" ");
+		for (int i = 0; i < parts.length; i++) {
+			if (i > 0) base += " ";
+			base += parts[i];
+
+			Set<String> nest = nested.get(base);
+			String next = ((i + 1) == parts.length) ? "" : parts[i + 1];
+
+			// No more nested commands
+			if (nest == null || !nest.contains(next)) {
+				args = new String[parts.length - (i + 1)];
+				System.arraycopy(parts, i + 1, args, 0, parts.length - (i + 1));
+				break;
+			}
+
+			// Command not registered
+			if (!commands.containsKey(base)) return;
+
+			Triplet<Command, Method, Object> info = commands.get(base);
+
+			// Execute command
+			try {
+				info.getMiddle().invoke(info.getRight(), sender, new CommandData(base, args));
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				if (e.getCause() instanceof CommandException) {
+					throw (CommandException) e.getCause();
+				} else {
+					throw new CommandException(e.getCause());
+				}
+			}
+		}
 	}
 
 	/**
