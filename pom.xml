@@ -12,11 +12,11 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Plugin version -->
     <hawkeye-version>2.0.0-SNAPSHOT</hawkeye-version>
-    
+
     <!-- Server implementation versions -->
     <bukkit-version>1.4.6-R0.2-SNAPSHOT</bukkit-version>
     <workbench-version>0.0.1-SNAPSHOT</workbench-version>
-    
+
     <!-- Dependency versions -->
     <junit-version>4.11</junit-version>
     <snakeyaml-version>1.11</snakeyaml-version>
@@ -46,7 +46,7 @@
     <module>impl/bukkit</module>
     <!-- <module>impl/workbench</module> -->
   </modules>
-  
+
   <repositories>
     <repository>
       <id>goalieguy6-repo</id>
@@ -88,5 +88,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>
