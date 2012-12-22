@@ -18,21 +18,9 @@
 
 package org.cubeville.hawkeye.command;
 
-public interface CommandSender {
+import org.cubeville.hawkeye.Named;
 
-	/**
-	 * Gets this command sender's name
-	 *
-	 * @return This command sender's name
-	 */
-	String getName();
-
-	/**
-	 * Gets this command sender's display name
-	 *
-	 * @return This command sender's display name
-	 */
-	String getDisplayName();
+public interface CommandSender extends Named {
 
 	/**
 	 * Sends a message to this command sender

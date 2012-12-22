@@ -21,7 +21,7 @@ package org.cubeville.hawkeye;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.model.Modifiable;
 
-public enum Action {
+public enum Action implements Named {
 
 	/**
 	 * Block placed by player
@@ -193,13 +193,14 @@ public enum Action {
 		this.dataClass = dataClass;
 	}
 
-	/**
-	 * Gets the simple name for this action for use in config and database
-	 *
-	 * @return Simple name for the action
-	 */
-	public String getSimpleName() {
+	@Override
+	public String getName() {
 		return toString().toLowerCase().replace("_", "-");
+	}
+
+	@Override
+	public String getDisplayName() {
+		return toString().toLowerCase().replace("_", " ");
 	}
 
 	/**

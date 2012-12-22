@@ -16,23 +16,28 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.command;
+package org.cubeville.hawkeye;
 
-public abstract class ConsoleCommandSender implements CommandSender {
+public interface Named {
 
-	@Override
-	public final String getName() {
-		return "*CONSOLE";
-	}
+	/**
+	 * Gets this object's name
+	 *
+	 * The object name is immutable and thus should be used for operations such
+	 * as persistent data storage.
+	 *
+	 * @return This object's name
+	 */
+	String getName();
 
-	@Override
-	public final String getDisplayName() {
-		return "*Console";
-	}
-
-	@Override
-	public final boolean isPlayer() {
-		return false;
-	}
+	/**
+	 * Gets this object's display name
+	 *
+	 * The display name is mutable and thus cannot be relied on for fetching
+	 * data. The display name should be used in most text output cases.
+	 *
+	 * @return This object's display name
+	 */
+	String getDisplayName();
 
 }
