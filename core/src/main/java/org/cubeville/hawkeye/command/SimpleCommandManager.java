@@ -147,7 +147,7 @@ public class SimpleCommandManager implements CommandManager {
 
 			// Check permission nodes
 			if (!hasPermission(method, sender)) {
-				// TODO Throw exception
+				throw new CommandPermissionException();
 			}
 
 			// Check number of arguments
