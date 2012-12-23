@@ -29,6 +29,36 @@ import org.cubeville.hawkeye.HawkEye;
 public class DatabaseUtil {
 
 	/**
+	 * Attempts to create a database table
+	 *
+	 * @param table Name of the table to create
+	 * @param query Query to create the table
+	 * @return True if table is created (or already exists), false if not
+	 */
+	public static boolean createTable(String table, String query) {
+		if (tableExists(table)) return true;
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+
+		try {
+			conn = HawkEye.getDatabase().getConnection();
+			ps = conn.prepareStatement(query);
+			ps.execute();
+
+			if (tableExists(table)) return true;
+		} catch (SQLException e) {
+			// TODO Log error
+			e.printStackTrace();
+		} finally {
+			close(conn);
+			close(ps);
+		}
+
+		return false;
+	}
+
+	/**
 	 * Checks if the specified table exists in the database
 	 *
 	 * @param table Name of the table to check for
