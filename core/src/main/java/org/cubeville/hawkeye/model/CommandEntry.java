@@ -26,4 +26,10 @@ public class CommandEntry extends AbstractTextEntry {
 		super(DefaultActions.PLAYER_COMMAND, entry);
 	}
 
+	@Override
+	public String getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

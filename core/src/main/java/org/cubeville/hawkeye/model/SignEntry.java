@@ -24,4 +24,10 @@ public class SignEntry extends AbstractBlockEntry {
 		super(entry.getAction(), entry);
 	}
 
+	@Override
+	public String getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

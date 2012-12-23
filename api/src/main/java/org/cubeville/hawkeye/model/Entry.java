@@ -25,6 +25,11 @@ import org.cubeville.hawkeye.location.Location;
 
 /**
  * Represents a log entry that can be stored in the database
+ *
+ * To be recognized as a valid entry, classes implementing this interface
+ * must also implement a constructor that accepts a {@link DataabaseEntry}.
+ * The entry should store its important data via {@link #getData()} and can
+ * recover this data in its constructor via {@link DatabaseEntry#getData()}.
  */
 public interface Entry {
 
@@ -55,6 +60,16 @@ public interface Entry {
 	 * @return Time action occurred at
 	 */
 	Date getTime();
+
+	/**
+	 * Gets a string that can be into the database's data column
+	 *
+	 * The entry should be able to restore all the data it needs when it
+	 * receives this same string back through {@link DatabaseEntry#getData()}.
+	 *
+	 * @return String to put in the database `data` column
+	 */
+	String getData();
 
 	/**
 	 * Returns a formatted string to be displayed in search results

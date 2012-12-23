@@ -26,4 +26,10 @@ public class ChatEntry extends AbstractTextEntry {
 		super(DefaultActions.PLAYER_CHAT, entry);
 	}
 
+	@Override
+	public String getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

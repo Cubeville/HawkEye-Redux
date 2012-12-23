@@ -24,4 +24,10 @@ public class PlayerInteractEntry extends AbstractInteractEntry {
 		super(entry.getAction(), entry);
 	}
 
+	@Override
+	public String getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

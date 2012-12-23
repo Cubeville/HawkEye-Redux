@@ -60,6 +60,11 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 	}
 
 	@Override
+	public String getData() {
+		return oldState.toString() + "|" + newState.toString();
+	}
+
+	@Override
 	public void rollback() {
 		if (block.getState().equals(newState)) block.setState(oldState);
 	}

@@ -92,13 +92,15 @@ public class SimpleDataManager implements DataManager {
 
 	@Override
 	public int getPlayerId(Player player) {
-		return playerIds.get(player.getName());
+		return playerIds.containsKey(player.getName()) ? playerIds.get(player.getName()) : -1;
 	}
 
 	@Override
 	public int registerPlayer(Player player) {
+		int id = getPlayerId(player);
+		if (id != -1) return id;
+
 		String name = player.getName();
-		int id = -1;
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -108,7 +110,7 @@ public class SimpleDataManager implements DataManager {
 		try {
 			conn = HawkEye.getDatabase().getConnection();
 			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, player.getName());
+			ps.setString(1, name);
 			if (ps.executeUpdate() == 0) {
 				throw new SQLException("Database player insert failed");
 			}
@@ -143,13 +145,15 @@ public class SimpleDataManager implements DataManager {
 
 	@Override
 	public int getWorldId(World world) {
-		return worldIds.get(world.getName());
+		return worldIds.containsKey(world.getName()) ? worldIds.get(world.getName()) : -1;
 	}
 
 	@Override
 	public int registerWorld(World world) {
+		int id = getWorldId(world);
+		if (id != -1) return id;
+
 		String name = world.getName();
-		int id = -1;
 
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -159,7 +163,7 @@ public class SimpleDataManager implements DataManager {
 		try {
 			conn = HawkEye.getDatabase().getConnection();
 			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, world.getName());
+			ps.setString(1, name);
 			if (ps.executeUpdate() == 0) {
 				throw new SQLException("Database world insert failed");
 			}
