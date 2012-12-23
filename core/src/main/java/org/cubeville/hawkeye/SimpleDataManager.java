@@ -18,6 +18,14 @@
 
 package org.cubeville.hawkeye;
 
+import static org.cubeville.util.DatabaseUtil.close;
+import static org.cubeville.util.DatabaseUtil.table;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -90,10 +98,41 @@ public class SimpleDataManager implements DataManager {
 	@Override
 	public int registerPlayer(Player player) {
 		String name = player.getName();
-		int id = 0;
-		// TODO Insert into database and get id
-		players.put(id, name);
-		playerIds.put(name, id);
+		int id = -1;
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "INSERT INTO " + table("players") + " (name) VALUES (?)";
+
+		try {
+			conn = HawkEye.getDatabase().getConnection();
+			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, player.getName());
+			if (ps.executeUpdate() == 0) {
+				throw new SQLException("Database player insert failed");
+			}
+
+			rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				id = rs.getInt("id");
+			} else {
+				throw new SQLException("Could not obtain user id");
+			}
+		} catch (SQLException e) {
+			// TODO Log error
+			e.printStackTrace();
+		} finally {
+			close(conn);
+			close(ps);
+			close(rs);
+		}
+
+		if (id != -1) {
+			players.put(id, name);
+			playerIds.put(name, id);
+		}
+
 		return id;
 	}
 
@@ -110,10 +149,41 @@ public class SimpleDataManager implements DataManager {
 	@Override
 	public int registerWorld(World world) {
 		String name = world.getName();
-		int id = 0;
-		// TODO Insert into database and get id
-		worlds.put(id, name);
-		worldIds.put(name, id);
+		int id = -1;
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "INSERT INTO " + table("worlds") + " (name) VALUES (?)";
+
+		try {
+			conn = HawkEye.getDatabase().getConnection();
+			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, world.getName());
+			if (ps.executeUpdate() == 0) {
+				throw new SQLException("Database world insert failed");
+			}
+
+			rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				id = rs.getInt("id");
+			} else {
+				throw new SQLException("Could not obtain world id");
+			}
+		} catch (SQLException e) {
+			// TODO Log error
+			e.printStackTrace();
+		} finally {
+			close(conn);
+			close(ps);
+			close(rs);
+		}
+
+		if (id != -1) {
+			worlds.put(id, name);
+			worldIds.put(name, id);
+		}
+
 		return id;
 	}
 

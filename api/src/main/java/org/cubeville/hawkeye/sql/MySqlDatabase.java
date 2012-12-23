@@ -37,10 +37,16 @@ public class MySqlDatabase implements Database {
 	private ConnectionManager manager;
 
 	/**
-	 * {@inheritDoc}
+	 * Table prefix
 	 */
+	private final String prefix;
+
+	public MySqlDatabase(String prefix) {
+		this.prefix = prefix;
+	}
+
 	@Override
-	public boolean connect(String hostname, String port, String database, String username, String password, String prefix) throws DatabaseException {
+	public boolean connect(String hostname, String port, String database, String username, String password) throws DatabaseException {
 		// Load the driver
 		try {
 			Class.forName(DRIVER_CLASS);
@@ -61,17 +67,16 @@ public class MySqlDatabase implements Database {
 		return true;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Connection getConnection() throws SQLException {
 		return manager.getConnection();
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
+	public String getPrefix() {
+		return prefix;
+	}
+
 	@Override
 	public void close() {
 		manager.closeConnections();

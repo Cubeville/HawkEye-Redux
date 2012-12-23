@@ -29,6 +29,16 @@ import org.cubeville.hawkeye.HawkEye;
 public class DatabaseUtil {
 
 	/**
+	 * Gets the name of specified table with the prefix attached
+	 *
+	 * @param table Table to get
+	 * @return Table name with prefix
+	 */
+	public static String table(String table) {
+		return "`" + HawkEye.getDatabase().getPrefix() + table + "`";
+	}
+
+	/**
 	 * Attempts to create a database table
 	 *
 	 * @param table Name of the table to create

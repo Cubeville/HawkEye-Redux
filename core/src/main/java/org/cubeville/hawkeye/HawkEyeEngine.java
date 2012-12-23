@@ -68,7 +68,7 @@ public class HawkEyeEngine implements PluginEngine {
 		this.server = server;
 		this.config = config;
 
-		database = new MySqlDatabase();
+		database = new MySqlDatabase(config.getString("database.prefix"));
 		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
 		dataManager = new SimpleDataManager();
 		searchManager = new SimpleSearchManager();
@@ -80,8 +80,7 @@ public class HawkEyeEngine implements PluginEngine {
 				config.getString("database.port"),
 				config.getString("database.database"),
 				config.getString("database.username"),
-				config.getString("database.password"),
-				config.getString("database.prefix")
+				config.getString("database.password")
 			);
 		} catch (DatabaseException ex) {
 			// TODO Handle this better

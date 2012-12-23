@@ -31,11 +31,10 @@ public interface Database {
 	 * @param database The database to use
 	 * @param username The user to connect as
 	 * @param password The password to connect with
-	 * @param prefix The table prefix
 	 * @return True if connection was established
 	 * @throws DatabaseException If any errors occurred
 	 */
-	boolean connect(String hostname, String port, String database, String username, String password, String prefix) throws DatabaseException;
+	boolean connect(String hostname, String port, String database, String username, String password) throws DatabaseException;
 
 	/**
 	 * Attempts to get a database connection
@@ -44,6 +43,13 @@ public interface Database {
 	 * @throws SQLException If any errors occurred
 	 */
 	Connection getConnection() throws SQLException;
+
+	/**
+	 * Returns the table prefix
+	 *
+	 * @return Table prefix
+	 */
+	String getPrefix();
 
 	/**
 	 * Closes the connection to the database
