@@ -130,60 +130,60 @@ public class SimpleCommandManager implements CommandManager {
 				System.arraycopy(parts, i + 1, args, 0, parts.length - (i + 1));
 				break;
 			}
+		}
 
-			// Check if alias
-			if (!commands.containsKey(base) && aliases.containsKey(base)) {
-				base = aliases.get(base);
-			}
+		// Check if alias
+		if (!commands.containsKey(base) && aliases.containsKey(base)) {
+			base = aliases.get(base);
+		}
 
-			// Command not registered
-			if (commands.containsKey(base)) return;
+		// Command not registered
+		if (commands.containsKey(base)) return;
 
-			// Get command details
-			CommandData data = new CommandData(base, args);
-			Triplet<Command, Method, Object> info = commands.get(base);
-			Command cmd = info.getLeft();
-			Method method = info.getMiddle();
+		// Get command details
+		CommandData data = new CommandData(base, args);
+		Triplet<Command, Method, Object> info = commands.get(base);
+		Command cmd = info.getLeft();
+		Method method = info.getMiddle();
 
-			// Check permission nodes
-			if (!hasPermission(method, sender)) {
-				throw new CommandPermissionException();
-			}
+		// Check permission nodes
+		if (!hasPermission(method, sender)) {
+			throw new CommandPermissionException();
+		}
 
-			// Check number of arguments
-			if (data.length() < cmd.min()) {
+		// Check number of arguments
+		if (data.length() < cmd.min()) {
+			// TODO Throw exception
+		}
+
+		if (cmd.max() != -1 && data.length() > cmd.max()) {
+			// TODO Throw exception
+		}
+
+		// Check flags
+		Set<Character> validFlags = new HashSet<Character>();
+		for (char flag : cmd.flags().toCharArray()) {
+			validFlags.add(flag);
+		}
+
+		for (char flag : data.getFlags()) {
+			if (validFlags.contains(flag)) {
 				// TODO Throw exception
 			}
+		}
 
-			if (cmd.max() != -1 && data.length() > cmd.max()) {
-				// TODO Throw exception
-			}
-
-			// Check flags
-			Set<Character> validFlags = new HashSet<Character>();
-			for (char flag : cmd.flags().toCharArray()) {
-				validFlags.add(flag);
-			}
-
-			for (char flag : data.getFlags()) {
-				if (validFlags.contains(flag)) {
-					// TODO Throw exception
-				}
-			}
-
-			// Execute command
-			try {
-				method.invoke(info.getRight(), sender, data);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				if (e.getCause() instanceof CommandException) {
-					throw (CommandException) e.getCause();
-				} else {
-					throw new CommandException(e.getCause());
-				}
+		// Execute command
+		try {
+			method.invoke(info.getRight(), sender, data);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			if (e.getCause() instanceof CommandException) {
+				throw (CommandException) e.getCause();
+			} else {
+				throw new CommandException(e.getCause());
 			}
 		}
 	}
