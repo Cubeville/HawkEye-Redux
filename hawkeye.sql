@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `hawkeye_data` (
   `x` double NOT NULL,
   `y` double NOT NULL,
   `z` double NOT NULL,
-  `data` varchar(510) DEFAULT NULL CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `data` varchar(4096) DEFAULT NULL CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   KEY `location` (`world_id`, `x`, `y`, `z`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;

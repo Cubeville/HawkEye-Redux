@@ -68,6 +68,8 @@ public interface Entry {
 	 * The entry should be able to restore all the data it needs when it
 	 * receives this same string back through {@link DatabaseEntry#getData()}.
 	 *
+	 * The data column in the default database can hold 4096 bytes of data.
+	 *
 	 * @return String to put in the database `data` column
 	 */
 	String getData();
