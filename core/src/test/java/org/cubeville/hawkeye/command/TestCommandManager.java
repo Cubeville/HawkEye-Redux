@@ -18,22 +18,10 @@
 
 package org.cubeville.hawkeye.command;
 
-public interface CommandManager {
+public class TestCommandManager extends SimpleCommandManager {
 
-	/**
-	 * Registers all annotated command methods in the specified object
-	 *
-	 * @param obj Object to register commands of
-	 */
-	void registerCommands(Object obj) throws CommandException;
-
-	/**
-	 * Attempts to execute a command
-	 *
-	 * @param command Command to execute
-	 * @param sender Who sent the command
-	 * @throws CommandException If the command could not be handled properly
-	 */
-	void execute(String command, CommandSender sender) throws CommandException;
+	public String getBaseCommand(String command) {
+		return super.parseCommand(command).getLeft();
+	}
 
 }

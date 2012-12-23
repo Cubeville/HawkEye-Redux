@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.cubeville.util.Pair;
 import org.cubeville.util.Triplet;
 
 public class SimpleCommandManager implements CommandManager {
@@ -51,7 +52,7 @@ public class SimpleCommandManager implements CommandManager {
 	}
 
 	@Override
-	public void registerCommands(Object obj) {
+	public void registerCommands(Object obj) throws CommandException {
 		// Get the object's methods via reflection
 		Class<?> clazz = obj.getClass();
 
@@ -60,11 +61,11 @@ public class SimpleCommandManager implements CommandManager {
 			if (!method.isAnnotationPresent(Command.class)) continue;
 
 			// Make sure method can handle commands
-			if (!validateMethod(method)) continue;
+			if (!validateMethod(method)) throw new CommandException();
 
 			// Make sure command info is valid
 			Command info = method.getAnnotation(Command.class);
-			if (!validateCommand(info)) continue;
+			if (!validateCommand(info)) throw new CommandException();
 
 			// Make sure method is accessible
 			method.setAccessible(true);
@@ -112,6 +113,68 @@ public class SimpleCommandManager implements CommandManager {
 		// Remove leading slash
 		if (command.startsWith("/")) command = command.substring(1);
 
+		// Parse command
+		Pair<String, String[]> cmdData = parseCommand(command);
+		String base = cmdData.getLeft();
+		String[] args = cmdData.getRight();
+
+		// Command not registered
+		if (!commands.containsKey(base)) return;
+
+		// Get command details
+		CommandData data = new CommandData(base, args);
+		Triplet<Command, Method, Object> info = commands.get(base);
+		Command cmd = info.getLeft();
+		Method method = info.getMiddle();
+
+		// Check permission nodes
+		if (!hasPermission(method, sender)) {
+			throw new CommandPermissionException();
+		}
+
+		// Make sure sender is valid
+		if (cmd.player() && !sender.isPlayer()) {
+			throw new CommandPlayerException();
+		}
+
+		// Check number of arguments
+		if (data.length() < cmd.min()) {
+			throw new CommandUsageException();
+		}
+
+		if (cmd.max() != -1 && data.length() > cmd.max()) {
+			throw new CommandUsageException();
+		}
+
+		// Check flags
+		Set<Character> validFlags = new HashSet<Character>();
+		for (char flag : cmd.flags().toCharArray()) {
+			validFlags.add(flag);
+		}
+
+		for (char flag : data.getFlags()) {
+			if (!validFlags.contains(flag)) {
+				throw new CommandUsageException();
+			}
+		}
+
+		// Execute command
+		try {
+			method.invoke(info.getRight(), sender, data);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			if (e.getCause() instanceof CommandException) {
+				throw (CommandException) e.getCause();
+			} else {
+				throw new CommandException(e.getCause());
+			}
+		}
+	}
+
+	protected Pair<String, String[]> parseCommand(String command) {
 		String base = "";
 		String[] args = new String[0];
 
@@ -137,60 +200,7 @@ public class SimpleCommandManager implements CommandManager {
 			base = aliases.get(base);
 		}
 
-		// Command not registered
-		if (commands.containsKey(base)) return;
-
-		// Get command details
-		CommandData data = new CommandData(base, args);
-		Triplet<Command, Method, Object> info = commands.get(base);
-		Command cmd = info.getLeft();
-		Method method = info.getMiddle();
-
-		// Check permission nodes
-		if (!hasPermission(method, sender)) {
-			throw new CommandPermissionException();
-		}
-
-		// Make sure sender is valid
-		if (cmd.player() && !sender.isPlayer()) {
-			throw new CommandPlayerException();
-		}
-
-		// Check number of arguments
-		if (data.length() < cmd.min()) {
-			// TODO Throw exception
-		}
-
-		if (cmd.max() != -1 && data.length() > cmd.max()) {
-			// TODO Throw exception
-		}
-
-		// Check flags
-		Set<Character> validFlags = new HashSet<Character>();
-		for (char flag : cmd.flags().toCharArray()) {
-			validFlags.add(flag);
-		}
-
-		for (char flag : data.getFlags()) {
-			if (validFlags.contains(flag)) {
-				// TODO Throw exception
-			}
-		}
-
-		// Execute command
-		try {
-			method.invoke(info.getRight(), sender, data);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			if (e.getCause() instanceof CommandException) {
-				throw (CommandException) e.getCause();
-			} else {
-				throw new CommandException(e.getCause());
-			}
-		}
+		return Pair.of(base, args);
 	}
 
 	/**

@@ -18,22 +18,15 @@
 
 package org.cubeville.hawkeye.command;
 
-public interface CommandManager {
+public class TestConsole extends ConsoleCommandSender {
 
-	/**
-	 * Registers all annotated command methods in the specified object
-	 *
-	 * @param obj Object to register commands of
-	 */
-	void registerCommands(Object obj) throws CommandException;
+	@Override
+	public void sendMessage(String... message) {
+	}
 
-	/**
-	 * Attempts to execute a command
-	 *
-	 * @param command Command to execute
-	 * @param sender Who sent the command
-	 * @throws CommandException If the command could not be handled properly
-	 */
-	void execute(String command, CommandSender sender) throws CommandException;
+	@Override
+	public boolean hasPermission(String permission) {
+		return true;
+	}
 
 }

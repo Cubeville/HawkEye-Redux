@@ -18,22 +18,11 @@
 
 package org.cubeville.hawkeye.command;
 
-public interface CommandManager {
+/**
+ * Exception thrown when someone does not use a command correctly
+ */
+public class CommandUsageException extends CommandException {
 
-	/**
-	 * Registers all annotated command methods in the specified object
-	 *
-	 * @param obj Object to register commands of
-	 */
-	void registerCommands(Object obj) throws CommandException;
-
-	/**
-	 * Attempts to execute a command
-	 *
-	 * @param command Command to execute
-	 * @param sender Who sent the command
-	 * @throws CommandException If the command could not be handled properly
-	 */
-	void execute(String command, CommandSender sender) throws CommandException;
+	private static final long serialVersionUID = 3043821094302311575L;
 
 }
