@@ -21,27 +21,12 @@ package org.cubeville.hawkeye.location;
 /**
  * Immutable location class
  */
-public class Location {
+public class Location extends Vector {
 
 	/**
 	 * World this location is in
 	 */
 	private final World world;
-
-	/**
-	 * X coordinate of this location
-	 */
-	private final double x;
-
-	/**
-	 * Y coordinate of this location
-	 */
-	private final double y;
-
-	/**
-	 * Z coordinate of this location
-	 */
-	private final double z;
 
 	/**
 	 * Constructs a location
@@ -52,31 +37,23 @@ public class Location {
 	 * @param z Z coordinate of the location
 	 */
 	public Location(World world, double x, double y, double z) {
+		super(x, y, z);
 		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
 	}
 
 	public Location(World world, int x, int y, int z) {
+		super(x, y, z);
 		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
 	}
 
 	public Location(World world, float x, float y, float z) {
+		super(x, y, z);
 		this.world = world;
-		this.x = x;
-		this.y = y;
-		this.z = z;
 	}
 
 	public Location(Location location) {
+		super(location.x, location.y, location.z);
 		world = location.world;
-		x = location.x;
-		y = location.y;
-		z = location.z;
 	}
 
 	/**
@@ -85,10 +62,8 @@ public class Location {
 	 * @param world World the location is in
 	 */
 	public Location(World world) {
+		super();
 		this.world = world;
-		x = 0;
-		y = 0;
-		z = 0;
 	}
 
 	/**
@@ -98,60 +73,6 @@ public class Location {
 	 */
 	public World getWorld() {
 		return world;
-	}
-
-	/**
-	 * Gets this location's x coordinate
-	 *
-	 * @return Location's x coordinate
-	 */
-	public double getX() {
-		return x;
-	}
-
-	/**
-	 * Gets this location's block x coordinate
-	 *
-	 * @return Location's x coordinate rounded to nearest block
-	 */
-	public int getBlockX() {
-		return (int) x;
-	}
-
-	/**
-	 * Gets this location's y coordinate
-	 *
-	 * @return Location's y coordinate
-	 */
-	public double getY() {
-		return y;
-	}
-
-	/**
-	 * Gets this location's block y coordinate
-	 *
-	 * @return Location's y coordinate rounded to nearest block
-	 */
-	public int getBlockY() {
-		return (int) y;
-	}
-
-	/**
-	 * Gets this location's z coordinate
-	 *
-	 * @return Location's z coordinate
-	 */
-	public double getZ() {
-		return z;
-	}
-
-	/**
-	 * Gets this location's block z coordinate
-	 *
-	 * @return Location's z coordinate rounded to nearest block
-	 */
-	public double getBlockZ() {
-		return (int) z;
 	}
 
 	/**
