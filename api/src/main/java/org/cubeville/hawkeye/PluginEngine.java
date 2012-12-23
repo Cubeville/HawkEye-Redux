@@ -67,6 +67,13 @@ public interface PluginEngine {
 	SessionManager getSessionManager();
 
 	/**
+	 * Gets the data manager
+	 *
+	 * @return Data manager
+	 */
+	DataManager getDataManager();
+
+	/**
 	 * Gets the search manager
 	 *
 	 * @return Search manager

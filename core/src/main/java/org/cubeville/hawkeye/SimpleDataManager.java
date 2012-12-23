@@ -18,22 +18,41 @@
 
 package org.cubeville.hawkeye;
 
-import org.cubeville.hawkeye.model.Entry;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
-public interface Action extends Named {
-
-	/**
-	 * Returns the entry class this action uses to store data
-	 *
-	 * @return Class used by this action to store database entries
-	 */
-	Class<? extends Entry> getEntryClass();
+public class SimpleDataManager implements DataManager {
 
 	/**
-	 * Gets whether or not this entry can be modified (i.e. rolled back)
-	 *
-	 * @return True if the entry is able to be modified
+	 * Action list
 	 */
-	boolean canModify();
+	private final List<Action> actions = new ArrayList<Action>();
+
+	public SimpleDataManager() {
+		// Register all actions logged by this plugin
+		registerActions(DefaultActions.values());
+	}
+
+	@Override
+	public List<Action> getActions() {
+		return actions;
+	}
+
+	@Override
+	public void registerAction(Action action) {
+		actions.add(action);
+	}
+
+	@Override
+	public void registerActions(Action[] list) {
+		registerActions(Arrays.asList(list));
+	}
+
+	@Override
+	public void registerActions(Collection<Action> list) {
+		actions.addAll(list);
+	}
 
 }

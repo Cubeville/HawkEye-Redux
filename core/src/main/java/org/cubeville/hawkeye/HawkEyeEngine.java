@@ -54,6 +54,11 @@ public class HawkEyeEngine implements PluginEngine {
 	private final SessionManager sessionManager;
 
 	/**
+	 * Data manager
+	 */
+	private final DataManager dataManager;
+
+	/**
 	 * Search manager
 	 */
 	private final SearchManager searchManager;
@@ -65,6 +70,7 @@ public class HawkEyeEngine implements PluginEngine {
 
 		database = new MySqlDatabase();
 		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
+		dataManager = new SimpleDataManager();
 		searchManager = new SimpleSearchManager();
 
 		// TODO Run this in a thread
@@ -107,6 +113,11 @@ public class HawkEyeEngine implements PluginEngine {
 	@Override
 	public SessionManager getSessionManager() {
 		return sessionManager;
+	}
+
+	@Override
+	public DataManager getDataManager() {
+		return dataManager;
 	}
 
 	@Override

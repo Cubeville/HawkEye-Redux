@@ -83,7 +83,7 @@ public class HawkEye {
 	 *
 	 * @return Database
 	 */
-	public Database getDatabase() {
+	public static Database getDatabase() {
 		return engine.getDatabase();
 	}
 
@@ -92,8 +92,17 @@ public class HawkEye {
 	 *
 	 * @return Session manager
 	 */
-	public SessionManager getSessionManager() {
+	public static SessionManager getSessionManager() {
 		return engine.getSessionManager();
+	}
+
+	/**
+	 * Gets the data manager
+	 *
+	 * @return Data manager
+	 */
+	public static DataManager getDataManager() {
+		return engine.getDataManager();
 	}
 
 	/**
@@ -101,7 +110,7 @@ public class HawkEye {
 	 *
 	 * @return Search manager
 	 */
-	public SearchManager getSearchManager() {
+	public static SearchManager getSearchManager() {
 		return engine.getSearchManager();
 	}
 
@@ -120,7 +129,7 @@ public class HawkEye {
 	 * @param name Name of player to get
 	 * @return Player
 	 */
-	public Player getPlayer(String name) {
+	public static Player getPlayer(String name) {
 		return engine.getPlayer(name);
 	}
 
@@ -130,7 +139,7 @@ public class HawkEye {
 	 * @param name Name of world to get
 	 * @return World
 	 */
-	public World getWorld(String name) {
+	public static World getWorld(String name) {
 		return engine.getWorld(name);
 	}
 

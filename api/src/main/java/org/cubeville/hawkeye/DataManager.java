@@ -18,22 +18,37 @@
 
 package org.cubeville.hawkeye;
 
-import org.cubeville.hawkeye.model.Entry;
+import java.util.Collection;
+import java.util.List;
 
-public interface Action extends Named {
-
-	/**
-	 * Returns the entry class this action uses to store data
-	 *
-	 * @return Class used by this action to store database entries
-	 */
-	Class<? extends Entry> getEntryClass();
+public interface DataManager {
 
 	/**
-	 * Gets whether or not this entry can be modified (i.e. rolled back)
+	 * Gets a list of all the existing loggable actions
 	 *
-	 * @return True if the entry is able to be modified
+	 * @return List of loggable actions
 	 */
-	boolean canModify();
+	List<Action> getActions();
+
+	/**
+	 * Registers a loggable action
+	 *
+	 * @param action Action to register
+	 */
+	void registerAction(Action action);
+
+	/**
+	 * Registers multiple loggable actions
+	 *
+	 * @param action Array of actions to register
+	 */
+	void registerActions(Action[] actions);
+
+	/**
+	 * Registers multiple loggable actions
+	 *
+	 * @param action Collection of actions to register
+	 */
+	void registerActions(Collection<Action> actions);
 
 }
