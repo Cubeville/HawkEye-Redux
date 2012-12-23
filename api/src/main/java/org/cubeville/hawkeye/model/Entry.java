@@ -27,7 +27,8 @@ import org.cubeville.hawkeye.location.Location;
  * Represents a log entry that can be stored in the database
  *
  * To be recognized as a valid entry, classes implementing this interface
- * must also implement a constructor that accepts a {@link DataabaseEntry}.
+ * must also implement a constructor that accepts a {@link DatabaseEntry}.
+ *
  * The entry should store its important data via {@link #getData()} and can
  * recover this data in its constructor via {@link DatabaseEntry#getData()}.
  */
