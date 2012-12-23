@@ -151,6 +151,11 @@ public class SimpleCommandManager implements CommandManager {
 			throw new CommandPermissionException();
 		}
 
+		// Make sure sender is valid
+		if (cmd.player() && !sender.isPlayer()) {
+			throw new CommandPlayerException();
+		}
+
 		// Check number of arguments
 		if (data.length() < cmd.min()) {
 			// TODO Throw exception

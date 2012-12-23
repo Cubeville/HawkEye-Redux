@@ -19,10 +19,10 @@
 package org.cubeville.hawkeye.command;
 
 /**
- * Exception thrown when someone does not have permission to execute a command
+ * Exception thrown when a non-player tries to execute a player-only command
  */
-public class CommandPermissionException extends CommandException {
+public class CommandPlayerException extends CommandException {
 
-	private static final long serialVersionUID = 3790727540608716988L;
+	private static final long serialVersionUID = 3950889997084383359L;
 
 }
