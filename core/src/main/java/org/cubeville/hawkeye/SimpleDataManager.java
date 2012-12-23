@@ -18,17 +18,16 @@
 
 package org.cubeville.hawkeye;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SimpleDataManager implements DataManager {
 
 	/**
-	 * Action list
+	 * Map containing action database names and their corresponding actions
 	 */
-	private final List<Action> actions = new ArrayList<Action>();
+	private final Map<String, Action> actions = new HashMap<String, Action>();
 
 	public SimpleDataManager() {
 		// Register all actions logged by this plugin
@@ -36,23 +35,23 @@ public class SimpleDataManager implements DataManager {
 	}
 
 	@Override
-	public List<Action> getActions() {
-		return actions;
+	public Collection<Action> getActions() {
+		return actions.values();
 	}
 
 	@Override
-	public void registerAction(Action action) {
-		actions.add(action);
+	public boolean registerAction(Action action) {
+		String name = action.getName().toLowerCase();
+		if (actions.containsKey(name)) return false;
+
+		actions.put(name, action);
+		return true;
 	}
 
-	@Override
-	public void registerActions(Action[] list) {
-		registerActions(Arrays.asList(list));
-	}
-
-	@Override
-	public void registerActions(Collection<Action> list) {
-		actions.addAll(list);
+	private void registerActions(Action[] actions) {
+		for (Action action : actions) {
+			registerAction(action);
+		}
 	}
 
 }

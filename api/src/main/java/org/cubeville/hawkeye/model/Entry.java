@@ -56,4 +56,11 @@ public interface Entry {
 	 */
 	Timestamp getTime();
 
+	/**
+	 * Returns a formatted string to be displayed in search results
+	 *
+	 * @return Formatted string with important entry data
+	 */
+	String getOutput();
+
 }

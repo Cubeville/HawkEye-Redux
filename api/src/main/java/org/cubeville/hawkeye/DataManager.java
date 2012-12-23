@@ -19,36 +19,22 @@
 package org.cubeville.hawkeye;
 
 import java.util.Collection;
-import java.util.List;
 
 public interface DataManager {
 
 	/**
-	 * Gets a list of all the existing loggable actions
+	 * Gets a collection containing all the existing loggable actions
 	 *
-	 * @return List of loggable actions
+	 * @return Collection of loggable actions
 	 */
-	List<Action> getActions();
+	Collection<Action> getActions();
 
 	/**
 	 * Registers a loggable action
 	 *
 	 * @param action Action to register
+	 * @return True if action was registered, false if not
 	 */
-	void registerAction(Action action);
-
-	/**
-	 * Registers multiple loggable actions
-	 *
-	 * @param action Array of actions to register
-	 */
-	void registerActions(Action[] actions);
-
-	/**
-	 * Registers multiple loggable actions
-	 *
-	 * @param action Collection of actions to register
-	 */
-	void registerActions(Collection<Action> actions);
+	boolean registerAction(Action action);
 
 }
