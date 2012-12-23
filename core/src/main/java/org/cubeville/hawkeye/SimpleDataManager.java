@@ -38,9 +38,19 @@ public class SimpleDataManager implements DataManager {
 	private final Map<Integer, String> players = new HashMap<Integer, String>();
 
 	/**
+	 * Reverse player map for getting player id from name
+	 */
+	private final Map<String, Integer> playerIds = new HashMap<String, Integer>();
+
+	/**
 	 * Map containg world ids and their names
 	 */
 	private final Map<Integer, String> worlds = new HashMap<Integer, String>();
+
+	/**
+	 * Reverse player map for getting world id from name
+	 */
+	private final Map<String, Integer> worldIds = new HashMap<String, Integer>();
 
 	public SimpleDataManager() {
 		for (Action action : DefaultActions.values()) {
@@ -73,11 +83,18 @@ public class SimpleDataManager implements DataManager {
 	}
 
 	@Override
-	public void registerPlayer(Player player) {
+	public int getPlayerId(Player player) {
+		return playerIds.get(player.getName());
+	}
+
+	@Override
+	public int registerPlayer(Player player) {
 		String name = player.getName();
 		int id = 0;
 		// TODO Insert into database and get id
 		players.put(id, name);
+		playerIds.put(name, id);
+		return id;
 	}
 
 	@Override
@@ -86,11 +103,18 @@ public class SimpleDataManager implements DataManager {
 	}
 
 	@Override
-	public void registerWorld(World world) {
+	public int getWorldId(World world) {
+		return worldIds.get(world.getName());
+	}
+
+	@Override
+	public int registerWorld(World world) {
 		String name = world.getName();
 		int id = 0;
 		// TODO Insert into database and get id
 		worlds.put(id, name);
+		worldIds.put(name, id);
+		return id;
 	}
 
 }

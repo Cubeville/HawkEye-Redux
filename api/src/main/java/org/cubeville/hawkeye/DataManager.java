@@ -57,11 +57,20 @@ public interface DataManager {
 	String getPlayer(int id);
 
 	/**
+	 * Gets a player's id number
+	 *
+	 * @param player Player whose id to get
+	 * @return Player's id number
+	 */
+	int getPlayerId(Player player);
+
+	/**
 	 * Registers a player in the database
 	 *
 	 * @param player Player to register
+	 * @return The player's new id
 	 */
-	void registerPlayer(Player player);
+	int registerPlayer(Player player);
 
 	/**
 	 * Gets a world by its id number
@@ -72,10 +81,19 @@ public interface DataManager {
 	World getWorld(int id);
 
 	/**
+	 * Gets a world's id number
+	 *
+	 * @param world World whose id to get
+	 * @return World's id number
+	 */
+	int getWorldId(World world);
+
+	/**
 	 * Registers a world in the database
 	 *
 	 * @param world World to register
+	 * @return The world's new id
 	 */
-	void registerWorld(World world);
+	int registerWorld(World world);
 
 }
