@@ -20,8 +20,10 @@ package org.cubeville.hawkeye.command;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -45,16 +47,24 @@ public class SimpleCommandManager implements CommandManager {
 	 */
 	private final Map<String, Set<String>> nested;
 
+	/**
+	 * List of root commands to be registered with server implementations
+	 */
+	private final List<String> roots;
+
 	public SimpleCommandManager() {
 		commands = new HashMap<String, Triplet<Command, Method, Object>>();
 		aliases = new HashMap<String, String>();
 		nested = new HashMap<String, Set<String>>();
+		roots = new ArrayList<String>();
 	}
 
 	@Override
 	public void registerCommands(Object obj) throws CommandException {
 		// Get the object's methods via reflection
 		Class<?> clazz = obj.getClass();
+
+		roots.clear();
 
 		for (Method method : clazz.getMethods()) {
 			// Check if it's a command handler
@@ -82,6 +92,8 @@ public class SimpleCommandManager implements CommandManager {
 				aliases.put(alias, info.command());
 			}
 		}
+
+		// TODO Register root commands with server implementation
 	}
 
 	/**
@@ -95,6 +107,8 @@ public class SimpleCommandManager implements CommandManager {
 		String[] parts = command.split(" ");
 		for (int i = 0; i < parts.length; i++) {
 			if (i > 0) base += " ";
+			else if (!roots.contains(parts[i])) roots.add(parts[i]);
+
 			base += parts[i];
 
 			// Reached last level
