@@ -23,6 +23,11 @@
       <artifactId>snakeyaml</artifactId>
       <version>${snakeyaml-version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.sk89q</groupId>
+      <artifactId>worldedit</artifactId>
+      <version>${worldedit-version}</version>
+    </dependency>
   </dependencies>
 
   <build>
