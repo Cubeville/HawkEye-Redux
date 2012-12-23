@@ -16,44 +16,20 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
+package org.cubeville.hawkeye.entity;
 
-import java.sql.Timestamp;
+import static org.junit.Assert.assertEquals;
 
-import org.cubeville.hawkeye.Action;
-import org.cubeville.hawkeye.location.Location;
+import org.junit.Test;
 
-/**
- * Represents a log entry that can be stored in the database
- */
-public interface Entry {
+public class EntityTest {
 
-	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
-	 */
-	Action getAction();
-
-	/**
-	 * Gets the player who performed this action
-	 *
-	 * @return Player's name
-	 */
-	String getPlayer();
-
-	/**
-	 * Gets the location this action was performed at
-	 *
-	 * @return Location action occurred at
-	 */
-	Location getLocation();
-
-	/**
-	 * Gets the time this action was performed at
-	 *
-	 * @return Time action occurred at
-	 */
-	Timestamp getTime();
+	@Test
+	public void getEntityById() {
+		for (Entity entity : Entity.values()) {
+			if (entity.getId() == -1) continue;
+			assertEquals(Entity.getById(entity.getId()), entity);
+		}
+	}
 
 }

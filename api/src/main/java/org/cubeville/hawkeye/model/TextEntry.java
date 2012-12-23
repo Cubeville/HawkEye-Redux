@@ -18,42 +18,13 @@
 
 package org.cubeville.hawkeye.model;
 
-import java.sql.Timestamp;
-
-import org.cubeville.hawkeye.Action;
-import org.cubeville.hawkeye.location.Location;
-
-/**
- * Represents a log entry that can be stored in the database
- */
-public interface Entry {
+public interface TextEntry extends Entry {
 
 	/**
-	 * Gets the type of action stored in this entry
+	 * Gets the text stored in this entry
 	 *
-	 * @return Entry action
+	 * @return Entry text
 	 */
-	Action getAction();
-
-	/**
-	 * Gets the player who performed this action
-	 *
-	 * @return Player's name
-	 */
-	String getPlayer();
-
-	/**
-	 * Gets the location this action was performed at
-	 *
-	 * @return Location action occurred at
-	 */
-	Location getLocation();
-
-	/**
-	 * Gets the time this action was performed at
-	 *
-	 * @return Time action occurred at
-	 */
-	Timestamp getTime();
+	String getText();
 
 }

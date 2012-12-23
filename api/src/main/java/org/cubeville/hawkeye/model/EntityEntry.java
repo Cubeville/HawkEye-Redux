@@ -18,42 +18,10 @@
 
 package org.cubeville.hawkeye.model;
 
-import java.sql.Timestamp;
+import org.cubeville.hawkeye.entity.Entity;
 
-import org.cubeville.hawkeye.Action;
-import org.cubeville.hawkeye.location.Location;
+public interface EntityEntry extends Entry {
 
-/**
- * Represents a log entry that can be stored in the database
- */
-public interface Entry {
-
-	/**
-	 * Gets the type of action stored in this entry
-	 *
-	 * @return Entry action
-	 */
-	Action getAction();
-
-	/**
-	 * Gets the player who performed this action
-	 *
-	 * @return Player's name
-	 */
-	String getPlayer();
-
-	/**
-	 * Gets the location this action was performed at
-	 *
-	 * @return Location action occurred at
-	 */
-	Location getLocation();
-
-	/**
-	 * Gets the time this action was performed at
-	 *
-	 * @return Time action occurred at
-	 */
-	Timestamp getTime();
+	Entity getEntity();
 
 }
