@@ -23,6 +23,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.cubeville.hawkeye.HawkEye;
 
@@ -112,14 +113,14 @@ public class DatabaseUtil {
 	}
 
 	/**
-	 * Wrapper method to close a prepared statement
+	 * Wrapper method to close a statement
 	 *
-	 * @param conn Prepared statement to close
+	 * @param conn Statement to close
 	 */
-	public static void close(PreparedStatement ps) {
-		if (ps != null) {
+	public static void close(Statement stmt) {
+		if (stmt != null) {
 			try {
-				ps.close();
+				stmt.close();
 			} catch (SQLException ignore) {
 			}
 		}
