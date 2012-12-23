@@ -18,11 +18,95 @@
 
 package org.cubeville.hawkeye.model;
 
+import org.cubeville.hawkeye.item.Blocks;
+
 /**
  * Represents the state of a block at a certain point in time
  */
-public interface BlockState {
+public class BlockState {
 
-	// TODO Implement this
+	/**
+	 * Block type
+	 */
+	private Blocks type;
+
+	/**
+	 * Block data value
+	 */
+	private byte data;
+
+	public BlockState(Blocks type, byte data) {
+		this.type = type;
+		this.data = data;
+	}
+
+	/**
+	 * Constructs a blockstate from a database serialized string
+	 *
+	 * @param str Database string
+	 */
+	public BlockState(String str) {
+		int id;
+		byte data;
+		String[] parts = str.split(":");
+
+		try {
+			id = Integer.parseInt(parts[0]);
+		} catch (NumberFormatException e) {
+			id = 0;
+		}
+
+		try {
+			data = parts.length > 1 ? Byte.parseByte(parts[1]) : 0;
+		} catch (NumberFormatException e) {
+			data = 0;
+		}
+
+		type = Blocks.getById(id);
+		this.data = data;
+	}
+
+	/**
+	 * Gets the type of this block state
+	 *
+	 * @return Block type
+	 */
+	public Blocks getType() {
+		return type;
+	}
+
+	/**
+	 * Sets the type of this block state
+	 *
+	 * @param type Block type
+	 */
+	public void setType(Blocks type) {
+		this.type = type;
+	}
+
+	/**
+	 * Gets the data value of this block state
+	 *
+	 * @return Data value
+	 */
+	public byte getData() {
+		return data;
+	}
+
+	/**
+	 * Sets the data value of this block state
+	 *
+	 * @param data Data value
+	 */
+	public void setData(byte data) {
+		this.data = data;
+	}
+
+	@Override
+	public String toString() {
+		String ret = String.valueOf(type.getId());
+		if (data != 0) ret += ":" + String.valueOf(data);
+		return ret;
+	}
 
 }

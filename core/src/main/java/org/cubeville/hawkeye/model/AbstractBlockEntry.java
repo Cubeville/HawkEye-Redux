@@ -25,14 +25,23 @@ import org.cubeville.hawkeye.location.Block;
 public abstract class AbstractBlockEntry extends AbstractEntry implements BlockEntry, Modifiable {
 
 	private final Block block;
-	private BlockState oldState;
-	private BlockState newState;
+	private final BlockState oldState;
+	private final BlockState newState;
 
 	public AbstractBlockEntry(Action action, DatabaseEntry entry) {
 		super(action, entry);
 
 		block = getLocation().toBlock();
-		// TODO Parse entry data to get block states
+
+		String before;
+		String after;
+
+		String[] parts = entry.getData().split("\\|");
+		before = parts[0];
+		after = parts.length > 1 ? parts[1] : "0";
+
+		oldState = new BlockState(before);
+		newState = new BlockState(after);
 	}
 
 	@Override
