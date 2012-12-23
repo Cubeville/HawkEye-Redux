@@ -20,6 +20,9 @@ package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.location.Block;
 
+/**
+ * Represents an action performed on a block
+ */
 public interface BlockEntry extends Entry, Modifiable {
 
 	/**

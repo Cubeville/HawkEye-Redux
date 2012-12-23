@@ -20,8 +20,16 @@ package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.entity.Entity;
 
+/**
+ * Represents an action that was performed on an entity
+ */
 public interface EntityEntry extends Entry {
 
+	/**
+	 * Gets the type of entity this action was performed on
+	 *
+	 * @return Entity type this action was performed on
+	 */
 	Entity getEntity();
 
 }

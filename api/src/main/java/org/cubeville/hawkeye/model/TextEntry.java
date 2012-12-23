@@ -18,6 +18,9 @@
 
 package org.cubeville.hawkeye.model;
 
+/**
+ * Represents a basic text entry (i.e. chat/commands)
+ */
 public interface TextEntry extends Entry {
 
 	/**

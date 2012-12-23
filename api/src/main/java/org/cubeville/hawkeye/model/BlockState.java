@@ -18,6 +18,11 @@
 
 package org.cubeville.hawkeye.model;
 
+/**
+ * Represents the state of a block at a certain point in time
+ */
 public interface BlockState {
+
+	// TODO Implement this
 
 }
