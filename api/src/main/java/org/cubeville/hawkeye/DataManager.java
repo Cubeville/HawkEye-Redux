@@ -20,6 +20,9 @@ package org.cubeville.hawkeye;
 
 import java.util.Collection;
 
+import org.cubeville.hawkeye.entity.Player;
+import org.cubeville.hawkeye.location.World;
+
 public interface DataManager {
 
 	/**
@@ -30,11 +33,49 @@ public interface DataManager {
 	Collection<Action> getActions();
 
 	/**
+	 * Gets an action by its database name
+	 *
+	 * @param name Action's database name
+	 * @return Corresponding action
+	 */
+	Action getAction(String name);
+
+	/**
 	 * Registers a loggable action
 	 *
 	 * @param action Action to register
 	 * @return True if action was registered, false if not
 	 */
 	boolean registerAction(Action action);
+
+	/**
+	 * Gets a player by their id number
+	 *
+	 * @param id Player id number
+	 * @return Player's name
+	 */
+	String getPlayer(int id);
+
+	/**
+	 * Registers a player in the database
+	 *
+	 * @param player Player to register
+	 */
+	void registerPlayer(Player player);
+
+	/**
+	 * Gets a world by its id number
+	 *
+	 * @param id World id number
+	 * @return World
+	 */
+	World getWorld(int id);
+
+	/**
+	 * Registers a world in the database
+	 *
+	 * @param world World to register
+	 */
+	void registerWorld(World world);
 
 }

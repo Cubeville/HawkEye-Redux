@@ -22,6 +22,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cubeville.hawkeye.entity.Player;
+import org.cubeville.hawkeye.location.World;
+
 public class SimpleDataManager implements DataManager {
 
 	/**
@@ -29,14 +32,30 @@ public class SimpleDataManager implements DataManager {
 	 */
 	private final Map<String, Action> actions = new HashMap<String, Action>();
 
+	/**
+	 * Map containing player ids and their names
+	 */
+	private final Map<Integer, String> players = new HashMap<Integer, String>();
+
+	/**
+	 * Map containg world ids and their names
+	 */
+	private final Map<Integer, String> worlds = new HashMap<Integer, String>();
+
 	public SimpleDataManager() {
-		// Register all actions logged by this plugin
-		registerActions(DefaultActions.values());
+		for (Action action : DefaultActions.values()) {
+			registerAction(action);
+		}
 	}
 
 	@Override
 	public Collection<Action> getActions() {
 		return actions.values();
+	}
+
+	@Override
+	public Action getAction(String name) {
+		return actions.get(name);
 	}
 
 	@Override
@@ -48,10 +67,30 @@ public class SimpleDataManager implements DataManager {
 		return true;
 	}
 
-	private void registerActions(Action[] actions) {
-		for (Action action : actions) {
-			registerAction(action);
-		}
+	@Override
+	public String getPlayer(int id) {
+		return players.get(id);
+	}
+
+	@Override
+	public void registerPlayer(Player player) {
+		String name = player.getName();
+		int id = 0;
+		// TODO Insert into database and get id
+		players.put(id, name);
+	}
+
+	@Override
+	public World getWorld(int id) {
+		return HawkEye.getWorld(worlds.get(id));
+	}
+
+	@Override
+	public void registerWorld(World world) {
+		String name = world.getName();
+		int id = 0;
+		// TODO Insert into database and get id
+		worlds.put(id, name);
 	}
 
 }

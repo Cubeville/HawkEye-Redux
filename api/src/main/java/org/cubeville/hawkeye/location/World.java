@@ -18,14 +18,9 @@
 
 package org.cubeville.hawkeye.location;
 
-public interface World {
+import org.cubeville.hawkeye.Named;
 
-	/**
-	 * Gets the name of this world
-	 *
-	 * @return Name of this world
-	 */
-	String getName();
+public interface World extends Named {
 
 	/**
 	 * Gets the location at the specified coordinates in this world

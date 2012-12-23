@@ -154,6 +154,15 @@ public class Location {
 		return (int) z;
 	}
 
+	/**
+	 * Gets the block at this location
+	 *
+	 * @return Block at this location
+	 */
+	public Block toBlock() {
+		return getWorld().getBlockAt(x, y, z);
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = 1;

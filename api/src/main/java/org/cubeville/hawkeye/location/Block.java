@@ -18,6 +18,9 @@
 
 package org.cubeville.hawkeye.location;
 
+import org.cubeville.hawkeye.entity.Player;
+import org.cubeville.hawkeye.model.BlockState;
+
 public abstract class Block {
 
 	/**
@@ -47,6 +50,28 @@ public abstract class Block {
 	 * @param data New metadata value
 	 */
 	public abstract void setData(byte data);
+
+	/**
+	 * Gets this block's current state
+	 *
+	 * @return Block's current state
+	 */
+	public abstract BlockState getState();
+
+	/**
+	 * Sets this block's current state
+	 *
+	 * @param state New block state
+	 */
+	public abstract void setState(BlockState state);
+
+	/**
+	 * Sets this block's current state for a certain player
+	 *
+	 * @param player Player to set state for
+	 * @param state New block state
+	 */
+	public abstract void setLocalState(Player player, BlockState state);
 
 	/**
 	 * Gets this block's name
