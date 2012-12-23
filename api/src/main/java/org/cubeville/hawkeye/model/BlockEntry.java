@@ -23,7 +23,7 @@ import org.cubeville.hawkeye.location.Block;
 /**
  * Represents an action performed on a block
  */
-public interface BlockEntry extends Entry, Modifiable {
+public interface BlockEntry extends Entry {
 
 	/**
 	 * Gets the block this action was performed on

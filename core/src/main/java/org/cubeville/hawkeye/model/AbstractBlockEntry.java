@@ -22,7 +22,7 @@ import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Block;
 
-public abstract class AbstractBlockEntry extends AbstractEntry implements BlockEntry {
+public abstract class AbstractBlockEntry extends AbstractEntry implements BlockEntry, Modifiable {
 
 	private final Block block;
 	private BlockState oldState;
