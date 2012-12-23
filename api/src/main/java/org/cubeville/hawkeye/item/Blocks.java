@@ -25,7 +25,7 @@ import org.cubeville.hawkeye.item.data.ItemData;
 import org.cubeville.hawkeye.item.data.MobHeadItemData;
 import org.cubeville.hawkeye.item.data.SignItemData;
 
-public enum Block {
+public enum Blocks {
 
 	AIR(0),
 	STONE(1),
@@ -187,13 +187,13 @@ public enum Block {
 	/**
 	 * Mapping of ids to blocks for quick access
 	 */
-	private static final Map<Integer, Block> idMap = new HashMap<Integer, Block>(values().length);
+	private static final Map<Integer, Blocks> idMap = new HashMap<Integer, Blocks>(values().length);
 
-	private Block(int id) {
+	private Blocks(int id) {
 		this(id, null);
 	}
 
-	private Block(int id, Class<? extends ItemData> dataClass) {
+	private Blocks(int id, Class<? extends ItemData> dataClass) {
 		this.id = id;
 		this.dataClass = dataClass;
 	}
@@ -222,12 +222,12 @@ public enum Block {
 	 * @param id Id of block to get
 	 * @return Block with the specified id or null if it doesn't exist
 	 */
-	public static Block getById(int id) {
+	public static Blocks getById(int id) {
 		return idMap.containsKey(id) ? idMap.get(id) : null;
 	}
 
 	static {
-		for (Block block : values()) {
+		for (Blocks block : values()) {
 			idMap.put(block.id, block);
 		}
 	}

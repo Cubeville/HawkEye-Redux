@@ -66,10 +66,10 @@ public enum ItemType {
 	 * @return True if specified id is a vanilla minecraft item, false if not
 	 */
 	public static boolean exists(int id) {
-		Block block = Block.getById(id);
+		Blocks block = Blocks.getById(id);
 		if (block != null) return true;
 
-		Item item = Item.getById(id);
+		Items item = Items.getById(id);
 		return item != null;
 	}
 

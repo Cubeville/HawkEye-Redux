@@ -12,26 +12,26 @@ public class BlockItemTest {
 
 	@Test
 	public void getBlockById() {
-		for (Block block : Block.values()) {
-			assertEquals(Block.getById(block.getId()), block);
+		for (Blocks block : Blocks.values()) {
+			assertEquals(Blocks.getById(block.getId()), block);
 		}
 	}
 
 	@Test
 	public void getItemById() {
-		for (Item item : Item.values()) {
-			assertEquals(Item.getById(item.getId()), item);
+		for (Items item : Items.values()) {
+			assertEquals(Items.getById(item.getId()), item);
 		}
 	}
 
 	@Test
 	public void testItemTypes() {
-		for (Block block : Block.values()) {
+		for (Blocks block : Blocks.values()) {
 			assertTrue(ItemType.isBlock(block.getId()));
 			assertThat(ItemType.getType(block.getId()), is(ItemType.BLOCK));
 		}
 
-		for (Item item : Item.values()) {
+		for (Items item : Items.values()) {
 			assertTrue(ItemType.isItem(item.getId()));
 			assertThat(ItemType.getType(item.getId()), is(ItemType.ITEM));
 		}
@@ -39,11 +39,11 @@ public class BlockItemTest {
 
 	@Test
 	public void testItemExistence() {
-		for (Block block : Block.values()) {
+		for (Blocks block : Blocks.values()) {
 			assertTrue(ItemType.exists(block.getId()));
 		}
 
-		for (Item item : Item.values()) {
+		for (Items item : Items.values()) {
 			assertTrue(ItemType.exists(item.getId()));
 		}
 

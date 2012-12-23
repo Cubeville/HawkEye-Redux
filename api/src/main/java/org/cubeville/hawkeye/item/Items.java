@@ -30,7 +30,7 @@ import org.cubeville.hawkeye.item.data.ItemData;
 import org.cubeville.hawkeye.item.data.MapItemData;
 import org.cubeville.hawkeye.item.data.MobHeadItemData;
 
-public enum Item {
+public enum Items {
 
 	IRON_SHOVEL(256, DurabilityItemData.class),
 	IRON_PICKAXE(257, DurabilityItemData.class),
@@ -206,13 +206,13 @@ public enum Item {
 	/**
 	 * Mapping of ids to item for quick access
 	 */
-	private static final Map<Integer, Item> idMap = new HashMap<Integer, Item>(values().length);
+	private static final Map<Integer, Items> idMap = new HashMap<Integer, Items>(values().length);
 
-	private Item(int id) {
+	private Items(int id) {
 		this(id, null);
 	}
 
-	private Item(int id, Class<? extends ItemData> dataClass) {
+	private Items(int id, Class<? extends ItemData> dataClass) {
 		this.id = id;
 		this.dataClass = dataClass;
 	}
@@ -241,12 +241,12 @@ public enum Item {
 	 * @param id Id of item to get
 	 * @return Item with the specified id or null if it doesn't exist
 	 */
-	public static Item getById(int id) {
+	public static Items getById(int id) {
 		return idMap.containsKey(id) ? idMap.get(id) : null;
 	}
 
 	static {
-		for (Item item : values()) {
+		for (Items item : values()) {
 			idMap.put(item.id, item);
 		}
 	}
