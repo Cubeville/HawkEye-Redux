@@ -18,27 +18,33 @@
 
 package org.cubeville.hawkeye;
 
+import org.cubeville.hawkeye.model.BlockBreakEntry;
+import org.cubeville.hawkeye.model.BlockPlaceEntry;
+import org.cubeville.hawkeye.model.ChatEntry;
+import org.cubeville.hawkeye.model.CommandEntry;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.model.Modifiable;
+import org.cubeville.hawkeye.model.PlayerInteractEntry;
+import org.cubeville.hawkeye.model.SignEntry;
 
 public enum DefaultActions implements Action {
 
 	/**
 	 * Block placed by player
 	 */
-	BLOCK_PLACE,
+	BLOCK_PLACE(BlockPlaceEntry.class),
 	/**
 	 * Block broken by player
 	 */
-	BLOCK_BREAK,
+	BLOCK_BREAK(BlockBreakEntry.class),
 	/**
 	 * Sign placed by player
 	 */
-	SIGN_PLACE,
+	SIGN_PLACE(SignEntry.class),
 	/**
 	 * Sign broken by player
 	 */
-	SIGN_BREAK,
+	SIGN_BREAK(SignEntry.class),
 	/**
 	 * Hanging entity (painting, item frame) broken
 	 */
@@ -58,11 +64,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player chat
 	 */
-	PLAYER_CHAT,
+	PLAYER_CHAT(ChatEntry.class),
 	/**
 	 * Player executed command
 	 */
-	PLAYER_COMMAND,
+	PLAYER_COMMAND(CommandEntry.class),
 	/**
 	 * Player dropped item
 	 */
@@ -102,15 +108,15 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player interacted with door
 	 */
-	INTERACT_DOOR,
+	INTERACT_DOOR(PlayerInteractEntry.class),
 	/**
 	 * Player interacted with lever
 	 */
-	INTERACT_LEVER,
+	INTERACT_LEVER(PlayerInteractEntry.class),
 	/**
 	 * Player (or arrow) interacted with button
 	 */
-	INTERACT_BUTTON,
+	INTERACT_BUTTON(PlayerInteractEntry.class),
 	/**
 	 * Player ate cake
 	 */
