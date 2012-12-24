@@ -18,8 +18,8 @@
 
 package org.cubeville.hawkeye;
 
-import static org.cubeville.util.DatabaseUtil.close;
-import static org.cubeville.util.DatabaseUtil.table;
+import static org.cubeville.hawkeye.util.DatabaseUtil.close;
+import static org.cubeville.hawkeye.util.DatabaseUtil.table;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -119,7 +119,7 @@ public class SimpleConsumer implements Consumer {
 			nbt = new NBTOutputStream(output);
 			nbt.writeTag(entries);
 		} catch (FileNotFoundException e) {
-			// TODO Log error
+			HawkEye.getLogger().warning("Unable to create data file");
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -182,7 +182,7 @@ public class SimpleConsumer implements Consumer {
 			// Run any remaining queries
 			ps.executeBatch();
 		} catch (SQLException e) {
-			// TODO Log error
+			HawkEye.getLogger().warning("Could not insert database entry: " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			close(conn);

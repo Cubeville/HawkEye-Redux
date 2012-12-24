@@ -32,13 +32,14 @@ import org.cubeville.hawkeye.session.SimpleSessionManager;
 import org.cubeville.hawkeye.sql.Database;
 import org.cubeville.hawkeye.sql.DatabaseException;
 import org.cubeville.hawkeye.sql.MySqlDatabase;
+import org.cubeville.util.HawkEyeLogger;
 
 public class HawkEyeEngine implements PluginEngine {
 
 	/**
 	 * Logger
 	 */
-	private final Logger logger = Logger.getLogger("Minecraft.HawkEye");
+	private final Logger logger;
 
 	/**
 	 * Server compatibility layer
@@ -77,6 +78,7 @@ public class HawkEyeEngine implements PluginEngine {
 
 	public HawkEyeEngine(ServerInterface server, Configuration config) {
 		HawkEye.setEngine(this);
+		logger = new HawkEyeLogger(this);
 		this.server = server;
 		this.config = config;
 
@@ -86,7 +88,6 @@ public class HawkEyeEngine implements PluginEngine {
 		dataManager = new SimpleDataManager();
 		searchManager = new SimpleSearchManager();
 
-		// TODO Run this in a thread
 		try {
 			database.connect(
 				config.getString("database.hostname"),
@@ -96,8 +97,9 @@ public class HawkEyeEngine implements PluginEngine {
 				config.getString("database.password")
 			);
 		} catch (DatabaseException e) {
-			// Tell the consumer to log to file if the database failss
+			// Tell the consumer to log to file if the database fails
 			((SimpleConsumer) consumer).disableDatabase();
+			logger.severe("Could not connect to database");
 			e.printStackTrace();
 		}
 	}

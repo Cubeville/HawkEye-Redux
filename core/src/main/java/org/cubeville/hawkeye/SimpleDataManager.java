@@ -18,8 +18,8 @@
 
 package org.cubeville.hawkeye;
 
-import static org.cubeville.util.DatabaseUtil.close;
-import static org.cubeville.util.DatabaseUtil.table;
+import static org.cubeville.hawkeye.util.DatabaseUtil.close;
+import static org.cubeville.hawkeye.util.DatabaseUtil.table;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -127,7 +127,7 @@ public class SimpleDataManager implements DataManager {
 				throw new SQLException("Could not obtain user id");
 			}
 		} catch (SQLException e) {
-			// TODO Log error
+			HawkEye.getLogger().warning("Could not register player '" + name + "': " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			close(conn);
@@ -185,7 +185,7 @@ public class SimpleDataManager implements DataManager {
 				throw new SQLException("Could not obtain world id");
 			}
 		} catch (SQLException e) {
-			// TODO Log error
+			HawkEye.getLogger().warning("Could not register world '" + name + "': " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			close(conn);

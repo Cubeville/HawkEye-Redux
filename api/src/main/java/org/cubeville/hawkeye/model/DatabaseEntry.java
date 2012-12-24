@@ -36,7 +36,6 @@ public class DatabaseEntry {
 	private final String data;
 
 	public DatabaseEntry(int id, int player, String action, Timestamp time, int worldId, double x, double y, double z, String data) {
-		// TODO Still figuring out database schema
 		this.id = id;
 		this.player = HawkEye.getDataManager().getPlayer(player);
 		this.action = HawkEye.getDataManager().getAction(action);

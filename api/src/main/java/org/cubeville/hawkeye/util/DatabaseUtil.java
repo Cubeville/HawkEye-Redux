@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.util;
+package org.cubeville.hawkeye.util;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -59,7 +59,7 @@ public class DatabaseUtil {
 
 			if (tableExists(table)) return true;
 		} catch (SQLException e) {
-			// TODO Log error
+			HawkEye.getLogger().warning("Could not create table: " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			close(conn);
@@ -88,7 +88,7 @@ public class DatabaseUtil {
 
 			if (rs.next()) return true;
 		} catch (SQLException e) {
-			// TODO Log error
+			HawkEye.getLogger().warning("Unable to determine if table exists: " + e.getMessage());
 			e.printStackTrace();
 		} finally {
 			close(conn);

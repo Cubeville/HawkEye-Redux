@@ -18,7 +18,7 @@
 
 package org.cubeville.hawkeye.search;
 
-import static org.cubeville.util.DatabaseUtil.table;
+import static org.cubeville.hawkeye.util.DatabaseUtil.table;
 
 import java.sql.Connection;
 import java.sql.SQLException;
