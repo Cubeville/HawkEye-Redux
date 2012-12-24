@@ -18,15 +18,22 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.util.Pair;
 
 public class FilterParser implements ParameterParser {
 
 	@Override
-	public String process(String parameter, CommandSender sender) {
-		// TODO Auto-generated method stub
-		return null;
+	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) {
+		String sql = "`data` LIKE :data";
+		Map<String, Object> binds = new HashMap<String, Object>();
+		binds.put("data", "%" + parameter + "%");
+
+		return Pair.of(sql, binds);
 	}
 
 }

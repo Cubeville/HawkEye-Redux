@@ -20,8 +20,11 @@ package org.cubeville.hawkeye.search;
 
 import static org.cubeville.util.DatabaseUtil.table;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +39,7 @@ import org.cubeville.hawkeye.search.parsers.PlayerParser;
 import org.cubeville.hawkeye.search.parsers.RadiusParser;
 import org.cubeville.hawkeye.search.parsers.TimeParser;
 import org.cubeville.hawkeye.search.parsers.WorldParser;
+import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
 public class SimpleSearchManager implements SearchManager {
@@ -59,12 +63,12 @@ public class SimpleSearchManager implements SearchManager {
 	}
 
 	@Override
-	public String getQuery(String params, CommandSender sender) throws CommandException {
+	public Statement getQuery(Connection connection, String params, CommandSender sender) throws CommandException, SQLException {
 		String query = "SELECT * FROM " + table("data") + " WHERE ";
-		// TODO Rename table and stuff
 
 		String[] parts = params.split(" ");
-		List<String> conditions = new ArrayList<String>();
+		List<String> conditions = new LinkedList<String>();
+		Map<String, Object> binds = new HashMap<String, Object>();
 		// Default condition so it doesn't break if no parameters are processed
 		conditions.add("true");
 
@@ -86,12 +90,30 @@ public class SimpleSearchManager implements SearchManager {
 
 			if (parser == null) throw new CommandUsageException("Invalid parameter specified: " + key);
 
-			conditions.add(parser.process(value, sender));
+			// Parse parameter
+			Pair<String, Map<String, Object>> data = parser.process(value, sender);
+			conditions.add(data.getLeft());
+			binds.putAll(data.getRight());
 		}
 
+		// Build full query
 		query += "(" + StringUtil.buildString(conditions, ") AND (") + ")";
 
-		return query;
+		NamedParameterStatement stmt;
+
+		try {
+			stmt = new NamedParameterStatement(connection, query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		// Bind named parameters
+		for (Map.Entry<String, Object> entry : binds.entrySet()) {
+			stmt.setObject(entry.getKey(), entry.getValue());
+		}
+
+		return stmt.getStatement();
 	}
 
 	@Override

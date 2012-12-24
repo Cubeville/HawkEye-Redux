@@ -18,13 +18,16 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.Map;
+
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.util.Pair;
 
 public class LocationParser implements ParameterParser {
 
 	@Override
-	public String process(String parameter, CommandSender sender) {
+	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) {
 		// TODO Auto-generated method stub
 		return null;
 	}

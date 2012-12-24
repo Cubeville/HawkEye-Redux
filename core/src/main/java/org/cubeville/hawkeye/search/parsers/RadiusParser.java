@@ -18,6 +18,9 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
@@ -30,6 +33,7 @@ import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Vector;
 import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
 public class RadiusParser implements ParameterParser {
@@ -51,7 +55,7 @@ public class RadiusParser implements ParameterParser {
 	}
 
 	@Override
-	public String process(String parameter, CommandSender sender) throws CommandException {
+	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException {
 		if (!sender.isPlayer()) throw new CommandPlayerException();
 
 		if ((parameter.equalsIgnoreCase("we") || parameter.equalsIgnoreCase("worldedit")) && hasWorldEdit()) {
@@ -74,7 +78,7 @@ public class RadiusParser implements ParameterParser {
 		return buildQuery(min, max);
 	}
 
-	private String processWorldedit(CommandSender sender) throws CommandException {
+	private Pair<String, Map<String, Object>> processWorldedit(CommandSender sender) throws CommandException {
 		LocalSession session = worldedit.getSession(sender.getName());
 		Region region;
 
@@ -90,22 +94,33 @@ public class RadiusParser implements ParameterParser {
 		return buildQuery(min, max);
 	}
 
-	private String buildQuery(Vector min, Vector max) {
+	private Pair<String, Map<String, Object>> buildQuery(Vector min, Vector max) {
 		String x;
 		String y;
 		String z;
 
+		Map<String, Object> binds = new HashMap<String, Object>();
+
+		binds.put("xmin", min.getX());
+		binds.put("ymin", min.getY());
+		binds.put("zmin", min.getZ());
+
 		if (min.equals(max)) {
-			x = "x = " + min.getBlockX();
-			y = "y = " + min.getBlockY();
-			z = "z = " + min.getBlockZ();
+			x = "`x` = :xmin";
+			y = "`y` = :ymin";
+			z = "`z` = :zmin";
 		} else {
-			x = "(x BETWEEN " + min.getX() + " AND " + max.getX() + ")";
-			y = "(y BETWEEN " + min.getY() + " AND " + max.getY() + ")";
-			z = "(z BETWEEN " + min.getZ() + " AND " + max.getZ() + ")";
+			binds.put("xmax", max.getX());
+			binds.put("ymax", max.getY());
+			binds.put("zmax", max.getZ());
+			x = "(`x` BETWEEN :xmin AND :xmax)";
+			y = "(`y` BETWEEN :ymin AND :ymax)";
+			z = "(`z` BETWEEN :zmin AND :zmax)";
 		}
 
-		return StringUtil.buildString(" AND ", x, y, z);
+		String sql = StringUtil.buildString(" AND ", x, y, z);
+
+		return Pair.of(sql, binds);
 	}
 
 	private static Vector toVector(com.sk89q.worldedit.Vector vector) {
