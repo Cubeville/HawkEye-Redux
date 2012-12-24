@@ -18,7 +18,7 @@
 
 package org.cubeville.hawkeye.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.location.Location;
@@ -28,7 +28,7 @@ public abstract class AbstractEntry implements Entry {
 	private final Action action;
 	private final String player;
 	private final Location location;
-	private final Date time;
+	private final Timestamp time;
 
 	public AbstractEntry(Action action, DatabaseEntry entry) {
 		this.action = action;
@@ -53,7 +53,7 @@ public abstract class AbstractEntry implements Entry {
 	}
 
 	@Override
-	public Date getTime() {
+	public Timestamp getTime() {
 		return time;
 	}
 

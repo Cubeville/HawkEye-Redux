@@ -18,7 +18,7 @@
 
 package org.cubeville.hawkeye.model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.location.Location;
@@ -60,7 +60,7 @@ public interface Entry {
 	 *
 	 * @return Time action occurred at
 	 */
-	Date getTime();
+	Timestamp getTime();
 
 	/**
 	 * Gets a string that can be into the database's data column
