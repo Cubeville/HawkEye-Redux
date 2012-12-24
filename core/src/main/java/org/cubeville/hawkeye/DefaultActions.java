@@ -19,6 +19,8 @@
 package org.cubeville.hawkeye;
 
 import org.cubeville.hawkeye.model.BlockBreakEntry;
+import org.cubeville.hawkeye.model.BlockExplosionEntry;
+import org.cubeville.hawkeye.model.BlockModifyEntry;
 import org.cubeville.hawkeye.model.BlockPlaceEntry;
 import org.cubeville.hawkeye.model.ChatEntry;
 import org.cubeville.hawkeye.model.CommandEntry;
@@ -132,31 +134,31 @@ public enum DefaultActions implements Action {
 	/**
 	 * Creeper explosion
 	 */
-	EXPLOSION_CREEPER,
+	EXPLOSION_CREEPER(BlockExplosionEntry.class),
 	/**
 	 * TNT explosion
 	 */
-	EXPLOSION_TNT,
+	EXPLOSION_TNT(BlockExplosionEntry.class),
 	/**
 	 * Ghast explosion
 	 */
-	EXPLOSION_GHAST,
+	EXPLOSION_GHAST(BlockExplosionEntry.class),
 	/**
 	 * Miscellaneous explosion
 	 */
-	EXPLOSION_OTHER,
+	EXPLOSION_OTHER(BlockExplosionEntry.class),
 	/**
 	 * Block fade (i.e. snow melt, leaf decay, ice melt)
 	 */
-	BLOCK_FADE,
+	BLOCK_FADE(BlockModifyEntry.class),
 	/**
 	 * Block form (i.e. snow/ice forming)
 	 */
-	BLOCK_FORM,
+	BLOCK_FORM(BlockModifyEntry.class),
 	/**
 	 * Crop growth
 	 */
-	BLOCK_GROW,
+	BLOCK_GROW(BlockModifyEntry.class),
 	/**
 	 * Block moved by piston
 	 */
@@ -164,7 +166,7 @@ public enum DefaultActions implements Action {
 	/**
 	 * Block spread (i.e. mushroom growth/fire spread)
 	 */
-	BLOCK_SPREAD,
+	BLOCK_SPREAD(BlockModifyEntry.class),
 	/**
 	 * Block changed by entity (i.e. enderman moving blocks, zombie breaking
 	 * doors, snow golems leaving snow, wither, etc)
