@@ -18,11 +18,19 @@
       <artifactId>api</artifactId>
       <version>${project.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.jnbt</groupId>
+      <artifactId>jnbt</artifactId>
+      <version>${jnbt-version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.yaml</groupId>
       <artifactId>snakeyaml</artifactId>
       <version>${snakeyaml-version}</version>
     </dependency>
+
     <dependency>
       <groupId>com.sk89q</groupId>
       <artifactId>worldedit</artifactId>
@@ -49,8 +57,15 @@
               <artifactSet>
                 <includes>
                   <include>org.cubeville.hawkeye:api</include>
+                  <include>org.jnbt:jnbt</include>
                 </includes>
               </artifactSet>
+              <relocations>
+                <relocation>
+                  <pattern>org.jnbt</pattern>
+                  <shadedPattern>org.cubeville.lib.jnbt</shadedPattern>
+                </relocation>
+              </relocations>
             </configuration>
           </execution>
         </executions>
