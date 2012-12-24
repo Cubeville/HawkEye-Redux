@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye.search;
 
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 
 /**
@@ -25,6 +26,14 @@ import org.cubeville.hawkeye.command.CommandSender;
  */
 public interface ParameterParser {
 
-	public String process(String parameter, CommandSender sender);
+	/**
+	 * Creates an SQL where clause to search for a certain parameter
+	 *
+	 * @param parameter Parameter to search for
+	 * @param sender Who is doing the search
+	 * @return SQL where clause to use a database query
+	 * @throws CommandException If the parameter is invalid
+	 */
+	String process(String parameter, CommandSender sender) throws CommandException;
 
 }

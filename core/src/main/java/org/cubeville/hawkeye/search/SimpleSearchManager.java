@@ -18,12 +18,16 @@
 
 package org.cubeville.hawkeye.search;
 
+import static org.cubeville.util.DatabaseUtil.table;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.search.parsers.ActionParser;
 import org.cubeville.hawkeye.search.parsers.BlockParser;
 import org.cubeville.hawkeye.search.parsers.FilterParser;
@@ -55,8 +59,8 @@ public class SimpleSearchManager implements SearchManager {
 	}
 
 	@Override
-	public String getQuery(String params, CommandSender sender) {
-		String query = "SELECT * FROM `table` WHERE ";
+	public String getQuery(String params, CommandSender sender) throws CommandException {
+		String query = "SELECT * FROM " + table("data") + " WHERE ";
 		// TODO Rename table and stuff
 
 		String[] parts = params.split(" ");
@@ -80,8 +84,7 @@ public class SimpleSearchManager implements SearchManager {
 				parser = parameters.get(key);
 			}
 
-			// TODO Throw some type of invalid parameter error
-			if (parser == null) continue;
+			if (parser == null) throw new CommandUsageException("Invalid parameter specified: " + key);
 
 			conditions.add(parser.process(value, sender));
 		}

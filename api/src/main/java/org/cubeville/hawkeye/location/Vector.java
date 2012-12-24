@@ -129,6 +129,50 @@ public class Vector {
 		return (int) z;
 	}
 
+	/**
+	 * Adds to this vector
+	 *
+	 * @param x X amount to add
+	 * @param y Y amount to add
+	 * @param z Z amount to add
+	 * @return New vector
+	 */
+	public Vector add(double x, double y, double z) {
+		return new Vector(this.x + x, this.y + y, this.z + z);
+	}
+
+	/**
+	 * Adds to this vector
+	 *
+	 * @param vector Vector to add
+	 * @return New vector
+	 */
+	public Vector add(Vector vector) {
+		return new Vector(x + vector.x, y + vector.y, z + vector.z);
+	}
+
+	/**
+	 * Subtracts from this vector
+	 *
+	 * @param x X amount to subtract
+	 * @param y Y amount to subtract
+	 * @param z Z amount to subtract
+	 * @return New vector
+	 */
+	public Vector subtract(double x, double y, double z) {
+		return new Vector(this.x - x, this.y - y, this.z - z);
+	}
+
+	/**
+	 * Subtracts from this vector
+	 *
+	 * @param vector Vector to subtract
+	 * @return New vector
+	 */
+	public Vector subtract(Vector vector) {
+		return new Vector(x - vector.x, y - vector.y, z - vector.z);
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = 1;

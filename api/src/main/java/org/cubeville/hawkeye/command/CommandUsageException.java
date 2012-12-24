@@ -25,4 +25,8 @@ public class CommandUsageException extends CommandException {
 
 	private static final long serialVersionUID = 3043821094302311575L;
 
+	public CommandUsageException(String message) {
+		super(message);
+	}
+
 }

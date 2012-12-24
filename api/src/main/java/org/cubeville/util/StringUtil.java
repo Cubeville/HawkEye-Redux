@@ -33,6 +33,10 @@ public class StringUtil {
 		return buildString(args, separator, 0);
 	}
 
+	public static String buildString(String separator, String... args) {
+		return buildString(args, separator);
+	}
+
 	/**
 	 * Converts an array of strings into one string
 	 *

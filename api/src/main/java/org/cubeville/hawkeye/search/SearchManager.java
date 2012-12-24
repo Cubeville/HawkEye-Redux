@@ -18,15 +18,18 @@
 
 package org.cubeville.hawkeye.search;
 
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 
 public interface SearchManager {
 
 	/**
 	 * Gets an SQL query based on parameters provided by the command sender
-	 * @return
+	 *
+	 * @return SQL query to get search results from the database
+	 * @throws CommandException If any of the parameters specified are invalid
 	 */
-	String getQuery(String params, CommandSender sender);
+	String getQuery(String params, CommandSender sender) throws CommandException;
 
 	/**
 	 * Registers a search parameter
