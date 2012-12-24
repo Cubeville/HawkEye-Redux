@@ -153,11 +153,11 @@ public class SimpleCommandManager implements CommandManager {
 
 		// Check number of arguments
 		if (data.length() < cmd.min()) {
-			throw new CommandUsageException();
+			throw new CommandUsageException("Not enough arguments specified!");
 		}
 
 		if (cmd.max() != -1 && data.length() > cmd.max()) {
-			throw new CommandUsageException();
+			throw new CommandUsageException("Too many arguments specified!");
 		}
 
 		// Check flags
@@ -168,7 +168,7 @@ public class SimpleCommandManager implements CommandManager {
 
 		for (char flag : data.getFlags()) {
 			if (!validFlags.contains(flag)) {
-				throw new CommandUsageException();
+				throw new CommandUsageException("Invalid flag specified: " + flag);
 			}
 		}
 
