@@ -91,8 +91,13 @@ public class SimpleDataManager implements DataManager {
 	}
 
 	@Override
+	public int getPlayerId(String player) {
+		return playerIds.containsKey(player) ? playerIds.get(player) : -1;
+	}
+
+	@Override
 	public int getPlayerId(Player player) {
-		return playerIds.containsKey(player.getName()) ? playerIds.get(player.getName()) : -1;
+		return getPlayerId(player.getName());
 	}
 
 	@Override
@@ -144,8 +149,13 @@ public class SimpleDataManager implements DataManager {
 	}
 
 	@Override
+	public int getWorldId(String world) {
+		return worldIds.containsKey(world) ? worldIds.get(world) : -1;
+	}
+
+	@Override
 	public int getWorldId(World world) {
-		return worldIds.containsKey(world.getName()) ? worldIds.get(world.getName()) : -1;
+		return getWorldId(world.getName());
 	}
 
 	@Override

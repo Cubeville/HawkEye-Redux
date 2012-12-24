@@ -18,18 +18,33 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.HawkEye;
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.util.Pair;
+import org.cubeville.util.StringUtil;
 
 public class WorldParser implements ParameterParser {
 
 	@Override
-	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) {
-		// TODO Auto-generated method stub
-		return null;
+	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException {
+		List<String> worlds = new ArrayList<String>();
+
+		String[] list = parameter.split(",");
+		for (int i = 0; i < list.length; i++) {
+			int id = HawkEye.getDataManager().getWorldId(list[i]);
+
+			if (id == -1) throw new CommandException("Could not find world: " + list[i]);
+			else worlds.add(String.valueOf(id));
+		}
+
+		String sql = "`world_id` IN (" + StringUtil.buildString(worlds, ",") + ")";
+		return Pair.of(sql, null);
 	}
 
 }

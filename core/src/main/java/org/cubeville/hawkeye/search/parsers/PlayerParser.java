@@ -18,18 +18,33 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.HawkEye;
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.util.Pair;
+import org.cubeville.util.StringUtil;
 
 public class PlayerParser implements ParameterParser {
 
 	@Override
-	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) {
-		// TODO Auto-generated method stub
-		return null;
+	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException {
+		List<String> players = new ArrayList<String>();
+
+		String[] list = parameter.split(",");
+		for (int i = 0; i < list.length; i++) {
+			int id = HawkEye.getDataManager().getPlayerId(list[i]);
+
+			if (id == -1) throw new CommandException("Could not find player: " + list[i]);
+			else players.add(String.valueOf(id));
+		}
+
+		String sql = "`player_id` IN (" + StringUtil.buildString(players, ",") + ")";
+		return Pair.of(sql, null);
 	}
 
 }

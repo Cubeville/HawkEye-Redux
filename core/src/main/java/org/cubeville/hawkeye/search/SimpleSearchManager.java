@@ -93,7 +93,7 @@ public class SimpleSearchManager implements SearchManager {
 			// Parse parameter
 			Pair<String, Map<String, Object>> data = parser.process(value, sender);
 			conditions.add(data.getLeft());
-			binds.putAll(data.getRight());
+			if (data.getRight() != null) binds.putAll(data.getRight());
 		}
 
 		// Build full query

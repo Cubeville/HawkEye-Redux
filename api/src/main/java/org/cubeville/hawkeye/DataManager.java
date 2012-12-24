@@ -62,6 +62,14 @@ public interface DataManager {
 	 * @param player Player whose id to get
 	 * @return Player's id number
 	 */
+	int getPlayerId(String player);
+
+	/**
+	 * Gets a player's id number
+	 *
+	 * @param player Player whose id to get
+	 * @return Player's id number
+	 */
 	int getPlayerId(Player player);
 
 	/**
@@ -79,6 +87,14 @@ public interface DataManager {
 	 * @return World
 	 */
 	World getWorld(int id);
+
+	/**
+	 * Gets a world's id number
+	 *
+	 * @param world World whose id to get
+	 * @return World's id number
+	 */
+	int getWorldId(String world);
 
 	/**
 	 * Gets a world's id number

@@ -18,18 +18,32 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.util.Pair;
+import org.cubeville.util.StringUtil;
 
 public class ActionParser implements ParameterParser {
 
 	@Override
 	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) {
-		// TODO Auto-generated method stub
-		return null;
+		List<String> actions = new ArrayList<String>();
+
+		String[] list = parameter.split(",");
+		for (int i = 0; i < list.length; i++) {
+			Action action = HawkEye.getDataManager().getAction(list[i]);
+
+			if (action != null) actions.add(action.getName());
+		}
+
+		String sql = "`action` IN ('" + StringUtil.buildString(actions, "','") + "')";
+		return Pair.of(sql, null);
 	}
 
 }
