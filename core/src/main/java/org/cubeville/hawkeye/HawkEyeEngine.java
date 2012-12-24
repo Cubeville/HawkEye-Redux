@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye;
 
+import java.util.logging.Logger;
+
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
@@ -34,6 +36,11 @@ import org.cubeville.hawkeye.sql.MySqlDatabase;
 public class HawkEyeEngine implements PluginEngine {
 
 	/**
+	 * Logger
+	 */
+	private final Logger logger = Logger.getLogger("Minecraft.HawkEye");
+
+	/**
 	 * Server compatibility layer
 	 */
 	private final ServerInterface server;
@@ -47,6 +54,11 @@ public class HawkEyeEngine implements PluginEngine {
 	 * Database
 	 */
 	private final Database database;
+
+	/**
+	 * Entry consumer
+	 */
+	private final Consumer consumer;
 
 	/**
 	 * Session manager
@@ -69,6 +81,7 @@ public class HawkEyeEngine implements PluginEngine {
 		this.config = config;
 
 		database = new MySqlDatabase(config.getString("database.prefix"));
+		consumer = new SimpleConsumer();
 		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
 		dataManager = new SimpleDataManager();
 		searchManager = new SimpleSearchManager();
@@ -82,9 +95,10 @@ public class HawkEyeEngine implements PluginEngine {
 				config.getString("database.username"),
 				config.getString("database.password")
 			);
-		} catch (DatabaseException ex) {
-			// TODO Handle this better
-			ex.printStackTrace();
+		} catch (DatabaseException e) {
+			// Tell the consumer to log to file if the database failss
+			((SimpleConsumer) consumer).disableDatabase();
+			e.printStackTrace();
 		}
 	}
 
@@ -92,6 +106,11 @@ public class HawkEyeEngine implements PluginEngine {
 	public String getVersion() {
 		// TODO Get version automagically
 		return "2.0.0-SNAPSHOT";
+	}
+
+	@Override
+	public Logger getLogger() {
+		return logger;
 	}
 
 	@Override
@@ -107,6 +126,11 @@ public class HawkEyeEngine implements PluginEngine {
 	@Override
 	public Database getDatabase() {
 		return database;
+	}
+
+	@Override
+	public Consumer getConsumer() {
+		return consumer;
 	}
 
 	@Override

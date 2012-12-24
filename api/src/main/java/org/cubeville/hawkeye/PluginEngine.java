@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye;
 
+import java.util.logging.Logger;
+
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
@@ -39,6 +41,13 @@ public interface PluginEngine {
 	String getVersion();
 
 	/**
+	 * Gets the logger
+	 *
+	 * @return Logger
+	 */
+	Logger getLogger();
+
+	/**
 	 * Gets the server compatibility layer
 	 *
 	 * @return Server interface
@@ -58,6 +67,13 @@ public interface PluginEngine {
 	 * @return Database
 	 */
 	Database getDatabase();
+
+	/**
+	 * Gets the entry consumer
+	 *
+	 * @return Consumer
+	 */
+	Consumer getConsumer();
 
 	/**
 	 * Gets the session manager

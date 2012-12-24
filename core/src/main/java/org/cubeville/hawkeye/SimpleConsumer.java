@@ -46,6 +46,7 @@ public class SimpleConsumer implements Consumer {
 
 	private final LinkedBlockingQueue<Entry> queue = new LinkedBlockingQueue<Entry>();
 	private final ReentrantLock lock = new ReentrantLock();
+	private boolean database = true;
 
 	public SimpleConsumer() {
 
@@ -61,39 +62,53 @@ public class SimpleConsumer implements Consumer {
 		return queue.size();
 	}
 
+	/**
+	 * Disables database inserts and instead dumps to files
+	 */
+	public void disableDatabase() {
+		database = false;
+	}
+
 	@Override
 	public void dumpToFile() {
-		new File("plugins/HawkEye/data/").mkdirs();
-		long time = System.currentTimeMillis();
+		// Acquire lock
+		if (!lock.tryLock()) return;
 
-		CompoundTag tag;
-		Map<String, Tag> entries = new HashMap<String, Tag>();
-		int count = 0;
+		try {
+			new File("plugins/HawkEye/data/").mkdirs();
+			long time = System.currentTimeMillis();
 
-		while (!queue.isEmpty()) {
-			Entry entry = queue.poll();
-			Map<String, Tag> data = new HashMap<String, Tag>();
+			CompoundTag tag;
+			Map<String, Tag> entries = new HashMap<String, Tag>();
+			int count = 0;
 
-			data.put("player_id", new IntTag("player_id", getPlayerId(entry.getPlayer())));
-			data.put("action", new StringTag("action", entry.getAction().getName()));
-			data.put("date", new StringTag("date", entry.getTime().toString()));
-			data.put("world_id", new IntTag("world_id", getWorldId(entry.getLocation().getWorld().getName())));
-			data.put("x", new DoubleTag("x", entry.getLocation().getX()));
-			data.put("y", new DoubleTag("y", entry.getLocation().getY()));
-			data.put("z", new DoubleTag("z", entry.getLocation().getZ()));
-			data.put("data", new StringTag("data", entry.getData()));
+			while (!queue.isEmpty()) {
+				Entry entry = queue.poll();
+				Map<String, Tag> data = new HashMap<String, Tag>();
 
-			String name = "entry-" + ++count;
-			entries.put(name, new CompoundTag(name, data));
+				data.put("player_id", new IntTag("player_id", getPlayerId(entry.getPlayer())));
+				data.put("action", new StringTag("action", entry.getAction().getName()));
+				data.put("date", new StringTag("date", entry.getTime().toString()));
+				data.put("world_id", new IntTag("world_id", getWorldId(entry.getLocation().getWorld().getName())));
+				data.put("x", new DoubleTag("x", entry.getLocation().getX()));
+				data.put("y", new DoubleTag("y", entry.getLocation().getY()));
+				data.put("z", new DoubleTag("z", entry.getLocation().getZ()));
+				data.put("data", new StringTag("data", entry.getData()));
 
-			if (count % 1000 == 0) {
-				tag = new CompoundTag("entries", entries);
-				saveToFile(tag, "data-" + time + "-" + (count / 1000) + ".hawk");
+				String name = "entry-" + ++count;
+				entries.put(name, new CompoundTag(name, data));
+
+				if (count % 1000 == 0) {
+					tag = new CompoundTag("entries", entries);
+					saveToFile(tag, "data-" + time + "-" + (count / 1000) + ".hawk");
+				}
 			}
-		}
 
-		tag = new CompoundTag("entries", entries);
-		saveToFile(tag, "data-" + time + "-" + ((count / 1000) + 1) + ".hawk");
+			tag = new CompoundTag("entries", entries);
+			saveToFile(tag, "data-" + time + "-" + ((count / 1000) + 1) + ".hawk");
+		} finally {
+			lock.unlock();
+		}
 	}
 
 	private void saveToFile(Tag entries, String file) {
@@ -129,6 +144,12 @@ public class SimpleConsumer implements Consumer {
 		if (queue.isEmpty()) return;
 		// Acquire lock
 		if (!lock.tryLock()) return;
+
+		// Dump to file if the database is not available
+		if (!database) {
+			if (queue.size() > 1000) dumpToFile();
+			return;
+		}
 
 		Connection conn = null;
 		PreparedStatement ps = null;

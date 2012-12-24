@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye;
 
+import java.util.logging.Logger;
+
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
@@ -61,6 +63,15 @@ public class HawkEye {
 	}
 
 	/**
+	 * Gets the logger
+	 *
+	 * @return Logger
+	 */
+	public static Logger getLogger() {
+		return engine.getLogger();
+	}
+
+	/**
 	 * Gets the server compatibility layer
 	 *
 	 * @return Server interface
@@ -85,6 +96,15 @@ public class HawkEye {
 	 */
 	public static Database getDatabase() {
 		return engine.getDatabase();
+	}
+
+	/**
+	 * Gets the entry consumer
+	 *
+	 * @return Consumer
+	 */
+	public static Consumer getConsumer() {
+		return engine.getConsumer();
 	}
 
 	/**
