@@ -32,7 +32,6 @@ import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.search.parsers.ActionParser;
-import org.cubeville.hawkeye.search.parsers.BlockParser;
 import org.cubeville.hawkeye.search.parsers.FilterParser;
 import org.cubeville.hawkeye.search.parsers.LocationParser;
 import org.cubeville.hawkeye.search.parsers.PlayerParser;
@@ -56,7 +55,6 @@ public class SimpleSearchManager implements SearchManager {
 		registerParameter("r", new RadiusParser());
 		registerParameter("t", new TimeParser());
 		registerParameter("a", new ActionParser());
-		registerParameter("b", new BlockParser());
 		registerParameter("f", new FilterParser());
 		registerParameter("l", new LocationParser());
 		registerParameter("w", new WorldParser());
