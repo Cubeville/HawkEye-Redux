@@ -23,6 +23,7 @@ import static org.cubeville.util.DatabaseUtil.table;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,8 +44,15 @@ import org.cubeville.util.StringUtil;
 
 public class SimpleSearchManager implements SearchManager {
 
+	/**
+	 * Default parameter parser (used if no parameter is prefixed)
+	 */
 	private final ParameterParser defaultParser;
-	private final Map<String, ParameterParser> parameters = new HashMap<String, ParameterParser>();
+
+	/**
+	 * Custom parameter parsers (keyed by prefix)
+	 */
+	private final Map<String, Pair<ParameterParser, Boolean>> parameters = new HashMap<String, Pair<ParameterParser, Boolean>>();
 
 	public SimpleSearchManager() {
 		// If no parameter is specified it will fallback to the default parser
@@ -67,8 +75,11 @@ public class SimpleSearchManager implements SearchManager {
 		String[] parts = params.split(" ");
 		List<String> conditions = new LinkedList<String>();
 		Map<String, Object> binds = new HashMap<String, Object>();
+
 		// Default condition so it doesn't break if no parameters are processed
 		conditions.add("true");
+
+		List<String> used = new ArrayList<String>();
 
 		for (int i = 0; i < parts.length; i++) {
 			String param = parts[i];
@@ -76,6 +87,7 @@ public class SimpleSearchManager implements SearchManager {
 
 			if (param.isEmpty()) continue;
 
+			// Get parameter key/value
 			String[] paramParts = param.split(":", 2);
 			String key = paramParts.length == 1 ? "default" : paramParts[0].toLowerCase();
 			String value = paramParts.length == 1 ? paramParts[0] : paramParts[1];
@@ -83,10 +95,22 @@ public class SimpleSearchManager implements SearchManager {
 			if (key.equalsIgnoreCase("default")) {
 				parser = defaultParser;
 			} else {
-				parser = parameters.get(key);
+				// Get custom parser
+				Pair<ParameterParser, Boolean> pair = parameters.get(key);
+				if (pair == null) {
+					parser = null;
+				} else {
+					// Check for duplicate parameters
+					if (!pair.getRight() && used.contains(key)) {
+						throw new CommandUsageException("Duplicate parameter detected: '" + key + "'");
+					} else {
+						if (!pair.getRight()) used.add(key);
+						parser = pair.getLeft();
+					}
+				}
 			}
 
-			if (parser == null) throw new CommandUsageException("Invalid parameter specified: " + key);
+			if (parser == null) throw new CommandUsageException("Invalid parameter specified: '" + key + "'");
 
 			// Parse parameter
 			Pair<String, Map<String, Object>> data = parser.process(value, sender);
@@ -116,11 +140,16 @@ public class SimpleSearchManager implements SearchManager {
 
 	@Override
 	public boolean registerParameter(String prefix, ParameterParser parser) {
+		return registerParameter(prefix, parser, true);
+	}
+
+	@Override
+	public boolean registerParameter(String prefix, ParameterParser parser, boolean duplicate) {
 		prefix = prefix.toLowerCase();
 
 		if (parameters.containsKey(prefix)) return false;
 
-		parameters.put(prefix, parser);
+		parameters.put(prefix, Pair.of(parser, duplicate));
 		return true;
 	}
 

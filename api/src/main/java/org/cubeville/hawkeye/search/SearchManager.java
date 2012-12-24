@@ -48,4 +48,15 @@ public interface SearchManager {
 	 */
 	boolean registerParameter(String parameter, ParameterParser parser);
 
+	/**
+	 * Registers a search parameter
+	 *
+	 * @param prefix Search parameter prefix
+	 * @param parser Parser that parses this parameter value
+	 * @param duplicate Whether or not this parameter can be specified more
+	 *                   than once (i.e. there can only be one radius)
+	 * @return True if parameter was registered, false if it was already taken
+	 */
+	boolean registerParameter(String parameter, ParameterParser parser, boolean duplicate);
+
 }
