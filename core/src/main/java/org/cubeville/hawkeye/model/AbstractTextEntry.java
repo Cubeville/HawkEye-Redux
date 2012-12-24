@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.location.Location;
 
 public abstract class AbstractTextEntry extends AbstractEntry implements TextEntry {
 
@@ -30,8 +31,18 @@ public abstract class AbstractTextEntry extends AbstractEntry implements TextEnt
 		text = entry.getData();
 	}
 
+	public AbstractTextEntry(Action action, String player, Location location, String text) {
+		super(action, player, location);
+		this.text = text;
+	}
+
 	@Override
 	public String getText() {
+		return text;
+	}
+
+	@Override
+	public String getData() {
 		return text;
 	}
 

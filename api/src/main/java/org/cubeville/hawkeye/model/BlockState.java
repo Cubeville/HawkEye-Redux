@@ -25,6 +25,8 @@ import org.cubeville.hawkeye.item.Blocks;
  */
 public class BlockState {
 
+	public static final BlockState NOTHING = new BlockState(Blocks.AIR, (byte) 0);
+
 	/**
 	 * Block type
 	 */

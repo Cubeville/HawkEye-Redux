@@ -19,11 +19,16 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.location.Location;
 
 public abstract class AbstractInteractEntry extends AbstractEntry {
 
 	public AbstractInteractEntry(Action action, DatabaseEntry entry) {
 		super(action, entry);
+	}
+
+	public AbstractInteractEntry(Action action, String player, Location location) {
+		super(action, player, location);
 	}
 
 }

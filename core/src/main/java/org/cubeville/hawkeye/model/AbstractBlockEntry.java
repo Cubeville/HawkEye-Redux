@@ -21,6 +21,7 @@ package org.cubeville.hawkeye.model;
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Block;
+import org.cubeville.hawkeye.location.Location;
 
 public abstract class AbstractBlockEntry extends AbstractEntry implements BlockEntry, Modifiable {
 
@@ -42,6 +43,13 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 
 		oldState = new BlockState(before);
 		newState = new BlockState(after);
+	}
+
+	public AbstractBlockEntry(Action action, String player, Location location, BlockState oldState, BlockState newState) {
+		super(action, player, location);
+		block = location.toBlock();
+		this.oldState = oldState;
+		this.newState = newState;
 	}
 
 	@Override

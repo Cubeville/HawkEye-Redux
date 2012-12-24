@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.DefaultActions;
+import org.cubeville.hawkeye.location.Location;
 
 public class CommandEntry extends AbstractTextEntry {
 
@@ -26,10 +27,8 @@ public class CommandEntry extends AbstractTextEntry {
 		super(DefaultActions.PLAYER_COMMAND, entry);
 	}
 
-	@Override
-	public String getData() {
-		// TODO Auto-generated method stub
-		return null;
+	public CommandEntry(String player, Location location, String command) {
+		super(DefaultActions.PLAYER_COMMAND, player, location, command);
 	}
 
 }

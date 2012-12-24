@@ -18,10 +18,17 @@
 
 package org.cubeville.hawkeye.model;
 
+import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.location.Location;
+
 public class PlayerInteractEntry extends AbstractInteractEntry {
 
 	public PlayerInteractEntry(DatabaseEntry entry) {
 		super(entry.getAction(), entry);
+	}
+
+	public PlayerInteractEntry(Action type, String player, Location location) {
+		super(type, player, location);
 	}
 
 	@Override

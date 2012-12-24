@@ -19,11 +19,16 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.DefaultActions;
+import org.cubeville.hawkeye.location.Location;
 
 public class BlockPlaceEntry extends AbstractBlockEntry {
 
 	public BlockPlaceEntry(DatabaseEntry entry) {
 		super(DefaultActions.BLOCK_PLACE, entry);
+	}
+
+	public BlockPlaceEntry(String player, Location location, BlockState old, BlockState placed) {
+		super(DefaultActions.BLOCK_PLACE, player, location, old, placed);
 	}
 
 }

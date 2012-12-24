@@ -37,6 +37,13 @@ public abstract class AbstractEntry implements Entry {
 		time = entry.getTimestamp();
 	}
 
+	public AbstractEntry(Action action, String player, Location location) {
+		this.action = action;
+		this.player = player;
+		this.location = location;
+		time = new Timestamp(System.currentTimeMillis());
+	}
+
 	@Override
 	public Action getAction() {
 		return action;
