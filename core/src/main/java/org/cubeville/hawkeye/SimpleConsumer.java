@@ -145,48 +145,51 @@ public class SimpleConsumer implements Consumer {
 		// Acquire lock
 		if (!lock.tryLock()) return;
 
-		// Dump to file if the database is not available
-		if (!database) {
-			if (queue.size() > 900) dumpToFile();
-			return;
-		}
-
-		Connection conn = null;
-		PreparedStatement ps = null;
-		String sql = "INSERT INTO " + table("data") + " (player_id, action, date, world_id, x, y, z, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
 		try {
-			conn = HawkEye.getDatabase().getConnection();
-			ps = conn.prepareStatement(sql);
-			int count = 0;
-
-			// TODO Implement a (configurable) limit on entries per run
-			while (!queue.isEmpty()) {
-				Entry entry = queue.poll();
-
-				ps.setInt(1, getPlayerId(entry.getPlayer()));
-				ps.setString(2, entry.getAction().getName());
-				ps.setTimestamp(3, entry.getTime());
-				ps.setInt(4, getWorldId(entry.getLocation().getWorld().getName()));
-				ps.setDouble(5, entry.getLocation().getX());
-				ps.setDouble(6, entry.getLocation().getY());
-				ps.setDouble(7, entry.getLocation().getZ());
-				ps.setString(8, entry.getData());
-
-				ps.addBatch();
-
-				// Execute after every 500 queries
-				if (++count % 500 == 0) ps.executeBatch();
+			// Dump to file if the database is not available
+			if (!database) {
+				if (queue.size() > 900) dumpToFile();
+				return;
 			}
 
-			// Run any remaining queries
-			ps.executeBatch();
-		} catch (SQLException e) {
-			HawkEye.getLogger().warning("Could not insert database entry: " + e.getMessage());
-			e.printStackTrace();
+			Connection conn = null;
+			PreparedStatement ps = null;
+			String sql = "INSERT INTO " + table("data") + " (player_id, action, date, world_id, x, y, z, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+			try {
+				conn = HawkEye.getDatabase().getConnection();
+				ps = conn.prepareStatement(sql);
+				int count = 0;
+
+				// TODO Implement a (configurable) limit on entries per run
+				while (!queue.isEmpty()) {
+					Entry entry = queue.poll();
+
+					ps.setInt(1, getPlayerId(entry.getPlayer()));
+					ps.setString(2, entry.getAction().getName());
+					ps.setTimestamp(3, entry.getTime());
+					ps.setInt(4, getWorldId(entry.getLocation().getWorld().getName()));
+					ps.setDouble(5, entry.getLocation().getX());
+					ps.setDouble(6, entry.getLocation().getY());
+					ps.setDouble(7, entry.getLocation().getZ());
+					ps.setString(8, entry.getData());
+
+					ps.addBatch();
+
+					// Execute after every 500 queries
+					if (++count % 500 == 0) ps.executeBatch();
+				}
+
+				// Run any remaining queries
+				ps.executeBatch();
+			} catch (SQLException e) {
+				HawkEye.getLogger().warning("Could not insert database entry: " + e.getMessage());
+				e.printStackTrace();
+			} finally {
+				close(conn);
+				close(ps);
+			}
 		} finally {
-			close(conn);
-			close(ps);
 			lock.unlock();
 		}
 	}
