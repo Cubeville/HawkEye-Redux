@@ -35,13 +35,18 @@ import org.jnbt.Tag;
 import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
 
-public class EntryImporter {
+public class EntryImporter implements Runnable {
 
 	public EntryImporter() {
 
 	}
 
-	public void importData() {
+	@Override
+	public void run() {
+		importData();
+	}
+
+	private void importData() {
 		File[] files = new File("plugins/HawkEye/data/").listFiles();
 		if (files == null || files.length == 0) return;
 

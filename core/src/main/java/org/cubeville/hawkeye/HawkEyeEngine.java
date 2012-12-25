@@ -105,7 +105,7 @@ public class HawkEyeEngine implements PluginEngine {
 
 		if (((SimpleConsumer) consumer).hasDatabase()) {
 			// Import dumped data
-			new EntryImporter().importData();
+			new Thread(new EntryImporter()).start();
 		}
 	}
 
