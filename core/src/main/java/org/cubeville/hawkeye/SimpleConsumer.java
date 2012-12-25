@@ -147,7 +147,7 @@ public class SimpleConsumer implements Consumer {
 
 		// Dump to file if the database is not available
 		if (!database) {
-			if (queue.size() > 1000) dumpToFile();
+			if (queue.size() > 900) dumpToFile();
 			return;
 		}
 
