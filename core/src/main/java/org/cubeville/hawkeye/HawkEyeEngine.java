@@ -32,7 +32,7 @@ import org.cubeville.hawkeye.session.SimpleSessionManager;
 import org.cubeville.hawkeye.sql.Database;
 import org.cubeville.hawkeye.sql.DatabaseException;
 import org.cubeville.hawkeye.sql.MySqlDatabase;
-import org.cubeville.util.HawkEyeLogger;
+import org.cubeville.hawkeye.util.HawkEyeLogger;
 
 public class HawkEyeEngine implements PluginEngine {
 

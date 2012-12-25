@@ -18,7 +18,6 @@
 
 package org.cubeville.util;
 
-
 /**
  * Simple utility class to wrap two objects
  *
