@@ -108,4 +108,11 @@ public class DatabaseEntry {
 		return data;
 	}
 
+	/**
+	 * Attempts to convert this object to its action's entry implementation
+	 */
+	public Entry toEntry() {
+		return action.getEntry(this);
+	}
+
 }

@@ -18,12 +18,16 @@
 
 package org.cubeville.hawkeye;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import org.cubeville.hawkeye.model.BlockBreakEntry;
 import org.cubeville.hawkeye.model.BlockExplosionEntry;
 import org.cubeville.hawkeye.model.BlockModifyEntry;
 import org.cubeville.hawkeye.model.BlockPlaceEntry;
 import org.cubeville.hawkeye.model.ChatEntry;
 import org.cubeville.hawkeye.model.CommandEntry;
+import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.model.Modifiable;
 import org.cubeville.hawkeye.model.PlayerInteractEntry;
@@ -187,6 +191,11 @@ public enum DefaultActions implements Action {
 	private final Class<? extends Entry> entryClass;
 
 	/**
+	 * Data class constructor
+	 */
+	private Constructor<? extends Entry> constructor;
+
+	/**
 	 * Default fallback until entry classes are implemented
 	 */
 	private DefaultActions() {
@@ -195,6 +204,18 @@ public enum DefaultActions implements Action {
 
 	private DefaultActions(Class<? extends Entry> entryClass) {
 		this.entryClass = entryClass;
+		constructor = null;
+
+		try {
+			constructor = entryClass.getConstructor(DatabaseEntry.class);
+			constructor.setAccessible(true);
+		} catch (SecurityException e) {
+			HawkEye.getLogger().warning("Could not get DatabaseEntry constructor for " + entryClass.getCanonicalName());
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			HawkEye.getLogger().warning("Could not get DatabaseEntry constructor for " + entryClass.getCanonicalName());
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -210,6 +231,26 @@ public enum DefaultActions implements Action {
 	@Override
 	public Class<? extends Entry> getEntryClass() {
 		return entryClass;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <E extends Entry> E getEntry(DatabaseEntry entry) {
+		if (constructor == null) return null;
+
+		try {
+			return (E) constructor.newInstance(entry);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 	@Override

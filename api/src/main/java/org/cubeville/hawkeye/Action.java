@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye;
 
+import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
 
 public interface Action extends Named {
@@ -28,6 +29,14 @@ public interface Action extends Named {
 	 * @return Class used by this action to store database entries
 	 */
 	Class<? extends Entry> getEntryClass();
+
+	/**
+	 * Constructs an entry representing this action based on a database entry
+	 *
+	 * @param entry Database entry
+	 * @return Entry implementation representing this action
+	 */
+	<E extends Entry> E getEntry(DatabaseEntry entry);
 
 	/**
 	 * Gets whether or not this entry can be modified (i.e. rolled back)
