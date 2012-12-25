@@ -36,7 +36,7 @@ public interface Action extends Named {
 	 * @param entry Database entry
 	 * @return Entry implementation representing this action
 	 */
-	<E extends Entry> E getEntry(DatabaseEntry entry);
+	Entry getEntry(DatabaseEntry entry);
 
 	/**
 	 * Gets whether or not this entry can be modified (i.e. rolled back)

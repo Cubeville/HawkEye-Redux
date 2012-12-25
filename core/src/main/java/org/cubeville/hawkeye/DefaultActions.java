@@ -233,13 +233,12 @@ public enum DefaultActions implements Action {
 		return entryClass;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public <E extends Entry> E getEntry(DatabaseEntry entry) {
+	public Entry getEntry(DatabaseEntry entry) {
 		if (constructor == null) return null;
 
 		try {
-			return (E) constructor.newInstance(entry);
+			return constructor.newInstance(entry);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -249,7 +248,7 @@ public enum DefaultActions implements Action {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
