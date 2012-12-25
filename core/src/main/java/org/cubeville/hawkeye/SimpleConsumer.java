@@ -69,6 +69,15 @@ public class SimpleConsumer implements Consumer {
 		database = false;
 	}
 
+	/**
+	 * Checks if the database is enabled
+	 *
+	 * @return True if database is available, false if not
+	 */
+	public boolean hasDatabase() {
+		return database;
+	}
+
 	@Override
 	public void dumpToFile() {
 		// Acquire lock

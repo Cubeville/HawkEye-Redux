@@ -102,6 +102,11 @@ public class HawkEyeEngine implements PluginEngine {
 			logger.severe("Could not connect to database");
 			e.printStackTrace();
 		}
+
+		if (((SimpleConsumer) consumer).hasDatabase()) {
+			// Import dumped data
+			new EntryImporter().importData();
+		}
 	}
 
 	@Override
