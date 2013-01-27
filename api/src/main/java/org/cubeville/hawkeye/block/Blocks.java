@@ -16,14 +16,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item;
+package org.cubeville.hawkeye.block;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cubeville.hawkeye.item.data.ItemData;
-import org.cubeville.hawkeye.item.data.MobHeadItemData;
-import org.cubeville.hawkeye.item.data.SignItemData;
+import org.cubeville.hawkeye.block.data.Sign;
+import org.cubeville.hawkeye.block.data.Skull;
+import org.cubeville.hawkeye.model.BlockData;
 
 public enum Blocks {
 
@@ -90,12 +90,12 @@ public enum Blocks {
 	SOIL(60),
 	FURNACE(61),
 	BURNING_FURNACE(62),
-	SIGN_POST(63, SignItemData.class),
+	SIGN_POST(63, Sign.class),
 	WOODEN_DOOR(64),
 	LADDER(65),
 	RAILS(66),
 	COBBLESTONE_STAIRS(67),
-	WALL_SIGN(68, SignItemData.class),
+	WALL_SIGN(68, Sign.class),
 	LEVER(69),
 	STONE_PLATE(70),
 	IRON_DOOR_BLOCK(71),
@@ -171,7 +171,7 @@ public enum Blocks {
 	CARROT(141),
 	POTATO(142),
 	WOOD_BUTTON(143),
-	SKULL(144, MobHeadItemData.class),
+	SKULL(144, Skull.class),
 	ANVIL(145);
 
 	/**
@@ -182,7 +182,7 @@ public enum Blocks {
 	/**
 	 * Custom item data class
 	 */
-	private final Class<? extends ItemData> dataClass;
+	private final Class<? extends BlockData> dataClass;
 
 	/**
 	 * Mapping of ids to blocks for quick access
@@ -193,7 +193,7 @@ public enum Blocks {
 		this(id, null);
 	}
 
-	private Blocks(int id, Class<? extends ItemData> dataClass) {
+	private Blocks(int id, Class<? extends BlockData> dataClass) {
 		this.id = id;
 		this.dataClass = dataClass;
 	}

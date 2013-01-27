@@ -18,6 +18,9 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.lib.jnbt.Tag;
+
 /**
  * ItemData implementation to store the durability of tools/armor
  */
@@ -48,6 +51,12 @@ public class DurabilityItemData implements ItemData {
 	 */
 	public short getDurability() {
 		return durability;
+	}
+
+	@Override
+	public Tag serialize() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -18,11 +18,18 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.lib.jnbt.Tag;
+
 /**
  * ItemData implementation to store the details of a map
  */
 public class MapItemData implements ItemData {
 
-	// TODO Implement this
+	@Override
+	public Tag serialize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

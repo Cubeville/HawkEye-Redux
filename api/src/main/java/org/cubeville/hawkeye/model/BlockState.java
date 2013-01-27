@@ -18,7 +18,7 @@
 
 package org.cubeville.hawkeye.model;
 
-import org.cubeville.hawkeye.item.Blocks;
+import org.cubeville.hawkeye.block.Blocks;
 
 /**
  * Represents the state of a block at a certain point in time

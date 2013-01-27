@@ -18,9 +18,18 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.lib.jnbt.Tag;
+
 /**
  * ItemData implementation to store the contents of written books
  */
 public class BookItemData implements ItemData {
+
+	@Override
+	public Tag serialize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

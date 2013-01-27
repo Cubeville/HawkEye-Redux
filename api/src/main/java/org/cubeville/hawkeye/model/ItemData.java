@@ -16,46 +16,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item.data;
+package org.cubeville.hawkeye.model;
 
-import org.cubeville.hawkeye.model.ItemData;
-import org.cubeville.lib.jnbt.Tag;
 
 /**
- * ItemData implementation to store the owner of player skulls
+ * Interface to attach to custom item data classes
+ *
+ * ItemData implementations are used to store custom data about an item/block,
+ * for example the data value of a deleted block, the contents of a removed
+ * chest, enchantments/durability on an item, etc.
  */
-public class MobHeadItemData implements ItemData {
-
-	/**
-	 * Owner of this mob head
-	 */
-	private String owner;
-
-	public MobHeadItemData(String owner) {
-		this.owner = owner;
-	}
-
-	/**
-	 * Sets the owner of this mob head
-	 *
-	 * @param owner New owner
-	 */
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
-
-	/**
-	 * Gets the owner of this mob head
-	 * @return This mob head's owner
-	 */
-	public String getOwner() {
-		return owner;
-	}
-
-	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+public interface ItemData extends NBTSerializable {
 
 }

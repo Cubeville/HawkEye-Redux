@@ -1,5 +1,5 @@
 /*
- * HawkEye redux
+ * HawkEye Redux
  * Copyright (C) 2012 Cubeville <http://www.cubeville.org> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,33 +16,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item.data;
+package org.cubeville.hawkeye.model;
 
-/**
- * ItemData implementation to store the text written on signs
- */
-public class SignItemData implements ItemData {
+import org.cubeville.lib.jnbt.Tag;
 
-	private String[] lines;
+public interface NBTSerializable {
 
-	public SignItemData(String[] lines) {
-		this.lines = lines;
-	}
-
-	public void setLines(String[] lines) {
-		this.lines = lines;
-	}
-
-	public String[] getLines() {
-		return lines;
-	}
-
-	public void setLine(int i, String line) {
-		lines[i] = line;
-	}
-
-	public String getLine(int i) {
-		return lines[i];
-	}
+	Tag serialize();
 
 }

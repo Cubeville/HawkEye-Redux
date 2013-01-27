@@ -16,41 +16,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item.data;
+package org.cubeville.hawkeye.block.data;
 
-import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.hawkeye.model.BlockData;
 import org.cubeville.lib.jnbt.Tag;
 
-/**
- * ItemData implementation to store the owner of player skulls
- */
-public class MobHeadItemData implements ItemData {
-
-	/**
-	 * Owner of this mob head
-	 */
-	private String owner;
-
-	public MobHeadItemData(String owner) {
-		this.owner = owner;
-	}
-
-	/**
-	 * Sets the owner of this mob head
-	 *
-	 * @param owner New owner
-	 */
-	public void setOwner(String owner) {
-		this.owner = owner;
-	}
-
-	/**
-	 * Gets the owner of this mob head
-	 * @return This mob head's owner
-	 */
-	public String getOwner() {
-		return owner;
-	}
+public class Skull implements BlockData {
 
 	@Override
 	public Tag serialize() {

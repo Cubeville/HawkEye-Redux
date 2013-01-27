@@ -8,6 +8,9 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import org.cubeville.hawkeye.ItemType;
+import org.cubeville.hawkeye.block.Blocks;
+
 public class BlockItemTest {
 
 	@Test

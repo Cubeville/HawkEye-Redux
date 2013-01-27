@@ -18,13 +18,15 @@
 
 package org.cubeville.hawkeye.item.data;
 
-/**
- * Interface to attach to custom item data classes
- *
- * ItemData implementations are used to store custom data about an item/block,
- * for example the data value of a deleted block, the contents of a removed
- * chest, enchantments/durability on an item, etc.
- */
-public interface ItemData {
+import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.lib.jnbt.Tag;
+
+public class PotionItemData implements ItemData {
+
+	@Override
+	public Tag serialize() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

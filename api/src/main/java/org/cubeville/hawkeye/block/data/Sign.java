@@ -1,5 +1,5 @@
 /*
- * HawkEye Redux
+ * HawkEye redux
  * Copyright (C) 2012 Cubeville <http://www.cubeville.org> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,40 +16,36 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item.data;
+package org.cubeville.hawkeye.block.data;
 
-import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.hawkeye.model.BlockData;
 import org.cubeville.lib.jnbt.Tag;
 
 /**
- * ItemData implementation to store the owner of player skulls
+ * ItemData implementation to store the text written on signs
  */
-public class MobHeadItemData implements ItemData {
+public class Sign implements BlockData {
 
-	/**
-	 * Owner of this mob head
-	 */
-	private String owner;
+	private String[] lines;
 
-	public MobHeadItemData(String owner) {
-		this.owner = owner;
+	public Sign(String[] lines) {
+		this.lines = lines;
 	}
 
-	/**
-	 * Sets the owner of this mob head
-	 *
-	 * @param owner New owner
-	 */
-	public void setOwner(String owner) {
-		this.owner = owner;
+	public void setLines(String[] lines) {
+		this.lines = lines;
 	}
 
-	/**
-	 * Gets the owner of this mob head
-	 * @return This mob head's owner
-	 */
-	public String getOwner() {
-		return owner;
+	public String[] getLines() {
+		return lines;
+	}
+
+	public void setLine(int i, String line) {
+		lines[i] = line;
+	}
+
+	public String getLine(int i) {
+		return lines[i];
 	}
 
 	@Override

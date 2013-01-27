@@ -16,7 +16,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item;
+package org.cubeville.hawkeye;
+
+import org.cubeville.hawkeye.block.Blocks;
+import org.cubeville.hawkeye.item.Items;
 
 public enum ItemType {
 

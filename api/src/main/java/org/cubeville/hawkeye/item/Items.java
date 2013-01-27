@@ -26,9 +26,9 @@ import org.cubeville.hawkeye.item.data.ColoredArmorItemData;
 import org.cubeville.hawkeye.item.data.DurabilityItemData;
 import org.cubeville.hawkeye.item.data.EnchantmentStorageItemData;
 import org.cubeville.hawkeye.item.data.FireworkItemData;
-import org.cubeville.hawkeye.item.data.ItemData;
 import org.cubeville.hawkeye.item.data.MapItemData;
 import org.cubeville.hawkeye.item.data.MobHeadItemData;
+import org.cubeville.hawkeye.model.ItemData;
 
 public enum Items {
 
