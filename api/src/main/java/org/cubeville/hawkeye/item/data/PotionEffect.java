@@ -18,10 +18,50 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import org.cubeville.hawkeye.item.PotionEffects;
 import org.cubeville.hawkeye.model.NBTSerializable;
 import org.cubeville.lib.jnbt.Tag;
 
 public class PotionEffect implements NBTSerializable {
+
+	private byte effectId;
+	private byte amplifier;
+	private int duration;
+	private boolean splash;
+	private boolean ambient;
+
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param data Tag to deserialize from
+	 */
+	public PotionEffect(Tag data) {
+
+	}
+
+	public PotionEffects getEffect() {
+		return PotionEffects.getById(effectId);
+	}
+
+	public byte getEffectId() {
+		return effectId;
+	}
+
+	public byte getAmplifier() {
+		return amplifier;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public boolean isSplash() {
+		return splash;
+	}
+
+	public boolean isAmbient() {
+		return ambient;
+	}
 
 	@Override
 	public Tag serialize() {
