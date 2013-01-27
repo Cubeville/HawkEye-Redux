@@ -25,15 +25,14 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Map;
 
-import org.jnbt.CompoundTag;
-import org.jnbt.DoubleTag;
-import org.jnbt.IntTag;
-import org.jnbt.NBTInputStream;
-import org.jnbt.StringTag;
-import org.jnbt.Tag;
-
 import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
+import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.DoubleTag;
+import org.cubeville.lib.jnbt.IntTag;
+import org.cubeville.lib.jnbt.NBTInputStream;
+import org.cubeville.lib.jnbt.StringTag;
+import org.cubeville.lib.jnbt.Tag;
 
 public class EntryImporter implements Runnable {
 

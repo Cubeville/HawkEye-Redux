@@ -33,14 +33,13 @@ import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.jnbt.CompoundTag;
-import org.jnbt.DoubleTag;
-import org.jnbt.IntTag;
-import org.jnbt.NBTOutputStream;
-import org.jnbt.StringTag;
-import org.jnbt.Tag;
-
 import org.cubeville.hawkeye.model.Entry;
+import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.DoubleTag;
+import org.cubeville.lib.jnbt.IntTag;
+import org.cubeville.lib.jnbt.NBTOutputStream;
+import org.cubeville.lib.jnbt.StringTag;
+import org.cubeville.lib.jnbt.Tag;
 
 public class SimpleConsumer implements Consumer {
 
