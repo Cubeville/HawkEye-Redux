@@ -1,7 +1,5 @@
 package org.cubeville.lib.jnbt;
 
-import java.nio.charset.Charset;
-
 /*
  * JNBT License
  *
@@ -36,38 +34,52 @@ import java.nio.charset.Charset;
  */
 
 /**
- * A class which holds constant values.
+ * The <code>TAG_Int_Array</code> tag.
+ *
  * @author Graham Edgecombe
  *
  */
-public final class NBTConstants {
+public final class IntArrayTag extends Tag {
 
-	/**
-	 * The character set used by NBT (UTF-8).
-	 */
-	public static final Charset CHARSET = Charset.forName("UTF-8");
+    /**
+     * The value.
+     */
+    private final int[] value;
 
-	/**
-	 * Tag type constants.
-	 */
-	public static final int TYPE_END = 0,
-		TYPE_BYTE = 1,
-		TYPE_SHORT = 2,
-		TYPE_INT = 3,
-		TYPE_LONG = 4,
-		TYPE_FLOAT = 5,
-		TYPE_DOUBLE = 6,
-		TYPE_BYTE_ARRAY = 7,
-		TYPE_STRING = 8,
-		TYPE_LIST = 9,
-		TYPE_COMPOUND = 10,
-		TYPE_INT_ARRAY = 11;
+    /**
+     * Creates the tag.
+     *
+     * @param name
+     *            The name.
+     * @param value
+     *            The value.
+     */
+    public IntArrayTag(String name, int[] value) {
+        super(name);
+        this.value = value;
+    }
 
-	/**
-	 * Default private constructor.
-	 */
-	private NBTConstants() {
+    @Override
+    public int[] getValue() {
+        return value;
+    }
 
-	}
+    @Override
+    public String toString() {
+        StringBuilder hex = new StringBuilder();
+        for (int b : value) {
+            String hexDigits = Integer.toHexString(b).toUpperCase();
+            if (hexDigits.length() == 1) {
+                hex.append("0");
+            }
+            hex.append(hexDigits).append(" ");
+        }
+        String name = getName();
+        String append = "";
+        if (name != null && !name.equals("")) {
+            append = "(\"" + getName() + "\")";
+        }
+        return "TAG_Int_Array" + append + ": " + hex.toString();
+    }
 
 }
