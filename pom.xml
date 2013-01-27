@@ -14,7 +14,7 @@
     <hawkeye-version>2.0.0-SNAPSHOT</hawkeye-version>
 
     <!-- Server implementation versions -->
-    <bukkit-version>1.4.6-R0.2-SNAPSHOT</bukkit-version>
+    <bukkit-version>1.4.7-R0.2-SNAPSHOT</bukkit-version>
     <workbench-version>0.0.1-SNAPSHOT</workbench-version>
 
     <!-- Dependency versions -->
@@ -22,7 +22,7 @@
     <snakeyaml-version>1.11</snakeyaml-version>
     <mysql-version>5.1.22</mysql-version>
     <jnbt-version>1.1</jnbt-version>
-    <worldedit-version>5.4.6-SNAPSHOT</worldedit-version>
+    <worldedit-version>5.5.2-SNAPSHOT</worldedit-version>
   </properties>
 
   <ciManagement>
@@ -51,7 +51,7 @@
   <repositories>
     <repository>
       <id>goalieguy6-repo</id>
-      <url>http://repo.goalieguy6.com/content/gropus/public</url>
+      <url>http://repo.goalieguy6.com/content/groups/public</url>
     </repository>
     <repository>
       <id>sk89q-repo</id>
