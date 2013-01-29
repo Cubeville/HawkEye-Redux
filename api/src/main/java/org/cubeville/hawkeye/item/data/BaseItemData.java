@@ -21,42 +21,20 @@ package org.cubeville.hawkeye.item.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.hawkeye.model.ItemData;
-import org.cubeville.lib.jnbt.ByteTag;
 import org.cubeville.lib.jnbt.CompoundTag;
-import org.cubeville.lib.jnbt.ShortTag;
 import org.cubeville.lib.jnbt.Tag;
 
 public class BaseItemData implements ItemData {
 
-	private final short itemId;
-	private final byte amount;
-	private final short durability;
-
-	/**
-	 * Deserialization constructor
-	 *
-	 * @param tag Tag to deserialize from
-	 */
-	public BaseItemData(CompoundTag tag) {
-		Map<String, Tag> data = tag.getValue();
-		itemId = ((ShortTag) data.get("Id")).getValue();
-		amount = ((ByteTag) data.get("Count")).getValue();
-		durability = ((ShortTag) data.get("Damage")).getValue();
-	}
+	// TODO Add enchantment data here
 
 	@Override
 	public final CompoundTag serialize() {
 		Map<String, Tag> data = new HashMap<String, Tag>();
-		data.put("id", new ShortTag("id", itemId));
-		data.put("Count", new ByteTag("Count", amount));
-		data.put("Damage", new ShortTag("Damage", durability));
-
-		Map<String, Tag> tagData = new HashMap<String, Tag>();
-		serialize(tagData);
-		if (!tagData.isEmpty()) data.put("tag", new CompoundTag("tag", tagData));
-
-		return new CompoundTag("", data);
+		serialize(data);
+		return new CompoundTag(NBT.ITEM.DATA, data);
 	}
 
 	public void serialize(Map<String, Tag> map) { }

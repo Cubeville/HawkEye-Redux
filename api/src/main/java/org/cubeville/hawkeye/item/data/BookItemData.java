@@ -29,7 +29,6 @@ import org.cubeville.lib.jnbt.Tag;
 public class BookItemData extends BaseItemData {
 
 	public BookItemData(CompoundTag tag) {
-		super(tag);
 		// TODO Auto-generated constructor stub
 	}
 

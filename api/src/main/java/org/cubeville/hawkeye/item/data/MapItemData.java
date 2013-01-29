@@ -29,7 +29,6 @@ import org.cubeville.lib.jnbt.Tag;
 public class MapItemData extends BaseItemData {
 
 	public MapItemData(CompoundTag tag) {
-		super(tag);
 		// TODO Auto-generated constructor stub
 	}
 

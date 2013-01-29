@@ -18,26 +18,27 @@
 
 package org.cubeville.hawkeye.model;
 
-import org.cubeville.hawkeye.block.Blocks;
+import org.cubeville.hawkeye.item.Items;
+
 
 /**
  * Represents the state of a block at a certain point in time
  */
 public class BlockState {
 
-	public static final BlockState NOTHING = new BlockState(Blocks.AIR, (byte) 0);
+	public static final BlockState NOTHING = new BlockState(Items.AIR, (byte) 0);
 
 	/**
 	 * Block type
 	 */
-	private Blocks type;
+	private Items type;
 
 	/**
 	 * Block data value
 	 */
 	private byte data;
 
-	public BlockState(Blocks type, byte data) {
+	public BlockState(Items type, byte data) {
 		this.type = type;
 		this.data = data;
 	}
@@ -64,7 +65,7 @@ public class BlockState {
 			data = 0;
 		}
 
-		type = Blocks.getById(id);
+		type = Items.getById(id);
 		this.data = data;
 	}
 
@@ -73,7 +74,7 @@ public class BlockState {
 	 *
 	 * @return Block type
 	 */
-	public Blocks getType() {
+	public Items getType() {
 		return type;
 	}
 
@@ -82,7 +83,7 @@ public class BlockState {
 	 *
 	 * @param type Block type
 	 */
-	public void setType(Blocks type) {
+	public void setType(Items type) {
 		this.type = type;
 	}
 

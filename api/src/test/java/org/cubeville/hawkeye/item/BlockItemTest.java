@@ -9,43 +9,31 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import org.cubeville.hawkeye.ItemType;
-import org.cubeville.hawkeye.block.Blocks;
 
 public class BlockItemTest {
 
 	@Test
-	public void getBlockById() {
-		for (Blocks block : Blocks.values()) {
-			assertEquals(Blocks.getById(block.getId()), block);
-		}
-	}
-
-	@Test
-	public void getItemById() {
+	public void getById() {
 		for (Items item : Items.values()) {
 			assertEquals(Items.getById(item.getId()), item);
 		}
 	}
 
 	@Test
-	public void testItemTypes() {
-		for (Blocks block : Blocks.values()) {
-			assertTrue(ItemType.isBlock(block.getId()));
-			assertThat(ItemType.getType(block.getId()), is(ItemType.BLOCK));
-		}
-
+	public void testTypes() {
 		for (Items item : Items.values()) {
-			assertTrue(ItemType.isItem(item.getId()));
-			assertThat(ItemType.getType(item.getId()), is(ItemType.ITEM));
+			if (item.getId() <= 255) {
+				assertTrue(ItemType.isBlock(item.getId()));
+				assertThat(ItemType.getType(item.getId()), is(ItemType.BLOCK));
+			} else {
+				assertTrue(ItemType.isItem(item.getId()));
+				assertThat(ItemType.getType(item.getId()), is(ItemType.ITEM));
+			}
 		}
 	}
 
 	@Test
-	public void testItemExistence() {
-		for (Blocks block : Blocks.values()) {
-			assertTrue(ItemType.exists(block.getId()));
-		}
-
+	public void testExistence() {
 		for (Items item : Items.values()) {
 			assertTrue(ItemType.exists(item.getId()));
 		}

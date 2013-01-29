@@ -18,8 +18,64 @@
 
 package org.cubeville.hawkeye.item;
 
-public interface ItemStack {
+import org.cubeville.hawkeye.model.ItemData;
 
-	// TODO Implement this
+/**
+ * Represents a stack of items
+ */
+public class ItemStack {
+
+	private final short id;
+	private final byte amount;
+	private final short durability;
+
+	public ItemStack(short id) {
+		this(id, (byte) 1, (short) 0);
+	}
+
+	public ItemStack(short id, byte amount) {
+		this(id, amount, (short) 0);
+	}
+
+	public ItemStack(short id, byte amount, short durability) {
+		this.id = id;
+		this.amount = amount;
+		this.durability = durability;
+	}
+
+	/**
+	 * Gets the type of item this stack is
+	 */
+	public Items getType() {
+		return Items.getById(id);
+	}
+
+	/**
+	 * Gets the id of this stack's item type
+	 */
+	public short getTypeId() {
+		return id;
+	}
+
+	/**
+	 * Gets the amount the items in this stack
+	 */
+	public byte getAmount() {
+		return amount;
+	}
+
+	/**
+	 * Gets the durability of this item stack
+	 */
+	public short getDurability() {
+		return durability;
+	}
+
+	/**
+	 * Gets any custom data associated with this item stack
+	 */
+	public ItemData getData() {
+		return null;
+	}
 
 }

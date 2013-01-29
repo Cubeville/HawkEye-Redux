@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.ListTag;
 import org.cubeville.lib.jnbt.Tag;
@@ -36,13 +37,11 @@ public class PotionItemData extends BaseItemData {
 	 * @param tag Tag to deserialize from
 	 */
 	public PotionItemData(CompoundTag tag) {
-		super(tag);
-
 		Map<String, Tag> data = tag.getValue();
-		if (data.containsKey("CustomPotionEffects")) {
+		if (data.containsKey(NBT.ITEM.POTION.EFFECTS)) {
 			customEffects = new ArrayList<PotionEffect>();
 
-			List<Tag> effects = ((ListTag) data.get("CustomPotionEffects")).getValue();
+			List<Tag> effects = ((ListTag) data.get(NBT.ITEM.POTION.EFFECTS)).getValue();
 			for (Tag t : effects) {
 				PotionEffect effect = new PotionEffect((CompoundTag) t);
 				customEffects.add(effect);
@@ -66,7 +65,7 @@ public class PotionItemData extends BaseItemData {
 			}
 		}
 
-		map.put("CustomPotionEffects", new ListTag("CustomPotionEffects", CompoundTag.class, data));
+		map.put(NBT.ITEM.POTION.EFFECTS, new ListTag(NBT.ITEM.POTION.EFFECTS, CompoundTag.class, data));
 	}
 
 }

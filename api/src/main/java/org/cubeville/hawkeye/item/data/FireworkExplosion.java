@@ -21,6 +21,7 @@ package org.cubeville.hawkeye.item.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.hawkeye.item.FireworkShape;
 import org.cubeville.hawkeye.model.NBTSerializable;
 import org.cubeville.lib.jnbt.ByteTag;
@@ -40,9 +41,9 @@ public class FireworkExplosion implements NBTSerializable {
 	 */
 	public FireworkExplosion(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();
-		shapeId = ((ByteTag) data.get("Type")).getValue();
-		flicker = (((ByteTag) data.get("Flicker")).getValue() == 1);
-		trail = (((ByteTag) data.get("Trail")).getValue() == 1);
+		shapeId = ((ByteTag) data.get(NBT.FIREWORK_EFFECT.SHAPE)).getValue();
+		flicker = (((ByteTag) data.get(NBT.FIREWORK_EFFECT.FLICKER)).getValue() == 1);
+		trail = (((ByteTag) data.get(NBT.FIREWORK_EFFECT.TRAIL)).getValue() == 1);
 	}
 
 	/**
@@ -53,7 +54,7 @@ public class FireworkExplosion implements NBTSerializable {
 	}
 
 	/**
-	 * Gets the id of the shape of this firework explosino
+	 * Gets the id of the shape of this firework explosion
 	 */
 	public byte getShapeId() {
 		return shapeId;
@@ -76,9 +77,9 @@ public class FireworkExplosion implements NBTSerializable {
 	@Override
 	public CompoundTag serialize() {
 		Map<String, Tag> data = new HashMap<String, Tag>();
-		data.put("Type", new ByteTag("Type", shapeId));
-		data.put("Flicker", new ByteTag("Flicker", (byte) (flicker ? 1 : 0)));
-		data.put("Trail", new ByteTag("Trail", (byte) (trail ? 1 : 0)));
+		data.put(NBT.FIREWORK_EFFECT.SHAPE, new ByteTag(NBT.FIREWORK_EFFECT.SHAPE, shapeId));
+		data.put(NBT.FIREWORK_EFFECT.FLICKER, new ByteTag(NBT.FIREWORK_EFFECT.FLICKER, (byte) (flicker ? 1 : 0)));
+		data.put(NBT.FIREWORK_EFFECT.TRAIL, new ByteTag(NBT.FIREWORK_EFFECT.TRAIL, (byte) (trail ? 1 : 0)));
 		return new CompoundTag("", data);
 	}
 

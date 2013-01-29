@@ -29,7 +29,6 @@ import org.cubeville.lib.jnbt.Tag;
 public class EnchantmentStorageItemData extends BaseItemData {
 
 	public EnchantmentStorageItemData(CompoundTag tag) {
-		super(tag);
 		// TODO Auto-generated constructor stub
 	}
 

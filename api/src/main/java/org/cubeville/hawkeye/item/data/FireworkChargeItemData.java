@@ -20,22 +20,38 @@ package org.cubeville.hawkeye.item.data;
 
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.Tag;
 
-/**
- * ItemData implementation to store the color of dyed armor
- */
-public class ColoredArmorItemData extends BaseItemData {
+public class FireworkChargeItemData extends BaseItemData {
 
-	public ColoredArmorItemData(CompoundTag tag) {
-		// TODO Auto-generated constructor stub
+	private FireworkExplosion explosion;
+
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param tag Tag to deserialize from
+	 */
+	public FireworkChargeItemData(CompoundTag tag) {
+		Map<String, Tag> data = tag.getValue();
+
+		if (data.containsKey(NBT.ITEM.FIREWORK.EFFECT)) {
+			explosion = new FireworkExplosion((CompoundTag) data.get(NBT.ITEM.FIREWORK.EFFECT));
+		}
+	}
+
+	public boolean hasExplosion() {
+		return explosion != null;
 	}
 
 	@Override
 	public void serialize(Map<String, Tag> map) {
 		super.serialize(map);
-		// TODO
+
+		if (hasExplosion()) {
+			map.put(NBT.ITEM.FIREWORK.EFFECT, explosion.serialize());
+		}
 	}
 
 

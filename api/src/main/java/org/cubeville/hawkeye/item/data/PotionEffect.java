@@ -21,6 +21,7 @@ package org.cubeville.hawkeye.item.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.hawkeye.item.PotionEffects;
 import org.cubeville.hawkeye.model.NBTSerializable;
 import org.cubeville.lib.jnbt.ByteTag;
@@ -42,10 +43,10 @@ public class PotionEffect implements NBTSerializable {
 	 */
 	public PotionEffect(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();
-		effectId = ((ByteTag) data.get("Id")).getValue();
-		amplifier = ((ByteTag) data.get("Amplifier")).getValue();
-		duration = ((IntTag) data.get("Duration")).getValue();
-		ambient = (((ByteTag) data.get("Ambient")).getValue() == 1);
+		effectId = ((ByteTag) data.get(NBT.POTION_EFFECT.ID)).getValue();
+		amplifier = ((ByteTag) data.get(NBT.POTION_EFFECT.LEVEL)).getValue();
+		duration = ((IntTag) data.get(NBT.POTION_EFFECT.DURATION)).getValue();
+		ambient = (((ByteTag) data.get(NBT.POTION_EFFECT.AMBIENT)).getValue() == 1);
 	}
 
 	/**
@@ -89,10 +90,10 @@ public class PotionEffect implements NBTSerializable {
 	@Override
 	public CompoundTag serialize() {
 		Map<String, Tag> data = new HashMap<String, Tag>();
-		data.put("Id", new ByteTag("Id", effectId));
-		data.put("Amplifier", new ByteTag("Amplifier", amplifier));
-		data.put("Duration", new IntTag("Duration", duration));
-		data.put("Ambient", new ByteTag("Ambient", (byte) (ambient ? 1 : 0)));
+		data.put(NBT.POTION_EFFECT.ID, new ByteTag(NBT.POTION_EFFECT.ID, effectId));
+		data.put(NBT.POTION_EFFECT.LEVEL, new ByteTag(NBT.POTION_EFFECT.LEVEL, amplifier));
+		data.put(NBT.POTION_EFFECT.DURATION, new IntTag(NBT.POTION_EFFECT.DURATION, duration));
+		data.put(NBT.POTION_EFFECT.AMBIENT, new ByteTag(NBT.POTION_EFFECT.AMBIENT, (byte) (ambient ? 1 : 0)));
 		return new CompoundTag("", data);
 	}
 

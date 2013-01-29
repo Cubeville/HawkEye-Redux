@@ -20,6 +20,7 @@ package org.cubeville.hawkeye.item.data;
 
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
@@ -40,19 +41,15 @@ public class MobHeadItemData extends BaseItemData {
 	 * @param data Tag to deserialize from
 	 */
 	public MobHeadItemData(CompoundTag tag) {
-		super(tag);
-
 		Map<String, Tag> data = tag.getValue();
-		if (data.containsKey("SkullOwner")) {
-			owner = ((StringTag) data.get("SkullOwner")).getValue();
+		if (data.containsKey(NBT.ITEM.SKULL.OWNER)) {
+			owner = ((StringTag) data.get(NBT.ITEM.SKULL.OWNER)).getValue();
 		}
 	}
 
-	/*
 	public MobHeadItemData(String owner) {
 		this.owner = owner;
 	}
-	*/
 
 	/**
 	 * Sets the owner of this mob head
@@ -75,7 +72,7 @@ public class MobHeadItemData extends BaseItemData {
 	public void serialize(Map<String, Tag> map) {
 		super.serialize(map);
 
-		map.put("SkullOwner", new StringTag("SkullOwner", owner));
+		map.put(NBT.ITEM.SKULL.OWNER, new StringTag(NBT.ITEM.SKULL.OWNER, owner));
 	}
 
 }

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.ListTag;
 import org.cubeville.lib.jnbt.Tag;
@@ -31,6 +32,7 @@ import org.cubeville.lib.jnbt.Tag;
  */
 public class FireworkItemData extends BaseItemData {
 
+	// TODO Flight level
 	private List<FireworkExplosion> explosions;
 
 	/**
@@ -39,13 +41,11 @@ public class FireworkItemData extends BaseItemData {
 	 * @param tag Tag to deserialize from
 	 */
 	public FireworkItemData(CompoundTag tag) {
-		super(tag);
-
 		Map<String, Tag> data = tag.getValue();
-		if (data.containsKey("Explosions")) {
+		if (data.containsKey(NBT.ITEM.FIREWORK.EFFECTS)) {
 			explosions = new ArrayList<FireworkExplosion>();
 
-			List<Tag> explosions = ((ListTag) data.get("Explosions")).getValue();
+			List<Tag> explosions = ((ListTag) data.get(NBT.ITEM.FIREWORK.EFFECTS)).getValue();
 			for (Tag t : explosions) {
 				FireworkExplosion explosion = new FireworkExplosion((CompoundTag) t);
 				this.explosions.add(explosion);
@@ -69,7 +69,7 @@ public class FireworkItemData extends BaseItemData {
 			}
 		}
 
-		map.put("Explosions", new ListTag("Explosions", CompoundTag.class, data));
+		map.put(NBT.ITEM.FIREWORK.EFFECTS, new ListTag(NBT.ITEM.FIREWORK.EFFECTS, CompoundTag.class, data));
 	}
 
 
