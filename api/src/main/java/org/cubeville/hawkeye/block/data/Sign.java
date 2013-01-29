@@ -18,45 +18,71 @@
 
 package org.cubeville.hawkeye.block.data;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.cubeville.hawkeye.model.BlockData;
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
 
 /**
  * ItemData implementation to store the text written on signs
  */
-public class Sign implements BlockData {
+public class Sign extends BaseBlockData {
 
-	private String[] lines;
+	private final String[] lines;
+
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param data Tag to deserialize from
+	 */
+	public Sign(CompoundTag tag) {
+		lines = new String[] { "", "", "", "" };
+
+		Map<String, Tag> data = tag.getValue();
+
+		if (data.containsKey(NBT.BLOCK.SIGN.LINE1)) {
+			lines[0] = ((StringTag) data.get(NBT.BLOCK.SIGN.LINE1)).getValue();
+		}
+		if (data.containsKey(NBT.BLOCK.SIGN.LINE2)) {
+			lines[1] = ((StringTag) data.get(NBT.BLOCK.SIGN.LINE2)).getValue();
+		}
+		if (data.containsKey(NBT.BLOCK.SIGN.LINE3)) {
+			lines[2] = ((StringTag) data.get(NBT.BLOCK.SIGN.LINE3)).getValue();
+		}
+		if (data.containsKey(NBT.BLOCK.SIGN.LINE4)) {
+			lines[3] = ((StringTag) data.get(NBT.BLOCK.SIGN.LINE4)).getValue();
+		}
+	}
 
 	public Sign(String[] lines) {
 		this.lines = lines;
 	}
 
-	public void setLines(String[] lines) {
-		this.lines = lines;
-	}
-
+	/**
+	 * Returns the lines of text on this sign
+	 */
 	public String[] getLines() {
 		return lines;
 	}
 
-	public void setLine(int i, String line) {
-		lines[i] = line;
-	}
-
+	/**
+	 * Gets the specified line of text on this sign
+	 *
+	 * @param i Line number to get
+	 * @return Text on line number
+	 */
 	public String getLine(int i) {
 		return lines[i];
 	}
 
 	@Override
-	public CompoundTag serialize() {
-		Map<String, Tag> data = new HashMap<String, Tag>();
-
-		return new CompoundTag("", data);
+	public void serialize(Map<String, Tag> map) {
+		map.put(NBT.BLOCK.SIGN.LINE1, new StringTag(NBT.BLOCK.SIGN.LINE1, lines[0]));
+		map.put(NBT.BLOCK.SIGN.LINE2, new StringTag(NBT.BLOCK.SIGN.LINE2, lines[1]));
+		map.put(NBT.BLOCK.SIGN.LINE3, new StringTag(NBT.BLOCK.SIGN.LINE3, lines[2]));
+		map.put(NBT.BLOCK.SIGN.LINE4, new StringTag(NBT.BLOCK.SIGN.LINE4, lines[3]));
 	}
 
 }

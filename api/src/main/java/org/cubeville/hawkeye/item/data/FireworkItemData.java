@@ -33,7 +33,7 @@ import org.cubeville.lib.jnbt.Tag;
 public class FireworkItemData extends BaseItemData {
 
 	// TODO Flight level
-	private List<FireworkExplosion> explosions;
+	private final List<FireworkExplosion> explosions;
 
 	/**
 	 * Deserialization constructor
@@ -41,14 +41,15 @@ public class FireworkItemData extends BaseItemData {
 	 * @param tag Tag to deserialize from
 	 */
 	public FireworkItemData(CompoundTag tag) {
+		explosions = new ArrayList<FireworkExplosion>();
+
 		Map<String, Tag> data = tag.getValue();
 		if (data.containsKey(NBT.ITEM.FIREWORK.EFFECTS)) {
-			explosions = new ArrayList<FireworkExplosion>();
 
-			List<Tag> explosions = ((ListTag) data.get(NBT.ITEM.FIREWORK.EFFECTS)).getValue();
-			for (Tag t : explosions) {
+			List<Tag> list = ((ListTag) data.get(NBT.ITEM.FIREWORK.EFFECTS)).getValue();
+			for (Tag t : list) {
 				FireworkExplosion explosion = new FireworkExplosion((CompoundTag) t);
-				this.explosions.add(explosion);
+				explosions.add(explosion);
 			}
 		}
 	}

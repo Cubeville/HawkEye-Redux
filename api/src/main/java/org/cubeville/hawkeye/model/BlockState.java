@@ -20,7 +20,6 @@ package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.item.Items;
 
-
 /**
  * Represents the state of a block at a certain point in time
  */
@@ -38,9 +37,19 @@ public class BlockState {
 	 */
 	private byte data;
 
+	/**
+	 * Custom data associated with the block (tile entity data)
+	 */
+	private BlockData blockData;
+
 	public BlockState(Items type, byte data) {
+		this(type, data, null);
+	}
+
+	public BlockState(Items type, byte data, BlockData blockData) {
 		this.type = type;
 		this.data = data;
+		this.blockData = blockData;
 	}
 
 	/**
@@ -67,6 +76,8 @@ public class BlockState {
 
 		type = Items.getById(id);
 		this.data = data;
+
+		// TODO Add blockdata support
 	}
 
 	/**
@@ -103,6 +114,24 @@ public class BlockState {
 	 */
 	public void setData(byte data) {
 		this.data = data;
+	}
+
+	/**
+	 * Gets the tile entity data associated with this block state
+	 *
+	 * @return Block data
+	 */
+	public BlockData getBlockData() {
+		return blockData;
+	}
+
+	/**
+	 * Sets the tile entity data associated with this block state
+	 *
+	 * @param blockData Block data
+	 */
+	public void setBlockData(BlockData blockData) {
+		this.blockData = blockData;
 	}
 
 	@Override

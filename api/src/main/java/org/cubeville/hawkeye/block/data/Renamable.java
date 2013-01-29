@@ -21,70 +21,50 @@ package org.cubeville.hawkeye.block.data;
 import java.util.Map;
 
 import org.cubeville.hawkeye.NBT;
-import org.cubeville.lib.jnbt.ByteTag;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
 
-public class Skull extends BaseBlockData {
+public abstract class Renamable extends BaseBlockData {
 
-	private final byte type;
-	private final String player;
-	private final byte rotation;
+	private final String name;
 
 	/**
 	 * Deserialization constructor
 	 *
 	 * @param data Tag to deserialize from
 	 */
-	public Skull(CompoundTag tag) {
+	public Renamable(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();
-
-		type = ((ByteTag) data.get(NBT.BLOCK.SKULL.TYPE)).getValue();
-		rotation = ((ByteTag) data.get(NBT.BLOCK.SKULL.ROTATION)).getValue();
-
-		if (data.containsKey(NBT.BLOCK.SKULL.PLAYER)) {
-			player = ((StringTag) data.get(NBT.BLOCK.SKULL.PLAYER)).getValue();
+		if (data.containsKey(NBT.BLOCK.NAME)) {
+			name = ((StringTag) data.get(NBT.BLOCK.NAME)).getValue();
 		} else {
-			player = "";
+			name = null;
 		}
 	}
 
-	/**
-	 * Gets the type of this skull
-	 */
-	public byte getType() {
-		return type;
+	public Renamable(String name) {
+		this.name = name;
 	}
 
 	/**
-	 * Returns whether or not this skull has a custom player
+	 * Returns whether or not this block has a custom name
 	 */
-	public boolean hasPlayer() {
-		return !(player == null || player.isEmpty());
+	public boolean hasName() {
+		return !(name == null || name.isEmpty());
 	}
 
 	/**
-	 * Gets the player this skull represents
+	 * Gets the custom name associated with this block
 	 */
-	public String getPlayer() {
-		return player;
-	}
-
-	/**
-	 * Gets the rotation of this skull
-	 */
-	public byte getRotation() {
-		return rotation;
+	public String getName() {
+		return name;
 	}
 
 	@Override
 	public void serialize(Map<String, Tag> map) {
-		map.put(NBT.BLOCK.SKULL.TYPE, new ByteTag(NBT.BLOCK.SKULL.TYPE, type));
-		map.put(NBT.BLOCK.SKULL.ROTATION, new ByteTag(NBT.BLOCK.SKULL.ROTATION, rotation));
-
-		if (hasPlayer()) {
-			map.put(NBT.BLOCK.SKULL.PLAYER, new StringTag(NBT.BLOCK.SKULL.PLAYER, player));
+		if (hasName()) {
+			map.put(NBT.BLOCK.NAME, new StringTag(NBT.BLOCK.NAME, name));
 		}
 	}
 

@@ -85,4 +85,45 @@ public class NBT {
 		public static final String FADE_COLORS = "FadeColors";
 	}
 
+	public class BLOCK {
+		public static final String NAME = "CustomName";
+		public static final String INVENTORY = "Items";
+
+		public class BEACON {
+			public static final String LEVEL = "Levels";
+			public static final String PRIMARY_EFFECT = "Primary";
+			public static final String SECONDARY_EFFECT = "Secondary";
+		}
+
+		public class BREWING_STAND {
+			public static final String TIME = "BrewTime";
+		}
+
+		public class FURNACE {
+			public static final String FUEL = "BurnTime";
+			public static final String TIME = "CookTime";
+		}
+
+		public class NOTE_BLOCK {
+			public static final String NOTE = "note";
+		}
+
+		public class JUKEBOX {
+			public static final String RECORD = "RecordItem";
+		}
+
+		public class SIGN {
+			public static final String LINE1 = "Text1";
+			public static final String LINE2 = "Text2";
+			public static final String LINE3 = "Text3";
+			public static final String LINE4 = "Text4";
+		}
+
+		public class SKULL {
+			public static final String TYPE = "SkullType";
+			public static final String PLAYER = "ExtraType";
+			public static final String ROTATION = "Rot";
+		}
+	}
+
 }
