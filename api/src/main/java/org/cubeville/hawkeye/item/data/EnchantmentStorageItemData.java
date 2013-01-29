@@ -18,18 +18,20 @@
 
 package org.cubeville.hawkeye.item.data;
 
-import org.cubeville.hawkeye.model.ItemData;
+import java.util.Map;
+
 import org.cubeville.lib.jnbt.Tag;
 
 /**
  * ItemData implementation to store the enchantments on enchanted books
  */
-public class EnchantmentStorageItemData implements ItemData {
+public class EnchantmentStorageItemData extends BaseItemData {
 
 	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+	public void serialize(Map<String, Tag> map) {
+		super.serialize(map);
+		// TODO
 	}
+
 
 }

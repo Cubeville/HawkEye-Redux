@@ -18,17 +18,68 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.cubeville.hawkeye.item.FireworkShape;
 import org.cubeville.hawkeye.model.NBTSerializable;
+import org.cubeville.lib.jnbt.ByteTag;
+import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.Tag;
 
 public class FireworkExplosion implements NBTSerializable {
 
-	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+	private final byte shapeId;
+	private final boolean flicker;
+	private final boolean trail;
+
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param data Tag to deserialize from
+	 */
+	public FireworkExplosion(CompoundTag tag) {
+		Map<String, Tag> data = tag.getValue();
+		shapeId = ((ByteTag) data.get("Type")).getValue();
+		flicker = (((ByteTag) data.get("Flicker")).getValue() == 1);
+		trail = (((ByteTag) data.get("Trail")).getValue() == 1);
 	}
 
+	/**
+	 * Gets the shape of this firework explosion
+	 */
+	public FireworkShape getShape() {
+		return FireworkShape.getById(shapeId);
+	}
 
+	/**
+	 * Gets the id of the shape of this firework explosino
+	 */
+	public byte getShapeId() {
+		return shapeId;
+	}
+
+	/**
+	 * Returns whether or not this firework explosion has the flicker effect
+	 */
+	public boolean hasFlicker() {
+		return flicker;
+	}
+
+	/**
+	 * Returns whether or not this firework explosion has the trail effect
+	 */
+	public boolean hasTrail() {
+		return trail;
+	}
+
+	@Override
+	public CompoundTag serialize() {
+		Map<String, Tag> data = new HashMap<String, Tag>();
+		data.put("Type", new ByteTag("Type", shapeId));
+		data.put("Flicker", new ByteTag("Flicker", (byte) (flicker ? 1 : 0)));
+		data.put("Trail", new ByteTag("Trail", (byte) (trail ? 1 : 0)));
+		return new CompoundTag("", data);
+	}
 
 }

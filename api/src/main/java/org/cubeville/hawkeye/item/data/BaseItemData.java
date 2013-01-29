@@ -18,45 +18,37 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.lib.jnbt.ByteTag;
+import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.ShortTag;
 import org.cubeville.lib.jnbt.Tag;
 
-/**
- * ItemData implementation to store the durability of tools/armor
- */
-public class DurabilityItemData implements ItemData {
+public class BaseItemData implements ItemData {
 
-	/**
-	 * Holds item durability (i.e. for tools/armor)
-	 */
+	private short itemId;
+	private byte amount;
 	private short durability;
 
-	public DurabilityItemData(short durability) {
-		this.durability = durability;
-	}
-
-	/**
-	 * Sets this item's durability
-	 *
-	 * @param durability Durability level
-	 */
-	public void setDurability(short durability) {
-		this.durability = durability;
-	}
-
-	/**
-	 * Gets this item's durability
-	 *
-	 * @return This item's durability level
-	 */
-	public short getDurability() {
-		return durability;
-	}
-
 	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+	public final Tag serialize() {
+		Map<String, Tag> data = new HashMap<String, Tag>();
+		data.put("id", new ShortTag("id", itemId));
+		data.put("Count", new ByteTag("Count", amount));
+		data.put("Damage", new ShortTag("Damage", durability));
+
+		Map<String, Tag> tagData = new HashMap<String, Tag>();
+		serialize(tagData);
+		if (!tagData.isEmpty()) data.put("tag", new CompoundTag("tag", tagData));
+
+		return new CompoundTag("", data);
+	}
+
+	public void serialize(Map<String, Tag> map) {
+
 	}
 
 }

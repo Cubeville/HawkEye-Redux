@@ -47,7 +47,7 @@ public enum PotionEffects {
 	private final int id;
 
 	/**
-	 * Mapping of ids to enchantment for quick access
+	 * Mapping of ids to effects for quick access
 	 */
 	private static final Map<Integer, PotionEffects> idMap = new HashMap<Integer, PotionEffects>(values().length);
 
@@ -56,9 +56,9 @@ public enum PotionEffects {
 	}
 
 	/**
-	 * Gets the id of this enchantment
+	 * Gets the id of this effect
 	 *
-	 * @return This item's id
+	 * @return This effect's id
 	 */
 	public int getId() {
 		return id;
@@ -70,10 +70,10 @@ public enum PotionEffects {
 	}
 
 	/**
-	 * Gets an enchantment by its id
+	 * Gets an effect by its id
 	 *
-	 * @param id Id of enchantment to get
-	 * @return Enchamtment with the specified id or null if it doesn't exist
+	 * @param id Id of effect to get
+	 * @return Potion effect with the specified id or null if it doesn't exist
 	 */
 	public static PotionEffects getById(int id) {
 		return idMap.containsKey(id) ? idMap.get(id) : null;

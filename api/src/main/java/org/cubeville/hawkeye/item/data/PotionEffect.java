@@ -18,55 +18,82 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.cubeville.hawkeye.item.PotionEffects;
 import org.cubeville.hawkeye.model.NBTSerializable;
+import org.cubeville.lib.jnbt.ByteTag;
+import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.IntTag;
 import org.cubeville.lib.jnbt.Tag;
 
 public class PotionEffect implements NBTSerializable {
 
-	private byte effectId;
-	private byte amplifier;
-	private int duration;
-	private boolean splash;
-	private boolean ambient;
+	private final byte effectId;
+	private final byte amplifier;
+	private final int duration;
+	private final boolean ambient;
 
 	/**
 	 * Deserialization constructor
 	 *
 	 * @param data Tag to deserialize from
 	 */
-	public PotionEffect(Tag data) {
-
+	public PotionEffect(CompoundTag tag) {
+		Map<String, Tag> data = tag.getValue();
+		effectId = ((ByteTag) data.get("Id")).getValue();
+		amplifier = ((ByteTag) data.get("Amplifier")).getValue();
+		duration = ((IntTag) data.get("Duration")).getValue();
+		ambient = (((ByteTag) data.get("Ambient")).getValue() == 1);
 	}
 
+	/**
+	 * Gets the type of effect this potion effect has
+	 */
 	public PotionEffects getEffect() {
 		return PotionEffects.getById(effectId);
 	}
 
+	/**
+	 * Gets the id of the type of effect this potion effect has
+	 */
 	public byte getEffectId() {
 		return effectId;
 	}
 
+	/**
+	 * Gets this potion effect's level amplifier
+	 */
 	public byte getAmplifier() {
 		return amplifier;
 	}
 
+	/**
+	 * Gets this potion effect's duration (in game ticks)
+	 */
 	public int getDuration() {
 		return duration;
 	}
 
-	public boolean isSplash() {
-		return splash;
-	}
-
+	/**
+	 * Gets whether or not this potion effect is ambient
+	 *
+	 * Ambient potion effects have a reduced amount of visual particles around
+	 * the player.
+	 */
 	public boolean isAmbient() {
 		return ambient;
 	}
 
 	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+	public CompoundTag serialize() {
+		Map<String, Tag> data = new HashMap<String, Tag>();
+		data.put("Id", new ByteTag("Id", effectId));
+		data.put("Amplifier", new ByteTag("Amplifier", amplifier));
+		data.put("Duration", new IntTag("Duration", duration));
+		data.put("Ambient", new ByteTag("Ambient", (byte) (ambient ? 1 : 0)));
+		return new CompoundTag("", data);
 	}
 
 }

@@ -18,15 +18,35 @@
 
 package org.cubeville.hawkeye.item.data;
 
-import org.cubeville.hawkeye.model.ItemData;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.ListTag;
 import org.cubeville.lib.jnbt.Tag;
 
-public class PotionItemData implements ItemData {
+public class PotionItemData extends BaseItemData {
+
+	private List<PotionEffect> customEffects;
+
+	public boolean hasCustomEffects() {
+		return !(customEffects == null || customEffects.isEmpty());
+	}
 
 	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+	public void serialize(Map<String, Tag> map) {
+		super.serialize(map);
+
+		List<Tag> data = new ArrayList<Tag>();
+
+		if (hasCustomEffects()) {
+			for (PotionEffect effect : customEffects) {
+				data.add(effect.serialize());
+			}
+		}
+
+		map.put("CustomPotionEffects", new ListTag("CustomPotionEffects", CompoundTag.class, data));
 	}
 
 }

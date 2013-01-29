@@ -18,18 +18,39 @@
 
 package org.cubeville.hawkeye.item.data;
 
-import org.cubeville.hawkeye.model.ItemData;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.ListTag;
 import org.cubeville.lib.jnbt.Tag;
 
 /**
  * ItemData implementation to store the effects of a firework
  */
-public class FireworkItemData implements ItemData {
+public class FireworkItemData extends BaseItemData {
+
+	private List<FireworkExplosion> explosions;
+
+	public boolean hasExplosions() {
+		return !(explosions == null || explosions.isEmpty());
+	}
 
 	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+	public void serialize(Map<String, Tag> map) {
+		super.serialize(map);
+
+		List<Tag> data = new ArrayList<Tag>();
+
+		if (hasExplosions()) {
+			for (FireworkExplosion explosion : explosions) {
+				data.add(explosion.serialize());
+			}
+		}
+
+		map.put("Explosions", new ListTag("Explosions", CompoundTag.class, data));
 	}
+
 
 }

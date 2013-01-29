@@ -18,22 +18,20 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.Map;
+
 import org.cubeville.lib.jnbt.Tag;
 
 /**
  * ItemData implementation to store the color of dyed armor
  */
-public class ColoredArmorItemData extends DurabilityItemData {
-
-	public ColoredArmorItemData(short durability) {
-		super(durability);
-		// TODO Auto-generated constructor stub
-	}
+public class ColoredArmorItemData extends BaseItemData {
 
 	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+	public void serialize(Map<String, Tag> map) {
+		super.serialize(map);
+		// TODO
 	}
+
 
 }

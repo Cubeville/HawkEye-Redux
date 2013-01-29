@@ -18,13 +18,15 @@
 
 package org.cubeville.hawkeye.item.data;
 
-import org.cubeville.hawkeye.model.ItemData;
+import java.util.Map;
+
+import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
 
 /**
  * ItemData implementation to store the owner of player skulls
  */
-public class MobHeadItemData implements ItemData {
+public class MobHeadItemData extends BaseItemData {
 
 	/**
 	 * Owner of this mob head
@@ -53,9 +55,10 @@ public class MobHeadItemData implements ItemData {
 	}
 
 	@Override
-	public Tag serialize() {
-		// TODO Auto-generated method stub
-		return null;
+	public void serialize(Map<String, Tag> map) {
+		super.serialize(map);
+
+		map.put("SkullOwner", new StringTag("SkullOwner", owner));
 	}
 
 }
