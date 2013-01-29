@@ -27,6 +27,7 @@ import org.cubeville.hawkeye.item.data.EnchantmentStorageItemData;
 import org.cubeville.hawkeye.item.data.FireworkItemData;
 import org.cubeville.hawkeye.item.data.MapItemData;
 import org.cubeville.hawkeye.item.data.MobHeadItemData;
+import org.cubeville.hawkeye.item.data.PotionItemData;
 import org.cubeville.hawkeye.model.ItemData;
 
 public enum Items {
@@ -148,7 +149,7 @@ public enum Items {
 	GHAST_TEAR(370),
 	GOLD_NUGGET(371),
 	NETHER_STALK(372),
-	POTION(373),
+	POTION(373, PotionItemData.class),
 	GLASS_BOTTLE(374),
 	SPIDER_EYE(375),
 	FERMENTED_SPIDER_EYE(376),

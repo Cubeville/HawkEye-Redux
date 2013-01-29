@@ -33,6 +33,26 @@ public class FireworkItemData extends BaseItemData {
 
 	private List<FireworkExplosion> explosions;
 
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param tag Tag to deserialize from
+	 */
+	public FireworkItemData(CompoundTag tag) {
+		super(tag);
+
+		Map<String, Tag> data = tag.getValue();
+		if (data.containsKey("Explosions")) {
+			explosions = new ArrayList<FireworkExplosion>();
+
+			List<Tag> explosions = ((ListTag) data.get("Explosions")).getValue();
+			for (Tag t : explosions) {
+				FireworkExplosion explosion = new FireworkExplosion((CompoundTag) t);
+				this.explosions.add(explosion);
+			}
+		}
+	}
+
 	public boolean hasExplosions() {
 		return !(explosions == null || explosions.isEmpty());
 	}

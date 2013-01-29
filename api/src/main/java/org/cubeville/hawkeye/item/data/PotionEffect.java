@@ -38,7 +38,7 @@ public class PotionEffect implements NBTSerializable {
 	/**
 	 * Deserialization constructor
 	 *
-	 * @param data Tag to deserialize from
+	 * @param tag Tag to deserialize from
 	 */
 	public PotionEffect(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();

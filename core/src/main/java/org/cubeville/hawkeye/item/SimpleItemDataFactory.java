@@ -16,28 +16,29 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item.data;
+package org.cubeville.hawkeye.item;
 
 import java.util.Map;
 
+import org.cubeville.hawkeye.model.ItemData;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.Tag;
 
-/**
- * ItemData implementation to store the color of dyed armor
- */
-public class ColoredArmorItemData extends BaseItemData {
+public class SimpleItemDataFactory implements ItemDataFactory {
 
-	public ColoredArmorItemData(CompoundTag tag) {
-		super(tag);
-		// TODO Auto-generated constructor stub
+	@Override
+	public ItemData getItemData(CompoundTag tag) {
+		Map<String, Tag> data = tag.getValue();
+		if (!data.containsKey("id")) return null;
+
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
-		super.serialize(map);
-		// TODO
+	public ItemData getItemData(ItemStack stack) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-
 
 }

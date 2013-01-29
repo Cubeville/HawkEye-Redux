@@ -20,12 +20,18 @@ package org.cubeville.hawkeye.item.data;
 
 import java.util.Map;
 
+import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.Tag;
 
 /**
  * ItemData implementation to store the contents of written books
  */
 public class BookItemData extends BaseItemData {
+
+	public BookItemData(CompoundTag tag) {
+		super(tag);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void serialize(Map<String, Tag> map) {

@@ -18,10 +18,10 @@
 
 package org.cubeville.hawkeye.model;
 
-import org.cubeville.lib.jnbt.Tag;
+import org.cubeville.lib.jnbt.CompoundTag;
 
 public interface NBTSerializable {
 
-	Tag serialize();
+	CompoundTag serialize();
 
 }

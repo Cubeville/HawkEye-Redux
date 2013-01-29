@@ -30,6 +30,26 @@ public class PotionItemData extends BaseItemData {
 
 	private List<PotionEffect> customEffects;
 
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param tag Tag to deserialize from
+	 */
+	public PotionItemData(CompoundTag tag) {
+		super(tag);
+
+		Map<String, Tag> data = tag.getValue();
+		if (data.containsKey("CustomPotionEffects")) {
+			customEffects = new ArrayList<PotionEffect>();
+
+			List<Tag> effects = ((ListTag) data.get("CustomPotionEffects")).getValue();
+			for (Tag t : effects) {
+				PotionEffect effect = new PotionEffect((CompoundTag) t);
+				customEffects.add(effect);
+			}
+		}
+	}
+
 	public boolean hasCustomEffects() {
 		return !(customEffects == null || customEffects.isEmpty());
 	}

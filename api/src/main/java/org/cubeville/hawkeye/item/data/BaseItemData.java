@@ -29,12 +29,24 @@ import org.cubeville.lib.jnbt.Tag;
 
 public class BaseItemData implements ItemData {
 
-	private short itemId;
-	private byte amount;
-	private short durability;
+	private final short itemId;
+	private final byte amount;
+	private final short durability;
+
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param tag Tag to deserialize from
+	 */
+	public BaseItemData(CompoundTag tag) {
+		Map<String, Tag> data = tag.getValue();
+		itemId = ((ShortTag) data.get("Id")).getValue();
+		amount = ((ByteTag) data.get("Count")).getValue();
+		durability = ((ShortTag) data.get("Damage")).getValue();
+	}
 
 	@Override
-	public final Tag serialize() {
+	public final CompoundTag serialize() {
 		Map<String, Tag> data = new HashMap<String, Tag>();
 		data.put("id", new ShortTag("id", itemId));
 		data.put("Count", new ByteTag("Count", amount));
@@ -47,8 +59,6 @@ public class BaseItemData implements ItemData {
 		return new CompoundTag("", data);
 	}
 
-	public void serialize(Map<String, Tag> map) {
-
-	}
+	public void serialize(Map<String, Tag> map) { }
 
 }
