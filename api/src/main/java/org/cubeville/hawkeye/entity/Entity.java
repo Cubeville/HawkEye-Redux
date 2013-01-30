@@ -77,7 +77,6 @@ public enum Entity {
 	PLAYER(-1),
 	COMPLEX_PART(-1);
 
-
 	/**
 	 * Entity id
 	 */

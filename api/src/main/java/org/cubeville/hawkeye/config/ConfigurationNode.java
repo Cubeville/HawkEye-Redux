@@ -40,7 +40,6 @@ public class ConfigurationNode implements Configuration {
 		this.writeDefaults = writeDefaults;
 	}
 
-
 	/**
 	 * Gets the configuration's backing map
 	 *
