@@ -60,12 +60,12 @@ public class SimpleSearchManager implements SearchManager {
 		registerParameter("default", defaultParser);
 		registerParameter("p", defaultParser);
 
-		registerParameter("r", new RadiusParser());
-		registerParameter("t", new TimeParser());
+		registerParameter("r", new RadiusParser(), false);
+		registerParameter("t", new TimeParser(), false);
 		registerParameter("a", new ActionParser());
 		registerParameter("f", new FilterParser());
-		registerParameter("l", new LocationParser());
-		registerParameter("w", new WorldParser());
+		registerParameter("l", new LocationParser(), false);
+		registerParameter("w", new WorldParser(), false);
 	}
 
 	@Override
