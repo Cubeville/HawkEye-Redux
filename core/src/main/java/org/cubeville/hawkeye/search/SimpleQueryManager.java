@@ -52,7 +52,7 @@ public class SimpleQueryManager implements QueryManager {
 	/**
 	 * Custom parameter parsers (keyed by prefix)
 	 */
-	private final Map<String, Pair<ParameterParser, Boolean>> parameters = new HashMap<String, Pair<ParameterParser, Boolean>>();
+	private final Map<String, ParameterParser> parameters = new HashMap<String, ParameterParser>();
 
 	public SimpleQueryManager() {
 		// If no parameter is specified it will fallback to the default parser
@@ -60,63 +60,33 @@ public class SimpleQueryManager implements QueryManager {
 		registerParameter("default", defaultParser);
 		registerParameter("p", defaultParser);
 
-		registerParameter("r", new RadiusParser(), false);
-		registerParameter("t", new TimeParser(), false);
+		registerParameter("r", new RadiusParser());
+		registerParameter("t", new TimeParser());
 		registerParameter("a", new ActionParser());
 		registerParameter("f", new FilterParser());
-		registerParameter("l", new LocationParser(), false);
-		registerParameter("w", new WorldParser(), false);
+		registerParameter("l", new LocationParser());
+		registerParameter("w", new WorldParser());
 	}
 
 	@Override
 	public Statement getQuery(Connection connection, String params, CommandSender sender) throws CommandException, SQLException {
 		String query = "SELECT * FROM " + table("data") + " WHERE ";
 
-		String[] parts = params.split(" ");
 		List<String> conditions = new LinkedList<String>();
 		Map<String, Object> binds = new HashMap<String, Object>();
 
 		// Default condition so it doesn't break if no parameters are processed
 		conditions.add("true");
 
-		List<String> used = new ArrayList<String>();
+		Map<ParameterParser, List<String>> parameters = parseInput(params);
 
-		for (int i = 0; i < parts.length; i++) {
-			String param = parts[i];
-			ParameterParser parser;
+		for (Map.Entry<ParameterParser, List<String>> parameter : parameters.entrySet()) {
+			ParameterParser parser = parameter.getKey();
+			List<String> values = parameter.getValue();
+			Pair<String, Map<String, Object>> parsed = parser.process(values, sender);
 
-			if (param.isEmpty()) continue;
-
-			// Get parameter key/value
-			String[] paramParts = param.split(":", 2);
-			String key = paramParts.length == 1 ? "default" : paramParts[0].toLowerCase();
-			String value = paramParts.length == 1 ? paramParts[0] : paramParts[1];
-
-			if (key.equalsIgnoreCase("default")) {
-				parser = defaultParser;
-			} else {
-				// Get custom parser
-				Pair<ParameterParser, Boolean> pair = parameters.get(key);
-				if (pair == null) {
-					parser = null;
-				} else {
-					// Check for duplicate parameters
-					if (!pair.getRight() && used.contains(key)) {
-						throw new CommandUsageException("Duplicate parameter detected: '" + key + "'");
-					} else {
-						if (!pair.getRight()) used.add(key);
-						parser = pair.getLeft();
-					}
-					// TODO Group together duplicate parameters so they don't get parsed into individual clauses
-				}
-			}
-
-			if (parser == null) throw new CommandUsageException("Invalid parameter specified: '" + key + "'");
-
-			// Parse parameter
-			Pair<String, Map<String, Object>> data = parser.process(value, sender);
-			conditions.add(data.getLeft());
-			if (data.getRight() != null) binds.putAll(data.getRight());
+			conditions.add(parsed.getLeft());
+			if (parsed.getRight() != null) binds.putAll(parsed.getRight());
 		}
 
 		// Build full query
@@ -143,17 +113,71 @@ public class SimpleQueryManager implements QueryManager {
 
 	@Override
 	public boolean registerParameter(String prefix, ParameterParser parser) {
-		return registerParameter(prefix, parser, true);
-	}
-
-	@Override
-	public boolean registerParameter(String prefix, ParameterParser parser, boolean duplicate) {
 		prefix = prefix.toLowerCase();
-
 		if (parameters.containsKey(prefix)) return false;
 
-		parameters.put(prefix, Pair.of(parser, duplicate));
+		parameters.put(prefix, parser);
 		return true;
+	}
+
+	private Map<ParameterParser, List<String>> parseInput(String input) throws CommandUsageException {
+		List<String> args = StringUtil.split(input, " ");
+		Map<ParameterParser, List<String>> ret = new HashMap<ParameterParser, List<String>>();
+
+		ParameterParser parser = null;
+
+		for (int i = 0; i < args.size(); i++) {
+			String arg = args.get(i);
+			if (arg.isEmpty()) continue;
+
+			if (parser == null) {
+				if (!arg.contains(":")) {
+					// No parameter specified, fallback to default parser
+					parser = defaultParser;
+				} else {
+					String[] parts = arg.split(":");
+					String key = parts[0];
+
+					// Get the parser for this parameter
+					if (!parameters.containsKey(key)) {
+						throw new CommandUsageException("Invalid parameter specified: &7" + key);
+					} else {
+						parser = parameters.get(key);
+
+						if (parts.length == 1) {
+							// User left a space between parameter and value
+
+							if (i == (args.size() - 1)) {
+								// Last parameter
+								throw new CommandUsageException("Invalid argument specified: &7" + arg);
+							} else {
+								continue;
+							}
+						} else {
+							// Get just the value
+							arg = parts[1];
+						}
+					}
+				}
+			}
+
+			// At this point arg should be equal to just the value (no parameter)
+
+			if (parser != null) {
+				List<String> values;
+
+				if (ret.containsKey(parser)) {
+					values = ret.get(parser);
+				} else {
+					values = new ArrayList<String>();
+				}
+
+				values.addAll(StringUtil.split(arg));
+				ret.put(parser, values);
+			}
+		}
+
+		return ret;
 	}
 
 }

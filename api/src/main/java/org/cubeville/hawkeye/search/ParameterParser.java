@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye.search;
 
+import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandException;
@@ -43,13 +44,13 @@ public interface ParameterParser {
 	 *   "action": "block-break"
 	 *   "filter": "%98%"
 	 *
-	 * @param parameter Parameter to search for
+	 * @param parameters Parameters to search for
 	 * @param sender Who is doing the search
 	 * @return Pair containing SQL query and mapping of parameters to values
 	 *            left value - SQL where clause to use a database query
 	 *            right value - Map of named parameters and their values
 	 * @throws CommandException If the parameter is invalid
 	 */
-	Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException;
+	Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException;
 
 }

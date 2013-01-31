@@ -18,21 +18,32 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.util.Pair;
+import org.cubeville.util.StringUtil;
 
 public class FilterParser implements ParameterParser {
 
 	@Override
-	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) {
-		String sql = "`data` LIKE :data";
+	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) {
+		List<String> conditions = new ArrayList<String>();
 		Map<String, Object> binds = new HashMap<String, Object>();
-		binds.put("data", "%" + parameter + "%");
 
+		for (int i = 0; i < parameters.size(); i++) {
+			String name = "data" + i;
+			String value = parameters.get(i);
+
+			conditions.add("(`data` LIKE :" + name + ")");
+			binds.put(name, "%" + value + "%");
+		}
+
+		String sql = StringUtil.buildString(conditions, " OR ");
 		return Pair.of(sql, binds);
 	}
 

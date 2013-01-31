@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.search.parsers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.sk89q.worldedit.IncompleteRegionException;
@@ -55,8 +56,11 @@ public class RadiusParser implements ParameterParser {
 	}
 
 	@Override
-	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException {
+	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
 		if (!sender.isPlayer()) throw new CommandPlayerException();
+		if (parameters.size() > 1) throw new CommandUsageException("Invalid radius specified: &7" + StringUtil.buildString(parameters, ","));
+
+		String parameter = parameters.get(0);
 
 		if ((parameter.equalsIgnoreCase("we") || parameter.equalsIgnoreCase("worldedit")) && hasWorldEdit()) {
 			return processWorldedit(sender);

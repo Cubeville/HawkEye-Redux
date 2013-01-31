@@ -33,11 +33,10 @@ import org.cubeville.util.StringUtil;
 public class ActionParser implements ParameterParser {
 
 	@Override
-	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException {
+	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
 		List<String> actions = new ArrayList<String>();
 
-		List<String> params = StringUtil.split(parameter);
-		for (String param : params) {
+		for (String param : parameters) {
 			Action action = HawkEye.getDataManager().getAction(param);
 
 			if (action == null) throw new CommandException("Invalid action specified: &7" + param);

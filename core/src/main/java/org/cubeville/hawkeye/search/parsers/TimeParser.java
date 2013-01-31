@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandSender;
@@ -27,7 +28,7 @@ import org.cubeville.util.Pair;
 public class TimeParser implements ParameterParser {
 
 	@Override
-	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) {
+	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) {
 		// TODO Auto-generated method stub
 		return null;
 	}

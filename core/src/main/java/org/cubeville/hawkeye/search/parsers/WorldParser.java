@@ -32,11 +32,10 @@ import org.cubeville.util.StringUtil;
 public class WorldParser implements ParameterParser {
 
 	@Override
-	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException {
+	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
 		List<String> worlds = new ArrayList<String>();
 
-		List<String> params = StringUtil.split(parameter);
-		for (String param : params) {
+		for (String param : parameters) {
 			int id = HawkEye.getDataManager().getWorldId(param);
 
 			if (id == -1) throw new CommandException("Could not find world: &7" + param);
