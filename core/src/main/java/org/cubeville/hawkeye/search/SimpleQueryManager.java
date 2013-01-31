@@ -42,7 +42,7 @@ import org.cubeville.hawkeye.search.parsers.WorldParser;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class SimpleSearchManager implements SearchManager {
+public class SimpleQueryManager implements QueryManager {
 
 	/**
 	 * Default parameter parser (used if no parameter is prefixed)
@@ -54,7 +54,7 @@ public class SimpleSearchManager implements SearchManager {
 	 */
 	private final Map<String, Pair<ParameterParser, Boolean>> parameters = new HashMap<String, Pair<ParameterParser, Boolean>>();
 
-	public SimpleSearchManager() {
+	public SimpleQueryManager() {
 		// If no parameter is specified it will fallback to the default parser
 		defaultParser = new PlayerParser();
 		registerParameter("default", defaultParser);

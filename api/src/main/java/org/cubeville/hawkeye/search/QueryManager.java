@@ -25,7 +25,7 @@ import java.sql.Statement;
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 
-public interface SearchManager {
+public interface QueryManager {
 
 	/**
 	 * Gets an sql statement based on parameters provided by the command sender

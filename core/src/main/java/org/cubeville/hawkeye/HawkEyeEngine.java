@@ -24,8 +24,8 @@ import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
-import org.cubeville.hawkeye.search.SearchManager;
-import org.cubeville.hawkeye.search.SimpleSearchManager;
+import org.cubeville.hawkeye.search.QueryManager;
+import org.cubeville.hawkeye.search.SimpleQueryManager;
 import org.cubeville.hawkeye.session.SessionManager;
 import org.cubeville.hawkeye.session.SimpleSessionFactory;
 import org.cubeville.hawkeye.session.SimpleSessionManager;
@@ -72,9 +72,9 @@ public class HawkEyeEngine implements PluginEngine {
 	private final DataManager dataManager;
 
 	/**
-	 * Search manager
+	 * Query manager
 	 */
-	private final SearchManager searchManager;
+	private final QueryManager queryManager;
 
 	public HawkEyeEngine(ServerInterface server, Configuration config) {
 		HawkEye.setEngine(this);
@@ -86,7 +86,7 @@ public class HawkEyeEngine implements PluginEngine {
 		consumer = new SimpleConsumer();
 		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
 		dataManager = new SimpleDataManager();
-		searchManager = new SimpleSearchManager();
+		queryManager = new SimpleQueryManager();
 
 		try {
 			database.connect(
@@ -151,8 +151,8 @@ public class HawkEyeEngine implements PluginEngine {
 	}
 
 	@Override
-	public SearchManager getSearchManager() {
-		return searchManager;
+	public QueryManager getQueryManager() {
+		return queryManager;
 	}
 
 	@Override
