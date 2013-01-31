@@ -78,6 +78,8 @@ public class BlockState {
 		this.data = data;
 
 		// TODO Add blockdata support
+		// Idea: Store blockdata in hawkeye_nbt table and only access it when
+		// needed, i.e. if the user requests it or it is rolled back
 	}
 
 	/**

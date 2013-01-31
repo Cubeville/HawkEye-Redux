@@ -51,7 +51,7 @@ public class SimpleDataManager implements DataManager {
 	private final Map<String, Integer> playerIds = new HashMap<String, Integer>();
 
 	/**
-	 * Map containg world ids and their names
+	 * Map containing world ids and their names
 	 */
 	private final Map<Integer, String> worlds = new HashMap<Integer, String>();
 

@@ -122,6 +122,8 @@ public class SimpleSearchManager implements SearchManager {
 		// Build full query
 		query += "(" + StringUtil.buildString(conditions, ") AND (") + ")";
 
+		// TODO Add ordering and limiting
+
 		NamedParameterStatement stmt;
 
 		try {
