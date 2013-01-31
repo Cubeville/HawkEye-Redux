@@ -36,11 +36,11 @@ public class ActionParser implements ParameterParser {
 	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException {
 		List<String> actions = new ArrayList<String>();
 
-		String[] list = parameter.split(",");
-		for (int i = 0; i < list.length; i++) {
-			Action action = HawkEye.getDataManager().getAction(list[i]);
+		List<String> params = StringUtil.split(parameter);
+		for (String param : params) {
+			Action action = HawkEye.getDataManager().getAction(param);
 
-			if (action == null) throw new CommandException("Invalid action specified: &7" + list[i]);
+			if (action == null) throw new CommandException("Invalid action specified: &7" + param);
 			else actions.add(action.getName());
 		}
 

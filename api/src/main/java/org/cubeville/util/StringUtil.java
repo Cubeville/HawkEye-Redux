@@ -18,6 +18,7 @@
 
 package org.cubeville.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class StringUtil {
@@ -64,6 +65,27 @@ public class StringUtil {
 
 	public static String buildString(List<String> args, String separator, int startIndex) {
 		return buildString(args.toArray(new String[args.size()]), separator, startIndex);
+	}
+
+	/**
+	 * Converts a comma-delimited string to a list
+	 *
+	 * @param arg Comma-delimited string to convert
+	 * @return List of strings
+	 */
+	public static List<String> split(String arg) {
+		return split(arg, ",");
+	}
+
+	/**
+	 * Converts a delimited string to a list
+	 *
+	 * @param arg Delimited string to convert
+	 * @param delimiter String delimiter
+	 * @return List of strings
+	 */
+	public static List<String> split(String arg, String delimiter) {
+		return Arrays.asList(arg.split(delimiter));
 	}
 
 }
