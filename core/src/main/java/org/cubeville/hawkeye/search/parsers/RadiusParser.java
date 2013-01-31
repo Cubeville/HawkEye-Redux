@@ -68,7 +68,7 @@ public class RadiusParser implements ParameterParser {
 		try {
 			radius = Double.parseDouble(parameter);
 		} catch (NumberFormatException ex) {
-			throw new CommandUsageException("Invalid radius specified: " + parameter);
+			throw new CommandUsageException("Invalid radius specified: &7" + parameter);
 		}
 
 		Vector r = new Vector(radius, radius, radius);

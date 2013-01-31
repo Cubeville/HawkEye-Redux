@@ -39,7 +39,7 @@ public class PlayerParser implements ParameterParser {
 		for (int i = 0; i < list.length; i++) {
 			int id = HawkEye.getDataManager().getPlayerId(list[i]);
 
-			if (id == -1) throw new CommandException("Could not find player: " + list[i]);
+			if (id == -1) throw new CommandException("Could not find player: &7" + list[i]);
 			else players.add(String.valueOf(id));
 		}
 

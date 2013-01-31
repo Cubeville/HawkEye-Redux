@@ -37,7 +37,7 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 		String before;
 		String after;
 
-		String[] parts = entry.getData().split("\\|");
+		String[] parts = entry.getData().split(DELIMITER_SPLITTER);
 		before = parts[0];
 		after = parts.length > 1 ? parts[1] : "0";
 
@@ -69,7 +69,7 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 
 	@Override
 	public String getData() {
-		return oldState.toString() + "|" + newState.toString();
+		return oldState.toString() + DELIMITER + newState.toString();
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.HawkEye;
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.util.Pair;
@@ -32,14 +33,15 @@ import org.cubeville.util.StringUtil;
 public class ActionParser implements ParameterParser {
 
 	@Override
-	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) {
+	public Pair<String, Map<String, Object>> process(String parameter, CommandSender sender) throws CommandException {
 		List<String> actions = new ArrayList<String>();
 
 		String[] list = parameter.split(",");
 		for (int i = 0; i < list.length; i++) {
 			Action action = HawkEye.getDataManager().getAction(list[i]);
 
-			if (action != null) actions.add(action.getName());
+			if (action == null) throw new CommandException("Invalid action specified: &7" + list[i]);
+			else actions.add(action.getName());
 		}
 
 		String sql = "`action` IN ('" + StringUtil.buildString(actions, "','") + "')";

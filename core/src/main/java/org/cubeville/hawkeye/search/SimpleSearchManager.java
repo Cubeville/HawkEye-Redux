@@ -107,6 +107,7 @@ public class SimpleSearchManager implements SearchManager {
 						if (!pair.getRight()) used.add(key);
 						parser = pair.getLeft();
 					}
+					// TODO Group together duplicate parameters so they don't get parsed into individual clauses
 				}
 			}
 

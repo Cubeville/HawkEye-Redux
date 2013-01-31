@@ -25,6 +25,12 @@ import org.cubeville.hawkeye.location.Location;
 
 public abstract class AbstractEntry implements Entry {
 
+	/**
+	 * String used to delimit multiple parts of an entry in the database
+	 */
+	protected static final String DELIMITER = "|@|";
+	protected static final String DELIMITER_SPLITTER = "\\|@\\|";
+
 	private final Action action;
 	private final String player;
 	private final Location location;

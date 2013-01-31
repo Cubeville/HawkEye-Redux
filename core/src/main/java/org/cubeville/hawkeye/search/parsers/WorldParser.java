@@ -39,7 +39,7 @@ public class WorldParser implements ParameterParser {
 		for (int i = 0; i < list.length; i++) {
 			int id = HawkEye.getDataManager().getWorldId(list[i]);
 
-			if (id == -1) throw new CommandException("Could not find world: " + list[i]);
+			if (id == -1) throw new CommandException("Could not find world: &7" + list[i]);
 			else worlds.add(String.valueOf(id));
 		}
 
