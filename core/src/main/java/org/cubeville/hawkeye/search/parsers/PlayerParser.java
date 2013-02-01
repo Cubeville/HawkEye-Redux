@@ -34,15 +34,34 @@ public class PlayerParser implements ParameterParser {
 	@Override
 	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
 		List<String> players = new ArrayList<String>();
+		List<String> playersNot = new ArrayList<String>();
 
 		for (String param : parameters) {
-			int id = HawkEye.getDataManager().getPlayerId(param);
+			boolean not = false;
+			if (param.startsWith("!")) {
+				not = true;
+				param = param.substring(1);
+			}
 
+			int id = HawkEye.getDataManager().getPlayerId(param);
 			if (id == -1) throw new CommandException("Could not find player: &7" + param);
+
+			if (not) playersNot.add(String.valueOf(id));
 			else players.add(String.valueOf(id));
 		}
 
-		String sql = "`player_id` IN (" + StringUtil.buildString(players, ",") + ")";
+		String sql = "";
+
+		if (!players.isEmpty()) {
+			sql += "`player_id` IN (" + StringUtil.buildString(players, ",") + ")";
+		}
+
+		if (!playersNot.isEmpty()) {
+			if (!sql.isEmpty()) sql += " AND ";
+
+			sql += "`player_id` IN (" + StringUtil.buildString(playersNot, ",") + ")";
+		}
+
 		return Pair.of(sql, null);
 	}
 

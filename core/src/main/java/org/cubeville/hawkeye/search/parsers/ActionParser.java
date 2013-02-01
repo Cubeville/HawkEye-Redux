@@ -35,15 +35,35 @@ public class ActionParser implements ParameterParser {
 	@Override
 	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
 		List<String> actions = new ArrayList<String>();
+		List<String> actionsNot = new ArrayList<String>();
 
 		for (String param : parameters) {
+			boolean not = false;
+			if (param.startsWith("!")) {
+				not = true;
+				param = param.substring(1);
+			}
+
 			Action action = HawkEye.getDataManager().getAction(param);
 
 			if (action == null) throw new CommandException("Invalid action specified: &7" + param);
+
+			if (not) actionsNot.add(action.getName());
 			else actions.add(action.getName());
 		}
 
-		String sql = "`action` IN ('" + StringUtil.buildString(actions, "','") + "')";
+		String sql = "";
+
+		if (!actions.isEmpty()) {
+			sql += "`action` IN ('" + StringUtil.buildString(actions, "','") + "')";
+		}
+
+		if (!actionsNot.isEmpty()) {
+			if (!sql.isEmpty()) sql += " AND ";
+
+			sql += "`action` NOT IN ('" + StringUtil.buildString(actionsNot, "','") + "')";
+		}
+
 		return Pair.of(sql, null);
 	}
 

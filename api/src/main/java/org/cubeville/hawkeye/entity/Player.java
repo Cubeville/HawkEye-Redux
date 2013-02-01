@@ -42,7 +42,7 @@ public abstract class Player implements CommandSender {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean isPlayer() {
+	public final boolean isPlayer() {
 		return true;
 	}
 

@@ -34,15 +34,33 @@ public class WorldParser implements ParameterParser {
 	@Override
 	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
 		List<String> worlds = new ArrayList<String>();
+		List<String> worldsNot = new ArrayList<String>();
 
 		for (String param : parameters) {
-			int id = HawkEye.getDataManager().getWorldId(param);
+			boolean not = false;
+			if (param.startsWith("!")) {
+				not = true;
+				param = param.substring(1);
+			}
 
+			int id = HawkEye.getDataManager().getWorldId(param);
 			if (id == -1) throw new CommandException("Could not find world: &7" + param);
+
+			if (not) worldsNot.add(String.valueOf(id));
 			else worlds.add(String.valueOf(id));
 		}
 
-		String sql = "`world_id` IN (" + StringUtil.buildString(worlds, ",") + ")";
+		String sql = "";
+
+		if (!worlds.isEmpty()) {
+			sql += "`world_id` IN (" + StringUtil.buildString(worlds, ",") + ")";
+		}
+
+		if (!worldsNot.isEmpty()) {
+			if (!sql.isEmpty()) sql += " AND ";
+
+			sql += "`world_id` NOT IN (" + StringUtil.buildString(worldsNot, ",") + ")";
+		}
 		return Pair.of(sql, null);
 	}
 
