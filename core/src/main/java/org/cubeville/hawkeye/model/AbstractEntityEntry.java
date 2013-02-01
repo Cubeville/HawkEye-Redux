@@ -52,6 +52,7 @@ public abstract class AbstractEntityEntry extends AbstractEntry implements Entit
 	@Override
 	public String getData() {
 		return String.valueOf(entity.getId());
+		// TODO Store entity data
 	}
 
 }

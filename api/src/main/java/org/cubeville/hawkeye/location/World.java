@@ -20,6 +20,7 @@ package org.cubeville.hawkeye.location;
 
 import org.cubeville.hawkeye.Named;
 import org.cubeville.hawkeye.entity.Entity;
+import org.cubeville.hawkeye.model.EntityData;
 
 public interface World extends Named {
 
@@ -51,6 +52,6 @@ public interface World extends Named {
 	 * @param location Location to spawn entity at
 	 * @param entity Entity type to spawn
 	 */
-	void spawnEntity(Location location, Entity entity);
+	void spawnEntity(Location location, Entity entity, EntityData data);
 
 }
