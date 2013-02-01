@@ -19,11 +19,11 @@
 package org.cubeville.hawkeye.model;
 
 /**
- * Interface to attach to custom block data classes
+ * Interface to attach to custom entity data classes
  *
- * BlockData implementations are used to store custom data about a block, for
- * example the the contents of a chest, properties of a deleted beacon, etc.
+ * EntityData implementations are used to store custom data about an entity, for
+ * example the ID of a deleted painting, the item in a deleted item frame, etc.
  */
-public interface BlockData extends NBTSerializable {
+public interface EntityData extends NBTSerializable {
 
 }
