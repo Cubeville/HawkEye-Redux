@@ -16,29 +16,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.command;
+package org.cubeville.hawkeye.commands;
 
-/**
- * Exception thrown when someone does not use a command correctly
- */
-public class CommandUsageException extends CommandException {
+import org.cubeville.hawkeye.command.Command;
+import org.cubeville.hawkeye.command.CommandData;
+import org.cubeville.hawkeye.command.CommandSender;
 
-	private static final long serialVersionUID = 3043821094302311575L;
+public class BaseCommands {
 
-	private final String usage;
+	@Command(command = "hawkeye",
+			aliases = {"hawkeye help"},
+			description = "Help command")
+	public void base(CommandSender sender, CommandData data) {
 
-	public CommandUsageException(String message) {
-		super(message);
-		usage = null;
-	}
-
-	public CommandUsageException(String message, String usage) {
-		super(message);
-		this.usage = usage;
-	}
-
-	public String getUsage() {
-		return usage;
 	}
 
 }
