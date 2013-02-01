@@ -1,6 +1,6 @@
 /*
  * HawkEye redux
- * Copyright (C) 2012 Cubeville <http://www.cubeville.org> and contributors
+ * Copyright (C) 2012-2013 Cubeville <http://www.cubeville.org> and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
