@@ -29,6 +29,8 @@ import org.cubeville.hawkeye.model.ChatEntry;
 import org.cubeville.hawkeye.model.CommandEntry;
 import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
+import org.cubeville.hawkeye.model.HangingBreakEntry;
+import org.cubeville.hawkeye.model.HangingPlaceEntry;
 import org.cubeville.hawkeye.model.Modifiable;
 import org.cubeville.hawkeye.model.PlayerInteractEntry;
 import org.cubeville.hawkeye.model.PlayerLogEntry;
@@ -55,11 +57,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Hanging entity (painting, item frame) broken
 	 */
-	HANGING_BREAK,
+	HANGING_BREAK(HangingBreakEntry.class),
 	/**
 	 * Hanging entity (painting, item frame) placed
 	 */
-	HANGING_PLACE,
+	HANGING_PLACE(HangingPlaceEntry.class),
 	/**
 	 * Player login
 	 */

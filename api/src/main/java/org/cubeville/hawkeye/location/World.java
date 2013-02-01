@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.location;
 
 import org.cubeville.hawkeye.Named;
+import org.cubeville.hawkeye.entity.Entity;
 
 public interface World extends Named {
 
@@ -43,5 +44,13 @@ public interface World extends Named {
 	 */
 	Block getBlockAt(double x, double y, double z);
 	Block getBlockAt(int x, int y, int z);
+
+	/**
+	 * Spawns an entity in this world
+	 *
+	 * @param location Location to spawn entity at
+	 * @param entity Entity type to spawn
+	 */
+	void spawnEntity(Location location, Entity entity);
 
 }
