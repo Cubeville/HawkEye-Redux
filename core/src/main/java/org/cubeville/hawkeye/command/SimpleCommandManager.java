@@ -189,6 +189,9 @@ public class SimpleCommandManager implements CommandManager {
 	}
 
 	protected Pair<String, String[]> parseCommand(String command) {
+		// Strip extra spaces
+		command = command.trim().replaceAll(" +", " ");
+
 		String base = "";
 		String[] args = new String[0];
 
