@@ -31,6 +31,7 @@ import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.model.Modifiable;
 import org.cubeville.hawkeye.model.PlayerInteractEntry;
+import org.cubeville.hawkeye.model.PlayerLogEntry;
 import org.cubeville.hawkeye.model.SignEntry;
 
 public enum DefaultActions implements Action {
@@ -62,11 +63,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player login
 	 */
-	PLAYER_JOIN,
+	PLAYER_JOIN(PlayerLogEntry.class),
 	/**
 	 * Player logout
 	 */
-	PLAYER_QUIT,
+	PLAYER_QUIT(PlayerLogEntry.class),
 	/**
 	 * Player chat
 	 */
