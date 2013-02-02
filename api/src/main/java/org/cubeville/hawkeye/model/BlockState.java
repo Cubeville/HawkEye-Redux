@@ -30,7 +30,7 @@ public class BlockState {
 	/**
 	 * Block type
 	 */
-	private Items type;
+	private short id;
 
 	/**
 	 * Block data value
@@ -47,7 +47,15 @@ public class BlockState {
 	}
 
 	public BlockState(Items type, byte data, BlockData blockData) {
-		this.type = type;
+		this(type.getId(), data, null);
+	}
+
+	public BlockState(short id, byte data) {
+		this(id, data, null);
+	}
+
+	public BlockState(short id, byte data, BlockData blockData) {
+		this.id = id;
 		this.data = data;
 		this.blockData = blockData;
 	}
@@ -58,12 +66,12 @@ public class BlockState {
 	 * @param str Database string
 	 */
 	public BlockState(String str) {
-		int id;
+		short id;
 		byte data;
 		String[] parts = str.split(":");
 
 		try {
-			id = Integer.parseInt(parts[0]);
+			id = Short.parseShort(parts[0]);
 		} catch (NumberFormatException e) {
 			id = 0;
 		}
@@ -74,7 +82,7 @@ public class BlockState {
 			data = 0;
 		}
 
-		type = Items.getById(id);
+		this.id = id;
 		this.data = data;
 
 		// TODO Add blockdata support
@@ -88,7 +96,7 @@ public class BlockState {
 	 * @return Block type
 	 */
 	public Items getType() {
-		return type;
+		return Items.getById(id);
 	}
 
 	/**
@@ -97,7 +105,7 @@ public class BlockState {
 	 * @param type Block type
 	 */
 	public void setType(Items type) {
-		this.type = type;
+		id = type.getId();
 	}
 
 	/**
@@ -138,7 +146,7 @@ public class BlockState {
 
 	@Override
 	public String toString() {
-		String ret = String.valueOf(type.getId());
+		String ret = String.valueOf(id);
 		if (data != 0) ret += ":" + String.valueOf(data);
 		return ret;
 	}

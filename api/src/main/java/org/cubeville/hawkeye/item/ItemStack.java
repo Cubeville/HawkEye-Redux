@@ -44,6 +44,43 @@ public class ItemStack {
 	}
 
 	/**
+	 * Constructs an item stack from a database serialized string
+	 *
+	 * @param str Database string
+	 */
+	public ItemStack(String str) {
+		short id;
+		byte amount;
+		short durability;
+		String[] parts = str.split("@");
+		String[] data = parts[0].split(":");
+
+		try {
+			id = Short.parseShort(data[0]);
+		} catch (NumberFormatException e) {
+			id = 1;
+		}
+
+		try  {
+			durability = data.length > 1 ? Short.parseShort(data[1]) : 0;
+		} catch (NumberFormatException e) {
+			durability = 0;
+		}
+
+		try {
+			amount = parts.length > 1 ? Byte.parseByte(parts[1]) : 1;
+		} catch (NumberFormatException e) {
+			amount = 1;
+		}
+
+		this.id = id;
+		this.amount = amount;
+		this.durability = durability;
+
+		// TODO Item data support
+	}
+
+	/**
 	 * Gets the type of item this stack is
 	 */
 	public Items getType() {
@@ -75,7 +112,16 @@ public class ItemStack {
 	 * Gets any custom data associated with this item stack
 	 */
 	public ItemData getData() {
+		// TODO
 		return null;
+	}
+
+	@Override
+	public String toString() {
+		String ret = String.valueOf(id);
+		if (durability != 0) ret += ":" + String.valueOf(durability);
+		if (amount != 0) ret += "@" + String.valueOf(amount);
+		return ret;
 	}
 
 }

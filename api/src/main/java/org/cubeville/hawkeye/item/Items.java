@@ -44,14 +44,14 @@ public enum Items {
 	DIRT(3),
 	COBBLESTONE(4),
 	WOOD(5),
-	SAPLING(6),
+	SAPLING(6, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	BEDROCK(7),
-	WATER(8),
-	STATIONARY_WATER(9),
-	LAVA(10),
-	STATIONARY_LAVA(11),
-	SAND(12),
-	GRAVEL(13),
+	WATER(8, Attribute.FALL_THROUGH),
+	STATIONARY_WATER(9, Attribute.FALL_THROUGH),
+	LAVA(10, Attribute.FALL_THROUGH),
+	STATIONARY_LAVA(11, Attribute.FALL_THROUGH),
+	SAND(12, Attribute.GRAVITY),
+	GRAVEL(13, Attribute.GRAVITY),
 	GOLD_ORE(14),
 	IRON_ORE(15),
 	COAL_ORE(16),
@@ -65,63 +65,63 @@ public enum Items {
 	SANDSTONE(24),
 	NOTE_BLOCK(25),
 	BED_BLOCK(26),
-	POWERED_RAIL(27),
-	DETECTOR_RAIL(28),
+	POWERED_RAIL(27, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	DETECTOR_RAIL(28, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	PISTON_STICKY_BASE(29),
-	WEB(30),
-	LONG_GRASS(31),
-	DEAD_BUSH(32),
+	WEB(30, Attribute.BREAKS_FALLING),
+	LONG_GRASS(31, Attribute.ATTACHABLE_TOP | Attribute.FALL_THROUGH),
+	DEAD_BUSH(32, Attribute.ATTACHABLE_TOP | Attribute.FALL_THROUGH),
 	PISTON_BASE(33),
 	PISTON_EXTENSION(34),
 	WOOL(35),
 	PISTON_MOVING_PIECE(36),
-	YELLOW_FLOWER(37),
-	RED_ROSE(38),
-	BROWN_MUSHROOM(39),
-	RED_MUSHROOM(40),
+	YELLOW_FLOWER(37, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	RED_ROSE(38, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	BROWN_MUSHROOM(39, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	RED_MUSHROOM(40, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	GOLD_BLOCK(41),
 	IRON_BLOCK(42),
 	DOUBLE_STEP(43),
-	STEP(44),
+	STEP(44, Attribute.BREAKS_FALLING),
 	BRICK(45),
 	TNT(46),
 	BOOKSHELF(47),
 	MOSSY_COBBLESTONE(48),
 	OBSIDIAN(49),
-	TORCH(50),
-	FIRE(51),
+	TORCH(50, Attribute.ATTACHABLE_SIDE | Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	FIRE(51, Attribute.FALL_THROUGH),
 	MOB_SPAWNER(52),
 	WOOD_STAIRS(53),
 	CHEST(54),
-	REDSTONE_WIRE(55),
+	REDSTONE_WIRE(55, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	DIAMOND_ORE(56),
 	DIAMOND_BLOCK(57),
 	WORKBENCH(58),
-	CROPS(59),
+	CROPS(59, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	SOIL(60),
 	FURNACE(61),
 	BURNING_FURNACE(62),
-	SIGN_POST(63, Sign.class),
-	WOODEN_DOOR(64),
-	LADDER(65),
-	RAILS(66),
+	SIGN_POST(63, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING, Sign.class),
+	WOODEN_DOOR(64, Attribute.ATTACHABLE_TOP),
+	LADDER(65, Attribute.ATTACHABLE_SIDE),
+	RAILS(66, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	COBBLESTONE_STAIRS(67),
-	WALL_SIGN(68, Sign.class),
-	LEVER(69),
-	STONE_PLATE(70),
-	IRON_DOOR_BLOCK(71),
-	WOOD_PLATE(72),
+	WALL_SIGN(68, Attribute.ATTACHABLE_SIDE | Attribute.BREAKS_FALLING, Sign.class),
+	LEVER(69, Attribute.ATTACHABLE_SIDE | Attribute.ATTACHABLE_TOP | Attribute.ATTACHABLE_BOTTOM),
+	STONE_PLATE(70, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	IRON_DOOR_BLOCK(71, Attribute.ATTACHABLE_TOP),
+	WOOD_PLATE(72, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	REDSTONE_ORE(73),
 	GLOWING_REDSTONE_ORE(74),
-	REDSTONE_TORCH_OFF(75),
-	REDSTONE_TORCH_ON(76),
-	STONE_BUTTON(77),
-	SNOW(78),
+	REDSTONE_TORCH_OFF(75, Attribute.ATTACHABLE_SIDE | Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	REDSTONE_TORCH_ON(76, Attribute.ATTACHABLE_SIDE | Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	STONE_BUTTON(77, Attribute.ATTACHABLE_SIDE | Attribute.BREAKS_FALLING),
+	SNOW(78, Attribute.ATTACHABLE_TOP | Attribute.FALL_THROUGH),
 	ICE(79),
 	SNOW_BLOCK(80),
-	CACTUS(81),
+	CACTUS(81, Attribute.ATTACHABLE_TOP),
 	CLAY(82),
-	SUGAR_CANE_BLOCK(83),
+	SUGAR_CANE_BLOCK(83, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	JUKEBOX(84),
 	FENCE(85),
 	PUMPKIN(86),
@@ -130,11 +130,11 @@ public enum Items {
 	GLOWSTONE(89),
 	PORTAL(90),
 	JACK_O_LANTERN(91),
-	CAKE_BLOCK(92),
-	DIODE_BLOCK_OFF(93),
-	DIODE_BLOCK_ON(94),
+	CAKE_BLOCK(92, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	DIODE_BLOCK_OFF(93, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	DIODE_BLOCK_ON(94, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	LOCKED_CHEST(95),
-	TRAP_DOOR(96),
+	TRAP_DOOR(96, Attribute.ATTACHABLE_SIDE),
 	MONSTER_EGGS(97),
 	SMOOTH_BRICK(98),
 	HUGE_MUSHROOM_1(99),
@@ -142,14 +142,14 @@ public enum Items {
 	IRON_FENCE(101),
 	THIN_GLASS(102),
 	MELON_BLOCK(103),
-	PUMPKIN_STEM(104),
-	MELON_STEM(105),
-	VINE(106),
+	PUMPKIN_STEM(104, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	MELON_STEM(105, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	VINE(106, Attribute.FALL_THROUGH),
 	FENCE_GATE(107),
 	BRICK_STAIRS(108),
 	SMOOTH_STAIRS(109),
 	MYCEL(110),
-	WATER_LILY(111),
+	WATER_LILY(111, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
 	NETHER_BRICK(112),
 	NETHER_FENCE(113),
 	NETHER_BRICK_STAIRS(114),
@@ -160,17 +160,17 @@ public enum Items {
 	ENDER_PORTAL(119),
 	ENDER_PORTAL_FRAME(120),
 	ENDER_STONE(121),
-	DRAGON_EGG(122),
+	DRAGON_EGG(122, Attribute.GRAVITY),
 	REDSTONE_LAMP_OFF(123),
 	REDSTONE_LAMP_ON(124),
 	WOOD_DOUBLE_STEP(125),
-	WOOD_STEP(126),
-	COCOA(127),
+	WOOD_STEP(126, Attribute.BREAKS_FALLING),
+	COCOA(127, Attribute.ATTACHABLE_SIDE),
 	STANDSTONE_STAIRS(128),
 	EMERALD_ORE(129),
 	ENDER_CHEST(130),
-	TRIPWIRE_HOOK(131),
-	TRIPWIRE(132),
+	TRIPWIRE_HOOK(131, Attribute.ATTACHABLE_SIDE | Attribute.BREAKS_FALLING),
+	TRIPWIRE(132, Attribute.FALL_THROUGH),
 	EMERALD_BLOCK(133),
 	SPRUCE_WOOD_STAIRS(134),
 	BIRCH_WOOD_STAIRS(135),
@@ -178,12 +178,12 @@ public enum Items {
 	COMMAND(137),
 	BEACON(138),
 	COBBLE_WALL(139),
-	FLOWER_POT(140),
-	CARROT(141),
-	POTATO(142),
-	WOOD_BUTTON(143),
+	FLOWER_POT(140, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	CARROT(141, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	POTATO(142, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
+	WOOD_BUTTON(143, Attribute.ATTACHABLE_SIDE | Attribute.BREAKS_FALLING),
 	SKULL(144, Skull.class),
-	ANVIL(145),
+	ANVIL(145, Attribute.GRAVITY),
 
 
 
@@ -354,7 +354,12 @@ public enum Items {
 	/**
 	 * Item id
 	 */
-	private final int id;
+	private final short id;
+
+	/**
+	 * Attribute flags
+	 */
+	private final int flags;
 
 	/**
 	 * Custom item data class
@@ -364,14 +369,23 @@ public enum Items {
 	/**
 	 * Mapping of ids to item for quick access
 	 */
-	private static final Map<Integer, Items> idMap = new HashMap<Integer, Items>(values().length);
+	private static final Map<Short, Items> idMap = new HashMap<Short, Items>(values().length);
 
 	private Items(int id) {
-		this(id, null);
+		this(id, 0, null);
+	}
+
+	private Items(int id, int flags) {
+		this(id, flags, null);
 	}
 
 	private Items(int id, Class<? extends NBTSerializable> dataClass) {
-		this.id = id;
+		this(id, 0, dataClass);
+	}
+
+	private Items(int id, int flags, Class<? extends NBTSerializable> dataClass) {
+		this.id = (short) id;
+		this.flags = flags;
 		this.dataClass = dataClass;
 	}
 
@@ -380,7 +394,7 @@ public enum Items {
 	 *
 	 * @return This item's id
 	 */
-	public int getId() {
+	public short getId() {
 		return id;
 	}
 
@@ -391,6 +405,13 @@ public enum Items {
 	 */
 	public boolean hasItemData() {
 		return dataClass != null;
+	}
+
+	/**
+	 * Gets whether or not this item has an attribute
+	 */
+	public boolean hasAttribute(int attribute) {
+		return (flags & attribute) == attribute;
 	}
 
 	/**
@@ -407,6 +428,33 @@ public enum Items {
 		for (Items item : values()) {
 			idMap.put(item.id, item);
 		}
+	}
+
+	public class Attribute {
+		/**
+		 * Blocks that are attachable to the side of a block
+		 */
+		public static final int ATTACHABLE_SIDE = 1;
+		/**
+		 * Blocks that attach on top of a block
+		 */
+		public static final int ATTACHABLE_TOP = 2;
+		/**
+		 * Blocks that attach underneath a block (only levers?)
+		 */
+		public static final int ATTACHABLE_BOTTOM = 4;
+		/**
+		 * Blocks that are affected by gravity
+		 */
+		public static final int GRAVITY = 8;
+		/**
+		 * Blocks that break falling blocks (i.e. torch breaks falling sand)
+		 */
+		public static final int BREAKS_FALLING = 16;
+		/**
+		 * Blocks that falling blocks can fall through
+		 */
+		public static final int FALL_THROUGH = 32;
 	}
 
 }
