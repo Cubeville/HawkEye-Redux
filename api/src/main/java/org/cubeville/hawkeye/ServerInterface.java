@@ -71,4 +71,11 @@ public interface ServerInterface {
 	 */
 	World getWorld(String name);
 
+	/**
+	 * Registers a command with the server
+	 *
+	 * @param command Command to register
+	 */
+	void registerCommand(String command);
+
 }

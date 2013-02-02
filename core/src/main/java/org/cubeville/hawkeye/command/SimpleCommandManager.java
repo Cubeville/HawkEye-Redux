@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.util.Pair;
 import org.cubeville.util.Triplet;
 
@@ -34,6 +35,10 @@ public class SimpleCommandManager implements CommandManager {
 
 	/**
 	 * Mapping of commands to their execution info
+	 *
+	 * Triplet contains the command annotation on the left, the method to
+	 * execute for the command in the middle, and the object to invoke the
+	 * method under on the right.
 	 */
 	private final Map<String, Triplet<Command, Method, Object>> commands;
 
@@ -93,7 +98,10 @@ public class SimpleCommandManager implements CommandManager {
 			}
 		}
 
-		// TODO Register root commands with server implementation
+		// Registers the root commands with the server
+		for (String command : roots) {
+			HawkEye.getServerInterface().registerCommand(command);
+		}
 	}
 
 	/**
@@ -188,6 +196,14 @@ public class SimpleCommandManager implements CommandManager {
 		}
 	}
 
+	/**
+	 * Parses a command string into a base and arguments
+	 *
+	 * This method is protected rather than private to allow access from tests
+	 *
+	 * @param command Command input to parse
+	 * @return Pair containing the base command on left and arguments on right
+	 */
 	protected Pair<String, String[]> parseCommand(String command) {
 		// Strip extra spaces
 		command = command.trim().replaceAll(" +", " ");
