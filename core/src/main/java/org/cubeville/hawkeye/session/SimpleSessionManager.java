@@ -22,19 +22,20 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.entity.Player;
 
 public class SimpleSessionManager implements SessionManager {
 
-	private final SessionFactory factory;
-	private final Map<String, Session> sessions = new ConcurrentHashMap<String, Session>();
+	private final SimpleSessionFactory factory;
+	private final Map<String, SimpleSession> sessions = new ConcurrentHashMap<String, SimpleSession>();
 
-	public SimpleSessionManager(SessionFactory factory) {
+	public SimpleSessionManager(SimpleSessionFactory factory) {
 		this.factory = factory;
 	}
 
 	@Override
-	public Session getSession(CommandSender owner) {
-		Session session = sessions.get(owner.getName());
+	public SimpleSession getSession(CommandSender owner) {
+		SimpleSession session = sessions.get(owner.getName());
 
 		if (session == null) {
 			session = factory.createSession(owner);
@@ -42,6 +43,20 @@ public class SimpleSessionManager implements SessionManager {
 		}
 
 		return session;
+	}
+
+	@Override
+	public void handleDisconnect(String player) {
+		if (sessions.containsKey(player)) {
+			sessions.get(player).handleDisconnect();
+		}
+	}
+
+	@Override
+	public void handleReconnect(Player player) {
+		if (sessions.containsKey(player.getName())) {
+			sessions.get(player.getName()).handleReconnect(player);
+		}
 	}
 
 }

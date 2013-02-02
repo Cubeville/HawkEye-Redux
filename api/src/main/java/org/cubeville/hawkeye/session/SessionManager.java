@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.session;
 
 import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.entity.Player;
 
 public interface SessionManager {
 
@@ -30,5 +31,19 @@ public interface SessionManager {
 	 * @return Owner's session of specified type
 	 */
 	Session getSession(CommandSender owner);
+
+	/**
+	 * Called when a user disconnects from the server
+	 *
+	 * @param player Name of the player that disconnected
+	 */
+	void handleDisconnect(String player);
+
+	/**
+	 * Called when a player (re)connects to the server
+	 *
+	 * @param player The player who connected
+	 */
+	void handleReconnect(Player player);
 
 }

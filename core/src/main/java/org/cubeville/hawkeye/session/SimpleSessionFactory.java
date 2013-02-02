@@ -23,7 +23,7 @@ import org.cubeville.hawkeye.command.CommandSender;
 public class SimpleSessionFactory implements SessionFactory {
 
 	@Override
-	public Session createSession(CommandSender owner) {
+	public SimpleSession createSession(CommandSender owner) {
 		return new SimpleSession(owner);
 	}
 

@@ -28,7 +28,7 @@ public class SimpleSession implements Session {
 	/**
 	 * The owner of this session
 	 */
-	private final CommandSender owner;
+	private CommandSender owner;
 
 	/**
 	 * Attribute store
@@ -62,6 +62,14 @@ public class SimpleSession implements Session {
 	@Override
 	public void clearAttributes() {
 		attributes.clear();
+	}
+
+	protected void handleDisconnect() {
+		owner = null;
+	}
+
+	protected void handleReconnect(CommandSender sender) {
+		owner = sender;
 	}
 
 }
