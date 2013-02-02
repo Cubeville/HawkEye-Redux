@@ -24,8 +24,18 @@ public interface CommandManager {
 	 * Registers all annotated command methods in the specified object
 	 *
 	 * @param obj Object to register commands of
+	 * @throws CommandException If a command method cannot be processed
 	 */
 	void registerCommands(Object obj) throws CommandException;
+
+	/**
+	 * Registers an alias for a root command
+	 *
+	 * @param command Command to register alias for
+	 * @param alias Alias for the command
+	 * @throws CommandException If the alias is already taken
+	 */
+	void registerRootAlias(String command, String alias) throws CommandException;
 
 	/**
 	 * Attempts to execute a command

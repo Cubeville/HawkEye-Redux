@@ -78,4 +78,13 @@ public interface ServerInterface {
 	 */
 	void registerCommand(String command);
 
+	/**
+	 * Registers a command alias with the server
+	 *
+	 * @param command Command to register alias for
+	 * @param alias Alias for the command
+	 * @return Whether or not the alias was registered
+	 */
+	boolean registerCommandAlias(String command, String alias);
+
 }
