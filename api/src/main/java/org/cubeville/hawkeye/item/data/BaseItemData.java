@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.cubeville.hawkeye.NBT;
-import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.hawkeye.item.ItemData;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.Tag;
 

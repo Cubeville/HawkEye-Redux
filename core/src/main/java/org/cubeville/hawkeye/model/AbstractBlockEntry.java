@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Block;
 import org.cubeville.hawkeye.location.Location;

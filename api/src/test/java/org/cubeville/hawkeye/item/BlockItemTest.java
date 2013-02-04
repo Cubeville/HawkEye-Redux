@@ -9,19 +9,20 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import org.cubeville.hawkeye.ItemType;
+import org.cubeville.hawkeye.Item;
 
 public class BlockItemTest {
 
 	@Test
 	public void getById() {
-		for (Items item : Items.values()) {
-			assertEquals(Items.getById(item.getId()), item);
+		for (Item item : Item.values()) {
+			assertEquals(Item.getById(item.getId()), item);
 		}
 	}
 
 	@Test
 	public void testTypes() {
-		for (Items item : Items.values()) {
+		for (Item item : Item.values()) {
 			if (item.getId() <= 255) {
 				assertTrue(ItemType.isBlock(item.getId()));
 				assertThat(ItemType.getType(item.getId()), is(ItemType.BLOCK));
@@ -34,7 +35,7 @@ public class BlockItemTest {
 
 	@Test
 	public void testExistence() {
-		for (Items item : Items.values()) {
+		for (Item item : Item.values()) {
 			assertTrue(ItemType.exists(item.getId()));
 		}
 

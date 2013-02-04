@@ -21,7 +21,7 @@ package org.cubeville.hawkeye.block.data;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.cubeville.hawkeye.model.BlockData;
+import org.cubeville.hawkeye.block.BlockData;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.Tag;
 

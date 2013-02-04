@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.item;
+package org.cubeville.hawkeye;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +33,7 @@ import org.cubeville.hawkeye.item.data.MobHeadItemData;
 import org.cubeville.hawkeye.item.data.PotionItemData;
 import org.cubeville.hawkeye.model.NBTSerializable;
 
-public enum Items {
+public enum Item {
 
 	/**
 	 * BLOCKS
@@ -369,21 +369,21 @@ public enum Items {
 	/**
 	 * Mapping of ids to item for quick access
 	 */
-	private static final Map<Short, Items> idMap = new HashMap<Short, Items>(values().length);
+	private static final Map<Short, Item> idMap = new HashMap<Short, Item>(values().length);
 
-	private Items(int id) {
+	private Item(int id) {
 		this(id, 0, null);
 	}
 
-	private Items(int id, int flags) {
+	private Item(int id, int flags) {
 		this(id, flags, null);
 	}
 
-	private Items(int id, Class<? extends NBTSerializable> dataClass) {
+	private Item(int id, Class<? extends NBTSerializable> dataClass) {
 		this(id, 0, dataClass);
 	}
 
-	private Items(int id, int flags, Class<? extends NBTSerializable> dataClass) {
+	private Item(int id, int flags, Class<? extends NBTSerializable> dataClass) {
 		this.id = (short) id;
 		this.flags = flags;
 		this.dataClass = dataClass;
@@ -420,12 +420,12 @@ public enum Items {
 	 * @param id Id of item to get
 	 * @return Item with the specified id or null if it doesn't exist
 	 */
-	public static Items getById(int id) {
+	public static Item getById(int id) {
 		return idMap.containsKey(id) ? idMap.get(id) : null;
 	}
 
 	static {
-		for (Items item : values()) {
+		for (Item item : values()) {
 			idMap.put(item.id, item);
 		}
 	}

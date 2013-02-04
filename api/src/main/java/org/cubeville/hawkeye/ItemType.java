@@ -18,8 +18,6 @@
 
 package org.cubeville.hawkeye;
 
-import org.cubeville.hawkeye.item.Items;
-
 public enum ItemType {
 
 	/**
@@ -68,7 +66,7 @@ public enum ItemType {
 	 * @return True if specified id is a vanilla minecraft item, false if not
 	 */
 	public static boolean exists(int id) {
-		Items item = Items.getById(id);
+		Item item = Item.getById(id);
 		return item != null;
 	}
 

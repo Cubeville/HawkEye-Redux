@@ -16,15 +16,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
+package org.cubeville.hawkeye.block;
+
+import org.cubeville.hawkeye.model.NBTSerializable;
 
 /**
- * Interface to attach to custom item data classes
+ * Interface to attach to custom block data classes
  *
- * ItemData implementations are used to store custom data about an item/block,
- * for example the data value of a deleted block, the contents of a removed
- * chest, enchantments/durability on an item, etc.
+ * BlockData implementations are used to store custom data about a block, for
+ * example the the contents of a chest, properties of a deleted beacon, etc.
  */
-public interface ItemData extends NBTSerializable {
+public interface BlockData extends NBTSerializable {
 
 }

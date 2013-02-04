@@ -18,8 +18,8 @@
 
 package org.cubeville.hawkeye.location;
 
+import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.entity.Player;
-import org.cubeville.hawkeye.model.BlockState;
 
 public abstract class Block {
 

@@ -18,7 +18,7 @@
 
 package org.cubeville.hawkeye.item;
 
-import org.cubeville.hawkeye.model.ItemData;
+import org.cubeville.hawkeye.Item;
 
 /**
  * Represents a stack of items
@@ -83,8 +83,8 @@ public class ItemStack {
 	/**
 	 * Gets the type of item this stack is
 	 */
-	public Items getType() {
-		return Items.getById(id);
+	public Item getType() {
+		return Item.getById(id);
 	}
 
 	/**

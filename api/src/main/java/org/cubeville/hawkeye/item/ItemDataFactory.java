@@ -18,7 +18,6 @@
 
 package org.cubeville.hawkeye.item;
 
-import org.cubeville.hawkeye.model.ItemData;
 import org.cubeville.lib.jnbt.CompoundTag;
 
 public interface ItemDataFactory {

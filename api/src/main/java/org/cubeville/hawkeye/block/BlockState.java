@@ -16,16 +16,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.model;
+package org.cubeville.hawkeye.block;
 
-import org.cubeville.hawkeye.item.Items;
+import org.cubeville.hawkeye.Item;
 
 /**
  * Represents the state of a block at a certain point in time
  */
 public class BlockState {
 
-	public static final BlockState NOTHING = new BlockState(Items.AIR, (byte) 0);
+	public static final BlockState NOTHING = new BlockState(Item.AIR, (byte) 0);
 
 	/**
 	 * Block type
@@ -42,11 +42,11 @@ public class BlockState {
 	 */
 	private BlockData blockData;
 
-	public BlockState(Items type, byte data) {
+	public BlockState(Item type, byte data) {
 		this(type, data, null);
 	}
 
-	public BlockState(Items type, byte data, BlockData blockData) {
+	public BlockState(Item type, byte data, BlockData blockData) {
 		this(type.getId(), data, null);
 	}
 
@@ -95,8 +95,8 @@ public class BlockState {
 	 *
 	 * @return Block type
 	 */
-	public Items getType() {
-		return Items.getById(id);
+	public Item getType() {
+		return Item.getById(id);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class BlockState {
 	 *
 	 * @param type Block type
 	 */
-	public void setType(Items type) {
+	public void setType(Item type) {
 		id = type.getId();
 	}
 

@@ -20,7 +20,6 @@ package org.cubeville.hawkeye.item;
 
 import java.util.Map;
 
-import org.cubeville.hawkeye.model.ItemData;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.Tag;
 
