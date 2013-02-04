@@ -20,6 +20,7 @@ package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.item.ItemStack;
+import org.cubeville.hawkeye.location.Location;
 
 public class AbstractItemEntry extends AbstractEntry implements ItemEntry {
 
@@ -28,8 +29,13 @@ public class AbstractItemEntry extends AbstractEntry implements ItemEntry {
 	public AbstractItemEntry(Action action, DatabaseEntry entry) {
 		super(action, entry);
 
-		short id = Short.parseShort(entry.getData());
-		item = new ItemStack(id);
+		item = new ItemStack(entry.getData());
+	}
+
+	public AbstractItemEntry(Action action, String player, Location location, ItemStack item) {
+		super(action, player, location);
+
+		this.item = item;
 	}
 
 	@Override
@@ -39,8 +45,7 @@ public class AbstractItemEntry extends AbstractEntry implements ItemEntry {
 
 	@Override
 	public String getData() {
-		// TODO Auto-generated method stub
-		return null;
+		return item.toString();
 	}
 
 }
