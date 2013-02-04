@@ -421,7 +421,7 @@ public enum Item {
 	 * @return Item with the specified id or null if it doesn't exist
 	 */
 	public static Item getById(int id) {
-		return idMap.containsKey(id) ? idMap.get(id) : null;
+		return idMap.containsKey((short) id) ? idMap.get((short) id) : null;
 	}
 
 	static {

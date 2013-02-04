@@ -1,4 +1,4 @@
-package org.cubeville.hawkeye.item;
+package org.cubeville.hawkeye;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.cubeville.hawkeye.ItemType;
 import org.cubeville.hawkeye.Item;
 
-public class BlockItemTest {
+public class ItemTest {
 
 	@Test
 	public void getById() {
