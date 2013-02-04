@@ -114,8 +114,9 @@ public class EntryImporter implements Runnable {
 		double y = ((DoubleTag) tags.get("y")).getValue();
 		double z = ((DoubleTag) tags.get("z")).getValue();
 		String data = ((StringTag) tags.get("data")).getValue();
+		int extra = ((IntTag) tags.get("extra")).getValue();
 
-		DatabaseEntry entry = new DatabaseEntry(-1, player, action, date, world, x, y, z, data);
+		DatabaseEntry entry = new DatabaseEntry(-1, player, action, date, world, x, y, z, data, extra);
 		return entry.toEntry();
 	}
 

@@ -75,6 +75,13 @@ public interface Entry {
 	String getData();
 
 	/**
+	 * Returns the id of any extra nbt data associated with this entry
+	 *
+	 * @return NBT data id
+	 */
+	int getNbtId();
+
+	/**
 	 * Returns a formatted string to be displayed in search results
 	 *
 	 * @return Formatted string with important entry data

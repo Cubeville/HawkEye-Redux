@@ -102,6 +102,7 @@ public class SimpleConsumer implements Consumer {
 				data.put("y", new DoubleTag("y", entry.getLocation().getY()));
 				data.put("z", new DoubleTag("z", entry.getLocation().getZ()));
 				data.put("data", new StringTag("data", entry.getData()));
+				data.put("extra", new IntTag("extra", entry.getNbtId()));
 
 				String name = "entry-" + ++count;
 				entries.put(name, new CompoundTag(name, data));
@@ -162,7 +163,7 @@ public class SimpleConsumer implements Consumer {
 
 			Connection conn = null;
 			PreparedStatement ps = null;
-			String sql = "INSERT INTO " + table("data") + " (player_id, action, date, world_id, x, y, z, data) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO " + table("data") + " (`player_id`, `action`, `date`, `world_id`, `x`, `y`, `z`, `data`, `extra`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			try {
 				conn = HawkEye.getDatabase().getConnection();
@@ -181,6 +182,7 @@ public class SimpleConsumer implements Consumer {
 					ps.setDouble(6, entry.getLocation().getY());
 					ps.setDouble(7, entry.getLocation().getZ());
 					ps.setString(8, entry.getData());
+					ps.setInt(9, entry.getNbtId());
 
 					ps.addBatch();
 

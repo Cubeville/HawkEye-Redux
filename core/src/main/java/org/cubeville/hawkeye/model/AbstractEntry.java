@@ -35,12 +35,14 @@ public abstract class AbstractEntry implements Entry {
 	private final String player;
 	private final Location location;
 	private final Timestamp time;
+	private final int extra;
 
 	public AbstractEntry(Action action, DatabaseEntry entry) {
 		this.action = action;
 		player = entry.getPlayer();
 		location = entry.getLocation();
 		time = entry.getTimestamp();
+		extra = entry.getNbtId();
 	}
 
 	public AbstractEntry(Action action, String player, Location location) {
@@ -48,6 +50,7 @@ public abstract class AbstractEntry implements Entry {
 		this.player = player;
 		this.location = location;
 		time = new Timestamp(System.currentTimeMillis());
+		extra = -1;
 	}
 
 	@Override
@@ -68,6 +71,11 @@ public abstract class AbstractEntry implements Entry {
 	@Override
 	public Timestamp getTime() {
 		return time;
+	}
+
+	@Override
+	public int getNbtId() {
+		return extra;
 	}
 
 	@Override
