@@ -38,6 +38,14 @@ public class StringUtil {
 		return buildString(args, separator);
 	}
 
+	public static String buildString(String[] args) {
+		return buildString(args, " ");
+	}
+
+	public static String buildString(String[] args, int startIndex) {
+		return buildString(args, " ", startIndex);
+	}
+
 	/**
 	 * Converts an array of strings into one string
 	 *

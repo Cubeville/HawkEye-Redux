@@ -12,7 +12,7 @@ public class StringTest {
 	@Test
 	public void testStringBuilder() {
 		String expected = "This is an array";
-		assertThat(StringUtil.buildString(array, " "), is(expected));
+		assertThat(StringUtil.buildString(array), is(expected));
 	}
 
 	@Test
@@ -25,6 +25,12 @@ public class StringTest {
 	public void testStringBuilderSeparator() {
 		String expected = "is,an,array";
 		assertThat(StringUtil.buildString(array, ",", 1), is(expected));
+	}
+
+	@Test
+	public void testSplitter() {
+		String test = "This is an array";
+		assertThat(StringUtil.split(test, " ").toArray(new String[0]), is(array));
 	}
 
 }
