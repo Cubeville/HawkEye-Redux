@@ -22,7 +22,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import org.cubeville.hawkeye.model.BlockBreakEntry;
+import org.cubeville.hawkeye.model.BlockBucketEntry;
 import org.cubeville.hawkeye.model.BlockExplosionEntry;
+import org.cubeville.hawkeye.model.BlockFireEntry;
+import org.cubeville.hawkeye.model.BlockGrowEntry;
 import org.cubeville.hawkeye.model.BlockModifyEntry;
 import org.cubeville.hawkeye.model.BlockPlaceEntry;
 import org.cubeville.hawkeye.model.ChatEntry;
@@ -33,6 +36,7 @@ import org.cubeville.hawkeye.model.HangingBreakEntry;
 import org.cubeville.hawkeye.model.HangingPlaceEntry;
 import org.cubeville.hawkeye.model.Modifiable;
 import org.cubeville.hawkeye.model.PlayerInteractEntry;
+import org.cubeville.hawkeye.model.PlayerItemEntry;
 import org.cubeville.hawkeye.model.PlayerLogEntry;
 import org.cubeville.hawkeye.model.SignEntry;
 
@@ -81,11 +85,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player dropped item
 	 */
-	PLAYER_ITEM_DROP,
+	PLAYER_ITEM_DROP(PlayerItemEntry.class),
 	/**
 	 * Player picked up item
 	 */
-	PLAYER_ITEM_PICKUP,
+	PLAYER_ITEM_PICKUP(PlayerItemEntry.class),
 	/**
 	 * Player died in PvP
 	 */
@@ -97,7 +101,7 @@ public enum DefaultActions implements Action {
 	/**
 	 * Items dropped on death
 	 */
-	PLAYER_DEATH_ITEMS,
+	PLAYER_DEATH_ITEMS(PlayerItemEntry.class),
 	/**
 	 * Player killed a mob
 	 */
@@ -105,15 +109,15 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player used lava bucket
 	 */
-	LAVA_BUCKET,
+	LAVA_BUCKET(BlockBucketEntry.class),
 	/**
 	 * Player used water bucket
 	 */
-	WATER_BUCKET,
+	WATER_BUCKET(BlockBucketEntry.class),
 	/**
 	 * Player used flint & steel
 	 */
-	FLINT_AND_STEEL,
+	FLINT_AND_STEEL(BlockFireEntry.class),
 	/**
 	 * Player interacted with door
 	 */
@@ -129,15 +133,15 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player ate cake
 	 */
-	CAKE_EAT,
+	CAKE_EAT(PlayerInteractEntry.class),
 	/**
 	 * Putting item in an inventory (chest, furnace, dispenser, etc)
 	 */
-	INVENTORY_ADD,
+	INVENTORY_ADD(PlayerItemEntry.class),
 	/**
 	 * Taking an item from an inventory
 	 */
-	INVENTORY_TAKE,
+	INVENTORY_TAKE(PlayerItemEntry.class),
 	/**
 	 * Creeper explosion
 	 */
@@ -182,11 +186,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Structure grown (tree/mushroom) naturally
 	 */
-	STRUCTURE_GROW,
+	STRUCTURE_GROW(BlockGrowEntry.class),
 	/**
 	 * Structure grown by bonemeal
 	 */
-	STRUCTURE_BONEMEAL;
+	STRUCTURE_BONEMEAL(BlockGrowEntry.class);
 
 	/**
 	 * Log entry data class
