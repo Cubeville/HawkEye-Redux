@@ -1,6 +1,7 @@
 package org.cubeville.util;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class StringTest {
 	@Test
 	public void testSplitter() {
 		String test = "This is an array";
-		assertThat(StringUtil.split(test, " ").toArray(new String[0]), is(array));
+		assertArrayEquals(StringUtil.split(test, " ").toArray(new String[0]), array);
 	}
 
 }
