@@ -19,17 +19,18 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.Action;
-import org.cubeville.hawkeye.block.BlockState;
+import org.cubeville.hawkeye.entity.Entity;
 import org.cubeville.hawkeye.location.Location;
 
-public class BlockModifyEntry extends AbstractBlockEntry {
 
-	public BlockModifyEntry(DatabaseEntry entry) {
+public class PlayerDeathEntry extends AbstractEntityEntry {
+
+	public PlayerDeathEntry(DatabaseEntry entry) {
 		super(entry.getAction(), entry);
 	}
 
-	public BlockModifyEntry(Action action, Location location, BlockState from, BlockState to) {
-		super(action, "Environment", location, from, to);
+	public PlayerDeathEntry(Action action, String player, Location location, Entity killer) {
+		super(action, player, location, killer);
 	}
 
 }

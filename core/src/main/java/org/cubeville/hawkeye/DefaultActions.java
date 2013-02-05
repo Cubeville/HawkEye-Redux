@@ -23,10 +23,12 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.cubeville.hawkeye.model.BlockBreakEntry;
 import org.cubeville.hawkeye.model.BlockBucketEntry;
+import org.cubeville.hawkeye.model.BlockEntityEntry;
 import org.cubeville.hawkeye.model.BlockExplosionEntry;
 import org.cubeville.hawkeye.model.BlockFireEntry;
 import org.cubeville.hawkeye.model.BlockGrowEntry;
 import org.cubeville.hawkeye.model.BlockModifyEntry;
+import org.cubeville.hawkeye.model.BlockPistonEntry;
 import org.cubeville.hawkeye.model.BlockPlaceEntry;
 import org.cubeville.hawkeye.model.ChatEntry;
 import org.cubeville.hawkeye.model.CommandEntry;
@@ -35,9 +37,12 @@ import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.model.HangingBreakEntry;
 import org.cubeville.hawkeye.model.HangingPlaceEntry;
 import org.cubeville.hawkeye.model.Modifiable;
+import org.cubeville.hawkeye.model.PlayerDeathEntry;
 import org.cubeville.hawkeye.model.PlayerInteractEntry;
 import org.cubeville.hawkeye.model.PlayerItemEntry;
+import org.cubeville.hawkeye.model.PlayerKillEntry;
 import org.cubeville.hawkeye.model.PlayerLogEntry;
+import org.cubeville.hawkeye.model.PlayerPvpDeathEntry;
 import org.cubeville.hawkeye.model.SignEntry;
 
 public enum DefaultActions implements Action {
@@ -93,11 +98,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player died in PvP
 	 */
-	PLAYER_DEATH_PVP,
+	PLAYER_DEATH_PVP(PlayerPvpDeathEntry.class),
 	/**
 	 * Player died from a non-pvp cause
 	 */
-	PLAYER_DEATH_OTHER,
+	PLAYER_DEATH_OTHER(PlayerDeathEntry.class),
 	/**
 	 * Items dropped on death
 	 */
@@ -105,7 +110,7 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player killed a mob
 	 */
-	PLAYER_MOB_KILL,
+	PLAYER_MOB_KILL(PlayerKillEntry.class),
 	/**
 	 * Player used lava bucket
 	 */
@@ -173,7 +178,7 @@ public enum DefaultActions implements Action {
 	/**
 	 * Block moved by piston
 	 */
-	BLOCK_PISTON,
+	BLOCK_PISTON(BlockPistonEntry.class),
 	/**
 	 * Block spread (i.e. mushroom growth/fire spread)
 	 */
@@ -182,7 +187,7 @@ public enum DefaultActions implements Action {
 	 * Block changed by entity (i.e. enderman moving blocks, zombie breaking
 	 * doors, snow golems leaving snow, wither, etc)
 	 */
-	ENTITY_BLOCK_MODIFY,
+	ENTITY_BLOCK_MODIFY(BlockEntityEntry.class),
 	/**
 	 * Structure grown (tree/mushroom) naturally
 	 */

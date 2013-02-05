@@ -18,18 +18,18 @@
 
 package org.cubeville.hawkeye.model;
 
-import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.location.Location;
 
-public class BlockModifyEntry extends AbstractBlockEntry {
+public class BlockPistonEntry extends AbstractBlockEntry {
 
-	public BlockModifyEntry(DatabaseEntry entry) {
-		super(entry.getAction(), entry);
+	public BlockPistonEntry(DatabaseEntry entry) {
+		super(DefaultActions.BLOCK_PISTON, entry);
 	}
 
-	public BlockModifyEntry(Action action, Location location, BlockState from, BlockState to) {
-		super(action, "Environment", location, from, to);
+	public BlockPistonEntry(Location location, BlockState old, BlockState replaced) {
+		super(DefaultActions.BLOCK_PISTON, "Piston", location, old, replaced);
 	}
 
 }
