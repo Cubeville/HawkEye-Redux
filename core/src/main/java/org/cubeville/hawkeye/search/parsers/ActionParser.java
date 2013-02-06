@@ -26,11 +26,11 @@ import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
-import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.PreParameterParser;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class ActionParser implements ParameterParser {
+public class ActionParser implements PreParameterParser {
 
 	@Override
 	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {

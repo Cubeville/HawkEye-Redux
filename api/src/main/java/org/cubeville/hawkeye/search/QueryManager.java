@@ -57,6 +57,10 @@ public interface QueryManager {
 	/**
 	 * Registers a search parameter
 	 *
+	 * Note: PRE_QUERY parsers should implement PreParameterParser whereas
+	 * POST_QUERY parsers should implement PostParameterParser. PRE_POST_QUERY
+	 * parsers should implement both.
+	 *
 	 * @param prefix Search parameter prefix
 	 * @param parser Parser that parses this parameter value
 	 * @param stage The parsing stage this parameter is registered on

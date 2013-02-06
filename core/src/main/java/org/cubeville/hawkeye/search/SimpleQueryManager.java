@@ -54,11 +54,6 @@ public class SimpleQueryManager implements QueryManager {
 	 */
 	private final Map<Stage, Map<String, ParameterParser>> parameters = new HashMap<Stage, Map<String, ParameterParser>>();
 
-	/**
-	 * List of registered prefixes
-	 */
-	private final List<String> prefixes = new ArrayList<String>();
-
 	public SimpleQueryManager() {
 		// If no parameter is specified it will fallback to the default parser
 		defaultParser = new PlayerParser();
@@ -88,10 +83,17 @@ public class SimpleQueryManager implements QueryManager {
 		for (Map.Entry<ParameterParser, List<String>> parameter : parameters.entrySet()) {
 			ParameterParser parser = parameter.getKey();
 			List<String> values = parameter.getValue();
-			Pair<String, Map<String, Object>> parsed = parser.process(values, sender);
 
-			conditions.add(parsed.getLeft());
-			if (parsed.getRight() != null) binds.putAll(parsed.getRight());
+			if (parser instanceof PostParameterParser) {
+				((PostParameterParser) parser).validate(values);
+			}
+
+			if (parser instanceof PreParameterParser) {
+				Pair<String, Map<String, Object>> parsed = ((PreParameterParser) parser).process(values, sender);
+
+				conditions.add(parsed.getLeft());
+				if (parsed.getRight() != null) binds.putAll(parsed.getRight());
+			}
 		}
 
 		// Build full query
@@ -118,6 +120,13 @@ public class SimpleQueryManager implements QueryManager {
 
 	@Override
 	public boolean registerParameter(String prefix, ParameterParser parser, Stage stage) {
+		if (stage == Stage.PRE_POST_QUERY) {
+			if (isRegistered(prefix)) return false;
+			registerParameter(prefix, parser, Stage.PRE_QUERY);
+			registerParameter(prefix, parser, Stage.POST_QUERY);
+			return true;
+		}
+
 		Map<String, ParameterParser> parsers;
 		if (parameters.containsKey(stage)) {
 			parsers = parameters.get(stage);
@@ -126,28 +135,49 @@ public class SimpleQueryManager implements QueryManager {
 		}
 
 		prefix = prefix.toLowerCase();
-		if (prefixes.contains(prefix)) return false;
+		if (parsers.containsKey(prefix)) return false;
 
-		prefixes.add(prefix);
+		switch (stage) {
+		case PRE_QUERY:
+			if (!(parser instanceof PreParameterParser))
+				throw new IllegalArgumentException("Must be PreParameterParser to register on stage PRE_QUERY!");
+			break;
+		case POST_QUERY:
+			if (!(parser instanceof PostParameterParser))
+				throw new IllegalArgumentException("Must be PostParameterParser to register on stage POST_QUERY!");
+			break;
+		case PRE_POST_QUERY:
+			return false;
+		}
+
 		parsers.put(prefix, parser);
 		parameters.put(stage, parsers);
 		return true;
+	}
+
+	private boolean isRegistered(String prefix) {
+		for (Map<String, ParameterParser> parsers : parameters.values()) {
+			if (parsers.containsKey(prefix.toLowerCase())) return true;
+		}
+
+		return false;
 	}
 
 	private Map<ParameterParser, List<String>> parseInput(String input) throws CommandUsageException {
 		List<String> args = StringUtil.split(input, " ");
 		Map<ParameterParser, List<String>> ret = new HashMap<ParameterParser, List<String>>();
 
-		Map<String, ParameterParser> parsers = parameters.get(Stage.PRE_QUERY);
-		parsers.putAll(parameters.get(Stage.PRE_POST_QUERY));
+		Map<String, ParameterParser> preParsers = parameters.get(Stage.PRE_QUERY);
+		Map<String, ParameterParser> postParsers = parameters.get(Stage.POST_QUERY);
 
 		ParameterParser parser = null;
+		ParameterParser parser2 = null;
 
 		for (int i = 0; i < args.size(); i++) {
 			String arg = args.get(i);
 			if (arg.isEmpty()) continue;
 
-			if (parser == null) {
+			if (parser == null && parser2 == null) {
 				if (!arg.contains(":")) {
 					// No parameter specified, fallback to default parser
 					parser = defaultParser;
@@ -155,25 +185,37 @@ public class SimpleQueryManager implements QueryManager {
 					String[] parts = arg.split(":");
 					String key = parts[0];
 
-					// Get the parser for this parameter
-					if (!prefixes.contains(key) || !parsers.containsKey(key)) {
+					if (!isRegistered(key)) {
 						throw new CommandUsageException("Invalid parameter specified: &7" + key);
-					} else {
-						parser = parsers.get(key);
+					}
 
-						if (parts.length == 1) {
-							// User left a space between parameter and value
+					// Get the pre parser for this parameter
+					if (preParsers.containsKey(key)) {
+						parser = preParsers.get(key);
+					}
 
-							if (i == (args.size() - 1)) {
-								// Last parameter
-								throw new CommandUsageException("Invalid argument specified: &7" + arg);
-							} else {
-								continue;
-							}
+					// Get the post parser for this parameter
+					if (postParsers.containsKey(key)) {
+						parser2 = postParsers.get(key);
+					}
+
+					// Neither parser exists
+					if (parser == null && parser2 == null) {
+						throw new CommandUsageException("Invalid parameter specified: &7" + key);
+					}
+
+					if (parts.length == 1) {
+						// User left a space between parameter and value
+
+						if (i == (args.size() - 1)) {
+							// Last parameter
+							throw new CommandUsageException("Invalid argument specified: &7" + arg);
 						} else {
-							// Get just the value
-							arg = parts[1];
+							continue;
 						}
+					} else {
+						// Get just the value
+						arg = parts[1];
 					}
 				}
 			}
@@ -191,6 +233,23 @@ public class SimpleQueryManager implements QueryManager {
 
 				values.addAll(StringUtil.split(arg));
 				ret.put(parser, values);
+
+				parser = null;
+			}
+
+			if (parser2 != null) {
+				List<String> values;
+
+				if (ret.containsKey(parser2)) {
+					values = ret.get(parser2);
+				} else {
+					values = new ArrayList<String>();
+				}
+
+				values.addAll(StringUtil.split(arg));
+				ret.put(parser2, values);
+
+				parser2 = null;
 			}
 		}
 

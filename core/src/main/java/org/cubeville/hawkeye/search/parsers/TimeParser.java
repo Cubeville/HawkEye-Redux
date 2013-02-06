@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandSender;
-import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.PreParameterParser;
 import org.cubeville.util.Pair;
 
-public class TimeParser implements ParameterParser {
+public class TimeParser implements PreParameterParser {
 
 	@Override
 	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) {

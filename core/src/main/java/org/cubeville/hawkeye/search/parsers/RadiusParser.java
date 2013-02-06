@@ -33,11 +33,11 @@ import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Vector;
-import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.PreParameterParser;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class RadiusParser implements ParameterParser {
+public class RadiusParser implements PreParameterParser {
 
 	private WorldEdit worldedit;
 
