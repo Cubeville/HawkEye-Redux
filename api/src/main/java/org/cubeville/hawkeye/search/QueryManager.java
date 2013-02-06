@@ -27,6 +27,21 @@ import org.cubeville.hawkeye.command.CommandSender;
 
 public interface QueryManager {
 
+	public enum Stage {
+		/**
+		 * The parameter works by putting its data in the search query
+		 */
+		PRE_QUERY,
+		/**
+		 * The parameter works by processing the data after it is retrieved
+		 */
+		POST_QUERY,
+		/**
+		 * The parameter runs on both stages listed above
+		 */
+		PRE_POST_QUERY;
+	}
+
 	/**
 	 * Gets an sql statement based on parameters provided by the command sender
 	 *
@@ -44,8 +59,9 @@ public interface QueryManager {
 	 *
 	 * @param prefix Search parameter prefix
 	 * @param parser Parser that parses this parameter value
+	 * @param stage The parsing stage this parameter is registered on
 	 * @return True if parameter was registered, false if it was already taken
 	 */
-	boolean registerParameter(String parameter, ParameterParser parser);
+	boolean registerParameter(String parameter, ParameterParser parser, Stage stage);
 
 }

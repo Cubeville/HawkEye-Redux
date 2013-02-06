@@ -50,22 +50,27 @@ public class SimpleQueryManager implements QueryManager {
 	private final ParameterParser defaultParser;
 
 	/**
-	 * Custom parameter parsers (keyed by prefix)
+	 * Custom parameter parsers (keyed by stage, value keyed by prefix)
 	 */
-	private final Map<String, ParameterParser> parameters = new HashMap<String, ParameterParser>();
+	private final Map<Stage, Map<String, ParameterParser>> parameters = new HashMap<Stage, Map<String, ParameterParser>>();
+
+	/**
+	 * List of registered prefixes
+	 */
+	private final List<String> prefixes = new ArrayList<String>();
 
 	public SimpleQueryManager() {
 		// If no parameter is specified it will fallback to the default parser
 		defaultParser = new PlayerParser();
-		registerParameter("default", defaultParser);
-		registerParameter("p", defaultParser);
+		registerParameter("default", defaultParser, Stage.PRE_QUERY);
+		registerParameter("p", defaultParser, Stage.PRE_QUERY);
 
-		registerParameter("r", new RadiusParser());
-		registerParameter("t", new TimeParser());
-		registerParameter("a", new ActionParser());
-		registerParameter("f", new FilterParser());
-		registerParameter("l", new LocationParser());
-		registerParameter("w", new WorldParser());
+		registerParameter("r", new RadiusParser(), Stage.PRE_QUERY);
+		registerParameter("t", new TimeParser(), Stage.PRE_QUERY);
+		registerParameter("a", new ActionParser(), Stage.PRE_QUERY);
+		registerParameter("f", new FilterParser(), Stage.PRE_QUERY);
+		registerParameter("l", new LocationParser(), Stage.PRE_QUERY);
+		registerParameter("w", new WorldParser(), Stage.PRE_QUERY);
 	}
 
 	@Override
@@ -112,11 +117,20 @@ public class SimpleQueryManager implements QueryManager {
 	}
 
 	@Override
-	public boolean registerParameter(String prefix, ParameterParser parser) {
-		prefix = prefix.toLowerCase();
-		if (parameters.containsKey(prefix)) return false;
+	public boolean registerParameter(String prefix, ParameterParser parser, Stage stage) {
+		Map<String, ParameterParser> parsers;
+		if (parameters.containsKey(stage)) {
+			parsers = parameters.get(stage);
+		} else {
+			parsers = new HashMap<String, ParameterParser>();
+		}
 
-		parameters.put(prefix, parser);
+		prefix = prefix.toLowerCase();
+		if (prefixes.contains(prefix)) return false;
+
+		prefixes.add(prefix);
+		parsers.put(prefix, parser);
+		parameters.put(stage, parsers);
 		return true;
 	}
 
@@ -124,6 +138,7 @@ public class SimpleQueryManager implements QueryManager {
 		List<String> args = StringUtil.split(input, " ");
 		Map<ParameterParser, List<String>> ret = new HashMap<ParameterParser, List<String>>();
 
+		Map<String, ParameterParser> parsers = parameters.get(Stage.PRE_QUERY);
 		ParameterParser parser = null;
 
 		for (int i = 0; i < args.size(); i++) {
@@ -139,10 +154,10 @@ public class SimpleQueryManager implements QueryManager {
 					String key = parts[0];
 
 					// Get the parser for this parameter
-					if (!parameters.containsKey(key)) {
+					if (!prefixes.contains(key) || !parsers.containsKey(key)) {
 						throw new CommandUsageException("Invalid parameter specified: &7" + key);
 					} else {
-						parser = parameters.get(key);
+						parser = parsers.get(key);
 
 						if (parts.length == 1) {
 							// User left a space between parameter and value
