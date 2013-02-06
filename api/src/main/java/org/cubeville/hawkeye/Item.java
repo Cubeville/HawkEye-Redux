@@ -371,6 +371,11 @@ public enum Item {
 	 */
 	private static final Map<Short, Item> idMap = new HashMap<Short, Item>(values().length);
 
+	/**
+	 * Name map for lookups
+	 */
+	private static final Map<String, Item> nameMap = new HashMap<String, Item>(values().length);
+
 	private Item(int id) {
 		this(id, 0, null);
 	}
@@ -424,9 +429,25 @@ public enum Item {
 		return idMap.containsKey((short) id) ? idMap.get((short) id) : null;
 	}
 
+	/**
+	 * Attempts to match an item from user input
+	 *
+	 * @param input The user's input
+	 * @return Item or null if no match was found
+	 */
+	public static Item match(String input) {
+		try {
+			return getById(Integer.parseInt(input));
+		} catch (NumberFormatException e) {
+			input = input.trim().toLowerCase().replace("[ -_]", "");
+			return nameMap.containsKey(input) ? nameMap.get(input) : null;
+		}
+	}
+
 	static {
 		for (Item item : values()) {
 			idMap.put(item.id, item);
+			nameMap.put(item.toString().toLowerCase().replace("_", ""), item);
 		}
 	}
 
