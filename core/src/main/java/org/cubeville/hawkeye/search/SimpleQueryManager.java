@@ -139,6 +139,8 @@ public class SimpleQueryManager implements QueryManager {
 		Map<ParameterParser, List<String>> ret = new HashMap<ParameterParser, List<String>>();
 
 		Map<String, ParameterParser> parsers = parameters.get(Stage.PRE_QUERY);
+		parsers.putAll(parameters.get(Stage.PRE_POST_QUERY));
+
 		ParameterParser parser = null;
 
 		for (int i = 0; i < args.size(); i++) {
