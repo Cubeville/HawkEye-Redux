@@ -19,11 +19,12 @@
 package org.cubeville.hawkeye.search;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
 import org.cubeville.hawkeye.command.CommandException;
-import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.model.Entry;
 
 public interface QueryManager {
 
@@ -46,13 +47,21 @@ public interface QueryManager {
 	 * Gets an sql statement based on parameters provided by the command sender
 	 *
 	 * @param connection Database connection to use
-	 * @param params Parameters specified by command sender
-	 * @param sender Who sent the command
+	 * @param query The search query being run
 	 * @return SQL statement to get search results from the database
 	 * @throws CommandException If any of the parameters specified are invalid
 	 * @throws SQLException If there are any errors with the database
 	 */
-	Statement getQuery(Connection connection, String params, CommandSender sender) throws CommandException, SQLException;
+	PreparedStatement getQuery(Connection connection, SearchQuery query) throws CommandException, SQLException;
+
+	/**
+	 * Runs a set of database results through the post search parsers
+	 *
+	 * @param results The database results to parse
+	 * @param query The search query being run
+	 * @throws CommandException If any of the parameters specified are invalid
+	 */
+	void processResults(List<Entry> results, SearchQuery query) throws CommandException;
 
 	/**
 	 * Registers a search parameter

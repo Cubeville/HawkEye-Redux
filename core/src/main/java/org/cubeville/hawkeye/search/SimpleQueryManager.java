@@ -21,8 +21,8 @@ package org.cubeville.hawkeye.search;
 import static org.cubeville.hawkeye.util.DatabaseUtil.table;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -32,6 +32,7 @@ import java.util.Map;
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
+import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.search.parsers.ActionParser;
 import org.cubeville.hawkeye.search.parsers.BlockParser;
 import org.cubeville.hawkeye.search.parsers.FilterParser;
@@ -44,6 +45,8 @@ import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
 public class SimpleQueryManager implements QueryManager {
+
+	// TODO Fix up this whole class, lots of stuff gets parsed twice
 
 	/**
 	 * Default parameter parser (used if no parameter is prefixed)
@@ -71,8 +74,11 @@ public class SimpleQueryManager implements QueryManager {
 	}
 
 	@Override
-	public Statement getQuery(Connection connection, String params, CommandSender sender) throws CommandException, SQLException {
-		String query = "SELECT * FROM " + table("data") + " WHERE ";
+	public PreparedStatement getQuery(Connection connection, SearchQuery query) throws CommandException, SQLException {
+		CommandSender sender = query.getSender();
+		String params = query.getParameters();
+
+		String sql = "SELECT * FROM " + table("data") + " WHERE ";
 
 		List<String> conditions = new LinkedList<String>();
 		Map<String, Object> binds = new HashMap<String, Object>();
@@ -99,14 +105,14 @@ public class SimpleQueryManager implements QueryManager {
 		}
 
 		// Build full query
-		query += "(" + StringUtil.buildString(conditions, ") AND (") + ")";
+		sql += "(" + StringUtil.buildString(conditions, ") AND (") + ")";
 
 		// TODO Add ordering and limiting
 
 		NamedParameterStatement stmt;
 
 		try {
-			stmt = new NamedParameterStatement(connection, query);
+			stmt = new NamedParameterStatement(connection, sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -118,6 +124,22 @@ public class SimpleQueryManager implements QueryManager {
 		}
 
 		return stmt.getStatement();
+	}
+
+	@Override
+	public void processResults(List<Entry> results, SearchQuery query) throws CommandException {
+		String params = query.getParameters();
+
+		Map<ParameterParser, List<String>> parameters = parseInput(params);
+
+		for (Map.Entry<ParameterParser, List<String>> parameter : parameters.entrySet()) {
+			ParameterParser parser = parameter.getKey();
+			List<String> values = parameter.getValue();
+
+			if (parser instanceof PostParameterParser) {
+				((PostParameterParser) parser).process(values, results);
+			}
+		}
 	}
 
 	@Override
