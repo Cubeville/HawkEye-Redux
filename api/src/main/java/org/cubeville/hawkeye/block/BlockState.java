@@ -100,6 +100,13 @@ public class BlockState {
 	}
 
 	/**
+	 * Gets the id of this block state's type
+	 */
+	public short getTypeId() {
+		return id;
+	}
+
+	/**
 	 * Sets the type of this block state
 	 *
 	 * @param type Block type

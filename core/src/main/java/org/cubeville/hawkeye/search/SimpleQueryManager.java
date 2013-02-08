@@ -33,6 +33,7 @@ import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.search.parsers.ActionParser;
+import org.cubeville.hawkeye.search.parsers.BlockParser;
 import org.cubeville.hawkeye.search.parsers.FilterParser;
 import org.cubeville.hawkeye.search.parsers.LocationParser;
 import org.cubeville.hawkeye.search.parsers.PlayerParser;
@@ -66,6 +67,7 @@ public class SimpleQueryManager implements QueryManager {
 		registerParameter("f", new FilterParser(), Stage.PRE_QUERY);
 		registerParameter("l", new LocationParser(), Stage.PRE_QUERY);
 		registerParameter("w", new WorldParser(), Stage.PRE_QUERY);
+		registerParameter("b", new BlockParser(), Stage.PRE_POST_QUERY);
 	}
 
 	@Override

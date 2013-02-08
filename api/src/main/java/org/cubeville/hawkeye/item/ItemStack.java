@@ -29,12 +29,24 @@ public class ItemStack {
 	private final byte amount;
 	private final short durability;
 
+	public ItemStack(Item type) {
+		this(type.getId());
+	}
+
 	public ItemStack(short id) {
 		this(id, (byte) 1, (short) 0);
 	}
 
+	public ItemStack(Item type, byte amount) {
+		this(type.getId(), amount);
+	}
+
 	public ItemStack(short id, byte amount) {
 		this(id, amount, (short) 0);
+	}
+
+	public ItemStack(Item type, byte amount, short durability) {
+		this(type.getId(), amount, durability);
 	}
 
 	public ItemStack(short id, byte amount, short durability) {
