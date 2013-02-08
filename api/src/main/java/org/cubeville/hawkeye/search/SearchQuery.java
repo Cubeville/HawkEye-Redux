@@ -38,8 +38,19 @@ public class SearchQuery implements Runnable {
 
 	// TODO Fix up the relationship between querymanager and searchquery
 
+	/**
+	 * CommandSender running this query
+	 */
 	private final CommandSender sender;
+
+	/**
+	 * Search parameters for this query
+	 */
 	private final String parameters;
+
+	/**
+	 * Callback to run when this query is completed
+	 */
 	private final Callback callback;
 
 	public SearchQuery(CommandSender sender, String parameters, Callback callback) {
@@ -48,14 +59,27 @@ public class SearchQuery implements Runnable {
 		this.callback = callback;
 	}
 
+	/**
+	 * Gets the command sender running this query
+	 *
+	 * @return CommandSender
+	 */
 	public CommandSender getSender() {
 		return sender;
 	}
 
+	/**
+	 * Gets the parameters attached to this query
+	 *
+	 * @return Search parameters
+	 */
 	public String getParameters() {
 		return parameters;
 	}
 
+	/**
+	 * Runs the search query
+	 */
 	@Override
 	public void run() {
 		Connection conn = null;
@@ -86,6 +110,13 @@ public class SearchQuery implements Runnable {
 		callback.execute(results);
 	}
 
+	/**
+	 * Creates an Entry object from a database row
+	 *
+	 * @param rs Database result set
+	 * @return HawkEye entry
+	 * @throws SQLException If any database errors occur
+	 */
 	private Entry createEntry(ResultSet rs) throws SQLException {
 		int id = rs.getInt("id");
 		int player = rs.getInt("player_id");

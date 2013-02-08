@@ -22,10 +22,24 @@ import java.util.List;
 
 import org.cubeville.hawkeye.model.Entry;
 
+/**
+ * Represents a callback to run when a database query is either completed or
+ * errors out.
+ */
 public interface Callback {
 
+	/**
+	 * Called when a database query has been completed
+	 *
+	 * @param results Final results from the query
+	 */
 	void execute(List<Entry> results);
 
+	/**
+	 * Called when the database query runs into an exception
+	 *
+	 * @param e The exception thrown by the database query
+	 */
 	void error(Exception e);
 
 }
