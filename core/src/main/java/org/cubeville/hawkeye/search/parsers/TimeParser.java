@@ -21,14 +21,24 @@ package org.cubeville.hawkeye.search.parsers;
 import java.util.List;
 import java.util.Map;
 
-import org.cubeville.hawkeye.command.CommandSender;
-import org.cubeville.hawkeye.search.PreParameterParser;
+import org.cubeville.hawkeye.command.CommandException;
+import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
 
-public class TimeParser implements PreParameterParser {
+public class TimeParser extends ParameterParser {
+
+	public TimeParser(List<String> parameters, SearchQuery query) throws CommandException {
+		super(parameters, query);
+	}
 
 	@Override
-	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) {
+	public void parse() throws CommandException {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Pair<String, Map<String, Object>> preProcess() {
 		// TODO Auto-generated method stub
 		return null;
 	}

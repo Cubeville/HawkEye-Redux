@@ -33,16 +33,24 @@ import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Vector;
-import org.cubeville.hawkeye.search.PreParameterParser;
+import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class RadiusParser implements PreParameterParser {
+public class RadiusParser extends ParameterParser {
 
 	private WorldEdit worldedit;
 
-	public RadiusParser() {
+	private Vector min;
+	private Vector max;
+
+	public RadiusParser(List<String> parameters, SearchQuery query) throws CommandException {
+		super(parameters, query);
+
 		worldedit = null;
+		min = null;
+		max = null;
 
 		try {
 			Class.forName("com.sk89q.worldedit.WorldEdit");
@@ -56,45 +64,49 @@ public class RadiusParser implements PreParameterParser {
 	}
 
 	@Override
-	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
+	public void parse() throws CommandException {
+		CommandSender sender = query.getSender();
 		if (!sender.isPlayer()) throw new CommandPlayerException();
 		if (parameters.size() > 1) throw new CommandUsageException("Invalid radius specified: &7" + StringUtil.buildString(parameters, ","));
-
 		String parameter = parameters.get(0);
 
-		if ((parameter.equalsIgnoreCase("we") || parameter.equalsIgnoreCase("worldedit")) && hasWorldEdit()) {
-			return processWorldedit(sender);
+		if (parameter.equalsIgnoreCase("we") || parameter.equalsIgnoreCase("worldedit")) {
+			parseWorldedit(sender);
+			return;
 		}
 
 		Vector center = ((Player) sender).getPosition();
-		double radius;
+		double radius = 0;
 
 		try {
 			radius = Double.parseDouble(parameter);
-		} catch (NumberFormatException ex) {
+		} catch (NumberFormatException e) {
 			throw new CommandUsageException("Invalid radius specified: &7" + parameter);
 		}
 
 		Vector r = new Vector(radius, radius, radius);
-		Vector min = center.subtract(r);
-		Vector max = center.add(r);
-
-		return buildQuery(min, max);
+		min = center.subtract(r);
+		max = center.add(r);
 	}
 
-	private Pair<String, Map<String, Object>> processWorldedit(CommandSender sender) throws CommandException {
+	private void parseWorldedit(CommandSender sender) throws CommandException {
+		if (!hasWorldEdit()) throw new CommandException("WorldEdit support is not enabled.");
+
 		LocalSession session = worldedit.getSession(sender.getName());
 		Region region;
 
 		try {
 			region = session.getSelection(session.getSelectionWorld());
+
+			min = toVector(region.getMinimumPoint());
+			max = toVector(region.getMaximumPoint());
 		} catch (IncompleteRegionException e) {
 			throw new CommandException("You do not have a WorldEdit selection.");
 		}
+	}
 
-		Vector min = toVector(region.getMinimumPoint());
-		Vector max = toVector(region.getMaximumPoint());
-
+	@Override
+	public Pair<String, Map<String, Object>> preProcess() {
 		return buildQuery(min, max);
 	}
 

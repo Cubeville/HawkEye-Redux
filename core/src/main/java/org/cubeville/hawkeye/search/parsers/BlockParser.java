@@ -29,80 +29,80 @@ import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.Item;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.command.CommandException;
-import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.item.ItemStack;
 import org.cubeville.hawkeye.model.BlockEntry;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.model.ItemEntry;
-import org.cubeville.hawkeye.search.PostParameterParser;
-import org.cubeville.hawkeye.search.PreParameterParser;
+import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class BlockParser implements PreParameterParser, PostParameterParser {
+public class BlockParser extends ParameterParser {
 
-	@Override
-	public void validate(List<String> parameters) throws CommandException {
-		for (int i = 0; i < parameters.size(); i++) {
-			String[] value = parameters.get(i).split(":", 2);
+	private final List<String> actions;
+	private final List<String> blocks;
+	private final List<ItemStack> items;
 
-			if (Item.match(value[0]) == null) throw new CommandException("Invalid item specified: &7" + value[0]);
-		}
+	public BlockParser(List<String> parameters, SearchQuery query) throws CommandException {
+		super(parameters, query);
+
+		actions = new ArrayList<String>();
+		blocks = new ArrayList<String>();
+		items = new ArrayList<ItemStack>();
 	}
 
 	@Override
-	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
-		List<String> blockActions = new ArrayList<String>();
+	public void parse() throws CommandException {
 		for (Action action : HawkEye.getDataManager().getActions()) {
 			if (BlockEntry.class.isAssignableFrom(action.getClass()) || ItemEntry.class.isAssignableFrom(action.getClass())) {
-				blockActions.add(action.getName());
+				actions.add(action.getName());
 			}
 		}
 
-		List<String> conditions = new ArrayList<String>();
-		Map<String, Object> binds = new HashMap<String, Object>();
-
 		for (int i = 0; i < parameters.size(); i++) {
-			String name = "block" + i;
 			String[] value = parameters.get(i).split(":", 2);
 
 			Item item = Item.match(value[0]);
-
+			if (item == null) throw new CommandException("Invalid item specified: &7" + value[0]);
 			String id = String.valueOf(item.getId());
+
+			short data = -1;
 			if (value.length == 2) {
 				id += ":" + value[1];
-			}
 
-			conditions.add("(`data` LIKE :" + name + ")");
-			binds.put(name, "%" + id + "%");
-		}
-
-		String sql = "";
-		sql += "`action` IN ('" + StringUtil.buildString(blockActions, "','") + "')";
-
-		return Pair.of(sql, null);
-	}
-
-	@Override
-	public void process(List<String> parameters, List<Entry> results) {
-		List<ItemStack> items = new ArrayList<ItemStack>();
-
-		for (int i = 0; i < parameters.size(); i++) {
-			String[] value = parameters.get(i).split(":", 2);
-
-			Item item = Item.match(value[0]);
-			short data = -1;
-
-			if (value.length == 2) {
 				try {
 					data = Short.parseShort(value[1]);
 				} catch (NumberFormatException ignore) {
 				}
 			}
 
+			blocks.add(id);
 			items.add(new ItemStack(item, (byte) 1, data));
 		}
+	}
 
+	@Override
+	public Pair<String, Map<String, Object>> preProcess() {
+		List<String> conditions = new ArrayList<String>();
+		Map<String, Object> binds = new HashMap<String, Object>();
+
+		for (int i = 0; i < blocks.size(); i++) {
+			String name = "block" + i;
+			String id = blocks.get(i);
+
+			conditions.add("(`data` LIKE :" + name + ")");
+			binds.put(name, "%" + id + "%");
+		}
+
+		String sql = "";
+		sql += "`action` IN ('" + StringUtil.buildString(actions, "','") + "')";
+
+		return Pair.of(sql, null);
+	}
+
+	@Override
+	public void postProcess(List<Entry> results) {
 		Iterator<Entry> itr = results.iterator();
 
 		outer:

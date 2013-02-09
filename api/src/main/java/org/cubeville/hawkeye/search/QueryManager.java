@@ -18,50 +18,23 @@
 
 package org.cubeville.hawkeye.search;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandException;
-import org.cubeville.hawkeye.model.Entry;
+import org.cubeville.hawkeye.command.CommandSender;
 
 public interface QueryManager {
 
-	public enum Stage {
-		/**
-		 * The parameter works by putting its data in the search query
-		 */
-		PRE_QUERY,
-		/**
-		 * The parameter works by processing the data after it is retrieved
-		 */
-		POST_QUERY,
-		/**
-		 * The parameter runs on both stages listed above
-		 */
-		PRE_POST_QUERY;
-	}
-
 	/**
-	 * Gets an sql statement based on parameters provided by the command sender
+	 * Creates a SearchQuery for the specified user
 	 *
-	 * @param connection Database connection to use
-	 * @param query The search query being run
-	 * @return SQL statement to get search results from the database
-	 * @throws CommandException If any of the parameters specified are invalid
-	 * @throws SQLException If there are any errors with the database
+	 * @param sender The command sender running a search
+	 * @param parameters The parameters specified by the sender
+	 * @return The created query
+	 * @throws CommandException If any of the parameters are invalid
 	 */
-	PreparedStatement getQuery(Connection connection, SearchQuery query) throws CommandException, SQLException;
-
-	/**
-	 * Runs a set of database results through the post search parsers
-	 *
-	 * @param results The database results to parse
-	 * @param query The search query being run
-	 * @throws CommandException If any of the parameters specified are invalid
-	 */
-	void processResults(List<Entry> results, SearchQuery query) throws CommandException;
+	SearchQuery createQuery(CommandSender sender, String parameters) throws CommandException;
 
 	/**
 	 * Registers a search parameter
@@ -71,10 +44,22 @@ public interface QueryManager {
 	 * parsers should implement both.
 	 *
 	 * @param prefix Search parameter prefix
-	 * @param parser Parser that parses this parameter value
+	 * @param parser Class that parses this parameter value
 	 * @param stage The parsing stage this parameter is registered on
 	 * @return True if parameter was registered, false if it was already taken
 	 */
-	boolean registerParameter(String parameter, ParameterParser parser, Stage stage);
+	boolean registerParameter(String parameter, Class<? extends ParameterParser> parser);
+
+	/**
+	 * Gets a list of parameter parsers for the specified parameter set
+	 *
+	 * @param query Query to get parsers for
+	 * @param parameters List of parameters for the search
+	 *           key - parameter prefix
+	 *           value - parameter values
+	 * @return List of parameter parsers for the query
+	 * @throws CommandException If there are any invalid parameters
+	 */
+	List<ParameterParser> getParsers(SearchQuery query, Map<String, List<String>> parameters) throws CommandException;
 
 }

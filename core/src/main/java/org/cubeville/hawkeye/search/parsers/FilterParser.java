@@ -23,21 +23,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.cubeville.hawkeye.command.CommandSender;
-import org.cubeville.hawkeye.search.PreParameterParser;
+import org.cubeville.hawkeye.command.CommandException;
+import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class FilterParser implements PreParameterParser {
+public class FilterParser extends ParameterParser {
+
+	private final List<String> filters;
+
+	public FilterParser(List<String> parameters, SearchQuery query) throws CommandException {
+		super(parameters, query);
+
+		filters = new ArrayList<String>();
+	}
 
 	@Override
-	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) {
+	public void parse() throws CommandException {
+		for (int i = 0; i < parameters.size(); i++) {
+			filters.add(parameters.get(i));
+		}
+	}
+
+	@Override
+	public Pair<String, Map<String, Object>> preProcess() {
 		List<String> conditions = new ArrayList<String>();
 		Map<String, Object> binds = new HashMap<String, Object>();
 
-		for (int i = 0; i < parameters.size(); i++) {
+		for (int i = 0; i < filters.size(); i++) {
 			String name = "data" + i;
-			String value = parameters.get(i);
+			String value = filters.get(i);
 
 			conditions.add("(`data` LIKE :" + name + ")");
 			binds.put(name, "%" + value + "%");

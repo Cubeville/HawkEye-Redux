@@ -25,18 +25,25 @@ import java.util.Map;
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
-import org.cubeville.hawkeye.command.CommandSender;
-import org.cubeville.hawkeye.search.PreParameterParser;
+import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class ActionParser implements PreParameterParser {
+public class ActionParser extends ParameterParser {
+
+	private final List<String> actions;
+	private final List<String> actionsNot;
+
+	public ActionParser(List<String> parameters, SearchQuery query) throws CommandException {
+		super(parameters, query);
+
+		actions = new ArrayList<String>();
+		actionsNot = new ArrayList<String>();
+	}
 
 	@Override
-	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
-		List<String> actions = new ArrayList<String>();
-		List<String> actionsNot = new ArrayList<String>();
-
+	public void parse() throws CommandException {
 		for (String param : parameters) {
 			boolean not = false;
 			if (param.startsWith("!")) {
@@ -45,13 +52,15 @@ public class ActionParser implements PreParameterParser {
 			}
 
 			Action action = HawkEye.getDataManager().getAction(param);
-
 			if (action == null) throw new CommandException("Invalid action specified: &7" + param);
 
 			if (not) actionsNot.add(action.getName());
 			else actions.add(action.getName());
 		}
+	}
 
+	@Override
+	public Pair<String, Map<String, Object>> preProcess() {
 		String sql = "";
 
 		if (!actions.isEmpty()) {

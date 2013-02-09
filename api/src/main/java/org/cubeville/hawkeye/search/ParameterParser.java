@@ -18,9 +18,84 @@
 
 package org.cubeville.hawkeye.search;
 
+import java.util.List;
+import java.util.Map;
+
+import org.cubeville.hawkeye.command.CommandException;
+import org.cubeville.hawkeye.model.Entry;
+import org.cubeville.util.Pair;
+
 /**
  * Represents a search parameter processor
+ *
+ * Parser implementations must contain a constructor that accepts a List and
+ * a SearchQuery.
  */
-public interface ParameterParser {
+public abstract class ParameterParser {
+
+	/**
+	 * Parameters specified by the sender
+	 */
+	protected final List<String> parameters;
+
+	/**
+	 * Query running the search
+	 */
+	protected final SearchQuery query;
+
+	/**
+	 * Constructor
+	 *
+	 * @param parameters Parameters to search for
+	 * @param query The query running the search
+	 */
+	public ParameterParser(List<String> parameters, SearchQuery query) throws CommandException {
+		this.parameters = parameters;
+		this.query = query;
+		parse();
+	}
+
+	/**
+	 * Validates the parameters passed in by the sender
+	 *
+	 * Note: This method is called first and should be used to catch any
+	 * invalid user input before a search is run.  It is preferred to throw an
+	 * exception with a message explaining where the error occurred, however
+	 * it may just return false.
+	 *
+	 * @throws CommandException If any of the parameters are invalid
+	 */
+	public abstract void parse() throws CommandException;
+
+	/**
+	 * Creates an SQL where clause to search for a certain parameter
+	 *
+	 * Named parameters should be used to prevent SQL injection attempts. They
+	 * use the format :variable. For example:
+	 *
+	 *   "action = :action AND data LIKE :filter"
+	 *
+	 * The return should also include a map of parameters and their values. For
+	 * example:
+	 *
+	 *   "action": "block-break"
+	 *   "filter": "%98%"
+	 *
+	 * @param parameters Parameters to search for
+	 * @return Pair containing SQL query and mapping of parameters to values
+	 *            left value - SQL where clause to use a database query
+	 *            right value - Map of named parameters and their values
+	 */
+	public Pair<String, Map<String, Object>> preProcess() { return null; }
+
+	/**
+	 * Processes the database search results from a query based on parameters
+	 * specified by a user.
+	 *
+	 * @param results The search results
+	 */
+	public void postProcess(List<Entry> results) { }
+
+
 
 }

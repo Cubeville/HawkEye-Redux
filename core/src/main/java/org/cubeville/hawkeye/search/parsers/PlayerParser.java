@@ -24,18 +24,25 @@ import java.util.Map;
 
 import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
-import org.cubeville.hawkeye.command.CommandSender;
-import org.cubeville.hawkeye.search.PreParameterParser;
+import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class PlayerParser implements PreParameterParser {
+public class PlayerParser extends ParameterParser {
+
+	private final List<String> players;
+	private final List<String> playersNot;
+
+	public PlayerParser(List<String> parameters, SearchQuery query) throws CommandException {
+		super(parameters, query);
+
+		players = new ArrayList<String>();
+		playersNot = new ArrayList<String>();
+	}
 
 	@Override
-	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
-		List<String> players = new ArrayList<String>();
-		List<String> playersNot = new ArrayList<String>();
-
+	public void parse() throws CommandException {
 		for (String param : parameters) {
 			boolean not = false;
 			if (param.startsWith("!")) {
@@ -49,7 +56,10 @@ public class PlayerParser implements PreParameterParser {
 			if (not) playersNot.add(String.valueOf(id));
 			else players.add(String.valueOf(id));
 		}
+	}
 
+	@Override
+	public Pair<String, Map<String, Object>> preProcess() {
 		String sql = "";
 
 		if (!players.isEmpty()) {

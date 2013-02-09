@@ -26,7 +26,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
@@ -34,9 +36,7 @@ import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
 
-public class SearchQuery implements Runnable {
-
-	// TODO Fix up the relationship between querymanager and searchquery
+public abstract class SearchQuery implements Runnable {
 
 	/**
 	 * CommandSender running this query
@@ -44,38 +44,73 @@ public class SearchQuery implements Runnable {
 	private final CommandSender sender;
 
 	/**
-	 * Search parameters for this query
+	 * Search parameters (key = parameter name, value = parameter values)
 	 */
-	private final String parameters;
+	private final Map<String, List<String>> parameters;
 
 	/**
 	 * Callback to run when this query is completed
 	 */
 	private final Callback callback;
 
-	public SearchQuery(CommandSender sender, String parameters, Callback callback) {
+	/**
+	 * Parameter parsers
+	 */
+	private final List<ParameterParser> parsers;
+
+	/**
+	 * SearchQuery constructor
+	 *
+	 * @param id Id of this search query for internal use
+	 * @param sender CommandSender running this query
+	 * @param parameters Query search parameters
+	 * @param callback Query callback handler
+	 * @throws CommandException If search parameters are invalid
+	 */
+	public SearchQuery(CommandSender sender, String parameters, Callback callback) throws CommandException {
 		this.sender = sender;
-		this.parameters = parameters;
+		this.parameters = Collections.unmodifiableMap(parse(parameters));
 		this.callback = callback;
+		parsers = HawkEye.getQueryManager().getParsers(this, this.parameters);
 	}
 
 	/**
 	 * Gets the command sender running this query
 	 *
-	 * @return CommandSender
+	 * @return Command sender running this query
 	 */
 	public CommandSender getSender() {
 		return sender;
 	}
 
 	/**
-	 * Gets the parameters attached to this query
+	 * Gets a list of parameter parsers attached to this query
 	 *
-	 * @return Search parameters
+	 * @return Parser list
 	 */
-	public String getParameters() {
-		return parameters;
+	public List<ParameterParser> getParsers() {
+		return parsers;
 	}
+
+	/**
+	 * Parses search parameters
+	 *
+	 * @param parameters Parameters specified by the command sender
+	 * @return Map of parameters and their values
+	 *          key - parameter prefix
+	 *          value - list of parameter values
+	 * @throws CommandException If any parameters are invalid
+	 */
+	protected abstract Map<String, List<String>> parse(String parameters) throws CommandException;
+
+	/**
+	 * Gets an sql statement based on parameters provided by the command sender
+	 *
+	 * @param connection Database connection to use
+	 * @return SQL statement to get search results from the database
+	 * @throws SQLException If there are any errors with the database
+	 */
+	protected abstract PreparedStatement createStatement(Connection connection) throws SQLException;
 
 	/**
 	 * Runs the search query
@@ -89,14 +124,14 @@ public class SearchQuery implements Runnable {
 
 		try {
 			conn = HawkEye.getDatabase().getConnection();
-			stmt = HawkEye.getQueryManager().getQuery(conn, this);
+			stmt = createStatement(conn);
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				results.add(createEntry(rs));
 			}
 
-			HawkEye.getQueryManager().processResults(results, this);
+			processResults(results);
 		} catch (CommandException e) {
 			// TODO Inform the user
 		} catch (SQLException e) {
@@ -108,6 +143,12 @@ public class SearchQuery implements Runnable {
 		}
 
 		callback.execute(results);
+	}
+
+	private void processResults(List<Entry> results) throws CommandException {
+		for (ParameterParser parser : parsers) {
+			parser.postProcess(results);
+		}
 	}
 
 	/**

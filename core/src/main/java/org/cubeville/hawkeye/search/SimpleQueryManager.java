@@ -18,21 +18,16 @@
 
 package org.cubeville.hawkeye.search;
 
-import static org.cubeville.hawkeye.util.DatabaseUtil.table;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
-import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.search.parsers.ActionParser;
 import org.cubeville.hawkeye.search.parsers.BlockParser;
 import org.cubeville.hawkeye.search.parsers.FilterParser;
@@ -41,243 +36,92 @@ import org.cubeville.hawkeye.search.parsers.PlayerParser;
 import org.cubeville.hawkeye.search.parsers.RadiusParser;
 import org.cubeville.hawkeye.search.parsers.TimeParser;
 import org.cubeville.hawkeye.search.parsers.WorldParser;
-import org.cubeville.util.Pair;
-import org.cubeville.util.StringUtil;
 
 public class SimpleQueryManager implements QueryManager {
-
-	// TODO Fix up this whole class, lots of stuff gets parsed twice
 
 	/**
 	 * Default parameter parser (used if no parameter is prefixed)
 	 */
-	private final ParameterParser defaultParser;
+	private final Class<? extends ParameterParser> defaultParser;
 
 	/**
-	 * Custom parameter parsers (keyed by stage, value keyed by prefix)
+	 * Custom parser constructors
 	 */
-	private final Map<Stage, Map<String, ParameterParser>> parameters = new HashMap<Stage, Map<String, ParameterParser>>();
+	private final Map<String, Constructor<? extends ParameterParser>> parsers = new HashMap<String, Constructor<? extends ParameterParser>>();
 
 	public SimpleQueryManager() {
 		// If no parameter is specified it will fallback to the default parser
-		defaultParser = new PlayerParser();
-		registerParameter("default", defaultParser, Stage.PRE_QUERY);
-		registerParameter("p", defaultParser, Stage.PRE_QUERY);
+		defaultParser = PlayerParser.class;
+		registerParameter("default", defaultParser);
+		registerParameter("p", defaultParser);
 
-		registerParameter("r", new RadiusParser(), Stage.PRE_QUERY);
-		registerParameter("t", new TimeParser(), Stage.PRE_QUERY);
-		registerParameter("a", new ActionParser(), Stage.PRE_QUERY);
-		registerParameter("f", new FilterParser(), Stage.PRE_QUERY);
-		registerParameter("l", new LocationParser(), Stage.PRE_QUERY);
-		registerParameter("w", new WorldParser(), Stage.PRE_QUERY);
-		registerParameter("b", new BlockParser(), Stage.PRE_POST_QUERY);
+		registerParameter("r", RadiusParser.class);
+		registerParameter("t", TimeParser.class);
+		registerParameter("a", ActionParser.class);
+		registerParameter("f", FilterParser.class);
+		registerParameter("l", LocationParser.class);
+		registerParameter("w", WorldParser.class);
+		registerParameter("b", BlockParser.class);
 	}
 
 	@Override
-	public PreparedStatement getQuery(Connection connection, SearchQuery query) throws CommandException, SQLException {
-		CommandSender sender = query.getSender();
-		String params = query.getParameters();
-
-		String sql = "SELECT * FROM " + table("data") + " WHERE ";
-
-		List<String> conditions = new LinkedList<String>();
-		Map<String, Object> binds = new HashMap<String, Object>();
-
-		// Default condition so it doesn't break if no parameters are processed
-		conditions.add("true");
-
-		Map<ParameterParser, List<String>> parameters = parseInput(params);
-
-		for (Map.Entry<ParameterParser, List<String>> parameter : parameters.entrySet()) {
-			ParameterParser parser = parameter.getKey();
-			List<String> values = parameter.getValue();
-
-			if (parser instanceof PostParameterParser) {
-				((PostParameterParser) parser).validate(values);
-			}
-
-			if (parser instanceof PreParameterParser) {
-				Pair<String, Map<String, Object>> parsed = ((PreParameterParser) parser).process(values, sender);
-
-				conditions.add(parsed.getLeft());
-				if (parsed.getRight() != null) binds.putAll(parsed.getRight());
-			}
-		}
-
-		// Build full query
-		sql += "(" + StringUtil.buildString(conditions, ") AND (") + ")";
-
-		// TODO Add ordering and limiting
-
-		NamedParameterStatement stmt;
-
-		try {
-			stmt = new NamedParameterStatement(connection, sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		// Bind named parameters
-		for (Map.Entry<String, Object> entry : binds.entrySet()) {
-			stmt.setObject(entry.getKey(), entry.getValue());
-		}
-
-		return stmt.getStatement();
+	public SearchQuery createQuery(CommandSender sender, String parameters) throws CommandException {
+		return new SimpleSearchQuery(sender, parameters, null);
+		// TODO Callback
 	}
 
 	@Override
-	public void processResults(List<Entry> results, SearchQuery query) throws CommandException {
-		String params = query.getParameters();
-
-		Map<ParameterParser, List<String>> parameters = parseInput(params);
-
-		for (Map.Entry<ParameterParser, List<String>> parameter : parameters.entrySet()) {
-			ParameterParser parser = parameter.getKey();
-			List<String> values = parameter.getValue();
-
-			if (parser instanceof PostParameterParser) {
-				((PostParameterParser) parser).process(values, results);
-			}
-		}
-	}
-
-	@Override
-	public boolean registerParameter(String prefix, ParameterParser parser, Stage stage) {
-		if (stage == Stage.PRE_POST_QUERY) {
-			if (isRegistered(prefix)) return false;
-			registerParameter(prefix, parser, Stage.PRE_QUERY);
-			registerParameter(prefix, parser, Stage.POST_QUERY);
-			return true;
-		}
-
-		Map<String, ParameterParser> parsers;
-		if (parameters.containsKey(stage)) {
-			parsers = parameters.get(stage);
-		} else {
-			parsers = new HashMap<String, ParameterParser>();
-		}
-
+	public boolean registerParameter(String prefix, Class<? extends ParameterParser> parser) {
 		prefix = prefix.toLowerCase();
 		if (parsers.containsKey(prefix)) return false;
 
-		switch (stage) {
-		case PRE_QUERY:
-			if (!(parser instanceof PreParameterParser))
-				throw new IllegalArgumentException("Must be PreParameterParser to register on stage PRE_QUERY!");
-			break;
-		case POST_QUERY:
-			if (!(parser instanceof PostParameterParser))
-				throw new IllegalArgumentException("Must be PostParameterParser to register on stage POST_QUERY!");
-			break;
-		case PRE_POST_QUERY:
+		try {
+			Constructor<? extends ParameterParser> constructor = parser.getConstructor(List.class, SearchQuery.class);
+			constructor.setAccessible(true);
+			parsers.put(prefix, constructor);
+
+			return true;
+		} catch (SecurityException e) {
+			return false;
+		} catch (NoSuchMethodException e) {
 			return false;
 		}
-
-		parsers.put(prefix, parser);
-		parameters.put(stage, parsers);
-		return true;
 	}
 
-	private boolean isRegistered(String prefix) {
-		for (Map<String, ParameterParser> parsers : parameters.values()) {
-			if (parsers.containsKey(prefix.toLowerCase())) return true;
+	@Override
+	public List<ParameterParser> getParsers(SearchQuery query, Map<String, List<String>> parameters) throws CommandException {
+		List<ParameterParser> parsers = new ArrayList<ParameterParser>();
+
+		for (Map.Entry<String, List<String>> entry : parameters.entrySet()) {
+			ParameterParser parser = getParser(query, entry.getKey(), entry.getValue());
+			if (parser != null) parsers.add(parser);
 		}
 
-		return false;
+		return parsers;
 	}
 
-	private Map<ParameterParser, List<String>> parseInput(String input) throws CommandUsageException {
-		List<String> args = StringUtil.split(input, " ");
-		Map<ParameterParser, List<String>> ret = new HashMap<ParameterParser, List<String>>();
+	/**
+	 * Gets a parameter parser for the specified query
+	 *
+	 * @param query Query that needs a parser
+	 * @param prefix Parameter prefix to get parser for
+	 * @param values Parameter values
+	 * @return Parameter parser
+	 * @throws CommandException If an error occurs
+	 */
+	private ParameterParser getParser(SearchQuery query, String prefix, List<String> values) throws CommandException {
+		prefix = prefix.toLowerCase();
+		if (!parsers.containsKey(prefix)) throw new CommandUsageException("Invalid parameter specified: &7" + prefix);
 
-		Map<String, ParameterParser> preParsers = parameters.get(Stage.PRE_QUERY);
-		Map<String, ParameterParser> postParsers = parameters.get(Stage.POST_QUERY);
-
-		ParameterParser parser = null;
-		ParameterParser parser2 = null;
-
-		for (int i = 0; i < args.size(); i++) {
-			String arg = args.get(i);
-			if (arg.isEmpty()) continue;
-
-			if (parser == null && parser2 == null) {
-				if (!arg.contains(":")) {
-					// No parameter specified, fallback to default parser
-					parser = defaultParser;
-				} else {
-					String[] parts = arg.split(":");
-					String key = parts[0];
-
-					if (!isRegistered(key)) {
-						throw new CommandUsageException("Invalid parameter specified: &7" + key);
-					}
-
-					// Get the pre parser for this parameter
-					if (preParsers.containsKey(key)) {
-						parser = preParsers.get(key);
-					}
-
-					// Get the post parser for this parameter
-					if (postParsers.containsKey(key)) {
-						parser2 = postParsers.get(key);
-					}
-
-					// Neither parser exists
-					if (parser == null && parser2 == null) {
-						throw new CommandUsageException("Invalid parameter specified: &7" + key);
-					}
-
-					if (parts.length == 1) {
-						// User left a space between parameter and value
-
-						if (i == (args.size() - 1)) {
-							// Last parameter
-							throw new CommandUsageException("Invalid argument specified: &7" + arg);
-						} else {
-							continue;
-						}
-					} else {
-						// Get just the value
-						arg = parts[1];
-					}
-				}
-			}
-
-			// At this point arg should be equal to just the value (no parameter)
-
-			if (parser != null) {
-				List<String> values;
-
-				if (ret.containsKey(parser)) {
-					values = ret.get(parser);
-				} else {
-					values = new ArrayList<String>();
-				}
-
-				values.addAll(StringUtil.split(arg));
-				ret.put(parser, values);
-
-				parser = null;
-			}
-
-			if (parser2 != null) {
-				List<String> values;
-
-				if (ret.containsKey(parser2)) {
-					values = ret.get(parser2);
-				} else {
-					values = new ArrayList<String>();
-				}
-
-				values.addAll(StringUtil.split(arg));
-				ret.put(parser2, values);
-
-				parser2 = null;
-			}
+		try {
+			return parsers.get(prefix).newInstance(values, query);
+		} catch (IllegalArgumentException ignore) {
+		} catch (InstantiationException ignore) {
+		} catch (IllegalAccessException ignore) {
+		} catch (InvocationTargetException ignore) {
 		}
 
-		return ret;
+		throw new CommandException("Error parsing parameter: &7" + prefix);
 	}
 
 }

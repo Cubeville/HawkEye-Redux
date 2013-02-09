@@ -24,18 +24,25 @@ import java.util.Map;
 
 import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
-import org.cubeville.hawkeye.command.CommandSender;
-import org.cubeville.hawkeye.search.PreParameterParser;
+import org.cubeville.hawkeye.search.ParameterParser;
+import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
 import org.cubeville.util.StringUtil;
 
-public class WorldParser implements PreParameterParser {
+public class WorldParser extends ParameterParser {
+
+	private final List<String> worlds;
+	private final List<String> worldsNot;
+
+	public WorldParser(List<String> parameters, SearchQuery query) throws CommandException {
+		super(parameters, query);
+
+		worlds = new ArrayList<String>();
+		worldsNot = new ArrayList<String>();
+	}
 
 	@Override
-	public Pair<String, Map<String, Object>> process(List<String> parameters, CommandSender sender) throws CommandException {
-		List<String> worlds = new ArrayList<String>();
-		List<String> worldsNot = new ArrayList<String>();
-
+	public void parse() throws CommandException {
 		for (String param : parameters) {
 			boolean not = false;
 			if (param.startsWith("!")) {
@@ -49,7 +56,10 @@ public class WorldParser implements PreParameterParser {
 			if (not) worldsNot.add(String.valueOf(id));
 			else worlds.add(String.valueOf(id));
 		}
+	}
 
+	@Override
+	public Pair<String, Map<String, Object>> preProcess() {
 		String sql = "";
 
 		if (!worlds.isEmpty()) {
