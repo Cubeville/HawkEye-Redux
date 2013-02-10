@@ -96,7 +96,7 @@ public class TimeUtil {
 	 * m = minute, s = second. All time units are optional, but at least one
 	 * must be specified.
 	 *
-	 * @param time Time in the format #y#m#w#d#h#m#s
+	 * @param time Time in the format #y#mo#w#d#h#m#s
 	 * @return Length of time string in seconds
 	 * @throws IllegalArgumentException If the time input has an invalid format
 	 */

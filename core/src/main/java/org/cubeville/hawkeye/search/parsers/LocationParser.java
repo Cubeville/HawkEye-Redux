@@ -48,24 +48,20 @@ public class LocationParser extends ParameterParser {
 		try {
 			location = new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z));
 		} catch (NumberFormatException e) {
-			location = null;
 			throw new CommandUsageException("Invalid location specified: &7" + StringUtil.buildString(parameters, ","));
 		}
 	}
 
 	@Override
 	public Pair<String, Map<String, Object>> preProcess() {
-		if (location != null) {
-			String sql = "`x` = :xloc AND `y` = :yloc AND `z` = :zloc";
-			Map<String, Object> binds = new HashMap<String, Object>();
-			binds.put("xloc", location.getBlockX());
-			binds.put("yloc", location.getBlockY());
-			binds.put("zloc", location.getBlockZ());
+		String sql = "`x` = :xloc AND `y` = :yloc AND `z` = :zloc";
+		Map<String, Object> binds = new HashMap<String, Object>();
 
-			return Pair.of(sql, binds);
-		}
+		binds.put("xloc", location.getBlockX());
+		binds.put("yloc", location.getBlockY());
+		binds.put("zloc", location.getBlockZ());
 
-		return null;
+		return Pair.of(sql, binds);
 	}
 
 }

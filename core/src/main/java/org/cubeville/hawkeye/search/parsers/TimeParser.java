@@ -22,11 +22,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandException;
+import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
+import org.cubeville.util.StringUtil;
+import org.cubeville.util.TimeUtil;
 
 public class TimeParser extends ParameterParser {
+
+	private int time;
 
 	public TimeParser(List<String> parameters, SearchQuery query) throws CommandException {
 		super(parameters, query);
@@ -34,13 +39,21 @@ public class TimeParser extends ParameterParser {
 
 	@Override
 	public void parse() throws CommandException {
-		// TODO Auto-generated method stub
+		if (parameters.size() > 1) throw new CommandUsageException("Invalid radius specified: &7" + StringUtil.buildString(parameters, ","));
+		String parameter = parameters.get(0);
+
+		try {
+			time = TimeUtil.parseTime(parameter);
+		} catch (IllegalArgumentException e) {
+			throw new CommandException(e.getMessage());
+		}
 	}
 
 	@Override
 	public Pair<String, Map<String, Object>> preProcess() {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "UNIX_TIMESTAMP(`date`) > " + (TimeUtil.now() - time);
+
+		return Pair.of(sql, null);
 	}
 
 }
