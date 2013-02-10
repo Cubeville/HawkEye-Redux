@@ -31,10 +31,11 @@ public interface QueryManager {
 	 *
 	 * @param sender The command sender running a search
 	 * @param parameters The parameters specified by the sender
+	 * @param callback Callback handler for when the search is complete
 	 * @return The created query
 	 * @throws CommandException If any of the parameters are invalid
 	 */
-	SearchQuery createQuery(CommandSender sender, String parameters) throws CommandException;
+	SearchQuery createQuery(CommandSender sender, String parameters, Callback callback) throws CommandException;
 
 	/**
 	 * Registers a search parameter

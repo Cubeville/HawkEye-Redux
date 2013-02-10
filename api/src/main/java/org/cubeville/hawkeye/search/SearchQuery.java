@@ -132,8 +132,6 @@ public abstract class SearchQuery implements Runnable {
 			}
 
 			processResults(results);
-		} catch (CommandException e) {
-			// TODO Inform the user
 		} catch (SQLException e) {
 			callback.error(e);
 		} finally {
@@ -145,7 +143,12 @@ public abstract class SearchQuery implements Runnable {
 		callback.execute(results);
 	}
 
-	private void processResults(List<Entry> results) throws CommandException {
+	/**
+	 * Runs query results through the parameter post processors
+	 *
+	 * @param results Database result set
+	 */
+	private void processResults(List<Entry> results) {
 		for (ParameterParser parser : parsers) {
 			parser.postProcess(results);
 		}

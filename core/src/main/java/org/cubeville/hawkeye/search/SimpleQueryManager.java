@@ -65,9 +65,8 @@ public class SimpleQueryManager implements QueryManager {
 	}
 
 	@Override
-	public SearchQuery createQuery(CommandSender sender, String parameters) throws CommandException {
-		return new SimpleSearchQuery(sender, parameters, null);
-		// TODO Callback
+	public SearchQuery createQuery(CommandSender sender, String parameters, Callback callback) throws CommandException {
+		return new SimpleSearchQuery(sender, parameters, callback);
 	}
 
 	@Override

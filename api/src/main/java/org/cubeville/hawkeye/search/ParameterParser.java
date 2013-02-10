@@ -59,9 +59,7 @@ public abstract class ParameterParser {
 	 * Validates the parameters passed in by the sender
 	 *
 	 * Note: This method is called first and should be used to catch any
-	 * invalid user input before a search is run.  It is preferred to throw an
-	 * exception with a message explaining where the error occurred, however
-	 * it may just return false.
+	 * invalid user input before a search is run.
 	 *
 	 * @throws CommandException If any of the parameters are invalid
 	 */
