@@ -18,15 +18,21 @@
 
 package org.cubeville.hawkeye.search.parsers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandException;
+import org.cubeville.hawkeye.command.CommandUsageException;
+import org.cubeville.hawkeye.location.Vector;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.hawkeye.search.SearchQuery;
 import org.cubeville.util.Pair;
+import org.cubeville.util.StringUtil;
 
 public class LocationParser extends ParameterParser {
+
+	private Vector location;
 
 	public LocationParser(List<String> parameters, SearchQuery query) throws CommandException {
 		super(parameters, query);
@@ -34,12 +40,31 @@ public class LocationParser extends ParameterParser {
 
 	@Override
 	public void parse() throws CommandException {
-		// TODO Auto-generated method stub
+		if (parameters.size() != 3) throw new CommandUsageException("Invalid location specified: &7" + StringUtil.buildString(parameters, ","));
+		String x = parameters.get(0);
+		String y = parameters.get(1);
+		String z = parameters.get(2);
+
+		try {
+			location = new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z));
+		} catch (NumberFormatException e) {
+			location = null;
+			throw new CommandUsageException("Invalid location specified: &7" + StringUtil.buildString(parameters, ","));
+		}
 	}
 
 	@Override
 	public Pair<String, Map<String, Object>> preProcess() {
-		// TODO Auto-generated method stub
+		if (location != null) {
+			String sql = "`x` = :xloc AND `y` = :yloc AND `z` = :zloc";
+			Map<String, Object> binds = new HashMap<String, Object>();
+			binds.put("xloc", location.getBlockX());
+			binds.put("yloc", location.getBlockY());
+			binds.put("zloc", location.getBlockZ());
+
+			return Pair.of(sql, binds);
+		}
+
 		return null;
 	}
 
