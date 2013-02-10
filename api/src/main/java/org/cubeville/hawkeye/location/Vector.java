@@ -125,7 +125,7 @@ public class Vector {
 	 *
 	 * @return Location's z coordinate rounded to nearest block
 	 */
-	public double getBlockZ() {
+	public int getBlockZ() {
 		return (int) z;
 	}
 
