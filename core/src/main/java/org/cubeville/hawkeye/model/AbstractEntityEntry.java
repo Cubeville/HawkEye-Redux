@@ -21,27 +21,25 @@ package org.cubeville.hawkeye.model;
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.entity.Entity;
 import org.cubeville.hawkeye.location.Location;
+import org.cubeville.lib.jnbt.NBTUtils;
 
 public abstract class AbstractEntityEntry extends AbstractEntry implements EntityEntry {
 
 	private final Entity entity;
+	private final byte[] nbt;
 
 	public AbstractEntityEntry(Action action, DatabaseEntry entry) {
 		super(action, entry);
 
-		int id = -1;
-
-		try {
-			id = Integer.parseInt(entry.getData());
-		} catch (NumberFormatException ignore) { }
-
-		entity = Entity.getById(id);
+		nbt = entry.getNbt();
+		entity = new Entity(entry.getData(), nbt);
 	}
 
 	public AbstractEntityEntry(Action action, String player, Location location, Entity entity) {
 		super(action, player, location);
 
 		this.entity = entity;
+		nbt = NBTUtils.toByteArray(entity.getData());
 	}
 
 	@Override
@@ -51,8 +49,12 @@ public abstract class AbstractEntityEntry extends AbstractEntry implements Entit
 
 	@Override
 	public String getData() {
-		return String.valueOf(entity.getId());
-		// TODO Store entity data
+		return entity.toString();
+	}
+
+	@Override
+	public byte[] getNbt() {
+		return nbt;
 	}
 
 }

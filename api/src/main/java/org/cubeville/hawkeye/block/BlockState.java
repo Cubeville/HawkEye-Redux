@@ -107,6 +107,8 @@ public class BlockState {
 
 	/**
 	 * Gets the id of this block state's type
+	 *
+	 * @return Block type id
 	 */
 	public short getTypeId() {
 		return id;

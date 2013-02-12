@@ -101,6 +101,8 @@ public class ItemStack {
 
 	/**
 	 * Gets the type of item this stack is
+	 *
+	 * @return Item type
 	 */
 	public Item getType() {
 		return Item.getById(id);
@@ -108,6 +110,8 @@ public class ItemStack {
 
 	/**
 	 * Gets the id of this stack's item type
+	 *
+	 * @return Item type id
 	 */
 	public short getTypeId() {
 		return id;
@@ -115,6 +119,8 @@ public class ItemStack {
 
 	/**
 	 * Gets the amount the items in this stack
+	 *
+	 * @return Item stack amount
 	 */
 	public byte getAmount() {
 		return amount;
@@ -122,6 +128,8 @@ public class ItemStack {
 
 	/**
 	 * Gets the durability of this item stack
+	 *
+	 * @return Item durability
 	 */
 	public short getDurability() {
 		return durability;
@@ -129,6 +137,8 @@ public class ItemStack {
 
 	/**
 	 * Gets any custom data associated with this item stack
+	 *
+	 * @return Item data
 	 */
 	public ItemData getData() {
 		// TODO

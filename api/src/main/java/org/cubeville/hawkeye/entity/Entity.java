@@ -18,98 +18,94 @@
 
 package org.cubeville.hawkeye.entity;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.cubeville.hawkeye.model.EntityData;
 
-public enum Entity {
-
-	DROPPED_ITEM(1),
-	EXPERIENCE_ORB(2),
-	PAINTING(9),
-	ARROW(10),
-	SNOWBALL(11),
-	FIREBALL(12),
-	SMALL_FIREBALL(13),
-	ENDERPEARL(14),
-	ENDER_SIGNAL(15),
-	THROWN_EXP_BOTTLE(17),
-	ITEM_FRAME(18),
-	WITHER_SKULL(19),
-	PRIMED_TNT(20),
-	FALLING_BLOCK(21),
-	FIREWORKS(22),
-	MINECART(40),
-	BOAT(41),
-	CREEPER(50),
-	SKELETON(51),
-	SPIDER(52),
-	GIANT(53),
-	ZOMBIE(54),
-	SLIME(55),
-	GHAST(56),
-	ZOMBIE_PIGMAN(57),
-	ENDERMAN(58),
-	CAVE_SPIDER(59),
-	SILVERFISH(60),
-	BLAZE(61),
-	MAGMA_CUBE(62),
-	ENDERDRAGON(63),
-	WITHER(64),
-	BAT(65),
-	WITCH(66),
-	PIG(90),
-	SHEEP(91),
-	COW(92),
-	CHICKEN(93),
-	SQUID(94),
-	WOLF(95),
-	MOOSHROOM(96),
-	SNOW_GOLEM(97),
-	OCELOT(98),
-	IRON_GOLEM(99),
-	VILLAGER(120),
-	ENDER_CRYSTAL(200),
-	SLASH_POTION(-1),
-	EGG(-1),
-	FISHING_HOOK(-1),
-	LIGHTNING(-1),
-	WEATHER(-1),
-	PLAYER(-1),
-	COMPLEX_PART(-1);
+public class Entity {
 
 	/**
-	 * Entity id
+	 * Entity type
 	 */
-	private final int id;
+	private final int type;
 
 	/**
-	 * Mapping of ids to blocks for quick access
+	 * Custom entity data
 	 */
-	private static final Map<Integer, Entity> idMap = new HashMap<Integer, Entity>(values().length - 7);
+	private final EntityData data;
 
-	private Entity(int id) {
-		this.id = id;
+	public Entity(EntityType type) {
+		this(type.getId(), null);
 	}
 
-	public int getId() {
-		return id;
+	public Entity(EntityType type, EntityData data) {
+		this(type.getId(), data);
+	}
+
+	public Entity(int type) {
+		this(type, null);
+	}
+
+	public Entity(int type, EntityData data) {
+		this.type = type;
+		this.data = data;
 	}
 
 	/**
-	 * Gets an entity type by its id
+	 * Constructs an entity from a database serialized string
 	 *
-	 * @param id Id of entity type to get
-	 * @return Entity type with the specified id or null if it doesn't exist
+	 * @param str Database string
+	 * @param nbt Entity nbt data byte array
 	 */
-	public static Entity getById(int id) {
-		return idMap.containsKey(id) ? idMap.get(id) : null;
+	public Entity(String str, byte[] nbt) {
+		int type;
+
+		try {
+			type = Integer.parseInt(str);
+		} catch (NumberFormatException e) {
+			type = -1;
+		}
+
+		this.type = type;
+		data = null;
+
+		if (nbt != null && nbt.length > 0) {
+			// TODO Entity data support
+		}
 	}
 
-	static {
-		for (Entity entity : values()) {
-			if (entity.id < 1) continue;
-			idMap.put(entity.id, entity);
-		}
+	public Entity(String str) {
+		this(str, null);
+	}
+
+	/**
+	 * Gets the type of this entity
+	 *
+	 * @return Entity type
+	 */
+	public EntityType getType() {
+		return EntityType.getById(type);
+	}
+
+	/**
+	 * Gets the id of the type of this entity
+	 *
+	 * @return Entity type id
+	 */
+	public int getTypeId() {
+		return type;
+	}
+
+	/**
+	 * Gets any custom entity data associated with this entity
+	 *
+	 * @return Entity data
+	 */
+	public EntityData getData() {
+		return data;
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(type);
 	}
 
 }

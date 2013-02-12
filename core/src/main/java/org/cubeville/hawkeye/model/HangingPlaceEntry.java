@@ -47,7 +47,6 @@ public class HangingPlaceEntry extends AbstractEntityEntry implements Modifiable
 	public void rebuild() {
 		Location loc = getLocation();
 		loc.getWorld().spawnEntity(loc, getEntity(), null);
-		// TODO Load entity data
 	}
 
 	@Override

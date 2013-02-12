@@ -19,7 +19,7 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.DefaultActions;
-import org.cubeville.hawkeye.entity.Entity;
+import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Location;
 
 public class PlayerPvpDeathEntry extends PlayerDeathEntry {
@@ -32,10 +32,10 @@ public class PlayerPvpDeathEntry extends PlayerDeathEntry {
 		killer = entry.getData();
 	}
 
-	public PlayerPvpDeathEntry(String player, Location location, String killer) {
-		super(DefaultActions.PLAYER_DEATH_PVP, player, location, Entity.PLAYER);
+	public PlayerPvpDeathEntry(String player, Location location, Player killer) {
+		super(DefaultActions.PLAYER_DEATH_PVP, player, location, killer);
 
-		this.killer = killer;
+		this.killer = killer.getName();
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public interface World extends Named {
 	 * Spawns an entity in this world
 	 *
 	 * @param location Location to spawn entity at
-	 * @param entity Entity type to spawn
+	 * @param entity Entity to spawn
 	 */
 	void spawnEntity(Location location, Entity entity, EntityData data);
 

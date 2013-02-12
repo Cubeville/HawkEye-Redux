@@ -8,9 +8,9 @@ public class EntityTest {
 
 	@Test
 	public void getEntityById() {
-		for (Entity entity : Entity.values()) {
+		for (EntityType entity : EntityType.values()) {
 			if (entity.getId() == -1) continue;
-			assertEquals(Entity.getById(entity.getId()), entity);
+			assertEquals(EntityType.getById(entity.getId()), entity);
 		}
 	}
 

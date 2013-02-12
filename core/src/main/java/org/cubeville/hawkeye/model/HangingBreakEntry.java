@@ -38,7 +38,6 @@ public class HangingBreakEntry extends AbstractEntityEntry implements Modifiable
 	public void rollback() {
 		Location loc = getLocation();
 		loc.getWorld().spawnEntity(loc, getEntity(), null);
-		// TODO Load entity data
 	}
 
 	@Override
