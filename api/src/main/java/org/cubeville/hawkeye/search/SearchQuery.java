@@ -140,7 +140,7 @@ public abstract class SearchQuery implements Runnable {
 			close(rs);
 		}
 
-		callback.execute(results);
+		callback.execute(Collections.unmodifiableList(results));
 	}
 
 	/**
