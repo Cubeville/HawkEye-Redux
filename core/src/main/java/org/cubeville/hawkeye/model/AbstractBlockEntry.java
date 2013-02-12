@@ -19,16 +19,20 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.Item;
+import org.cubeville.hawkeye.block.BlockData;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Block;
 import org.cubeville.hawkeye.location.Location;
+import org.cubeville.lib.jnbt.NBTUtils;
 
 public abstract class AbstractBlockEntry extends AbstractEntry implements BlockEntry, Modifiable {
 
 	private final Block block;
 	private final BlockState oldState;
 	private final BlockState newState;
+	private final byte[] nbt;
 
 	public AbstractBlockEntry(Action action, DatabaseEntry entry) {
 		super(action, entry);
@@ -42,8 +46,9 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 		before = parts[0];
 		after = parts.length > 1 ? parts[1] : "0";
 
-		oldState = new BlockState(before);
-		newState = new BlockState(after);
+		nbt = entry.getNbt();
+		oldState = after.equals("0") ? new BlockState(before, nbt) : new BlockState(before);
+		newState = after.equals("0") ? new BlockState(after) : new BlockState(after, nbt);
 	}
 
 	public AbstractBlockEntry(Action action, String player, Location location, BlockState oldState, BlockState newState) {
@@ -51,6 +56,9 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 		block = location.toBlock();
 		this.oldState = oldState;
 		this.newState = newState;
+
+		BlockData data = newState.getType() == Item.AIR ? oldState.getBlockData() : newState.getBlockData();
+		nbt = NBTUtils.toByteArray(data);
 	}
 
 	@Override
@@ -71,6 +79,11 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 	@Override
 	public String getData() {
 		return oldState.toString() + DELIMITER + newState.toString();
+	}
+
+	@Override
+	public byte[] getNbt() {
+		return nbt;
 	}
 
 	@Override

@@ -30,17 +30,17 @@ public class BlockState {
 	/**
 	 * Block type
 	 */
-	private short id;
+	private final short id;
 
 	/**
 	 * Block data value
 	 */
-	private byte data;
+	private final byte data;
 
 	/**
 	 * Custom data associated with the block (tile entity data)
 	 */
-	private BlockData blockData;
+	private final BlockData blockData;
 
 	public BlockState(Item type, byte data) {
 		this(type, data, null);
@@ -64,8 +64,9 @@ public class BlockState {
 	 * Constructs a blockstate from a database serialized string
 	 *
 	 * @param str Database string
+	 * @param nbt Block nbt data byte array
 	 */
-	public BlockState(String str) {
+	public BlockState(String str, byte[] nbt) {
 		short id;
 		byte data;
 		String[] parts = str.split(":");
@@ -84,10 +85,15 @@ public class BlockState {
 
 		this.id = id;
 		this.data = data;
+		blockData = null;
 
-		// TODO Add blockdata support
-		// Idea: Store blockdata in hawkeye_nbt table and only access it when
-		// needed, i.e. if the user requests it or it is rolled back
+		if (nbt != null && nbt.length > 0) {
+			// TODO Block data support
+		}
+	}
+
+	public BlockState(String str) {
+		this(str, null);
 	}
 
 	/**
@@ -107,15 +113,6 @@ public class BlockState {
 	}
 
 	/**
-	 * Sets the type of this block state
-	 *
-	 * @param type Block type
-	 */
-	public void setType(Item type) {
-		id = type.getId();
-	}
-
-	/**
 	 * Gets the data value of this block state
 	 *
 	 * @return Data value
@@ -125,30 +122,12 @@ public class BlockState {
 	}
 
 	/**
-	 * Sets the data value of this block state
-	 *
-	 * @param data Data value
-	 */
-	public void setData(byte data) {
-		this.data = data;
-	}
-
-	/**
 	 * Gets the tile entity data associated with this block state
 	 *
 	 * @return Block data
 	 */
 	public BlockData getBlockData() {
 		return blockData;
-	}
-
-	/**
-	 * Sets the tile entity data associated with this block state
-	 *
-	 * @param blockData Block data
-	 */
-	public void setBlockData(BlockData blockData) {
-		this.blockData = blockData;
 	}
 
 	@Override

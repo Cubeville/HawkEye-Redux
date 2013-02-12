@@ -26,18 +26,20 @@ import org.cubeville.lib.jnbt.NBTUtils;
 public class AbstractItemEntry extends AbstractEntry implements ItemEntry {
 
 	private final ItemStack item;
-	private byte[] cache = null;
+	private final byte[] nbt;
 
 	public AbstractItemEntry(Action action, DatabaseEntry entry) {
 		super(action, entry);
 
-		item = new ItemStack(entry.getData(), entry.getNbt());
+		nbt = entry.getNbt();
+		item = new ItemStack(entry.getData(), nbt);
 	}
 
 	public AbstractItemEntry(Action action, String player, Location location, ItemStack item) {
 		super(action, player, location);
 
 		this.item = item;
+		nbt = NBTUtils.toByteArray(item.getData());
 	}
 
 	@Override
@@ -52,9 +54,7 @@ public class AbstractItemEntry extends AbstractEntry implements ItemEntry {
 
 	@Override
 	public byte[] getNbt() {
-		if (cache != null) return cache;
-		cache = NBTUtils.toByteArray(item.getData().serialize());
-		return cache;
+		return nbt;
 	}
 
 }

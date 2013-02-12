@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.cubeville.hawkeye.model.NBTSerializable;
+
 /*
  * JNBT License
  *
@@ -173,6 +175,10 @@ public final class NBTUtils {
 			} catch (IOException ignore) {
 			}
 		}
+	}
+
+	public static byte[] toByteArray(NBTSerializable tag) {
+		return toByteArray(tag.serialize());
 	}
 
 	/**
