@@ -1,5 +1,9 @@
 package org.cubeville.lib.jnbt;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 /*
  * JNBT License
  *
@@ -145,6 +149,51 @@ public final class NBTUtils {
 			return IntArrayTag.class;
 		default:
 			throw new IllegalArgumentException("Invalid tag type : " + type + ".");
+		}
+	}
+
+	/**
+	 * Converts a tag to a byte array
+	 *
+	 * @param tag Tag to convert
+	 * @return Byte array
+	 */
+	public static byte[] toByteArray(Tag tag) {
+		ByteArrayOutputStream baos = null;
+
+		try {
+			baos = new ByteArrayOutputStream();
+			new NBTOutputStream(baos).writeTag(tag);
+			return baos.toByteArray();
+		} catch (IOException e) {
+			return null;
+		} finally {
+			try {
+				if (baos != null) baos.close();
+			} catch (IOException ignore) {
+			}
+		}
+	}
+
+	/**
+	 * Converts a byte array to a tag
+	 *
+	 * @param data Byte array to convert
+	 * @return Tag
+	 */
+	public static Tag fromByteArray(byte[] data) {
+		ByteArrayInputStream bais = null;
+
+		try {
+			bais = new ByteArrayInputStream(data);
+			return new NBTInputStream(bais).readTag();
+		} catch (IOException e) {
+			return null;
+		} finally {
+			try {
+				if (bais != null) bais.close();
+			} catch (IOException ignore) {
+			}
 		}
 	}
 

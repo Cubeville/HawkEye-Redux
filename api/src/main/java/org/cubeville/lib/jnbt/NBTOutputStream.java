@@ -5,7 +5,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.zip.GZIPOutputStream;
 
 /*
  * JNBT License
@@ -65,7 +64,7 @@ public final class NBTOutputStream implements Closeable {
 	 * @throws IOException if an I/O error occurs.
 	 */
 	public NBTOutputStream(OutputStream os) throws IOException {
-		this.os = new DataOutputStream(new GZIPOutputStream(os));
+		this.os = new DataOutputStream(os);
 	}
 
 	/**
