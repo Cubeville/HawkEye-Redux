@@ -59,7 +59,7 @@ public abstract class WorldEditor implements Runnable {
 		if (isRunning()) return;
 
 		session.setAttribute(Session.Attribute.WORKING, true);
-		taskId = HawkEye.getServerInterface().scheduleRepeatingTask(1L, 1L, this);
+		taskId = HawkEye.getServerInterface().scheduleSyncRepeatingTask(1L, 1L, this);
 
 		onStart();
 	}

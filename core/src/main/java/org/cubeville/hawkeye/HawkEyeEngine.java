@@ -103,9 +103,10 @@ public class HawkEyeEngine implements PluginEngine {
 			e.printStackTrace();
 		}
 
+		server.scheduleAsyncRepeatingTask(1L, 600L, consumer);
+
 		if (((SimpleConsumer) consumer).hasDatabase()) {
-			// Import dumped data
-			new Thread(new EntryImporter()).start();
+			server.scheduleAsyncTask(1L, new EntryImporter());
 		}
 	}
 

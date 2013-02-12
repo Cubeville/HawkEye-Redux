@@ -16,25 +16,26 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.search.callbacks;
+package org.cubeville.hawkeye.editor;
 
-import java.util.List;
-
-import org.cubeville.hawkeye.editor.Rollback;
-import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.session.Session;
 
-public class RollbackCallback extends AbstractCallback {
+public class Rebuild extends WorldEditor {
 
-	public RollbackCallback(Session session) {
-		super(session);
+	public Rebuild(Session session) {
+		super(Type.REBUILD, session, session.getSearchResults());
 	}
 
 	@Override
-	public void execute(List<Entry> results) {
-		super.execute(results);
+	public void onStart() {
+		// TODO Auto-generated method stub
 
-		new Rollback(session).start();
+	}
+
+	@Override
+	public void onComplete() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

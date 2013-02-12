@@ -32,6 +32,15 @@ public interface ServerInterface {
 	ServerImplementation getImplementation();
 
 	/**
+	 * Schedules a task to run on the main server thread
+	 *
+	 * @param delay Delay before execution
+	 * @param task Task to execute
+	 * @return Task id number
+	 */
+	int scheduleSyncTask(long delay, Runnable task);
+
+	/**
 	 * Schedules a repeating task with the server
 	 *
 	 * @param delay Delay before first execution
@@ -39,7 +48,25 @@ public interface ServerInterface {
 	 * @param task Task to execute
 	 * @return Task id number
 	 */
-	int scheduleRepeatingTask(long delay, long period, Runnable task);
+	int scheduleSyncRepeatingTask(long delay, long period, Runnable task);
+
+	/**
+	 * Schedules a task to run asynchronously
+	 *
+	 * @param delay Delay before execution
+	 * @param task Task to execute
+	 */
+	int scheduleAsyncTask(long delay, Runnable task);
+
+	/**
+	 * Schedules a repeating asynchronous task with the server
+	 *
+	 * @param delay Delay before first execution
+	 * @param period Period between subsequent executions
+	 * @param task Task to execute
+	 * @return Task id number
+	 */
+	int scheduleAsyncRepeatingTask(long delay, long period, Runnable task);
 
 	/**
 	 * Cancels a scheduled task

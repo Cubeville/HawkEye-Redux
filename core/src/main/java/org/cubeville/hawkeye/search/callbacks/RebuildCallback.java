@@ -20,13 +20,13 @@ package org.cubeville.hawkeye.search.callbacks;
 
 import java.util.List;
 
-import org.cubeville.hawkeye.editor.Rollback;
+import org.cubeville.hawkeye.editor.Rebuild;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.session.Session;
 
-public class RollbackCallback extends AbstractCallback {
+public class RebuildCallback extends AbstractCallback {
 
-	public RollbackCallback(Session session) {
+	public RebuildCallback(Session session) {
 		super(session);
 	}
 
@@ -34,7 +34,7 @@ public class RollbackCallback extends AbstractCallback {
 	public void execute(List<Entry> results) {
 		super.execute(results);
 
-		new Rollback(session).start();
+		new Rebuild(session).start();
 	}
 
 }
