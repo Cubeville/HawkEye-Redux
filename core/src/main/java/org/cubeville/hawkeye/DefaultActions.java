@@ -43,7 +43,6 @@ import org.cubeville.hawkeye.model.PlayerItemEntry;
 import org.cubeville.hawkeye.model.PlayerKillEntry;
 import org.cubeville.hawkeye.model.PlayerLogEntry;
 import org.cubeville.hawkeye.model.PlayerPvpDeathEntry;
-import org.cubeville.hawkeye.model.SignEntry;
 
 public enum DefaultActions implements Action {
 
@@ -55,14 +54,6 @@ public enum DefaultActions implements Action {
 	 * Block broken by player
 	 */
 	BLOCK_BREAK(BlockBreakEntry.class),
-	/**
-	 * Sign placed by player
-	 */
-	SIGN_PLACE(SignEntry.class),
-	/**
-	 * Sign broken by player
-	 */
-	SIGN_BREAK(SignEntry.class),
 	/**
 	 * Hanging entity (painting, item frame) broken
 	 */
