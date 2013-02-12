@@ -59,8 +59,9 @@ public class ItemStack {
 	 * Constructs an item stack from a database serialized string
 	 *
 	 * @param str Database string
+	 * @param nbt Item nbt data byte array
 	 */
-	public ItemStack(String str) {
+	public ItemStack(String str, byte[] nbt) {
 		short id;
 		byte amount;
 		short durability;
@@ -89,7 +90,13 @@ public class ItemStack {
 		this.amount = amount;
 		this.durability = durability;
 
-		// TODO Item data support
+		if (nbt != null && nbt.length > 0) {
+			// TODO Item data support
+		}
+	}
+
+	public ItemStack(String str) {
+		this(str, null);
 	}
 
 	/**

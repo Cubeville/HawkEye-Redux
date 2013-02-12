@@ -21,15 +21,17 @@ package org.cubeville.hawkeye.model;
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.item.ItemStack;
 import org.cubeville.hawkeye.location.Location;
+import org.cubeville.lib.jnbt.NBTUtils;
 
 public class AbstractItemEntry extends AbstractEntry implements ItemEntry {
 
 	private final ItemStack item;
+	private byte[] cache = null;
 
 	public AbstractItemEntry(Action action, DatabaseEntry entry) {
 		super(action, entry);
 
-		item = new ItemStack(entry.getData());
+		item = new ItemStack(entry.getData(), entry.getNbt());
 	}
 
 	public AbstractItemEntry(Action action, String player, Location location, ItemStack item) {
@@ -46,6 +48,13 @@ public class AbstractItemEntry extends AbstractEntry implements ItemEntry {
 	@Override
 	public String getData() {
 		return item.toString();
+	}
+
+	@Override
+	public byte[] getNbt() {
+		if (cache != null) return cache;
+		cache = NBTUtils.toByteArray(item.getData().serialize());
+		return cache;
 	}
 
 }
