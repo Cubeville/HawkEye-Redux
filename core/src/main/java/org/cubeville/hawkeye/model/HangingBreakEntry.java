@@ -35,23 +35,25 @@ public class HangingBreakEntry extends AbstractEntityEntry implements Modifiable
 	}
 
 	@Override
-	public void rollback() {
+	public boolean rollback() {
 		Location loc = getLocation();
 		loc.getWorld().spawnEntity(loc, getEntity(), null);
+		return true;
 	}
 
 	@Override
-	public void localRollback(Player player) {
+	public boolean localRollback(Player player) {
 		throw new UnsupportedOperationException("Local rollbacks are not yet supported for entities");
 	}
 
 	@Override
-	public void rebuild() {
+	public boolean rebuild() {
 		// TODO Create a method to destroy entities
+		return false;
 	}
 
 	@Override
-	public void localRebuild(Player player) {
+	public boolean localRebuild(Player player) {
 		throw new UnsupportedOperationException("Local rollbacks are not yet supported for entities");
 	}
 

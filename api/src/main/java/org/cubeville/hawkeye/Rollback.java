@@ -18,7 +18,7 @@
 
 package org.cubeville.hawkeye;
 
-import java.util.List;
+import java.util.Iterator;
 
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.model.Modifiable;
@@ -27,36 +27,49 @@ import org.cubeville.hawkeye.session.Session;
 public class Rollback implements Runnable {
 
 	private final Session session;
-	private final List<Entry> results;
+	private final Iterator<Entry> queue;
 
+	private final int taskId;
+
+	// TODO Make limit configurable
 	private final int limit = 200;
 
 	private int count = 0;
 
 	public Rollback(Session session) {
 		this.session = session;
-		results = session.getSearchResults();
-		// TODO Make limit configurable
+		queue = session.getSearchResults().iterator();
+
+		if (!queue.hasNext()) {
+			// TODO Message user
+			taskId = -1;
+			return;
+		}
+
+		session.setAttribute(Session.Attribute.WORKING, true);
+		taskId = HawkEye.getServerInterface().scheduleRepeatingTask(1L, 1L, this);
 	}
 
 	@Override
 	public void run() {
 		int i = 0;
 
-		while(i < limit && count < results.size()) {
-			Entry e = results.get(count);
+		while(i < limit && queue.hasNext()) {
+			Entry e = queue.next();
 			if (!(e instanceof Modifiable)) continue;
 			Modifiable entry = (Modifiable) e;
 
 			// TODO Rebuilds and previews
-			entry.rollback();
+			try {
+				if (entry.rollback()) count++;
+			} catch (UnsupportedOperationException ignore) { }
 
-			count++;
 			i++;
 		}
 
-		if (count == results.size()) {
-			// TODO Finish it
+		if (!queue.hasNext()) {
+			HawkEye.getServerInterface().cancelTask(taskId);
+			session.setAttribute(Session.Attribute.WORKING, false);
 		}
 	}
 

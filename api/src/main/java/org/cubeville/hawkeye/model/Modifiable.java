@@ -27,8 +27,10 @@ public interface Modifiable {
 
 	/**
 	 * Performs a rollback on the data in this entry
+	 *
+	 * @return Whether or not the entry was rolled back
 	 */
-	void rollback();
+	boolean rollback();
 
 	/**
 	 * Performs a local rollback on the data in this entry
@@ -37,13 +39,16 @@ public interface Modifiable {
 	 * rollback preview
 	 *
 	 * @param player Player to send the local rollback to
+	 * @return Whether or not the entry was rolled back
 	 */
-	void localRollback(Player player);
+	boolean localRollback(Player player);
 
 	/**
 	 * Performs a rebuilt on the data in this entry (opposite of rollback)
+	 *
+	 * @return Whether or not the entry was rebuilt
 	 */
-	void rebuild();
+	boolean rebuild();
 
 	/**
 	 * Performs a local rebuild on the data in this entry
@@ -52,7 +57,8 @@ public interface Modifiable {
 	 * rebuild preview
 	 *
 	 * @param player Player to send the local rollback to
+	 * @return Whether or not the entry was rebuilt
 	 */
-	void localRebuild(Player player);
+	boolean localRebuild(Player player);
 
 }

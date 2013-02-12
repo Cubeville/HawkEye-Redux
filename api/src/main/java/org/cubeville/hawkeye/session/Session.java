@@ -33,6 +33,13 @@ public interface Session {
 	CommandSender getOwner();
 
 	/**
+	 * Sends a message to the owner of this session
+	 *
+	 * @param message Message(s) to send
+	 */
+	void sendMessage(String... message);
+
+	/**
 	 * Gets the latest search results from this session
 	 *
 	 * @return Results from this session's last search
@@ -73,5 +80,20 @@ public interface Session {
 	 * Clears all attributes stored in this session
 	 */
 	void clearAttributes();
+
+	/**
+	 * Native session attributes
+	 */
+	public static class Attribute {
+		/**
+		 * Attribute for whether or not the session is running a search
+		 */
+		public static final String SEARCHING = "searching";
+		/**
+		 * Attribute for whether or not the session is currently processing a
+		 * rollback/rebuild
+		 */
+		public static final String WORKING = "working";
+	}
 
 }

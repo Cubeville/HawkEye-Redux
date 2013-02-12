@@ -52,6 +52,11 @@ public class SimpleSession implements Session {
 	}
 
 	@Override
+	public void sendMessage(String... message) {
+		if (owner != null) owner.sendMessage(message);
+	}
+
+	@Override
 	public List<Entry> getSearchResults() {
 		return results;
 	}

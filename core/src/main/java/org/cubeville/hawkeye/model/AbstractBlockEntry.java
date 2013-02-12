@@ -87,23 +87,43 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 	}
 
 	@Override
-	public void rollback() {
-		if (block.getState().equals(newState)) block.setState(oldState);
+	public boolean rollback() {
+		if (block.getState().equals(newState)) {
+			block.setState(oldState);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
-	public void localRollback(Player player) {
-		if (block.getState().equals(newState)) block.setLocalState(player, oldState);
+	public boolean localRollback(Player player) {
+		if (block.getState().equals(newState)) {
+			block.setLocalState(player, oldState);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
-	public void rebuild() {
-		if (block.getState().equals(oldState)) block.setState(newState);
+	public boolean rebuild() {
+		if (block.getState().equals(oldState)) {
+			block.setState(newState);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
-	public void localRebuild(Player player) {
-		if (block.getState().equals(oldState)) block.setLocalState(player, newState);
+	public boolean localRebuild(Player player) {
+		if (block.getState().equals(oldState)) {
+			block.setLocalState(player, newState);
+			return true;
+		}
+
+		return false;
 	}
 
 }

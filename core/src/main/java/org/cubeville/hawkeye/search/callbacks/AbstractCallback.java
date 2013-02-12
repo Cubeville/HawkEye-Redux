@@ -26,7 +26,7 @@ import org.cubeville.hawkeye.session.Session;
 
 public abstract class AbstractCallback implements Callback {
 
-	private final Session session;
+	protected final Session session;
 
 	public AbstractCallback(Session session) {
 		this.session = session;
