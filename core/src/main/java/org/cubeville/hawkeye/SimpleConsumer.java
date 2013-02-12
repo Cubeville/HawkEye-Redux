@@ -122,11 +122,10 @@ public class SimpleConsumer implements Consumer {
 	}
 
 	private void saveToFile(Tag entries, String file) {
-		FileOutputStream output = null;
 		NBTOutputStream nbt = null;
 		try {
-			output = new FileOutputStream(new File("plugins/HawkEye/data/" + file));
-			nbt = new NBTOutputStream(output);
+			File f = new File("plugins/HawkEye/data/" + file);
+			nbt = new NBTOutputStream(new FileOutputStream(f));
 			nbt.writeTag(entries);
 		} catch (FileNotFoundException e) {
 			HawkEye.getLogger().warning("Unable to create data file");
@@ -134,18 +133,9 @@ public class SimpleConsumer implements Consumer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (nbt != null) {
-				try {
-					nbt.close();
-				} catch (IOException ignore) {
-				}
-			}
-			if (output != null) {
-				try {
-					output.close();
-				} catch (IOException ignore) {
-				}
-			}
+			try {
+				if (nbt != null) nbt.close();
+			} catch (IOException ignore) { }
 		}
 	}
 

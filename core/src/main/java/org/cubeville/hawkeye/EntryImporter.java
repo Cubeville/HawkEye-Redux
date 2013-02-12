@@ -61,30 +61,19 @@ public class EntryImporter implements Runnable {
 	}
 
 	private Tag readFile(File file) {
-		FileInputStream input = null;
 		NBTInputStream nbt = null;
 
 		try {
-			input = new FileInputStream(file);
-			nbt = new NBTInputStream(input);
+			nbt = new NBTInputStream(new FileInputStream(file));
 			return nbt.readTag();
 		} catch (FileNotFoundException ignore) {
 		} catch (IOException e) {
 			HawkEye.getLogger().warning("Unable to read data file");
 			e.printStackTrace();
 		} finally {
-			if (nbt != null) {
-				try {
-					nbt.close();
-				} catch (IOException ignore) {
-				}
-			}
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException ignore) {
-				}
-			}
+			try {
+				if (nbt != null) nbt.close();
+			} catch (IOException ignore) { }
 		}
 
 		return null;
