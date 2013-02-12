@@ -19,9 +19,11 @@
 package org.cubeville.hawkeye.session;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.model.Entry;
 
 public class SimpleSession implements Session {
 
@@ -35,6 +37,11 @@ public class SimpleSession implements Session {
 	 */
 	private final Map<String, Object> attributes = new HashMap<String, Object>();
 
+	/**
+	 * Search results
+	 */
+	private List<Entry> results;
+
 	protected SimpleSession(CommandSender owner) {
 		this.owner = owner;
 	}
@@ -42,6 +49,16 @@ public class SimpleSession implements Session {
 	@Override
 	public CommandSender getOwner() {
 		return owner;
+	}
+
+	@Override
+	public List<Entry> getSearchResults() {
+		return results;
+	}
+
+	@Override
+	public void setSearchResults(List<Entry> results) {
+		this.results = results;
 	}
 
 	@Override

@@ -18,7 +18,10 @@
 
 package org.cubeville.hawkeye.session;
 
+import java.util.List;
+
 import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.model.Entry;
 
 public interface Session {
 
@@ -28,6 +31,20 @@ public interface Session {
 	 * @return Session owner
 	 */
 	CommandSender getOwner();
+
+	/**
+	 * Gets the latest search results from this session
+	 *
+	 * @return Results from this session's last search
+	 */
+	List<Entry> getSearchResults();
+
+	/**
+	 * Stores search results in this session
+	 *
+	 * @param results Search results to store
+	 */
+	void setSearchResults(List<Entry> results);
 
 	/**
 	 * Gets an attribute stored in this session
