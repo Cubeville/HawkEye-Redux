@@ -171,9 +171,9 @@ public abstract class SearchQuery implements Runnable {
 		double y = rs.getDouble("y");
 		double z = rs.getDouble("z");
 		String data = rs.getString("data");
-		int extra = rs.getInt("nbt");
+		byte[] nbt = rs.getBytes("nbt");
 
-		DatabaseEntry entry = new DatabaseEntry(id, player, action, date, world, x, y, z, data, extra);
+		DatabaseEntry entry = new DatabaseEntry(id, player, action, date, world, x, y, z, data, nbt);
 		return entry.toEntry();
 	}
 

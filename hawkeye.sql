@@ -8,17 +8,10 @@ CREATE TABLE IF NOT EXISTS `hawkeye_data` (
   `y` double NOT NULL,
   `z` double NOT NULL,
   `data` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nbt` INT( 11 ) DEFAULT NULL,
+  `nbt` blob DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `location` (`world_id`, `x`, `y`, `z`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
-
--- --------------------------------------------------------
-
-CREATE TABLE IF NOT EXISTS `hawkeye_nbt` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `data` blob NOT NULL,
-  PRIMARY KEY (`id`)
+  KEY `date` (`date`),
+  KEY `location` (`x`, `y`, `z`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 -- --------------------------------------------------------

@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
+import org.cubeville.lib.jnbt.ByteArrayTag;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.DoubleTag;
 import org.cubeville.lib.jnbt.IntTag;
@@ -114,9 +115,9 @@ public class EntryImporter implements Runnable {
 		double y = ((DoubleTag) tags.get("y")).getValue();
 		double z = ((DoubleTag) tags.get("z")).getValue();
 		String data = ((StringTag) tags.get("data")).getValue();
-		int extra = ((IntTag) tags.get("extra")).getValue();
+		byte[] nbt = ((ByteArrayTag) tags.get("nbt")).getValue();
 
-		DatabaseEntry entry = new DatabaseEntry(-1, player, action, date, world, x, y, z, data, extra);
+		DatabaseEntry entry = new DatabaseEntry(-1, player, action, date, world, x, y, z, data, nbt);
 		return entry.toEntry();
 	}
 

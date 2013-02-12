@@ -75,11 +75,11 @@ public interface Entry {
 	String getData();
 
 	/**
-	 * Returns the id of any extra nbt data associated with this entry
+	 * Returns the byte array stored in this entry's nbt column
 	 *
-	 * @return NBT data id
+	 * @return NBT data byte array
 	 */
-	int getNbtId();
+	byte[] getNbt();
 
 	/**
 	 * Returns a formatted string to be displayed in search results

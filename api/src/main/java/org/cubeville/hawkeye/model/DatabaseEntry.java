@@ -34,9 +34,9 @@ public class DatabaseEntry {
 	private final World world;
 	private final Location location;
 	private final String data;
-	private final int extra;
+	private final byte[] nbt;
 
-	public DatabaseEntry(int id, int player, String action, Timestamp time, int worldId, double x, double y, double z, String data, int extra) {
+	public DatabaseEntry(int id, int player, String action, Timestamp time, int worldId, double x, double y, double z, String data, byte[] nbt) {
 		this.id = id;
 		this.player = HawkEye.getDataManager().getPlayer(player);
 		this.action = HawkEye.getDataManager().getAction(action);
@@ -44,7 +44,7 @@ public class DatabaseEntry {
 		world = HawkEye.getDataManager().getWorld(worldId);
 		location = world.getLocationAt(x, y, z);
 		this.data = data;
-		this.extra = extra;
+		this.nbt = nbt;
 	}
 
 	/**
@@ -111,12 +111,12 @@ public class DatabaseEntry {
 	}
 
 	/**
-	 * Returns the id of any extra nbt data associated with this entry
+	 * Returns the byte array stored in this entry's nbt column
 	 *
-	 * @return NBT data id
+	 * @return NBT data byte array
 	 */
-	public int getNbtId() {
-		return extra;
+	public byte[] getNbt() {
+		return nbt;
 	}
 
 	/**

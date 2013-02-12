@@ -34,6 +34,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.cubeville.hawkeye.model.Entry;
+import org.cubeville.lib.jnbt.ByteArrayTag;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.DoubleTag;
 import org.cubeville.lib.jnbt.IntTag;
@@ -102,7 +103,7 @@ public class SimpleConsumer implements Consumer {
 				data.put("y", new DoubleTag("y", entry.getLocation().getY()));
 				data.put("z", new DoubleTag("z", entry.getLocation().getZ()));
 				data.put("data", new StringTag("data", entry.getData()));
-				data.put("extra", new IntTag("extra", entry.getNbtId()));
+				data.put("nbt", new ByteArrayTag("nbt", entry.getNbt()));
 
 				String name = "entry-" + ++count;
 				entries.put(name, new CompoundTag(name, data));
@@ -163,7 +164,7 @@ public class SimpleConsumer implements Consumer {
 
 			Connection conn = null;
 			PreparedStatement ps = null;
-			String sql = "INSERT INTO " + table("data") + " (`player_id`, `action`, `date`, `world_id`, `x`, `y`, `z`, `data`, `extra`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO " + table("data") + " (`player_id`, `action`, `date`, `world_id`, `x`, `y`, `z`, `data`, `nbt`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 			try {
 				conn = HawkEye.getDatabase().getConnection();
@@ -182,7 +183,7 @@ public class SimpleConsumer implements Consumer {
 					ps.setDouble(6, entry.getLocation().getY());
 					ps.setDouble(7, entry.getLocation().getZ());
 					ps.setString(8, entry.getData());
-					ps.setInt(9, entry.getNbtId());
+					ps.setBytes(9, entry.getNbt());
 
 					ps.addBatch();
 
