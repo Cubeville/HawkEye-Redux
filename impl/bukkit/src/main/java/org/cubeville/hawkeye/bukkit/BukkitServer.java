@@ -21,6 +21,7 @@ package org.cubeville.hawkeye.bukkit;
 import org.bukkit.Server;
 
 import org.cubeville.hawkeye.AbstractServerInterface;
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.ServerImplementation;
 import org.cubeville.hawkeye.bukkit.command.BukkitConsole;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
@@ -45,12 +46,12 @@ public class BukkitServer extends AbstractServerInterface {
 
 		for (org.bukkit.World world : server.getWorlds()) {
 			// AbstractServerInterface will cache it
-			getWorld(world.getName());
+			HawkEye.getDataManager().registerWorld(getWorld(world.getName()));
 		}
 
 		for (org.bukkit.entity.Player player : server.getOnlinePlayers()) {
 			// AbstractServerInterface will cache it
-			getPlayer(player.getName());
+			HawkEye.getDataManager().registerPlayer(getPlayer(player.getName()));
 		}
 	}
 
