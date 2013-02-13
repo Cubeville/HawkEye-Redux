@@ -66,12 +66,32 @@ public class HawkEyePlugin extends JavaPlugin implements Listener {
 		engine.getDatabase().close();
 	}
 
-	public BukkitWorld getWorld(String name) {
+	/**
+	 * Creates a HawkEye world from the specified world
+	 *
+	 * This method should only be accessed by the server interface.  Other
+	 * classes should access hawkeye worlds through the server interface as it
+	 * contains a built in cache layer.
+	 *
+	 * @param name Name of world
+	 * @return Native HawkEye bukkit world
+	 */
+	protected BukkitWorld getWorld(String name) {
 		World world = getServer().getWorld(name);
 		return world == null ? null : new BukkitWorld(world);
 	}
 
-	public BukkitPlayer getPlayer(String name) {
+	/**
+	 * Creates a HawkEye player from the specified player
+	 *
+	 * This method should only be accessed by the server interface.  Other
+	 * classes should get hawkeye players through the server interface as it
+	 * contains a built in cache layer.
+	 *
+	 * @param name Name of player
+	 * @return Native HawkEye bukkit player
+	 */
+	protected BukkitPlayer getPlayer(String name) {
 		Player player = getServer().getPlayerExact(name);
 		return player == null ? null : new BukkitPlayer(player);
 	}
