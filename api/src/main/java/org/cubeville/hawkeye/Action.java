@@ -45,4 +45,11 @@ public interface Action extends Named {
 	 */
 	boolean canModify();
 
+	/**
+	 * Checks if this action is being logged
+	 *
+	 * @return True if the action should be logged
+	 */
+	boolean isLogged();
+
 }

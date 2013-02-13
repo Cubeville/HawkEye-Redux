@@ -76,6 +76,11 @@ public interface ServerInterface {
 	void cancelTask(int id);
 
 	/**
+	 * Cancels all scheduled tasks
+	 */
+	void cancelAllTasks();
+
+	/**
 	 * Gets the server console
 	 *
 	 * @return Server's console command sender
@@ -89,6 +94,20 @@ public interface ServerInterface {
 	 * @return Player
 	 */
 	Player getPlayer(String name);
+
+	/**
+	 * Handles a login from the specified player
+	 *
+	 * @param player The player that logged in
+	 */
+	void handleLogin(Player player);
+
+	/**
+	 * Handles a logout from the specified player
+	 *
+	 * @param player The player that logged out
+	 */
+	void handleLogout(String player);
 
 	/**
 	 * Gets the specified world

@@ -76,10 +76,6 @@ public abstract class Block {
 	/**
 	 * Gets this block's name
 	 *
-	 * It's important to store the block name in the database as Mojang has
-	 * expressed that they would like to move away from the ID based system
-	 * as they work on the Workbench API.
-	 *
 	 * @return Block's name
 	 */
 	public abstract String getName();

@@ -260,4 +260,9 @@ public enum DefaultActions implements Action {
 		return Modifiable.class.isAssignableFrom(entryClass);
 	}
 
+	@Override
+	public boolean isLogged() {
+		return HawkEye.getConfig().isLogging(this);
+	}
+
 }

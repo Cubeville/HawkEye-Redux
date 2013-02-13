@@ -21,7 +21,7 @@ package org.cubeville.hawkeye;
 import java.util.logging.Logger;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
-import org.cubeville.hawkeye.config.Configuration;
+import org.cubeville.hawkeye.config.PluginConfig;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
 import org.cubeville.hawkeye.search.QueryManager;
@@ -85,7 +85,7 @@ public class HawkEye {
 	 *
 	 * @return Plugin configuration
 	 */
-	public static Configuration getConfig() {
+	public static PluginConfig getConfig() {
 		return engine.getConfig();
 	}
 

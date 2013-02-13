@@ -32,7 +32,7 @@ import org.cubeville.hawkeye.commands.BaseCommands;
 import org.cubeville.hawkeye.commands.RollbackCommands;
 import org.cubeville.hawkeye.commands.SearchCommands;
 import org.cubeville.hawkeye.commands.ToolCommands;
-import org.cubeville.hawkeye.config.Configuration;
+import org.cubeville.hawkeye.config.PluginConfig;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
 import org.cubeville.hawkeye.search.QueryManager;
@@ -65,7 +65,7 @@ public class HawkEyeEngine implements PluginEngine {
 	/**
 	 * Plugin configuration
 	 */
-	private final Configuration config;
+	private final PluginConfig config;
 
 	/**
 	 * Database
@@ -97,7 +97,7 @@ public class HawkEyeEngine implements PluginEngine {
 	 */
 	private final CommandManager commandManager;
 
-	public HawkEyeEngine(ServerInterface server, Configuration config) {
+	public HawkEyeEngine(ServerInterface server, PluginConfig config) {
 		HawkEye.setEngine(this);
 		logger = new HawkEyeLogger(this);
 		this.server = server;
@@ -162,7 +162,7 @@ public class HawkEyeEngine implements PluginEngine {
 	}
 
 	@Override
-	public Configuration getConfig() {
+	public PluginConfig getConfig() {
 		return config;
 	}
 
