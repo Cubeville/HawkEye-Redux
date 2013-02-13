@@ -28,6 +28,7 @@ limits:
        per-tick: 500
 
 general:
+    update-interval: 10 # How often to send queued entries to the database (in seconds)
     delete-on-rollback: false # Whether or not to delete entries after they are rolled back
     here-radius: 5 # Default radius for here/near command
     ignored:

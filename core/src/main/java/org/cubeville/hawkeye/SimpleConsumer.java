@@ -173,7 +173,6 @@ public class SimpleConsumer implements Consumer {
 				ps = conn.prepareStatement(sql);
 				int count = 0;
 
-				// TODO Implement a (configurable) limit on entries per run
 				while (!queue.isEmpty()) {
 					Entry entry = queue.poll();
 

@@ -35,14 +35,17 @@ public abstract class WorldEditor implements Runnable {
 
 	protected final Session session;
 
-	// TODO Make limit configurable
 	protected int count = 0;
-	protected final int limit = 200;
-
+	private static int limit;
+	private static int perTick;
 
 	public WorldEditor(Type type, Session session, List<Entry> results) {
 		if (type.isPreview() && !session.getOwner().isPlayer()) {
 			throw new UnsupportedOperationException("A player is required for previews.");
+		}
+
+		if (limit != -1 && results.size() > limit) {
+			throw new UnsupportedOperationException("Too many entries to rollback.");
 		}
 
 		this.type = type;
@@ -75,7 +78,7 @@ public abstract class WorldEditor implements Runnable {
 	public final void run() {
 		int i = 0;
 
-		while (i < limit && queue.hasNext()) {
+		while (i < perTick && queue.hasNext()) {
 			Entry e = queue.next();
 			if (!(e instanceof Modifiable)) continue;
 			Modifiable entry = (Modifiable) e;
@@ -131,6 +134,15 @@ public abstract class WorldEditor implements Runnable {
 		private boolean isPreview() {
 			return this == PREVIEW_ROLLBACK || this == PREVIEW_REBUILD;
 		}
+	}
+
+	public static void setLimit(int limit) {
+		WorldEditor.limit = limit;
+	}
+
+	public static void setTickLimit(int perTick) {
+		if (perTick == -1) perTick = Integer.MAX_VALUE;
+		WorldEditor.perTick = perTick;
 	}
 
 }

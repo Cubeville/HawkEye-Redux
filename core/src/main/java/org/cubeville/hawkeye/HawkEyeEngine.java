@@ -34,10 +34,13 @@ import org.cubeville.hawkeye.commands.SearchCommands;
 import org.cubeville.hawkeye.commands.ToolCommands;
 import org.cubeville.hawkeye.config.Configuration.Variable;
 import org.cubeville.hawkeye.config.PluginConfig;
+import org.cubeville.hawkeye.editor.WorldEditor;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
 import org.cubeville.hawkeye.search.QueryManager;
 import org.cubeville.hawkeye.search.SimpleQueryManager;
+import org.cubeville.hawkeye.search.SimpleSearchQuery;
+import org.cubeville.hawkeye.search.parsers.RadiusParser;
 import org.cubeville.hawkeye.session.SessionManager;
 import org.cubeville.hawkeye.session.SimpleSessionFactory;
 import org.cubeville.hawkeye.session.SimpleSessionManager;
@@ -138,12 +141,17 @@ public class HawkEyeEngine implements PluginEngine {
 			e.printStackTrace();
 		}
 
-		// TODO Make this configurable
-		server.scheduleAsyncRepeatingTask(10 * TPS, 10 * TPS, consumer);
+		server.scheduleAsyncRepeatingTask(1L, config.getInt(Config.UPDATE_INTERVAL, 10) * TPS, consumer);
 
 		if (((SimpleConsumer) consumer).hasDatabase()) {
 			server.scheduleAsyncTask(1L, new EntryImporter());
 		}
+
+		// Load limits from config
+		SimpleSearchQuery.setLimit(config.getInt(Config.LIMIT_SEARCH_RESULTS, -1));
+		RadiusParser.setMaxRadius(config.getInt(Config.LIMIT_SEARCH_RADIUS, -1));
+		WorldEditor.setLimit(config.getInt(Config.LIMIT_ROLLBACK_ENTRIES, -1));
+		WorldEditor.setTickLimit(config.getInt(Config.LIMIT_ROLLBACK_PER_TICK, 500));
 	}
 
 	@Override
@@ -245,6 +253,7 @@ public class HawkEyeEngine implements PluginEngine {
 		LIMIT_ROLLBACK_ENTRIES("limits.rollback.max-entries"),
 		LIMIT_ROLLBACK_PER_TICK("limits.rollback.per-tick"),
 
+		UPDATE_INTERVAL("general.update-interval"),
 		DELETE_ON_ROLLBACK("general.delete-on-rollback"),
 		DEFAULT_HERE_RADIUS("general.here-radius"),
 

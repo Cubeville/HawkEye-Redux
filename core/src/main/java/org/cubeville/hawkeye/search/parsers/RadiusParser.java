@@ -40,22 +40,27 @@ import org.cubeville.util.StringUtil;
 
 public class RadiusParser extends ParameterParser {
 
-	private WorldEdit worldedit;
+	private static boolean init = false;
+	private static WorldEdit worldedit;
 
 	private Vector min;
 	private Vector max;
 
+	private static int maxRadius;
+
 	public RadiusParser(List<String> parameters, SearchQuery query) throws CommandException {
 		super(parameters, query);
 
-		worldedit = null;
-		min = null;
-		max = null;
+		if (!init) {
+			worldedit = null;
 
-		try {
-			Class.forName("com.sk89q.worldedit.WorldEdit");
-			worldedit = WorldEdit.getInstance();
-		} catch (ClassNotFoundException e) {
+			try {
+				Class.forName("com.sk89q.worldedit.WorldEdit");
+				worldedit = WorldEdit.getInstance();
+			} catch (ClassNotFoundException e) {
+			}
+
+			init = true;
 		}
 	}
 
@@ -83,6 +88,8 @@ public class RadiusParser extends ParameterParser {
 		} catch (NumberFormatException e) {
 			throw new CommandUsageException("Invalid radius specified: &7" + parameter);
 		}
+
+		if (maxRadius != -1 && radius > maxRadius) throw new CommandUsageException("Radius too large, max radius allowed is: &7" + maxRadius);
 
 		Vector r = new Vector(radius, radius, radius);
 		min = center.subtract(r);
@@ -141,6 +148,10 @@ public class RadiusParser extends ParameterParser {
 
 	private static Vector toVector(com.sk89q.worldedit.Vector vector) {
 		return new Vector(vector.getX(), vector.getY(), vector.getZ());
+	}
+
+	public static void setMaxRadius(int maxRadius) {
+		RadiusParser.maxRadius = maxRadius;
 	}
 
 }

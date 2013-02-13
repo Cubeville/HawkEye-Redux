@@ -37,6 +37,8 @@ import org.cubeville.util.StringUtil;
 
 public class SimpleSearchQuery extends SearchQuery {
 
+	private static int limit;
+
 	public SimpleSearchQuery(CommandSender sender, String parameters, Callback callback) throws CommandException {
 		super(sender, parameters, callback);
 	}
@@ -118,7 +120,8 @@ public class SimpleSearchQuery extends SearchQuery {
 		// Build full query
 		sql += "(" + StringUtil.buildString(conditions, ") AND (") + ")";
 
-		// TODO Add ordering and limiting
+		sql += " ORDER BY `date` DESC";
+		if (limit > 0) sql += " LIMIT " + limit;
 
 		NamedParameterStatement stmt;
 
@@ -135,6 +138,10 @@ public class SimpleSearchQuery extends SearchQuery {
 		}
 
 		return stmt.getStatement();
+	}
+
+	public static void setLimit(int limit) {
+		SimpleSearchQuery.limit = limit;
 	}
 
 }
