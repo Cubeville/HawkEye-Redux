@@ -69,6 +69,17 @@ public abstract class AbstractServerInterface implements ServerInterface {
 		return player;
 	}
 
+	@Override
+	public void handleLogin(Player player) {
+		HawkEye.getDataManager().registerPlayer(player);
+		playerCache.put(player.getName().toLowerCase(), player);
+	}
+
+	@Override
+	public void handleLogout(String player) {
+		playerCache.remove(player.toLowerCase());
+	}
+
 	/**
 	 * Loads a player directly from the server
 	 *

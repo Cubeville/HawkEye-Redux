@@ -18,21 +18,16 @@
 
 package org.cubeville.hawkeye.bukkit;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bukkit.Server;
 
-import org.cubeville.hawkeye.HawkEye;
+import org.cubeville.hawkeye.AbstractServerInterface;
 import org.cubeville.hawkeye.ServerImplementation;
-import org.cubeville.hawkeye.ServerInterface;
 import org.cubeville.hawkeye.bukkit.command.BukkitConsole;
-import org.cubeville.hawkeye.bukkit.entity.BukkitPlayer;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
 
-public class BukkitServer implements ServerInterface {
+public class BukkitServer extends AbstractServerInterface {
 
 	/**
 	 * Plugin reference
@@ -44,39 +39,34 @@ public class BukkitServer implements ServerInterface {
 	 */
 	private final Server server;
 
-	/**
-	 * Console
-	 */
-	private final BukkitConsole console;
-
-	/**
-	 * World cache
-	 */
-	private final Map<String, World> worlds = new HashMap<String, World>();
-
-	/**
-	 * Player cache
-	 */
-	private final Map<String, Player> players = new HashMap<String, Player>();
-
 	public BukkitServer(HawkEyePlugin plugin, Server server) {
 		this.plugin = plugin;
 		this.server = server;
 
-		console = new BukkitConsole(server.getConsoleSender());
-
 		for (org.bukkit.World world : server.getWorlds()) {
-			// TODO Configure worlds to log
-			BukkitWorld w = new BukkitWorld(world);
-			HawkEye.getDataManager().registerWorld(w);
-			worlds.put(w.getName(), w);
+			// AbstractServerInterface will cache it
+			getWorld(world.getName());
 		}
 
 		for (org.bukkit.entity.Player player : server.getOnlinePlayers()) {
-			BukkitPlayer p = new BukkitPlayer(player);
-			HawkEye.getDataManager().registerPlayer(p);
-			players.put(p.getName(), p);
+			// AbstractServerInterface will cache it
+			getPlayer(player.getName());
 		}
+	}
+
+	@Override
+	protected ConsoleCommandSender loadConsoleSender() {
+		return new BukkitConsole(server.getConsoleSender());
+	}
+
+	@Override
+	protected Player loadPlayer(String name) {
+		return plugin.getPlayer(name);
+	}
+
+	@Override
+	protected World loadWorld(String name) {
+		return plugin.getWorld(name);
 	}
 
 	@Override
@@ -112,40 +102,6 @@ public class BukkitServer implements ServerInterface {
 	@Override
 	public void cancelAllTasks() {
 		server.getScheduler().cancelTasks(plugin);
-	}
-
-	@Override
-	public ConsoleCommandSender getConsoleSender() {
-		return console;
-	}
-
-	@Override
-	public Player getPlayer(String name) {
-		if (players.containsKey(name)) return players.get(name);
-
-		BukkitPlayer player = plugin.getPlayer(name);
-		if (player != null) players.put(name, player);
-		return player;
-	}
-
-	@Override
-	public void handleLogin(Player player) {
-		HawkEye.getDataManager().registerPlayer(player);
-		players.put(player.getName(), player);
-	}
-
-	@Override
-	public void handleLogout(String player) {
-		players.remove(player);
-	}
-
-	@Override
-	public World getWorld(String name) {
-		if (worlds.containsKey(name)) return worlds.get(name);
-
-		BukkitWorld world = plugin.getWorld(name);
-		if (world != null) worlds.put(name, world);
-		return world;
 	}
 
 	@Override
