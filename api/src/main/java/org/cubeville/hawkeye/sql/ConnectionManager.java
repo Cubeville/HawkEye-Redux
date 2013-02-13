@@ -57,7 +57,7 @@ public class ConnectionManager {
 	private final ConnectionReaper reaper;
 
 	/**
-	 * How long to allow a hold on a connection
+	 * How long to hold onto a connection
 	 */
 	private final long timeout = 60000;
 
@@ -134,7 +134,7 @@ public class ConnectionManager {
 		while (connlist != null && connlist.hasMoreElements()) {
 			JDCConnection conn = connlist.nextElement();
 
-			if (conn.inUse() && stale > conn.getLastUse() && !conn.validate()) {
+			if ((!conn.inUse() && stale > conn.getLastUse()) || !conn.validate()) {
 				removeConnection(conn);
 			}
 		}
@@ -146,7 +146,12 @@ public class ConnectionManager {
 	 * @param conn Connection to remove
 	 */
 	private synchronized void removeConnection(JDCConnection conn) {
-		 connections.removeElement(conn);
+		connections.removeElement(conn);
+		try {
+			Connection c = conn.getConnection();
+			if (c != null) c.close();
+		} catch (SQLException ignore) {
+		}
 	}
 
 	/**
@@ -154,18 +159,18 @@ public class ConnectionManager {
 	 */
 	private class ConnectionReaper extends Thread {
 		/**
-		 * How often to reap old connections (300,000 milliseconds = 5 minutes)
+		 * How often to reap old connections (180,000 milliseconds = 3 minutes)
 		 */
-		private final long delay = 300000;
+		private final long delay = 180000;
 
 		@Override
 		public void run() {
 			while (true) {
+				reapConnections();
+
 				try {
 					sleep(delay);
 				} catch (InterruptedException ignore) { }
-
-				reapConnections();
 			}
 		}
 	}

@@ -36,7 +36,7 @@ public class DatabaseUtil {
 	 * @return Table name with prefix
 	 */
 	public static String table(String table) {
-		return "`" + HawkEye.getDatabase().getPrefix() + table + "`";
+		return "`" + HawkEye.getDatabase().getPrefix() + "_" + table + "`";
 	}
 
 	/**

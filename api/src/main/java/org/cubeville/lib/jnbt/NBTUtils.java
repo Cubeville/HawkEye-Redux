@@ -161,6 +161,8 @@ public final class NBTUtils {
 	 * @return Byte array
 	 */
 	public static byte[] toByteArray(Tag tag) {
+		if (tag == null) return new byte[0];
+
 		ByteArrayOutputStream baos = null;
 
 		try {
@@ -178,6 +180,8 @@ public final class NBTUtils {
 	}
 
 	public static byte[] toByteArray(NBTSerializable tag) {
+		if (tag == null) return new byte[0];
+
 		return toByteArray(tag.serialize());
 	}
 
@@ -188,6 +192,8 @@ public final class NBTUtils {
 	 * @return Tag
 	 */
 	public static Tag fromByteArray(byte[] data) {
+		if (data == null || data.length == 0) return null;
+
 		ByteArrayInputStream bais = null;
 
 		try {
