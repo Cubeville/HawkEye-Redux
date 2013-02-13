@@ -122,7 +122,7 @@ public class SimpleDataManager implements DataManager {
 
 			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
-				id = rs.getInt("id");
+				id = rs.getInt(1);
 			} else {
 				throw new SQLException("Could not obtain user id");
 			}
@@ -180,7 +180,7 @@ public class SimpleDataManager implements DataManager {
 
 			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
-				id = rs.getInt("id");
+				id = rs.getInt(1);
 			} else {
 				throw new SQLException("Could not obtain world id");
 			}
