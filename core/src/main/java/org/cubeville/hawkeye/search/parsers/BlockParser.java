@@ -53,6 +53,11 @@ public class BlockParser extends ParameterParser {
 	}
 
 	@Override
+	public int getParseOrder() {
+		return 20;
+	}
+
+	@Override
 	public void parse() throws CommandException {
 		for (Action action : HawkEye.getDataManager().getActions()) {
 			if (BlockEntry.class.isAssignableFrom(action.getClass()) || ItemEntry.class.isAssignableFrom(action.getClass())) {

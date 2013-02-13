@@ -47,6 +47,11 @@ public class FilterParser extends ParameterParser {
 	}
 
 	@Override
+	public int getParseOrder() {
+		return 30;
+	}
+
+	@Override
 	public Pair<String, Map<String, Object>> preProcess() {
 		List<String> conditions = new ArrayList<String>();
 		Map<String, Object> binds = new HashMap<String, Object>();

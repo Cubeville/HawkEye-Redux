@@ -94,6 +94,18 @@ public abstract class ParameterParser {
 	 */
 	public void postProcess(List<Entry> results) { }
 
-
+	/**
+	 * Gets the parser order for this parameter.
+	 *
+	 * Lower numbers will be added to to query first.  Parse order exists to
+	 * ensure that queries will match as closely as possible no matter what
+	 * order the user enters parameters in.  This will allow the MySQL engine
+	 * to cache matching searches and use indexes to their full extent.
+	 *
+	 * @return Parse order for this parameter
+	 */
+	public int getParseOrder() {
+		return 50;
+	}
 
 }

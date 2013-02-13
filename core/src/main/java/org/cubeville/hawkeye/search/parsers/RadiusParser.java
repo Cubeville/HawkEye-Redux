@@ -69,6 +69,11 @@ public class RadiusParser extends ParameterParser {
 	}
 
 	@Override
+	public int getParseOrder() {
+		return 16;
+	}
+
+	@Override
 	public void parse() throws CommandException {
 		CommandSender sender = query.getSender();
 		if (!sender.isPlayer()) throw new CommandPlayerException();

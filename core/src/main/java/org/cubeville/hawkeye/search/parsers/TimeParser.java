@@ -38,6 +38,11 @@ public class TimeParser extends ParameterParser {
 	}
 
 	@Override
+	public int getParseOrder() {
+		return 7;
+	}
+
+	@Override
 	public void parse() throws CommandException {
 		if (parameters.size() > 1) throw new CommandUsageException("Invalid radius specified: &7" + StringUtil.buildString(parameters, ","));
 		String parameter = parameters.get(0);

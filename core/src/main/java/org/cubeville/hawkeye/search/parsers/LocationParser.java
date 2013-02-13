@@ -53,6 +53,11 @@ public class LocationParser extends ParameterParser {
 	}
 
 	@Override
+	public int getParseOrder() {
+		return 13;
+	}
+
+	@Override
 	public Pair<String, Map<String, Object>> preProcess() {
 		String sql = "`x` = :xloc AND `y` = :yloc AND `z` = :zloc";
 		Map<String, Object> binds = new HashMap<String, Object>();

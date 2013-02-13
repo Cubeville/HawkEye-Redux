@@ -21,6 +21,8 @@ package org.cubeville.hawkeye.search;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +98,8 @@ public class SimpleQueryManager implements QueryManager {
 			if (parser != null) parsers.add(parser);
 		}
 
+		Collections.sort(parsers, comparator);
+
 		return parsers;
 	}
 
@@ -122,5 +126,12 @@ public class SimpleQueryManager implements QueryManager {
 
 		throw new CommandException("Error parsing parameter: &7" + prefix);
 	}
+
+	private static Comparator<ParameterParser> comparator = new Comparator<ParameterParser>() {
+		@Override
+		public int compare(ParameterParser p1, ParameterParser p2) {
+			return p1.getParseOrder() - p2.getParseOrder();
+		}
+	};
 
 }

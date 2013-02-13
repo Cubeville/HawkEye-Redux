@@ -42,6 +42,11 @@ public class PlayerParser extends ParameterParser {
 	}
 
 	@Override
+	public int getParseOrder() {
+		return 1;
+	}
+
+	@Override
 	public void parse() throws CommandException {
 		for (String param : parameters) {
 			boolean not = false;

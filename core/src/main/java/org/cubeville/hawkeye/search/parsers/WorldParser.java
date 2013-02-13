@@ -42,6 +42,11 @@ public class WorldParser extends ParameterParser {
 	}
 
 	@Override
+	public int getParseOrder() {
+		return 10;
+	}
+
+	@Override
 	public void parse() throws CommandException {
 		for (String param : parameters) {
 			boolean not = false;

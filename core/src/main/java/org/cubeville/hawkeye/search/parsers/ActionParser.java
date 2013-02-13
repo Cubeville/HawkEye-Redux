@@ -43,6 +43,11 @@ public class ActionParser extends ParameterParser {
 	}
 
 	@Override
+	public int getParseOrder() {
+		return 4;
+	}
+
+	@Override
 	public void parse() throws CommandException {
 		for (String param : parameters) {
 			boolean not = false;
