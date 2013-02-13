@@ -64,6 +64,9 @@ public class SimpleDataManager implements DataManager {
 		for (Action action : DefaultActions.values()) {
 			registerAction(action);
 		}
+
+		loadWorlds();
+		loadPlayers();
 	}
 
 	@Override
@@ -199,6 +202,62 @@ public class SimpleDataManager implements DataManager {
 		}
 
 		return id;
+	}
+
+	private void loadWorlds() {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM " + table("worlds");
+
+		try {
+			conn = HawkEye.getDatabase().getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getByte("id");
+				String name = rs.getString("name");
+
+				worlds.put(id, name);
+				worldIds.put(name, id);
+			}
+		} catch (SQLException e) {
+			HawkEye.getLogger().warning("Could not load worlds: " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(conn);
+			close(ps);
+			close(rs);
+		}
+	}
+
+	private void loadPlayers() {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM " + table("players");
+
+		try {
+			conn = HawkEye.getDatabase().getConnection();
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+
+				players.put(id, name);
+				playerIds.put(name, id);
+			}
+		} catch (SQLException e) {
+			HawkEye.getLogger().warning("Could not load players: " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			close(conn);
+			close(ps);
+			close(rs);
+		}
 	}
 
 }
