@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `hawkeye_data` (
   `data` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `nbt` blob DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `player_action` (`player_id`, `action`),
   KEY `date` (`date`),
   KEY `location` (`x`, `y`, `z`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
