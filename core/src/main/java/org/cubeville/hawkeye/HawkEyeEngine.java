@@ -20,7 +20,14 @@ package org.cubeville.hawkeye;
 
 import java.util.logging.Logger;
 
+import org.cubeville.hawkeye.command.CommandException;
+import org.cubeville.hawkeye.command.CommandManager;
+import org.cubeville.hawkeye.command.CommandPermissionException;
+import org.cubeville.hawkeye.command.CommandPlayerException;
+import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
+import org.cubeville.hawkeye.command.SimpleCommandManager;
 import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
@@ -35,6 +42,11 @@ import org.cubeville.hawkeye.sql.MySqlDatabase;
 import org.cubeville.hawkeye.util.HawkEyeLogger;
 
 public class HawkEyeEngine implements PluginEngine {
+
+	/**
+	 * Ticks per second
+	 */
+	private static final long TPS = 20;
 
 	/**
 	 * Logger
@@ -76,6 +88,11 @@ public class HawkEyeEngine implements PluginEngine {
 	 */
 	private final QueryManager queryManager;
 
+	/**
+	 * Command manager
+	 */
+	private final CommandManager commandManager;
+
 	public HawkEyeEngine(ServerInterface server, Configuration config) {
 		HawkEye.setEngine(this);
 		logger = new HawkEyeLogger(this);
@@ -87,6 +104,7 @@ public class HawkEyeEngine implements PluginEngine {
 		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
 		dataManager = new SimpleDataManager();
 		queryManager = new SimpleQueryManager();
+		commandManager = new SimpleCommandManager();
 
 		try {
 			database.connect(
@@ -103,7 +121,8 @@ public class HawkEyeEngine implements PluginEngine {
 			e.printStackTrace();
 		}
 
-		server.scheduleAsyncRepeatingTask(1L, 600L, consumer);
+		// TODO Make this configurable
+		server.scheduleAsyncRepeatingTask(10 * TPS, 10 * TPS, consumer);
 
 		if (((SimpleConsumer) consumer).hasDatabase()) {
 			server.scheduleAsyncTask(1L, new EntryImporter());
@@ -157,6 +176,11 @@ public class HawkEyeEngine implements PluginEngine {
 	}
 
 	@Override
+	public CommandManager getCommandManager() {
+		return commandManager;
+	}
+
+	@Override
 	public ConsoleCommandSender getConsoleSender() {
 		return server.getConsoleSender();
 	}
@@ -169,6 +193,21 @@ public class HawkEyeEngine implements PluginEngine {
 	@Override
 	public World getWorld(String name) {
 		return server.getWorld(name);
+	}
+
+	@Override
+	public void handleCommand(CommandSender sender, String command) {
+		try {
+			commandManager.execute(command, sender);
+		} catch (CommandPermissionException e) {
+			sender.sendMessage("You do not have permission to do that.");
+		} catch (CommandPlayerException e) {
+			sender.sendMessage("That command can only be used by ingame players.");
+		} catch (CommandUsageException e) {
+			sender.sendMessage(new String[] { e.getMessage(), e.getUsage() });
+		} catch (CommandException e) {
+			sender.sendMessage(e.getMessage());
+		}
 	}
 
 }

@@ -28,16 +28,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.cubeville.hawkeye.HawkEye;
-import org.cubeville.hawkeye.ServerInterface;
 import org.cubeville.util.Pair;
 import org.cubeville.util.Triplet;
 
 public class SimpleCommandManager implements CommandManager {
-
-	/**
-	 * Server compatibility layer
-	 */
-	private final ServerInterface server;
 
 	/**
 	 * Mapping of commands to their execution info
@@ -63,9 +57,7 @@ public class SimpleCommandManager implements CommandManager {
 	 */
 	private final List<String> roots;
 
-	public SimpleCommandManager(ServerInterface server) {
-		this.server = server;
-
+	public SimpleCommandManager() {
 		commands = new HashMap<String, Triplet<Command, Method, Object>>();
 		aliases = new HashMap<String, String>();
 		nested = new HashMap<String, Set<String>>();
@@ -107,10 +99,12 @@ public class SimpleCommandManager implements CommandManager {
 		}
 
 		// Registers the root commands with the server
-		if (server != null) {
-			for (String command : roots) {
-				server.registerCommand(command);
-			}
+		registerCommands(roots);
+	}
+
+	protected void registerCommands(List<String> commands) {
+		for (String command : commands) {
+			HawkEye.getServerInterface().registerCommand(command);
 		}
 	}
 

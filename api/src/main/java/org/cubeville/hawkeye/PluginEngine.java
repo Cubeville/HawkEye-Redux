@@ -20,6 +20,8 @@ package org.cubeville.hawkeye;
 
 import java.util.logging.Logger;
 
+import org.cubeville.hawkeye.command.CommandManager;
+import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
@@ -97,6 +99,13 @@ public interface PluginEngine {
 	QueryManager getQueryManager();
 
 	/**
+	 * Gets the command manager
+	 *
+	 * @return Command manager
+	 */
+	CommandManager getCommandManager();
+
+	/**
 	 * Gets the server's console sender
 	 *
 	 * @return Console sender
@@ -118,5 +127,10 @@ public interface PluginEngine {
 	 * @return World
 	 */
 	World getWorld(String name);
+
+	/**
+	 * Passes a command through to the command manager
+	 */
+	void handleCommand(CommandSender sender, String command);
 
 }
