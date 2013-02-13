@@ -236,7 +236,21 @@ public class HawkEyeEngine implements PluginEngine {
 		DB_PORT("database.port"),
 		DB_NAME("database.database"),
 		DB_USER("database.username"),
-		DB_PASS("database.password");
+		DB_PASS("database.password"),
+
+		LIMIT_SEARCH_RESULTS("limits.search-results"),
+		LIMIT_SEARCH_RADIUS("limits.max-radius"),
+		LIMIT_DATABASE_ENTRIES("limits.database.max-entries"),
+		LIMIT_DATABASE_AGE("limits.database.entry-age"),
+		LIMIT_ROLLBACK_ENTRIES("limits.rollback.max-entries"),
+		LIMIT_ROLLBACK_PER_TICK("limits.rollback.per-tick"),
+
+		DELETE_ON_ROLLBACK("general.delete-on-rollback"),
+		DEFAULT_HERE_RADIUS("general.here-radius"),
+
+		IGNORED_WORLDS("general.ignored.worlds"),
+		IGNORED_PLAYERS("general.ignored.players"),
+		IGNORED_COMMANDS("general.ignored.commands");
 
 		private final String path;
 

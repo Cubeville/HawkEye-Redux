@@ -1,0 +1,97 @@
+# MySQL database information
+database:
+    # Prefix to use on database tables
+    prefix: hawkeye
+    # Connection details
+    hostname: localhost
+    port: 3306
+    database: minecraft
+    username: root
+    password: abc123
+
+# Hard limits on certain actions (-1 for unlimited)
+limits:
+    search-results: -1 # Maximum number of results to return from a search
+    max-radius: -1 # Maximum radius allowed in search/here
+    database:
+        # Maximum number of entries to keep in the database
+        total-entries: -1
+        # Entries older than this will be deleted
+        # Use format #y#mo#w#d#h#m#s i.e. 1w3d for 1 week 3 days
+        entry-age: -1
+    rollback:
+       # Maximum number of entries allowed in a rollback
+       max-entries: -1
+       # How many entries to rollback per server tick (too high may
+       # cause noticeable lag, lower numbers take longer to rollback)
+       # -1 NOT recommended
+       per-tick: 500
+
+general:
+    delete-on-rollback: false # Whether or not to delete entries after they are rolled back
+    here-radius: 5 # Default radius for here/near command
+    ignored:
+        worlds: # List of worlds to ignore
+        - ignoredworld
+        - alsoignored
+        players: # List of players to ignore
+        - ignored_player_name
+        commands: # List of commands to ignore if command logging is enabled
+        - /ignoredcmd
+
+logging: # What to log
+    block-place: true
+    block-break: true
+    # Hanging entity (item frame/painting) placed/broken
+    hanging-place: true
+    hanging-break: true
+    # Player login/logout
+    player-join: true
+    player-quit: true
+    # Player chat/commands
+    player-chat: true
+    player-command: true
+    # Dropped/picked up items
+    player-item-drop: true
+    player-item-pickup: true
+    # Death by PvP
+    player-death-pvp: true
+    # Death by non-PvP
+    player-death-other: true
+    # Items lost on death
+    player-death-items: true
+    # Player killed a mob
+    player-mob-kill: true
+    # Player used lava/water bucket
+    lava-bucket: true
+    water-bucket: true
+    # Player used flint & steel
+    flint-and-steel: true
+    # Player interacted with something
+    interact-door: true]
+    interact-lever: true
+    interact-button: true
+    cake-eat: true
+    # Item placed in/taken from chest/furnace/dispenser/etc
+    inventory-add: true
+    inventory-take: true
+    # Explosions
+    explosion-creeper: true
+    explosion-tnt: true
+    explosion-ghast: true
+    explosion-other: true
+    # Natural decay/fade (snow/ice melt, leaf decay, etc)
+    block-fade: true
+    # Block formed naturally (i.e. snowfall, water freezing to ice)
+    block-form: true
+    # Crop growth
+    block-grow: true
+    # Block moved by piston
+    block-piston: true
+    # Block spread (mushrooms multiplying, fire spreading, etc)
+    block-spread: true
+    # Block modified by mob (i.e. enderman, zombie breaking door, etc)
+    entity-block-modify: true
+    # Structure (tree/mushroom) grown naturally or with bonemeal
+    structure-grow: true
+    structure-bonemeal: true

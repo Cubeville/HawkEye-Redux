@@ -28,11 +28,16 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.cubeville.hawkeye.HawkEyeEngine.Config;
+import org.cubeville.hawkeye.config.PluginConfig;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.lib.jnbt.ByteArrayTag;
 import org.cubeville.lib.jnbt.CompoundTag;
@@ -48,8 +53,15 @@ public class SimpleConsumer implements Consumer {
 	private final ReentrantLock lock = new ReentrantLock();
 	private boolean database = true;
 
-	public SimpleConsumer() {
+	private final List<String> ignoredWorlds;
+	private final List<String> ignoredPlayers;
+	private final List<String> ignoredCommands;
 
+	public SimpleConsumer() {
+		PluginConfig config = HawkEye.getConfig();
+		ignoredWorlds = Collections.unmodifiableList(config.getStringList(Config.IGNORED_WORLDS, new ArrayList<String>()));
+		ignoredPlayers = Collections.unmodifiableList(config.getStringList(Config.IGNORED_PLAYERS, new ArrayList<String>()));
+		ignoredCommands = Collections.unmodifiableList(config.getStringList(Config.IGNORED_COMMANDS, new ArrayList<String>()));
 	}
 
 	@Override
@@ -164,6 +176,13 @@ public class SimpleConsumer implements Consumer {
 				// TODO Implement a (configurable) limit on entries per run
 				while (!queue.isEmpty()) {
 					Entry entry = queue.poll();
+
+					if (ignoredWorlds.contains(entry.getLocation().getWorld().getName())) continue;
+					else if (ignoredPlayers.contains(entry.getPlayer())) continue;
+
+					if (entry.getAction() == DefaultActions.PLAYER_COMMAND) {
+						if (ignoredCommands.contains(entry.getData().split(" ", 2)[0].toLowerCase())) continue;
+					}
 
 					ps.setInt(1, getPlayerId(entry.getPlayer()));
 					ps.setString(2, entry.getAction().getName());
