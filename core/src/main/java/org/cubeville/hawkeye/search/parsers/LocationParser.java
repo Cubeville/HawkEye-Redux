@@ -22,8 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandUsageException;
+import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Vector;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.hawkeye.search.SearchQuery;
@@ -32,6 +34,7 @@ import org.cubeville.util.StringUtil;
 
 public class LocationParser extends ParameterParser {
 
+	private int world;
 	private Vector location;
 
 	public LocationParser(List<String> parameters, SearchQuery query) throws CommandException {
@@ -40,10 +43,24 @@ public class LocationParser extends ParameterParser {
 
 	@Override
 	public void parse() throws CommandException {
-		if (parameters.size() != 3) throw new CommandUsageException("Invalid location specified: &7" + StringUtil.buildString(parameters, ","));
-		String x = parameters.get(0);
-		String y = parameters.get(1);
-		String z = parameters.get(2);
+		if (parameters.size() < 3 || parameters.size() > 4) {
+			// x,y,z or world,x,y,z
+			throw new CommandUsageException("Invalid location specified: &7" + StringUtil.buildString(parameters, ","));
+		}
+
+		if (!query.getSender().isPlayer() && parameters.size() < 4) {
+			// World required if you're not a player
+			throw new CommandUsageException("Invalid location specified: &7" + StringUtil.buildString(parameters, ","));
+		}
+
+		String worldName = parameters.size() == 3 ? ((Player) query.getSender()).getWorld().getName() : parameters.get(0);
+		world = HawkEye.getDataManager().getWorldId(worldName);
+		if (world == -1) throw new CommandUsageException("Invalid world specified: &7" + worldName);
+
+		int offset = parameters.size() == 3 ? 0 : 1;
+		String x = parameters.get(0 + offset);
+		String y = parameters.get(1 + offset);
+		String z = parameters.get(2 + offset);
 
 		try {
 			location = new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z));
@@ -59,9 +76,10 @@ public class LocationParser extends ParameterParser {
 
 	@Override
 	public Pair<String, Map<String, Object>> preProcess() {
-		String sql = "`x` = :xloc AND `y` = :yloc AND `z` = :zloc";
+		String sql = "`world_id` = :worldloc AND `x` = :xloc AND `y` = :yloc AND `z` = :zloc";
 		Map<String, Object> binds = new HashMap<String, Object>();
 
+		binds.put("worldloc", world);
 		binds.put("xloc", location.getBlockX());
 		binds.put("yloc", location.getBlockY());
 		binds.put("zloc", location.getBlockZ());

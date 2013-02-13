@@ -27,11 +27,13 @@ import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.regions.Region;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandPlayerException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.entity.Player;
+import org.cubeville.hawkeye.location.Location;
 import org.cubeville.hawkeye.location.Vector;
 import org.cubeville.hawkeye.search.ParameterParser;
 import org.cubeville.hawkeye.search.SearchQuery;
@@ -43,6 +45,7 @@ public class RadiusParser extends ParameterParser {
 	private static boolean init = false;
 	private static WorldEdit worldedit;
 
+	private int world;
 	private Vector min;
 	private Vector max;
 
@@ -85,7 +88,8 @@ public class RadiusParser extends ParameterParser {
 			return;
 		}
 
-		Vector center = ((Player) sender).getPosition();
+		Location center = ((Player) sender).getPosition();
+		world = HawkEye.getDataManager().getWorldId(center.getWorld());
 		double radius = 0;
 
 		try {
@@ -123,6 +127,7 @@ public class RadiusParser extends ParameterParser {
 	}
 
 	private Pair<String, Map<String, Object>> buildQuery(Vector min, Vector max) {
+		String w;
 		String x;
 		String y;
 		String z;
@@ -132,6 +137,14 @@ public class RadiusParser extends ParameterParser {
 		binds.put("xmin", min.getX());
 		binds.put("ymin", min.getY());
 		binds.put("zmin", min.getZ());
+
+		if (world != -1) {
+			w = "`world_id` = :worldrad";
+			binds.put("worldrad", world);
+		} else {
+			// Dummy condition so query doesn't break
+			w = "true";
+		}
 
 		if (min.equals(max)) {
 			x = "`x` = :xmin";
@@ -146,7 +159,7 @@ public class RadiusParser extends ParameterParser {
 			z = "(`z` BETWEEN :zmin AND :zmax)";
 		}
 
-		String sql = StringUtil.buildString(" AND ", x, y, z);
+		String sql = StringUtil.buildString(" AND ", w, x, y, z);
 
 		return Pair.of(sql, binds);
 	}

@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS `hawkeye_data` (
   PRIMARY KEY (`id`),
   KEY `player_action` (`player_id`, `action`),
   KEY `date` (`date`),
-  KEY `location` (`x`, `y`, `z`)
+  KEY `location` (`world_id`, `x`, `y`, `z`),
+  KEY `coordinates` (`x`, `y`, `z`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;
 
 -- --------------------------------------------------------
