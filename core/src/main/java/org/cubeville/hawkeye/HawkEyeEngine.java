@@ -28,6 +28,10 @@ import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.command.SimpleCommandManager;
+import org.cubeville.hawkeye.commands.BaseCommands;
+import org.cubeville.hawkeye.commands.RollbackCommands;
+import org.cubeville.hawkeye.commands.SearchCommands;
+import org.cubeville.hawkeye.commands.ToolCommands;
 import org.cubeville.hawkeye.config.Configuration;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
@@ -105,6 +109,18 @@ public class HawkEyeEngine implements PluginEngine {
 		dataManager = new SimpleDataManager();
 		queryManager = new SimpleQueryManager();
 		commandManager = new SimpleCommandManager();
+
+		try {
+			((SimpleCommandManager) commandManager).registerCommands(
+				new BaseCommands(),
+				new SearchCommands(),
+				new ToolCommands(),
+				new RollbackCommands()
+			);
+		} catch (CommandException e) {
+			logger.severe("Unable to register commands");
+			e.printStackTrace();
+		}
 
 		try {
 			database.connect(

@@ -64,6 +64,24 @@ public class SimpleCommandManager implements CommandManager {
 		roots = new ArrayList<String>();
 	}
 
+	/**
+	 * Utility method to register multiple objects at once
+	 */
+	public void registerCommands(Object... obj) throws CommandException {
+		CommandException ex = null;
+
+		for (Object o : obj) {
+			try {
+				registerCommands(o);
+			} catch (CommandException e) {
+				// Save the exception for later so all the objects can register
+				if (ex == null) ex = e;
+			}
+		}
+
+		if (ex != null) throw ex;
+	}
+
 	@Override
 	public void registerCommands(Object obj) throws CommandException {
 		// Get the object's methods via reflection
