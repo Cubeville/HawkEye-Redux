@@ -24,6 +24,7 @@ import org.cubeville.hawkeye.AbstractServerInterface;
 import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.ServerImplementation;
 import org.cubeville.hawkeye.bukkit.command.BukkitConsole;
+import org.cubeville.hawkeye.bukkit.entity.BukkitPlayer;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
@@ -62,12 +63,14 @@ public class BukkitServer extends AbstractServerInterface {
 
 	@Override
 	protected Player loadPlayer(String name) {
-		return plugin.getPlayer(name);
+		org.bukkit.entity.Player player = server.getPlayerExact(name);
+		return player == null ? null : new BukkitPlayer(player);
 	}
 
 	@Override
 	protected World loadWorld(String name) {
-		return plugin.getWorld(name);
+		org.bukkit.World world = server.getWorld(name);
+		return world == null ? null : new BukkitWorld(world);
 	}
 
 	@Override
