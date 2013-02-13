@@ -66,6 +66,7 @@ public class BukkitServer implements ServerInterface {
 		console = new BukkitConsole(server.getConsoleSender());
 
 		for (org.bukkit.World world : server.getWorlds()) {
+			// TODO Configure worlds to log
 			BukkitWorld w = new BukkitWorld(world);
 			HawkEye.getDataManager().registerWorld(w);
 			worlds.put(w.getName(), w);

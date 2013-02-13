@@ -32,6 +32,7 @@ import org.cubeville.hawkeye.commands.BaseCommands;
 import org.cubeville.hawkeye.commands.RollbackCommands;
 import org.cubeville.hawkeye.commands.SearchCommands;
 import org.cubeville.hawkeye.commands.ToolCommands;
+import org.cubeville.hawkeye.config.Configuration.Variable;
 import org.cubeville.hawkeye.config.PluginConfig;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
@@ -103,7 +104,7 @@ public class HawkEyeEngine implements PluginEngine {
 		this.server = server;
 		this.config = config;
 
-		database = new MySqlDatabase(config.getString("database.prefix"));
+		database = new MySqlDatabase(config.getString(Config.DB_PREFIX));
 		consumer = new SimpleConsumer();
 		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
 		dataManager = new SimpleDataManager();
@@ -124,11 +125,11 @@ public class HawkEyeEngine implements PluginEngine {
 
 		try {
 			database.connect(
-				config.getString("database.hostname"),
-				config.getString("database.port"),
-				config.getString("database.database"),
-				config.getString("database.username"),
-				config.getString("database.password")
+				config.getString(Config.DB_HOST),
+				config.getString(Config.DB_PORT),
+				config.getString(Config.DB_NAME),
+				config.getString(Config.DB_USER),
+				config.getString(Config.DB_PASS)
 			);
 		} catch (DatabaseException e) {
 			// Tell the consumer to log to file if the database fails
@@ -223,6 +224,29 @@ public class HawkEyeEngine implements PluginEngine {
 			sender.sendMessage(new String[] { e.getMessage(), e.getUsage() });
 		} catch (CommandException e) {
 			sender.sendMessage(e.getMessage());
+		}
+	}
+
+	/**
+	 * Config file variables
+	 */
+	public enum Config implements Variable {
+		DB_PREFIX("database.prefix"),
+		DB_HOST("database.hostname"),
+		DB_PORT("database.port"),
+		DB_NAME("database.database"),
+		DB_USER("database.username"),
+		DB_PASS("database.password");
+
+		private final String path;
+
+		private Config(String path) {
+			this.path = path;
+		}
+
+		@Override
+		public String getPath() {
+			return path;
 		}
 	}
 

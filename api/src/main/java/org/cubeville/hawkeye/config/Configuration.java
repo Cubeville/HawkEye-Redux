@@ -25,6 +25,10 @@ import java.util.List;
  */
 public interface Configuration {
 
+	public interface Variable {
+		String getPath();
+	}
+
 	/**
 	 * Clears all saved config data
 	 */
@@ -37,6 +41,7 @@ public interface Configuration {
 	 * @return Value at the node, or null if it doesn't exist
 	 */
 	Object get(String path);
+	Object get(Variable path);
 
 	/**
 	 * Sets a value at the specified node
@@ -45,6 +50,7 @@ public interface Configuration {
 	 * @param value Value to set at node
 	 */
 	void set(String path, Object value);
+	void set(Variable path, Object value);
 
 	/**
 	 * Gets a string at the specified node
@@ -53,6 +59,7 @@ public interface Configuration {
 	 * @return String or null if there is no value at path
 	 */
 	String getString(String path);
+	String getString(Variable path);
 
 	/**
 	 * Gets a string at the specified node
@@ -62,6 +69,7 @@ public interface Configuration {
 	 * @return String
 	 */
 	String getString(String path, String def);
+	String getString(Variable path, String def);
 
 	/**
 	 * Gets an integer at the specified node
@@ -70,6 +78,7 @@ public interface Configuration {
 	 * @return Integer or null
 	 */
 	Integer getInt(String path);
+	Integer getInt(Variable path);
 
 	/**
 	 * Gets an integer at the specified node
@@ -79,6 +88,7 @@ public interface Configuration {
 	 * @return int
 	 */
 	int getInt(String path, int def);
+	int getInt(Variable path, int def);
 
 	/**
 	 * Gets a double at the specified node
@@ -87,6 +97,7 @@ public interface Configuration {
 	 * @return Double or null
 	 */
 	Double getDouble(String path);
+	Double getDouble(Variable path);
 
 	/**
 	 * Gets a double at the specified node
@@ -96,6 +107,7 @@ public interface Configuration {
 	 * @return double
 	 */
 	double getDouble(String path, double def);
+	double getDouble(Variable path, double def);
 
 	/**
 	 * Gets a boolean at the specified node
@@ -104,6 +116,7 @@ public interface Configuration {
 	 * @return Boolean or null
 	 */
 	Boolean getBoolean(String path);
+	Boolean getBoolean(Variable path);
 
 	/**
 	 * Gets a boolean at the specified node
@@ -113,6 +126,7 @@ public interface Configuration {
 	 * @return boolean
 	 */
 	boolean getBoolean(String path, boolean def);
+	boolean getBoolean(Variable path, boolean def);
 
 	/**
 	 * Gets a string list at the specified node
@@ -121,6 +135,7 @@ public interface Configuration {
 	 * @return String list
 	 */
 	List<String> getStringList(String path);
+	List<String> getStringList(Variable path);
 
 	/**
 	 * Gets a string list at the specified node
@@ -130,6 +145,7 @@ public interface Configuration {
 	 * @return String list
 	 */
 	List<String> getStringList(String path, List<String> def);
+	List<String> getStringList(Variable path, List<String> def);
 
 	/**
 	 * Gets an integer list at the specified node
@@ -138,6 +154,7 @@ public interface Configuration {
 	 * @return Integer list
 	 */
 	List<Integer> getIntList(String path);
+	List<Integer> getIntList(Variable path);
 
 	/**
 	 * Gets an integer list at the specified node
@@ -147,6 +164,7 @@ public interface Configuration {
 	 * @return Integer list
 	 */
 	List<Integer> getIntList(String path, List<Integer> def);
+	List<Integer> getIntList(Variable path, List<Integer> def);
 
 	/**
 	 * Gets a double list at the specified node
@@ -155,6 +173,7 @@ public interface Configuration {
 	 * @return Double list
 	 */
 	List<Double> getDoubleList(String path);
+	List<Double> getDoubleList(Variable path);
 
 	/**
 	 * Gets a double list at the specified node
@@ -164,6 +183,7 @@ public interface Configuration {
 	 * @return Double list
 	 */
 	List<Double> getDoubleList(String path, List<Double> def);
+	List<Double> getDoubleList(Variable path, List<Double> def);
 
 	/**
 	 * Whether or not to save the default values for nodes that are null

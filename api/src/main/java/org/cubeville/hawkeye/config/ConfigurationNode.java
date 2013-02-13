@@ -289,4 +289,28 @@ public class ConfigurationNode implements Configuration {
 		this.writeDefaults = writeDefaults;
 	}
 
+	@Override public Object get(Variable path) { return get(path.getPath()); }
+	@Override public void set(Variable path, Object value) { set(path.getPath(), value); }
+
+	@Override public String getString(Variable path) { return getString(path.getPath()); }
+	@Override public String getString(Variable path, String def) { return getString(path.getPath(), def); }
+
+	@Override public Integer getInt(Variable path) { return getInt(path.getPath()); }
+	@Override public int getInt(Variable path, int def) { return getInt(path.getPath(), def); }
+
+	@Override public Double getDouble(Variable path) { return getDouble(path.getPath()); }
+	@Override public double getDouble(Variable path, double def) { return getDouble(path.getPath(), def); }
+
+	@Override public Boolean getBoolean(Variable path) { return getBoolean(path.getPath()); }
+	@Override public boolean getBoolean(Variable path, boolean def) { return getBoolean(path.getPath(), def); }
+
+	@Override public List<String> getStringList(Variable path) { return getStringList(path.getPath()); }
+	@Override public List<String> getStringList(Variable path, List<String> def) { return getStringList(path.getPath(), def); }
+
+	@Override public List<Integer> getIntList(Variable path) { return getIntList(path.getPath()); }
+	@Override public List<Integer> getIntList(Variable path, List<Integer> def) { return getIntList(path.getPath(), def); }
+
+	@Override public List<Double> getDoubleList(Variable path) { return getDoubleList(path.getPath()); }
+	@Override public List<Double> getDoubleList(Variable path, List<Double> def) { return getDoubleList(path.getPath(), def); }
+
 }
