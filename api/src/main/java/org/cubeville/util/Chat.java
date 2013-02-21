@@ -112,4 +112,27 @@ public class Chat {
 		return new String(s);
 	}
 
+	/**
+	 * Strips formatting codes
+	 *
+	 * @param message Message to remove color codes from
+	 * @return Message without color codes
+	 */
+	public static String stripFormatting(String message) {
+		return stripFormatting(message, '&');
+	}
+
+	/**
+	 * Strips formatting codes
+	 *
+	 * @param message Message to remove color codes from
+	 * @param escape Character used to escape color codes
+	 * @return Message without color codes
+	 */
+	public static String stripFormatting(String message, char escape) {
+		if (message.isEmpty()) return "";
+
+		return message.replaceAll(FORMAT_CHAR + "[" + valid + "]", "").replaceAll(escape + "[" + valid + "]", "");
+	}
+
 }

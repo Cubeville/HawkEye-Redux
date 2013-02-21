@@ -15,4 +15,12 @@ public class ColorTest {
 		assertThat(Chat.format(orig), is(expected));
 	}
 
+	@Test
+	public void stripFormatting() {
+		String orig = "&7Hello &4World&6!";
+		String expected = "Hello World!";
+
+		assertThat(Chat.stripFormatting(orig), is(expected));
+	}
+
 }
