@@ -30,11 +30,15 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 	 * Maximum number of 5 pixel characters that fit on a line
 	 */
 	private static final int MAX_CHAT_WIDTH = 54;
+
 	/**
 	 * Footer displayed after search results
 	 */
 	private static final String FOOTER;
 
+	/**
+	 * Number of entries to display on each page
+	 */
 	private final int recordsPerPage;
 
 	public AbstractDisplayManager(int recordsPerPage) {
@@ -71,20 +75,40 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 
 	public abstract void displayEntry(Session session, Entry entry);
 
+	/**
+	 * Gets the total number of pages for the results in the specified session
+	 *
+	 * @param session Session to get page number for
+	 * @return Total number of pages of results
+	 */
 	public int getTotalPages(Session session) {
 		double records = session.getSearchResults().size();
 		return (int) Math.ceil(records / recordsPerPage);
 	}
 
-	private void message(Session session, String... message) {
+	/**
+	 * Sends a message
+	 *
+	 * @param session Session to send message to
+	 * @param message Message to send
+	 */
+	protected void message(Session session, String... message) {
 		session.getOwner().sendMessage(message);
 	}
 
+	/**
+	 * Pads a string on both sides
+	 *
+	 * @param string String to pad
+	 * @param pad String to pad with
+	 * @return String with pad on both sides
+	 */
 	private String pad(String string, String pad) {
 		return pad + string + pad;
 	}
 
 	static {
+		// Generate a max width footer
 		String footer = "&8";
 		for (int i = 0; i < MAX_CHAT_WIDTH; i++) {
 			footer += "-";
