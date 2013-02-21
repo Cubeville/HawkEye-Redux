@@ -22,8 +22,18 @@ import java.util.List;
 
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.session.Session;
+import org.cubeville.util.Chat;
 
 public abstract class AbstractDisplayManager implements DisplayManager {
+
+	/**
+	 * Maximum number of 5 pixel characters that fit on a line
+	 */
+	private static final int MAX_CHAT_WIDTH = 54;
+	/**
+	 * Footer displayed after search results
+	 */
+	private static final String FOOTER;
 
 	private final int recordsPerPage;
 
@@ -40,16 +50,26 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 		int start = (page - 1) * recordsPerPage;
 		int end = start + recordsPerPage;
 
-		// TODO Make this look good
-		message(session, "&7Page &c" + page + "&7/&c" + pages);
+		String header = "&7Page &c" + page + "&7/&c" + pages;
+		int paddingLength = (MAX_CHAT_WIDTH - Chat.stripFormatting(header).length()) / 2;
+		String padding = "&8";
+		for (int i = 0; i < paddingLength; i++) {
+			padding += "-";
+		}
+
+		message(session, pad(header, padding));
 
 		for (int i = start; i < end; i++) {
 			if (start == results.size()) break;
 
 			Entry entry = results.get(i);
-			// TODO Display entry
+			displayEntry(session, entry);
 		}
+
+		message(session, FOOTER);
 	}
+
+	public abstract void displayEntry(Session session, Entry entry);
 
 	public int getTotalPages(Session session) {
 		double records = session.getSearchResults().size();
@@ -58,6 +78,18 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 
 	private void message(Session session, String... message) {
 		session.getOwner().sendMessage(message);
+	}
+
+	private String pad(String string, String pad) {
+		return pad + string + pad;
+	}
+
+	static {
+		String footer = "&8";
+		for (int i = 0; i < MAX_CHAT_WIDTH; i++) {
+			footer += "-";
+		}
+		FOOTER = footer;
 	}
 
 }
