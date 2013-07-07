@@ -14,31 +14,20 @@
     <hawkeye-version>2.0.0-SNAPSHOT</hawkeye-version>
 
     <!-- Server implementation versions -->
-    <bukkit-version>1.4.7-R0.2-SNAPSHOT</bukkit-version>
+    <bukkit-version>1.6.1-R0.1-SNAPSHOT</bukkit-version>
     <workbench-version>0.0.1-SNAPSHOT</workbench-version>
 
     <!-- Dependency versions -->
     <junit-version>4.11</junit-version>
-    <snakeyaml-version>1.11</snakeyaml-version>
-    <mysql-version>5.1.22</mysql-version>
-    <worldedit-version>5.5.2-SNAPSHOT</worldedit-version>
+    <snakeyaml-version>1.12</snakeyaml-version>
+    <mysql-version>5.1.25</mysql-version>
+    <worldedit-version>5.5.8-SNAPSHOT</worldedit-version>
   </properties>
 
   <ciManagement>
     <system>jenkins</system>
     <url>http://ci.goalieguy6.com</url>
   </ciManagement>
-
-  <distributionManagement>
-    <repository>
-      <id>goalieguy6-repo</id>
-      <url>http://repo.goalieguy6.com/content/repositories/releases</url>
-    </repository>
-    <snapshotRepository>
-      <id>goalieguy6-repo</id>
-      <url>http://repo.goalieguy6.com/content/repositories/snapshots</url>
-    </snapshotRepository>
-  </distributionManagement>
 
   <modules>
     <module>api</module>
@@ -48,10 +37,6 @@
   </modules>
 
   <repositories>
-    <repository>
-      <id>goalieguy6-repo</id>
-      <url>http://repo.goalieguy6.com/content/groups/public</url>
-    </repository>
     <repository>
       <id>sk89q-repo</id>
       <url>http://maven.sk89q.com/repo</url>

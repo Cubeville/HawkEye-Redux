@@ -33,6 +33,7 @@ public class NBT {
 		public static final String STORED_ENCHANTMENTS = "StoredEnchantments";
 		public static final String REPAIR_COST = "RepairCost";
 		public static final String DISPLAY = "display";
+		public static final String ATTRIBUTE_MODIFIERS = "AttributeModifiers";
 
 		public class DISPLAY {
 			public static final String NAME = "Name";
@@ -70,6 +71,15 @@ public class NBT {
 		public static final String LEVEL = "lvl";
 	}
 
+	public class ATTRIBUTE_MODIFIER {
+		public static final String ATTRIBUTE_NAME = "AttributeName";
+		public static final String NAME = "Name";
+		public static final String AMOUNT = "Amount";
+		public static final String OPERATION = "Operation";
+		public static final String UUID_MOST = "UUIDMost";
+		public static final String UUID_LEAST = "UUIDLeast";
+	}
+
 	public class POTION_EFFECT {
 		public static final String ID = "Id";
 		public static final String LEVEL = "Amplifier";
@@ -99,9 +109,21 @@ public class NBT {
 			public static final String TIME = "BrewTime";
 		}
 
+		public class COMMAND_BLOCK {
+			public static final String COMMAND = "Command";
+		}
+
 		public class FURNACE {
 			public static final String FUEL = "BurnTime";
 			public static final String TIME = "CookTime";
+		}
+
+		public class HOPPER {
+			public static final String COOLDOWN = "TransferCooldown";
+		}
+
+		public class MOB_SPAWNER {
+			// TODO
 		}
 
 		public class NOTE_BLOCK {
