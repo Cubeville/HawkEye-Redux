@@ -21,6 +21,7 @@ package org.cubeville.hawkeye;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cubeville.hawkeye.block.data.CommandBlock;
 import org.cubeville.hawkeye.block.data.Sign;
 import org.cubeville.hawkeye.block.data.Skull;
 import org.cubeville.hawkeye.item.data.BookItemData;
@@ -175,7 +176,7 @@ public enum Item {
 	SPRUCE_WOOD_STAIRS(134),
 	BIRCH_WOOD_STAIRS(135),
 	JUNGLE_WOOD_STAIRS(136),
-	COMMAND(137),
+	COMMAND(137, CommandBlock.class),
 	BEACON(138),
 	COBBLE_WALL(139),
 	FLOWER_POT(140, Attribute.ATTACHABLE_TOP | Attribute.BREAKS_FALLING),
