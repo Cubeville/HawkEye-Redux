@@ -41,6 +41,9 @@ public class FireworkChargeItemData extends BaseItemData {
 		}
 	}
 
+	/**
+	 * Gets whether or not this firework has an explosion attached to it
+	 */
 	public boolean hasExplosion() {
 		return explosion != null;
 	}

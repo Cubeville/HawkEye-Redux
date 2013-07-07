@@ -33,7 +33,7 @@ public class MobHeadItemData extends BaseItemData {
 	/**
 	 * Owner of this mob head
 	 */
-	private String owner;
+	private final String owner;
 
 	/**
 	 * Deserialization constructor
@@ -44,6 +44,8 @@ public class MobHeadItemData extends BaseItemData {
 		Map<String, Tag> data = tag.getValue();
 		if (data.containsKey(NBT.ITEM.SKULL.OWNER)) {
 			owner = ((StringTag) data.get(NBT.ITEM.SKULL.OWNER)).getValue();
+		} else {
+			owner = null;
 		}
 	}
 
@@ -52,17 +54,14 @@ public class MobHeadItemData extends BaseItemData {
 	}
 
 	/**
-	 * Sets the owner of this mob head
-	 *
-	 * @param owner New owner
+	 * Gets whether or not this mob head has a custom owner
 	 */
-	public void setOwner(String owner) {
-		this.owner = owner;
+	public boolean hasOwner() {
+		return owner != null;
 	}
 
 	/**
 	 * Gets the owner of this mob head
-	 * @return This mob head's owner
 	 */
 	public String getOwner() {
 		return owner;
@@ -72,7 +71,9 @@ public class MobHeadItemData extends BaseItemData {
 	public void serialize(Map<String, Tag> map) {
 		super.serialize(map);
 
-		map.put(NBT.ITEM.SKULL.OWNER, new StringTag(NBT.ITEM.SKULL.OWNER, owner));
+		if (hasOwner()) {
+			map.put(NBT.ITEM.SKULL.OWNER, new StringTag(NBT.ITEM.SKULL.OWNER, owner));
+		}
 	}
 
 }

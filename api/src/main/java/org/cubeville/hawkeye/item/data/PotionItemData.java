@@ -49,6 +49,9 @@ public class PotionItemData extends BaseItemData {
 		}
 	}
 
+	/**
+	 * Gets whether or not this potion has custom effects added to it
+	 */
 	public boolean hasCustomEffects() {
 		return !(customEffects == null || customEffects.isEmpty());
 	}
