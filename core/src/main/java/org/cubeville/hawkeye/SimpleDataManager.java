@@ -32,13 +32,14 @@ import java.util.Map;
 
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
+import org.cubeville.util.CaseInsensitiveMap;
 
 public class SimpleDataManager implements DataManager {
 
 	/**
 	 * Map containing action database names and their corresponding actions
 	 */
-	private final Map<String, Action> actions = new HashMap<String, Action>();
+	private final Map<String, Action> actions = new CaseInsensitiveMap<Action>();
 
 	/**
 	 * Map containing player ids and their names
@@ -48,7 +49,7 @@ public class SimpleDataManager implements DataManager {
 	/**
 	 * Reverse player map for getting player id from name
 	 */
-	private final Map<String, Integer> playerIds = new HashMap<String, Integer>();
+	private final Map<String, Integer> playerIds = new CaseInsensitiveMap<Integer>();
 
 	/**
 	 * Map containing world ids and their names
@@ -58,7 +59,7 @@ public class SimpleDataManager implements DataManager {
 	/**
 	 * Reverse player map for getting world id from name
 	 */
-	private final Map<String, Integer> worldIds = new HashMap<String, Integer>();
+	private final Map<String, Integer> worldIds = new CaseInsensitiveMap<Integer>();
 
 	public SimpleDataManager() {
 		for (Action action : DefaultActions.values()) {

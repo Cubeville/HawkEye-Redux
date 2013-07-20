@@ -31,16 +31,16 @@ import org.cubeville.util.StringUtil;
 
 public class FilterParser extends ParameterParser {
 
-	private final List<String> filters;
+	private List<String> filters;
 
 	public FilterParser(List<String> parameters, SearchQuery query) throws CommandException {
 		super(parameters, query);
-
-		filters = new ArrayList<String>();
 	}
 
 	@Override
 	public void parse() throws CommandException {
+		filters = new ArrayList<String>();
+
 		for (int i = 0; i < parameters.size(); i++) {
 			filters.add(parameters.get(i));
 		}

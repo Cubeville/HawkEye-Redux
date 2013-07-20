@@ -32,14 +32,11 @@ import org.cubeville.util.StringUtil;
 
 public class ActionParser extends ParameterParser {
 
-	private final List<String> actions;
-	private final List<String> actionsNot;
+	private List<String> actions;
+	private List<String> actionsNot;
 
 	public ActionParser(List<String> parameters, SearchQuery query) throws CommandException {
 		super(parameters, query);
-
-		actions = new ArrayList<String>();
-		actionsNot = new ArrayList<String>();
 	}
 
 	@Override
@@ -49,6 +46,9 @@ public class ActionParser extends ParameterParser {
 
 	@Override
 	public void parse() throws CommandException {
+		actions = new ArrayList<String>();
+		actionsNot = new ArrayList<String>();
+
 		for (String param : parameters) {
 			boolean not = false;
 			if (param.startsWith("!")) {

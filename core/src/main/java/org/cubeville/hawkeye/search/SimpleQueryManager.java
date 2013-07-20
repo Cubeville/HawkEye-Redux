@@ -121,7 +121,11 @@ public class SimpleQueryManager implements QueryManager {
 		} catch (IllegalArgumentException ignore) {
 		} catch (InstantiationException ignore) {
 		} catch (IllegalAccessException ignore) {
-		} catch (InvocationTargetException ignore) {
+		} catch (InvocationTargetException e) {
+			// Exceptions thrown by the parser get wrapped in
+			// InvocationTargetException
+			if (e.getCause() instanceof CommandException) throw (CommandException) e.getCause();
+			else e.printStackTrace();
 		}
 
 		throw new CommandException("Error parsing parameter: &7" + prefix);

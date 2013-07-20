@@ -31,14 +31,11 @@ import org.cubeville.util.StringUtil;
 
 public class PlayerParser extends ParameterParser {
 
-	private final List<String> players;
-	private final List<String> playersNot;
+	private List<String> players;
+	private List<String> playersNot;
 
 	public PlayerParser(List<String> parameters, SearchQuery query) throws CommandException {
 		super(parameters, query);
-
-		players = new ArrayList<String>();
-		playersNot = new ArrayList<String>();
 	}
 
 	@Override
@@ -48,6 +45,9 @@ public class PlayerParser extends ParameterParser {
 
 	@Override
 	public void parse() throws CommandException {
+		players = new ArrayList<String>();
+		playersNot = new ArrayList<String>();
+
 		for (String param : parameters) {
 			boolean not = false;
 			if (param.startsWith("!")) {
@@ -74,7 +74,7 @@ public class PlayerParser extends ParameterParser {
 		if (!playersNot.isEmpty()) {
 			if (!sql.isEmpty()) sql += " AND ";
 
-			sql += "`player_id` IN (" + StringUtil.buildString(playersNot, ",") + ")";
+			sql += "`player_id` NOT IN (" + StringUtil.buildString(playersNot, ",") + ")";
 		}
 
 		return Pair.of(sql, null);

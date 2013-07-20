@@ -24,6 +24,7 @@ import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.session.Session;
+import org.cubeville.util.Chat;
 
 public class SearchCallback extends AbstractCallback {
 
@@ -38,7 +39,7 @@ public class SearchCallback extends AbstractCallback {
 		try {
 			HawkEye.getDisplayManager().displayResults(session, 1);
 		} catch (CommandException e) {
-			error(e);
+			session.sendMessage(Chat.RED + "No results found.");
 		}
 	}
 

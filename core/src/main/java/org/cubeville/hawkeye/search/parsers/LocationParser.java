@@ -76,7 +76,7 @@ public class LocationParser extends ParameterParser {
 
 	@Override
 	public Pair<String, Map<String, Object>> preProcess() {
-		String sql = "`world_id` = :worldloc AND `x` = :xloc AND `y` = :yloc AND `z` = :zloc";
+		String sql = "`world_id` = :worldloc AND FLOOR(`x`) = :xloc AND FLOOR(`y`) = :yloc AND FLOOR(`z`) = :zloc";
 		Map<String, Object> binds = new HashMap<String, Object>();
 
 		binds.put("worldloc", world);

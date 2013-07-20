@@ -31,14 +31,11 @@ import org.cubeville.util.StringUtil;
 
 public class WorldParser extends ParameterParser {
 
-	private final List<String> worlds;
-	private final List<String> worldsNot;
+	private List<String> worlds;
+	private List<String> worldsNot;
 
 	public WorldParser(List<String> parameters, SearchQuery query) throws CommandException {
 		super(parameters, query);
-
-		worlds = new ArrayList<String>();
-		worldsNot = new ArrayList<String>();
 	}
 
 	@Override
@@ -48,6 +45,9 @@ public class WorldParser extends ParameterParser {
 
 	@Override
 	public void parse() throws CommandException {
+		worlds = new ArrayList<String>();
+		worldsNot = new ArrayList<String>();
+
 		for (String param : parameters) {
 			boolean not = false;
 			if (param.startsWith("!")) {

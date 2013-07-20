@@ -40,16 +40,12 @@ import org.cubeville.util.StringUtil;
 
 public class BlockParser extends ParameterParser {
 
-	private final List<String> actions;
-	private final List<String> blocks;
-	private final List<ItemStack> items;
+	private List<String> actions;
+	private List<String> blocks;
+	private List<ItemStack> items;
 
 	public BlockParser(List<String> parameters, SearchQuery query) throws CommandException {
 		super(parameters, query);
-
-		actions = new ArrayList<String>();
-		blocks = new ArrayList<String>();
-		items = new ArrayList<ItemStack>();
 	}
 
 	@Override
@@ -59,6 +55,10 @@ public class BlockParser extends ParameterParser {
 
 	@Override
 	public void parse() throws CommandException {
+		actions = new ArrayList<String>();
+		blocks = new ArrayList<String>();
+		items = new ArrayList<ItemStack>();
+
 		for (Action action : HawkEye.getDataManager().getActions()) {
 			if (BlockEntry.class.isAssignableFrom(action.getClass()) || ItemEntry.class.isAssignableFrom(action.getClass())) {
 				actions.add(action.getName());
