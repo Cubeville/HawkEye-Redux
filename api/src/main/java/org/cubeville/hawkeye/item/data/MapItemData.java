@@ -20,6 +20,8 @@ package org.cubeville.hawkeye.item.data;
 
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
+import org.cubeville.lib.jnbt.ByteTag;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.Tag;
 
@@ -28,15 +30,38 @@ import org.cubeville.lib.jnbt.Tag;
  */
 public class MapItemData extends BaseItemData {
 
+	private final byte scaling;
+
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param tag Tag to deserialize from
+	 */
 	public MapItemData(CompoundTag tag) {
 		super(tag);
-		// TODO Auto-generated constructor stub
+
+		Map<String, Tag> data = tag.getValue();
+		if (data.containsKey(NBT.ITEM.MAP.SCALING)) {
+			scaling = ((ByteTag) data.get(NBT.ITEM.MAP.SCALING)).getValue();
+		} else {
+			scaling = 0;
+		}
+	}
+
+	/**
+	 * Gets whether or not this map has custom scaling set
+	 */
+	public boolean hasScaling() {
+		return scaling != 0;
 	}
 
 	@Override
 	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
-		// TODO
+
+		if (hasScaling()) {
+			map.put(NBT.ITEM.MAP.SCALING, new ByteTag(NBT.ITEM.MAP.SCALING, scaling));
+		}
 	}
 
 

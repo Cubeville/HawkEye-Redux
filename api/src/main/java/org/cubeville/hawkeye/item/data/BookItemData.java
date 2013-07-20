@@ -18,9 +18,14 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.ListTag;
+import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
 
 /**
@@ -28,15 +33,81 @@ import org.cubeville.lib.jnbt.Tag;
  */
 public class BookItemData extends BaseItemData {
 
+	private final String title;
+	private final String author;
+	private final List<String> pages;
+
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param tag Tag to deserialize from
+	 */
 	public BookItemData(CompoundTag tag) {
 		super(tag);
-		// TODO Auto-generated constructor stub
+
+		pages = new LinkedList<String>();
+		Map<String, Tag> data = tag.getValue();
+
+		if (data.containsKey(NBT.ITEM.BOOK.TITLE)) {
+			title = ((StringTag) data.get(NBT.ITEM.BOOK.TITLE)).getValue();
+		} else {
+			title = null;
+		}
+
+		if (data.containsKey(NBT.ITEM.BOOK.AUTHOR)) {
+			author = ((StringTag) data.get(NBT.ITEM.BOOK.AUTHOR)).getValue();
+		} else {
+			author = null;
+		}
+
+		List<Tag> list = ((ListTag) data.get(NBT.ITEM.BOOK.PAGES)).getValue();
+		for (Tag t : list) {
+			pages.add(((StringTag) t).getValue());
+		}
+	}
+
+	public BookItemData(List<String> pages) {
+		this(null, null, pages);
+	}
+
+	public BookItemData(String title, String author, List<String> pages) {
+		this.title = title;
+		this.author = author;
+		this.pages = pages;
+	}
+
+	/**
+	 * Gets whether or not this book has a title
+	 */
+	public boolean hasTitle() {
+		return title != null;
+	}
+
+	/**
+	 * Gets whether or not this book has an author
+	 */
+	public boolean hasAuthor() {
+		return author != null;
 	}
 
 	@Override
 	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
-		// TODO
+
+		if (hasTitle()) {
+			map.put(NBT.ITEM.BOOK.TITLE, new StringTag(NBT.ITEM.BOOK.TITLE, title));
+		}
+
+		if (hasAuthor()) {
+			map.put(NBT.ITEM.BOOK.AUTHOR, new StringTag(NBT.ITEM.BOOK.AUTHOR, author));
+		}
+
+		List<Tag> data = new LinkedList<Tag>();
+		for (String page : pages) {
+			data.add(new StringTag("", page));
+		}
+
+		map.put(NBT.ITEM.BOOK.PAGES, new ListTag(NBT.ITEM.BOOK.PAGES, StringTag.class, data));
 	}
 
 }
