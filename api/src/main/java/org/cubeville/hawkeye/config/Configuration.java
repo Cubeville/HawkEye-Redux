@@ -26,7 +26,15 @@ import java.util.List;
 public interface Configuration {
 
 	public interface Variable {
+		/**
+		 * Gets the dot notation path to this config variable
+		 */
 		String getPath();
+
+		/**
+		 * Gets the default value for this config variable
+		 */
+		Object getDefault();
 	}
 
 	/**
@@ -42,6 +50,16 @@ public interface Configuration {
 	 */
 	Object get(String path);
 	Object get(Variable path);
+
+	/**
+	 * Gets an object at the specified node
+	 *
+	 * @param node Path to node
+	 * @param def Default value to return if object is null
+	 * @return Object
+	 */
+	Object get(String path, Object def);
+	Object get(Variable path, Object def);
 
 	/**
 	 * Sets a value at the specified node

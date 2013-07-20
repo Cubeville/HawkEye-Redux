@@ -30,7 +30,7 @@ import org.cubeville.hawkeye.commands.BaseCommands;
 import org.cubeville.hawkeye.commands.RollbackCommands;
 import org.cubeville.hawkeye.commands.SearchCommands;
 import org.cubeville.hawkeye.commands.ToolCommands;
-import org.cubeville.hawkeye.config.Configuration.Variable;
+import org.cubeville.hawkeye.config.HawkEyeConfig.Var;
 import org.cubeville.hawkeye.config.PluginConfig;
 import org.cubeville.hawkeye.editor.WorldEditor;
 import org.cubeville.hawkeye.entity.Player;
@@ -113,22 +113,21 @@ public class HawkEyeEngine implements PluginEngine {
 		this.server = server;
 		this.config = config;
 
-		database = new MySqlDatabase(config.getString(Config.DB_PREFIX));
+		database = new MySqlDatabase(config.getString(Var.DB_PREFIX, "hawkeye"));
 		consumer = new SimpleConsumer();
 
 		try {
 			database.connect(
-				config.getString(Config.DB_HOST),
-				config.getString(Config.DB_PORT),
-				config.getString(Config.DB_NAME),
-				config.getString(Config.DB_USER),
-				config.getString(Config.DB_PASS)
+				config.getString(Var.DB_HOST, "localhost"),
+				config.getString(Var.DB_PORT, "3306"),
+				config.getString(Var.DB_NAME, "hawkeye"),
+				config.getString(Var.DB_USER, "username"),
+				config.getString(Var.DB_PASS, "password")
 			);
 		} catch (DatabaseException e) {
 			// Tell the consumer to log to file if the database fails
 			((SimpleConsumer) consumer).disableDatabase();
-			logger.severe("Could not connect to database");
-			e.printStackTrace();
+			logger.error("Could not connect to database", e);
 		}
 
 		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
@@ -165,21 +164,20 @@ public class HawkEyeEngine implements PluginEngine {
 				new RollbackCommands()
 			);
 		} catch (CommandException e) {
-			logger.severe("Unable to register commands");
-			e.printStackTrace();
+			logger.error("Unable to register commands", e);
 		}
 
-		server.scheduleAsyncRepeatingTask(1L, config.getInt(Config.UPDATE_INTERVAL, 10) * TPS, consumer);
+		server.scheduleAsyncRepeatingTask(1L, config.getInt(Var.UPDATE_INTERVAL, 10) * TPS, consumer);
 
 		if (((SimpleConsumer) consumer).hasDatabase()) {
 			server.scheduleAsyncTask(1L, new EntryImporter());
 		}
 
 		// Load limits from config
-		SimpleSearchQuery.setLimit(config.getInt(Config.LIMIT_SEARCH_RESULTS, -1));
-		RadiusParser.setMaxRadius(config.getInt(Config.LIMIT_SEARCH_RADIUS, -1));
-		WorldEditor.setLimit(config.getInt(Config.LIMIT_ROLLBACK_ENTRIES, -1));
-		WorldEditor.setTickLimit(config.getInt(Config.LIMIT_ROLLBACK_PER_TICK, 500));
+		SimpleSearchQuery.setLimit(config.getInt(Var.LIMIT_SEARCH_RESULTS, -1));
+		RadiusParser.setMaxRadius(config.getInt(Var.LIMIT_SEARCH_RADIUS, -1));
+		WorldEditor.setLimit(config.getInt(Var.LIMIT_ROLLBACK_ENTRIES, -1));
+		WorldEditor.setTickLimit(config.getInt(Var.LIMIT_ROLLBACK_PER_TICK, 500));
 	}
 
 	@Override
@@ -265,44 +263,6 @@ public class HawkEyeEngine implements PluginEngine {
 			sender.sendMessage(Chat.RED + e.getMessage(), Chat.RED + e.getUsage());
 		} catch (CommandException e) {
 			sender.sendMessage(Chat.RED + e.getMessage());
-		}
-	}
-
-	/**
-	 * Config file variables
-	 */
-	public enum Config implements Variable {
-		DB_PREFIX("database.prefix"),
-		DB_HOST("database.hostname"),
-		DB_PORT("database.port"),
-		DB_NAME("database.database"),
-		DB_USER("database.username"),
-		DB_PASS("database.password"),
-
-		LIMIT_SEARCH_RESULTS("limits.search-results"),
-		LIMIT_SEARCH_RADIUS("limits.max-radius"),
-		LIMIT_DATABASE_ENTRIES("limits.database.max-entries"),
-		LIMIT_DATABASE_AGE("limits.database.entry-age"),
-		LIMIT_ROLLBACK_ENTRIES("limits.rollback.max-entries"),
-		LIMIT_ROLLBACK_PER_TICK("limits.rollback.per-tick"),
-
-		UPDATE_INTERVAL("general.update-interval"),
-		DELETE_ON_ROLLBACK("general.delete-on-rollback"),
-		DEFAULT_HERE_RADIUS("general.here-radius"),
-
-		IGNORED_WORLDS("general.ignored.worlds"),
-		IGNORED_PLAYERS("general.ignored.players"),
-		IGNORED_COMMANDS("general.ignored.commands");
-
-		private final String path;
-
-		private Config(String path) {
-			this.path = path;
-		}
-
-		@Override
-		public String getPath() {
-			return path;
 		}
 	}
 

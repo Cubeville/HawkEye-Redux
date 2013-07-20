@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.cubeville.hawkeye.HawkEyeEngine.Config;
+import org.cubeville.hawkeye.config.HawkEyeConfig.Var;
 import org.cubeville.hawkeye.config.PluginConfig;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.lib.jnbt.ByteArrayTag;
@@ -59,9 +59,9 @@ public class SimpleConsumer implements Consumer {
 
 	public SimpleConsumer() {
 		PluginConfig config = HawkEye.getConfig();
-		ignoredWorlds = Collections.unmodifiableList(config.getStringList(Config.IGNORED_WORLDS, new ArrayList<String>()));
-		ignoredPlayers = Collections.unmodifiableList(config.getStringList(Config.IGNORED_PLAYERS, new ArrayList<String>()));
-		ignoredCommands = Collections.unmodifiableList(config.getStringList(Config.IGNORED_COMMANDS, new ArrayList<String>()));
+		ignoredWorlds = Collections.unmodifiableList(config.getStringList(Var.IGNORED_WORLDS, new ArrayList<String>()));
+		ignoredPlayers = Collections.unmodifiableList(config.getStringList(Var.IGNORED_PLAYERS, new ArrayList<String>()));
+		ignoredCommands = Collections.unmodifiableList(config.getStringList(Var.IGNORED_COMMANDS, new ArrayList<String>()));
 	}
 
 	@Override

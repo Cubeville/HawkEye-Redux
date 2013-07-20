@@ -85,6 +85,16 @@ public class ConfigurationNode implements Configuration {
 		return val;
 	}
 
+	@Override
+	public Object get(String path, Object def) {
+		Object val = get(path);
+		if (val == null) {
+			if (writeDefaults) set(path, def);
+			val = def;
+		}
+		return val;
+	}
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public void set(String node, Object value) {
@@ -290,6 +300,8 @@ public class ConfigurationNode implements Configuration {
 	}
 
 	@Override public Object get(Variable path) { return get(path.getPath()); }
+	@Override public Object get(Variable path, Object def) { return get(path.getPath(), def); }
+
 	@Override public void set(Variable path, Object value) { set(path.getPath(), value); }
 
 	@Override public String getString(Variable path) { return getString(path.getPath()); }
