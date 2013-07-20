@@ -51,12 +51,16 @@ public class HawkEyePlugin extends JavaPlugin implements Listener {
 	@Override
 	public void onEnable() {
 		BukkitServer server = new BukkitServer(this, getServer());
+
+		// TODO Create/verify config
 		File configFile = new File(getDataFolder(), "config.yml");
 		HawkEyeConfig config = new HawkEyeConfig(configFile);
 
 		engine = new HawkEyeEngine(server, config);
 
 		getServer().getPluginManager().registerEvents(this, this);
+		// TODO Custom event registration based on events logged in config
+		// a la HawkEye v1
 	}
 
 	@Override

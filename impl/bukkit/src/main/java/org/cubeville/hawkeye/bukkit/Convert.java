@@ -109,12 +109,12 @@ public class Convert {
 	 * BlockState
 	 */
 	public static BlockState blockState(org.bukkit.block.BlockState blockState) {
-		// TODO
-		return null;
+		return new BlockState((short) blockState.getTypeId(), blockState.getRawData());
+		// TODO Convert BlockData
 	}
 
 	public static org.bukkit.block.BlockState blockState(BlockState blockState) {
-		// TODO
+		// TODO Reconstruct Bukkit BlockState somehow
 		return null;
 	}
 

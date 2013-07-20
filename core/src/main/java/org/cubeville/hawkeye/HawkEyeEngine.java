@@ -137,9 +137,12 @@ public class HawkEyeEngine implements PluginEngine {
 		queryManager = new SimpleQueryManager();
 		commandManager = new SimpleCommandManager();
 
+		// TODO Different allow users to choose from different display manager
+		// implementations with different output formats
 		displayManager = new AbstractDisplayManager(6) {
 			@Override
 			public void displayEntry(Session session, Entry entry) {
+				// TODO Format output to include player and date and stuff
 				session.sendMessage(entry.getOutput());
 			}
 		};
