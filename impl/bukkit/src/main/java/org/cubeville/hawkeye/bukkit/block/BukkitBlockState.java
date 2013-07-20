@@ -16,24 +16,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.block.data;
+package org.cubeville.hawkeye.bukkit.block;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.cubeville.hawkeye.block.BlockState;
+import org.cubeville.hawkeye.bukkit.Convert;
 
-import org.cubeville.hawkeye.block.BlockData;
-import org.cubeville.lib.jnbt.CompoundTag;
-import org.cubeville.lib.jnbt.Tag;
+public class BukkitBlockState extends BlockState {
 
-public class BaseBlockData implements BlockData {
+	private final org.bukkit.block.BlockState blockState;
 
-	@Override
-	public final CompoundTag serialize() {
-		Map<String, Tag> data = new HashMap<String, Tag>();
-		serialize(data);
-		return new CompoundTag("", data);
+	public BukkitBlockState(org.bukkit.block.BlockState blockState) {
+		super((short) blockState.getTypeId(), blockState.getRawData(), Convert.blockData(blockState));
+		this.blockState = blockState;
 	}
 
-	protected void serialize(Map<String, Tag> map) { }
+	public org.bukkit.block.BlockState getBukkitBlockState() {
+		return blockState;
+	}
 
 }

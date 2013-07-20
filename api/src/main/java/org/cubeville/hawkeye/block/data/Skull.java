@@ -50,6 +50,12 @@ public class Skull extends BaseBlockData {
 		}
 	}
 
+	public Skull(byte type, String player, byte rotation) {
+		this.type = type;
+		this.player = player;
+		this.rotation = rotation;
+	}
+
 	/**
 	 * Gets the type of this skull
 	 */
