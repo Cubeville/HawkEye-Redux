@@ -18,10 +18,18 @@
 
 package org.cubeville.hawkeye;
 
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.session.Session;
 
 public interface DisplayManager {
 
-	void displayResults(Session session, int page);
+	/**
+	 * Displays the results from a search query
+	 *
+	 * @param session Session to display the results to
+	 * @param page Page number of results to display
+	 * @throws CommandException If the specified page does not exist
+	 */
+	void displayResults(Session session, int page) throws CommandException;
 
 }

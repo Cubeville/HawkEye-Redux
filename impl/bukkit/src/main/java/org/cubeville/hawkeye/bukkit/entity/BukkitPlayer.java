@@ -22,6 +22,7 @@ import org.cubeville.hawkeye.bukkit.Convert;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Location;
 import org.cubeville.hawkeye.location.World;
+import org.cubeville.util.Chat;
 
 public class BukkitPlayer extends Player {
 
@@ -37,7 +38,7 @@ public class BukkitPlayer extends Player {
 
 	@Override
 	public void sendMessage(String... message) {
-		player.sendMessage(message);
+		for (String s : message) player.sendMessage(Chat.format(s));
 	}
 
 	@Override

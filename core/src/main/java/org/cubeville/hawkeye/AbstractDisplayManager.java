@@ -20,6 +20,7 @@ package org.cubeville.hawkeye;
 
 import java.util.List;
 
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.session.Session;
 import org.cubeville.util.Chat;
@@ -29,7 +30,7 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 	/**
 	 * Maximum number of 5 pixel characters that fit on a line
 	 */
-	private static final int MAX_CHAT_WIDTH = 54;
+	private static final int MAX_CHAT_WIDTH = 53;
 
 	/**
 	 * Footer displayed after search results
@@ -46,22 +47,22 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 	}
 
 	@Override
-	public void displayResults(Session session, int page) {
+	public void displayResults(Session session, int page) throws CommandException {
 		List<Entry> results = session.getSearchResults();
 		int pages = getTotalPages(session);
-		if (page < 1 || page > pages) return;
+		if (page < 1 || page > pages) throw new CommandException("Page " + page + " does not exist!");
 
 		int start = (page - 1) * recordsPerPage;
 		int end = Math.min(start + recordsPerPage, results.size());
 
-		String header = "&7Page &c" + page + "&7/&c" + pages;
+		String header = " &7Page &c" + page + "&7/&c" + pages + " ";
 		int paddingLength = (MAX_CHAT_WIDTH - Chat.stripFormatting(header).length()) / 2;
-		String padding = "&8";
+		StringBuilder padding = new StringBuilder().append("&8");
 		for (int i = 0; i < paddingLength; i++) {
-			padding += "-";
+			padding.append("-");
 		}
 
-		message(session, pad(header, padding));
+		message(session, pad(header, padding.toString()));
 
 		for (int i = start; i < end; i++) {
 			Entry entry = results.get(i);
@@ -91,7 +92,7 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 	 * @param message Message to send
 	 */
 	protected void message(Session session, String... message) {
-		session.getOwner().sendMessage(message);
+		session.sendMessage(message);
 	}
 
 	/**
@@ -107,11 +108,11 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 
 	static {
 		// Generate a max width footer
-		String footer = "&8";
+		StringBuilder footer = new StringBuilder().append("&8");
 		for (int i = 0; i < MAX_CHAT_WIDTH; i++) {
-			footer += "-";
+			footer.append("-");
 		}
-		FOOTER = footer;
+		FOOTER = footer.toString();
 	}
 
 }

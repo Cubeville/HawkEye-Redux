@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.bukkit.command;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
+import org.cubeville.util.Chat;
 
 public class BukkitConsole extends ConsoleCommandSender {
 
@@ -34,7 +35,7 @@ public class BukkitConsole extends ConsoleCommandSender {
 
 	@Override
 	public void sendMessage(String... message) {
-		console.sendMessage(message);
+		for (String s : message) console.sendMessage(Chat.format(s));
 	}
 
 	@Override

@@ -18,24 +18,38 @@
 
 package org.cubeville.hawkeye.commands;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.Command;
 import org.cubeville.hawkeye.command.CommandData;
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.search.SearchQuery;
+import org.cubeville.hawkeye.search.callbacks.SearchCallback;
+import org.cubeville.hawkeye.session.Session;
 
 public class SearchCommands {
 
 	@Command(command = "hawkeye search",
 			aliases = {"hawkeye s"},
 			description = "Search the HawkEye database")
-	public void search(CommandSender sender, CommandData data) {
+	public void search(CommandSender sender, CommandData data) throws CommandException {
+		Session session = HawkEye.getSessionManager().getSession(sender);
+		String params = data.getFullString(0);
 
+		SearchQuery query = HawkEye.getQueryManager().createQuery(sender, params, new SearchCallback(session));
+		HawkEye.getServerInterface().scheduleAsyncTask(1L, query);
+
+		sender.sendMessage("&cSearching database...");
 	}
 
 	@Command(command = "hawkeye page",
 			aliases = {"hawkeye pg"},
-			description = "Display a separate page of your results")
-	public void page(CommandSender sender, CommandData data) {
-
+			description = "Display a separate page of your results",
+			max = 1)
+	public void page(CommandSender sender, CommandData data) throws CommandException {
+		Session session = HawkEye.getSessionManager().getSession(sender);
+		int page = data.getInt(0);
+		HawkEye.getDisplayManager().displayResults(session, page);
 	}
 
 	@Command(command = "hawkeye tpto",

@@ -31,6 +31,7 @@ public abstract class AbstractEntry implements Entry {
 	protected static final String DELIMITER = "|@|";
 	protected static final String DELIMITER_SPLITTER = "\\|@\\|";
 
+	private final int id;
 	private final Action action;
 	private final String player;
 	private final Location location;
@@ -38,6 +39,7 @@ public abstract class AbstractEntry implements Entry {
 	private final byte[] nbt;
 
 	public AbstractEntry(Action action, DatabaseEntry entry) {
+		id = entry.getId();
 		this.action = action;
 		player = entry.getPlayer();
 		location = entry.getLocation();
@@ -46,11 +48,17 @@ public abstract class AbstractEntry implements Entry {
 	}
 
 	public AbstractEntry(Action action, String player, Location location) {
+		id = -1;
 		this.action = action;
 		this.player = player;
 		this.location = location;
 		time = new Timestamp(System.currentTimeMillis());
 		nbt = new byte[0];
+	}
+
+	@Override
+	public int getId() {
+		return id;
 	}
 
 	@Override

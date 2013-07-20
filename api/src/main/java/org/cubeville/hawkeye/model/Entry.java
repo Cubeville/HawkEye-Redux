@@ -35,6 +35,13 @@ import org.cubeville.hawkeye.location.Location;
 public interface Entry {
 
 	/**
+	 * Gets the internal id of this entry
+	 *
+	 * @return Entry id
+	 */
+	int getId();
+
+	/**
 	 * Gets the type of action stored in this entry
 	 *
 	 * @return Entry action

@@ -46,4 +46,9 @@ public abstract class AbstractTextEntry extends AbstractEntry implements TextEnt
 		return text;
 	}
 
+	@Override
+	public String getOutput() {
+		return text;
+	}
+
 }

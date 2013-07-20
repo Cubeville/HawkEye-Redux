@@ -50,6 +50,7 @@ import org.cubeville.hawkeye.sql.Database;
 import org.cubeville.hawkeye.sql.DatabaseException;
 import org.cubeville.hawkeye.sql.MySqlDatabase;
 import org.cubeville.hawkeye.util.HawkEyeLogger;
+import org.cubeville.util.Chat;
 
 public class HawkEyeEngine implements PluginEngine {
 
@@ -142,8 +143,17 @@ public class HawkEyeEngine implements PluginEngine {
 		displayManager = new AbstractDisplayManager(6) {
 			@Override
 			public void displayEntry(Session session, Entry entry) {
-				// TODO Format output to include player and date and stuff
-				session.sendMessage(entry.getOutput());
+				StringBuilder info = new StringBuilder();
+				info.append(Chat.RED).append("id:").append(entry.getId()).append(" ");
+				info.append(Chat.GRAY).append(entry.getTime()).append(" ");
+				info.append(Chat.RED).append(entry.getPlayer()).append(" ");
+				info.append(Chat.GRAY).append(entry.getAction().getDisplayName()).append(" ");
+
+				StringBuilder data = new StringBuilder().append("   ");
+				data.append(Chat.RED).append("Loc: ").append(Chat.GRAY).append(entry.getLocation()).append(" ");
+				data.append(Chat.RED).append("Data: ").append(Chat.GRAY).append(entry.getOutput());
+
+				session.sendMessage(info.toString(), data.toString());
 			}
 		};
 

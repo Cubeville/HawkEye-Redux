@@ -121,7 +121,7 @@ public class Location extends Vector {
 
 	@Override
 	public String toString() {
-		return "Location[world=" + world + ",x=" + x + ",y=" + y + ",z=" + z + "]";
+		return world.getDisplayName() + ":" + x + "," + y + "," + z;
 	}
 
 }
