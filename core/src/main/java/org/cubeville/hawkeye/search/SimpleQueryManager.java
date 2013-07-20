@@ -126,7 +126,7 @@ public class SimpleQueryManager implements QueryManager {
 			// Exceptions thrown by the parser get wrapped in
 			// InvocationTargetException
 			if (e.getCause() instanceof CommandException) throw (CommandException) e.getCause();
-			else HawkEye.getLogger().error("Error parsing parameter: " + prefix, e);
+			else HawkEye.getLogger().error("Error parsing parameter '" + prefix + "'", e);
 		}
 
 		throw new CommandException("Error parsing parameter: &7" + prefix);

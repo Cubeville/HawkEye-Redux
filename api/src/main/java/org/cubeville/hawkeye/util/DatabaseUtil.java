@@ -59,8 +59,7 @@ public class DatabaseUtil {
 
 			if (tableExists(table)) return true;
 		} catch (SQLException e) {
-			HawkEye.getLogger().warning("Could not create table: " + e.getMessage());
-			e.printStackTrace();
+			HawkEye.getLogger().error("Could not create table '" + table + "'", e);
 		} finally {
 			close(conn);
 			close(ps);
@@ -88,8 +87,7 @@ public class DatabaseUtil {
 
 			if (rs.next()) return true;
 		} catch (SQLException e) {
-			HawkEye.getLogger().warning("Unable to determine if table exists: " + e.getMessage());
-			e.printStackTrace();
+			HawkEye.getLogger().error("Unable to determine if table '" + table + "' exists", e);
 		} finally {
 			close(conn);
 			close(rs);

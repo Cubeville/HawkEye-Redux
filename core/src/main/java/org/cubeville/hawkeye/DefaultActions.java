@@ -213,11 +213,9 @@ public enum DefaultActions implements Action {
 			constructor = entryClass.getConstructor(DatabaseEntry.class);
 			constructor.setAccessible(true);
 		} catch (SecurityException e) {
-			HawkEye.getLogger().warning("Could not get DatabaseEntry constructor for " + entryClass.getCanonicalName());
-			e.printStackTrace();
+			HawkEye.getLogger().error("Could not get DatabaseEntry constructor for " + entryClass.getCanonicalName(), e);
 		} catch (NoSuchMethodException e) {
-			HawkEye.getLogger().warning("Could not get DatabaseEntry constructor for " + entryClass.getCanonicalName());
-			e.printStackTrace();
+			HawkEye.getLogger().error("Could not get DatabaseEntry constructor for " + entryClass.getCanonicalName(), e);
 		}
 	}
 

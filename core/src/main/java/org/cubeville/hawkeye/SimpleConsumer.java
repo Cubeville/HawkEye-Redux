@@ -140,8 +140,7 @@ public class SimpleConsumer implements Consumer {
 			nbt = new NBTOutputStream(new FileOutputStream(f));
 			nbt.writeTag(entries);
 		} catch (FileNotFoundException e) {
-			HawkEye.getLogger().warning("Unable to create data file");
-			e.printStackTrace();
+			HawkEye.getLogger().error("Unable to create data file", e);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -202,8 +201,7 @@ public class SimpleConsumer implements Consumer {
 				// Run any remaining queries
 				ps.executeBatch();
 			} catch (SQLException e) {
-				HawkEye.getLogger().warning("Could not insert database entry: " + e.getMessage());
-				e.printStackTrace();
+				HawkEye.getLogger().error("Could not insert database entry", e);
 			} finally {
 				close(conn);
 				close(ps);

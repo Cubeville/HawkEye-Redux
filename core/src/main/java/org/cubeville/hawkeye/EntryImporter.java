@@ -68,8 +68,7 @@ public class EntryImporter implements Runnable {
 			return nbt.readTag();
 		} catch (FileNotFoundException ignore) {
 		} catch (IOException e) {
-			HawkEye.getLogger().warning("Unable to read data file");
-			e.printStackTrace();
+			HawkEye.getLogger().error("Unable to read data file", e);
 		} finally {
 			try {
 				if (nbt != null) nbt.close();

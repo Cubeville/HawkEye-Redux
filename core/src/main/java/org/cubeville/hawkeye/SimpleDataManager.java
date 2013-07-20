@@ -131,8 +131,7 @@ public class SimpleDataManager implements DataManager {
 				throw new SQLException("Could not obtain user id");
 			}
 		} catch (SQLException e) {
-			HawkEye.getLogger().warning("Could not register player '" + name + "': " + e.getMessage());
-			e.printStackTrace();
+			HawkEye.getLogger().error("Could not register player '" + name + "'", e);
 		} finally {
 			close(conn);
 			close(ps);
@@ -189,8 +188,7 @@ public class SimpleDataManager implements DataManager {
 				throw new SQLException("Could not obtain world id");
 			}
 		} catch (SQLException e) {
-			HawkEye.getLogger().warning("Could not register world '" + name + "': " + e.getMessage());
-			e.printStackTrace();
+			HawkEye.getLogger().error("Could not register world '" + name + "'", e);
 		} finally {
 			close(conn);
 			close(ps);
@@ -224,7 +222,7 @@ public class SimpleDataManager implements DataManager {
 				worldIds.put(name, id);
 			}
 		} catch (SQLException e) {
-			HawkEye.getLogger().warning("Could not load worlds: " + e.getMessage());
+			HawkEye.getLogger().error("Could not load worlds", e);
 			e.printStackTrace();
 		} finally {
 			close(conn);
@@ -252,7 +250,7 @@ public class SimpleDataManager implements DataManager {
 				playerIds.put(name, id);
 			}
 		} catch (SQLException e) {
-			HawkEye.getLogger().warning("Could not load players: " + e.getMessage());
+			HawkEye.getLogger().error("Could not load players", e);
 			e.printStackTrace();
 		} finally {
 			close(conn);
