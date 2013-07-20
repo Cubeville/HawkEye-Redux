@@ -52,7 +52,7 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 		if (page < 1 || page > pages) return;
 
 		int start = (page - 1) * recordsPerPage;
-		int end = start + recordsPerPage;
+		int end = Math.min(start + recordsPerPage, results.size());
 
 		String header = "&7Page &c" + page + "&7/&c" + pages;
 		int paddingLength = (MAX_CHAT_WIDTH - Chat.stripFormatting(header).length()) / 2;
@@ -64,8 +64,6 @@ public abstract class AbstractDisplayManager implements DisplayManager {
 		message(session, pad(header, padding));
 
 		for (int i = start; i < end; i++) {
-			if (start == results.size()) break;
-
 			Entry entry = results.get(i);
 			displayEntry(session, entry);
 		}
