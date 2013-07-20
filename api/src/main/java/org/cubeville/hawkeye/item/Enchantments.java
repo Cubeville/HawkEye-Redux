@@ -21,7 +21,7 @@ package org.cubeville.hawkeye.item;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum Enchantment {
+public enum Enchantments {
 
 	PROTECTION(0),
 	FIRE_PROTECTION(1),
@@ -51,9 +51,9 @@ public enum Enchantment {
 	/**
 	 * Mapping of ids to enchantment for quick access
 	 */
-	private static final Map<Integer, Enchantment> idMap = new HashMap<Integer, Enchantment>(values().length);
+	private static final Map<Integer, Enchantments> idMap = new HashMap<Integer, Enchantments>(values().length);
 
-	private Enchantment(int id) {
+	private Enchantments(int id) {
 		this.id = id;
 	}
 
@@ -77,12 +77,12 @@ public enum Enchantment {
 	 * @param id Id of enchantment to get
 	 * @return Enchantment with the specified id or null if it doesn't exist
 	 */
-	public static Enchantment getById(int id) {
+	public static Enchantments getById(int id) {
 		return idMap.containsKey(id) ? idMap.get(id) : null;
 	}
 
 	static {
-		for (Enchantment enchantment : values()) {
+		for (Enchantments enchantment : values()) {
 			idMap.put(enchantment.id, enchantment);
 		}
 	}

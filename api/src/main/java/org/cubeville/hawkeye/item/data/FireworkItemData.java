@@ -41,6 +41,8 @@ public class FireworkItemData extends BaseItemData {
 	 * @param tag Tag to deserialize from
 	 */
 	public FireworkItemData(CompoundTag tag) {
+		super(tag);
+
 		explosions = new ArrayList<FireworkExplosion>();
 
 		Map<String, Tag> data = tag.getValue();
@@ -62,7 +64,7 @@ public class FireworkItemData extends BaseItemData {
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
 
 		List<Tag> data = new ArrayList<Tag>();

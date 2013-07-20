@@ -8,8 +8,8 @@ public class EnchantmentTest {
 
 	@Test
 	public void getEnchantmentById() {
-		for (Enchantment enchantment : Enchantment.values()) {
-			assertEquals(Enchantment.getById(enchantment.getId()), enchantment);
+		for (Enchantments enchantment : Enchantments.values()) {
+			assertEquals(Enchantments.getById(enchantment.getId()), enchantment);
 		}
 	}
 

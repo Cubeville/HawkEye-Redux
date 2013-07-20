@@ -18,48 +18,59 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.cubeville.hawkeye.NBT;
+import org.cubeville.hawkeye.item.Enchantments;
+import org.cubeville.hawkeye.model.NBTSerializable;
 import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.ShortTag;
 import org.cubeville.lib.jnbt.Tag;
 
-public class FireworkChargeItemData extends BaseItemData {
+public class Enchantment implements NBTSerializable {
 
-	private final FireworkExplosion explosion;
+	private final short enchantmentId;
+	private final short level;
 
 	/**
 	 * Deserialization constructor
 	 *
 	 * @param tag Tag to deserialize from
 	 */
-	public FireworkChargeItemData(CompoundTag tag) {
-		super(tag);
-
+	public Enchantment(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();
-
-		if (data.containsKey(NBT.ITEM.FIREWORK.EFFECT)) {
-			explosion = new FireworkExplosion((CompoundTag) data.get(NBT.ITEM.FIREWORK.EFFECT));
-		} else {
-			explosion = null;
-		}
+		enchantmentId = ((ShortTag) data.get(NBT.ENCHANTMENT.ID)).getValue();
+		level = ((ShortTag) data.get(NBT.ENCHANTMENT.LEVEL)).getValue();
 	}
 
 	/**
-	 * Gets whether or not this firework has an explosion attached to it
+	 * Gets the type of enchantment this is
 	 */
-	public boolean hasExplosion() {
-		return explosion != null;
+	public Enchantments getEnchantment() {
+		return Enchantments.getById(enchantmentId);
+	}
+
+	/**
+	 * Gets the id of the enchantment this is
+	 */
+	public short getEnchantmentId() {
+		return enchantmentId;
+	}
+
+	/**
+	 * Gets the enchantment's level
+	 */
+	public short getLevel() {
+		return level;
 	}
 
 	@Override
-	protected void serialize(Map<String, Tag> map) {
-		super.serialize(map);
-
-		if (hasExplosion()) {
-			map.put(NBT.ITEM.FIREWORK.EFFECT, explosion.serialize());
-		}
+	public CompoundTag serialize() {
+		Map<String, Tag> data = new HashMap<String, Tag>();
+		data.put(NBT.ENCHANTMENT.ID, new ShortTag(NBT.ENCHANTMENT.ID, enchantmentId));
+		data.put(NBT.ENCHANTMENT.LEVEL, new ShortTag(NBT.ENCHANTMENT.LEVEL, level));
+		return new CompoundTag("", data);
 	}
-
 
 }

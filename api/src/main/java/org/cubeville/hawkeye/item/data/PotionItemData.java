@@ -29,7 +29,7 @@ import org.cubeville.lib.jnbt.Tag;
 
 public class PotionItemData extends BaseItemData {
 
-	private List<PotionEffect> customEffects;
+	private final List<PotionEffect> customEffects;
 
 	/**
 	 * Deserialization constructor
@@ -37,10 +37,12 @@ public class PotionItemData extends BaseItemData {
 	 * @param tag Tag to deserialize from
 	 */
 	public PotionItemData(CompoundTag tag) {
-		Map<String, Tag> data = tag.getValue();
-		if (data.containsKey(NBT.ITEM.POTION.EFFECTS)) {
-			customEffects = new ArrayList<PotionEffect>();
+		super(tag);
 
+		customEffects = new ArrayList<PotionEffect>();
+		Map<String, Tag> data = tag.getValue();
+
+		if (data.containsKey(NBT.ITEM.POTION.EFFECTS)) {
 			List<Tag> effects = ((ListTag) data.get(NBT.ITEM.POTION.EFFECTS)).getValue();
 			for (Tag t : effects) {
 				PotionEffect effect = new PotionEffect((CompoundTag) t);
@@ -53,11 +55,11 @@ public class PotionItemData extends BaseItemData {
 	 * Gets whether or not this potion has custom effects added to it
 	 */
 	public boolean hasCustomEffects() {
-		return !(customEffects == null || customEffects.isEmpty());
+		return !customEffects.isEmpty();
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
 
 		List<Tag> data = new ArrayList<Tag>();

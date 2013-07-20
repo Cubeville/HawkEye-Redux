@@ -18,17 +18,50 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.NBT;
 import org.cubeville.hawkeye.item.ItemData;
 import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.ListTag;
 import org.cubeville.lib.jnbt.Tag;
 
 public class BaseItemData implements ItemData {
 
-	// TODO Add enchantment data here
+	private final List<Enchantment> enchantments;
+
+	/**
+	 * Deserialization constructor
+	 *
+	 * @param tag Tag to deserialize from
+	 */
+	public BaseItemData(CompoundTag tag) {
+		enchantments = new ArrayList<Enchantment>();
+		Map<String, Tag> data = tag.getValue();
+
+		if (data.containsKey(NBT.ITEM.ENCHANTMENTS)) {
+			List<Tag> enchants = ((ListTag) data.get(NBT.ITEM.ENCHANTMENTS)).getValue();
+			for (Tag t : enchants) {
+				Enchantment enchant = new Enchantment((CompoundTag) t);
+				enchantments.add(enchant);
+			}
+		}
+	}
+
+	public BaseItemData() {
+		enchantments = new ArrayList<Enchantment>();
+		// TODO Get enchantments
+	}
+
+	/**
+	 * Gets whether or not this item has enchantments on it
+	 */
+	public boolean hasEnchantments() {
+		return !enchantments.isEmpty();
+	}
 
 	@Override
 	public final CompoundTag serialize() {
@@ -37,6 +70,16 @@ public class BaseItemData implements ItemData {
 		return new CompoundTag(NBT.ITEM.DATA, data);
 	}
 
-	public void serialize(Map<String, Tag> map) { }
+	protected void serialize(Map<String, Tag> map) {
+		List<Tag> data = new ArrayList<Tag>();
+
+		if (hasEnchantments()) {
+			for (Enchantment enchantment : enchantments) {
+				data.add(enchantment.serialize());
+			}
+		}
+
+		map.put(NBT.ITEM.ENCHANTMENTS, new ListTag(NBT.ITEM.ENCHANTMENTS, CompoundTag.class, data));
+	}
 
 }

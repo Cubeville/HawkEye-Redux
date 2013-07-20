@@ -29,11 +29,12 @@ import org.cubeville.lib.jnbt.Tag;
 public class BookItemData extends BaseItemData {
 
 	public BookItemData(CompoundTag tag) {
+		super(tag);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
 		// TODO
 	}

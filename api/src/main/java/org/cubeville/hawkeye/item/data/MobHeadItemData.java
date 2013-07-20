@@ -41,7 +41,10 @@ public class MobHeadItemData extends BaseItemData {
 	 * @param data Tag to deserialize from
 	 */
 	public MobHeadItemData(CompoundTag tag) {
+		super(tag);
+
 		Map<String, Tag> data = tag.getValue();
+
 		if (data.containsKey(NBT.ITEM.SKULL.OWNER)) {
 			owner = ((StringTag) data.get(NBT.ITEM.SKULL.OWNER)).getValue();
 		} else {
@@ -68,7 +71,7 @@ public class MobHeadItemData extends BaseItemData {
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
 
 		if (hasOwner()) {
