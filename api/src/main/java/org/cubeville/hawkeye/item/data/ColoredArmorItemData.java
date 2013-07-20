@@ -45,8 +45,8 @@ public class ColoredArmorItemData extends BaseItemData {
 		Map<String, Tag> data = tag.getValue();
 
 		// Color tag is nested in the display tag
-		if (data.containsKey(NBT.ITEM.DISPLAY_TAG)) {
-			Map<String, Tag> display = ((CompoundTag) data.get(NBT.ITEM.DISPLAY_TAG)).getValue();
+		if (data.containsKey(NBT.ITEM.DISPLAY.TAG)) {
+			Map<String, Tag> display = ((CompoundTag) data.get(NBT.ITEM.DISPLAY.TAG)).getValue();
 
 			if (display.containsKey(NBT.ITEM.DISPLAY.COLOR)) {
 				color = ((IntTag) display.get(NBT.ITEM.DISPLAY.COLOR)).getValue();
@@ -74,15 +74,15 @@ public class ColoredArmorItemData extends BaseItemData {
 		Map<String, Tag> display;
 
 		// Don't want to overwrite the display tag if it's already there
-		if (map.containsKey(NBT.ITEM.DISPLAY_TAG)) {
-			display = ((CompoundTag) map.get(NBT.ITEM.DISPLAY_TAG)).getValue();
+		if (map.containsKey(NBT.ITEM.DISPLAY.TAG)) {
+			display = ((CompoundTag) map.get(NBT.ITEM.DISPLAY.TAG)).getValue();
 		} else {
 			display = new HashMap<String, Tag>();
 		}
 
 		display.put(NBT.ITEM.DISPLAY.COLOR, new IntTag(NBT.ITEM.DISPLAY.COLOR, color));
 
-		map.put(NBT.ITEM.DISPLAY_TAG, new CompoundTag(NBT.ITEM.DISPLAY_TAG, display));
+		map.put(NBT.ITEM.DISPLAY.TAG, new CompoundTag(NBT.ITEM.DISPLAY.TAG, display));
 	}
 
 

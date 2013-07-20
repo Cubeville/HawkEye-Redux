@@ -50,8 +50,8 @@ public class BaseItemData implements ItemData {
 		Map<String, Tag> data = tag.getValue();
 
 		// Name and lore are nested in the display tag
-		if (data.containsKey(NBT.ITEM.DISPLAY_TAG)) {
-			Map<String, Tag> display = ((CompoundTag) data.get(NBT.ITEM.DISPLAY_TAG)).getValue();
+		if (data.containsKey(NBT.ITEM.DISPLAY.TAG)) {
+			Map<String, Tag> display = ((CompoundTag) data.get(NBT.ITEM.DISPLAY.TAG)).getValue();
 
 			if (display.containsKey(NBT.ITEM.DISPLAY.NAME)) {
 				name = ((StringTag) display.get(NBT.ITEM.DISPLAY.NAME)).getValue();
@@ -118,8 +118,8 @@ public class BaseItemData implements ItemData {
 		Map<String, Tag> display;
 
 		// Don't want to overwrite the display tag if it's already there
-		if (map.containsKey(NBT.ITEM.DISPLAY_TAG)) {
-			display = ((CompoundTag) map.get(NBT.ITEM.DISPLAY_TAG)).getValue();
+		if (map.containsKey(NBT.ITEM.DISPLAY.TAG)) {
+			display = ((CompoundTag) map.get(NBT.ITEM.DISPLAY.TAG)).getValue();
 		} else {
 			display = new HashMap<String, Tag>();
 		}
@@ -138,7 +138,7 @@ public class BaseItemData implements ItemData {
 			display.put(NBT.ITEM.DISPLAY.LORE, new ListTag(NBT.ITEM.DISPLAY.LORE, StringTag.class, list));
 		}
 
-		map.put(NBT.ITEM.DISPLAY_TAG, new CompoundTag(NBT.ITEM.DISPLAY_TAG, display));
+		map.put(NBT.ITEM.DISPLAY.TAG, new CompoundTag(NBT.ITEM.DISPLAY.TAG, display));
 
 		if (hasEnchantments()) {
 			List<Tag> enchants = new ArrayList<Tag>();

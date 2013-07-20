@@ -50,8 +50,8 @@ public class FireworkItemData extends BaseItemData {
 		Map<String, Tag> data = tag.getValue();
 
 		// Firework data is nested in the fireworks tag
-		if (data.containsKey(NBT.ITEM.FIREWORKS)) {
-			Map<String, Tag> fireworks = ((CompoundTag) data.get(NBT.ITEM.FIREWORKS)).getValue();
+		if (data.containsKey(NBT.ITEM.FIREWORK.TAG)) {
+			Map<String, Tag> fireworks = ((CompoundTag) data.get(NBT.ITEM.FIREWORK.TAG)).getValue();
 
 			if (fireworks.containsKey(NBT.ITEM.FIREWORK.POWER)) {
 				power = ((ByteTag) fireworks.get(NBT.ITEM.FIREWORK.POWER)).getValue();
@@ -92,8 +92,8 @@ public class FireworkItemData extends BaseItemData {
 		Map<String, Tag> fireworks;
 
 		// Don't overwrite the firework tag if it already exists
-		if (map.containsKey(NBT.ITEM.FIREWORKS)) {
-			fireworks = ((CompoundTag) map.get(NBT.ITEM.FIREWORKS)).getValue();
+		if (map.containsKey(NBT.ITEM.FIREWORK.TAG)) {
+			fireworks = ((CompoundTag) map.get(NBT.ITEM.FIREWORK.TAG)).getValue();
 		} else {
 			fireworks = new HashMap<String, Tag>();
 		}
@@ -112,7 +112,7 @@ public class FireworkItemData extends BaseItemData {
 
 		fireworks.put(NBT.ITEM.FIREWORK.EFFECTS, new ListTag(NBT.ITEM.FIREWORK.EFFECTS, CompoundTag.class, data));
 
-		map.put(NBT.ITEM.FIREWORKS, new CompoundTag(NBT.ITEM.FIREWORKS, fireworks));
+		map.put(NBT.ITEM.FIREWORK.TAG, new CompoundTag(NBT.ITEM.FIREWORK.TAG, fireworks));
 	}
 
 

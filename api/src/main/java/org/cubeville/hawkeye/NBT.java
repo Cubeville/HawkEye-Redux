@@ -32,11 +32,10 @@ public class NBT {
 		public static final String ENCHANTMENTS = "ench";
 		public static final String STORED_ENCHANTMENTS = "StoredEnchantments";
 		public static final String REPAIR_COST = "RepairCost";
-		public static final String DISPLAY_TAG = "display";
 		public static final String ATTRIBUTE_MODIFIERS = "AttributeModifiers";
-		public static final String FIREWORKS = "Fireworks";
 
 		public class DISPLAY {
+			public static final String TAG = "display";
 			public static final String NAME = "Name";
 			public static final String LORE = "Lore";
 			public static final String COLOR = "color";
@@ -57,6 +56,7 @@ public class NBT {
 		}
 
 		public class FIREWORK {
+			public static final String TAG = "Fireworks";
 			public static final String POWER = "Flight";
 			public static final String EFFECT = "Explosion";
 			public static final String EFFECTS = "Explosions";
@@ -106,21 +106,8 @@ public class NBT {
 			public static final String SECONDARY_EFFECT = "Secondary";
 		}
 
-		public class BREWING_STAND {
-			public static final String TIME = "BrewTime";
-		}
-
 		public class COMMAND_BLOCK {
 			public static final String COMMAND = "Command";
-		}
-
-		public class FURNACE {
-			public static final String FUEL = "BurnTime";
-			public static final String TIME = "CookTime";
-		}
-
-		public class HOPPER {
-			public static final String COOLDOWN = "TransferCooldown";
 		}
 
 		public class MOB_SPAWNER {
