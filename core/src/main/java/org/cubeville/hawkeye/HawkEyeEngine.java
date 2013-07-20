@@ -109,22 +109,6 @@ public class HawkEyeEngine implements PluginEngine {
 
 		database = new MySqlDatabase(config.getString(Config.DB_PREFIX));
 		consumer = new SimpleConsumer();
-		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
-		dataManager = new SimpleDataManager();
-		queryManager = new SimpleQueryManager();
-		commandManager = new SimpleCommandManager();
-
-		try {
-			((SimpleCommandManager) commandManager).registerCommands(
-				new BaseCommands(),
-				new SearchCommands(),
-				new ToolCommands(),
-				new RollbackCommands()
-			);
-		} catch (CommandException e) {
-			logger.severe("Unable to register commands");
-			e.printStackTrace();
-		}
 
 		try {
 			database.connect(
@@ -138,6 +122,25 @@ public class HawkEyeEngine implements PluginEngine {
 			// Tell the consumer to log to file if the database fails
 			((SimpleConsumer) consumer).disableDatabase();
 			logger.severe("Could not connect to database");
+			e.printStackTrace();
+		}
+
+		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
+		dataManager = new SimpleDataManager();
+		queryManager = new SimpleQueryManager();
+		commandManager = new SimpleCommandManager();
+
+		server.loadExistingData();
+
+		try {
+			((SimpleCommandManager) commandManager).registerCommands(
+				new BaseCommands(),
+				new SearchCommands(),
+				new ToolCommands(),
+				new RollbackCommands()
+			);
+		} catch (CommandException e) {
+			logger.severe("Unable to register commands");
 			e.printStackTrace();
 		}
 

@@ -44,7 +44,10 @@ public class BukkitServer extends AbstractServerInterface {
 	public BukkitServer(HawkEyePlugin plugin, Server server) {
 		this.plugin = plugin;
 		this.server = server;
+	}
 
+	@Override
+	public void loadExistingData() {
 		for (org.bukkit.World world : server.getWorlds()) {
 			// AbstractServerInterface will cache it
 			HawkEye.getDataManager().registerWorld(getWorld(world.getName()));

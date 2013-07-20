@@ -116,8 +116,12 @@ public class RadiusParser extends ParameterParser {
 
 			min = toVector(region.getMinimumPoint());
 			max = toVector(region.getMaximumPoint());
-		} catch (IncompleteRegionException e) {
-			throw new CommandException("You do not have a WorldEdit selection.");
+		} catch (Exception e) {
+			// Trying to catch an IncompleteRegionException directly
+			// results in a NoClassDefFoundError on startup if WorldEdit
+			// isn't available
+			if (e instanceof IncompleteRegionException) throw new CommandException("You do not have a WorldEdit selection.");
+			else throw new CommandException("Could not get your selection, is WorldEdit enabled?");
 		}
 	}
 

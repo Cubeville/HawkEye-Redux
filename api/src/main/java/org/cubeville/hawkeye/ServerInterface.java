@@ -118,6 +118,11 @@ public interface ServerInterface {
 	World getWorld(String name);
 
 	/**
+	 * Loads existing players and worlds to catch anything from before startup
+	 */
+	void loadExistingData();
+
+	/**
 	 * Registers a command with the server
 	 *
 	 * @param command Command to register
