@@ -5,3 +5,7 @@ author: Cubeville
 authors: [GoalieGuy6]
 softdepend: [WorldEdit]
 description: Data logging plugin
+
+commands:
+    hawkeye:
+        aliases: [hawk, ha, he, hk]

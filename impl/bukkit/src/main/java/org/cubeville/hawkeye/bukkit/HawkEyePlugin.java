@@ -20,6 +20,8 @@ package org.cubeville.hawkeye.bukkit;
 
 import java.io.File;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -31,6 +33,7 @@ import org.cubeville.hawkeye.HawkEyeEngine;
 import org.cubeville.hawkeye.PluginEngine;
 import org.cubeville.hawkeye.bukkit.entity.BukkitPlayer;
 import org.cubeville.hawkeye.config.HawkEyeConfig;
+import org.cubeville.util.StringUtil;
 
 public class HawkEyePlugin extends JavaPlugin implements Listener {
 
@@ -66,6 +69,13 @@ public class HawkEyePlugin extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		engine.getDatabase().close();
+	}
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		String command = cmd.getName() + " " + StringUtil.buildString(args);
+		engine.handleCommand(Convert.commandSender(sender), command);
+		return true;
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
