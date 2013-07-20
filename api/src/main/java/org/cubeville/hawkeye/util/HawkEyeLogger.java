@@ -42,4 +42,50 @@ public class HawkEyeLogger extends Logger {
 		super.log(record);
 	}
 
+	/**
+	 * Logs a debug message
+	 *
+	 * @param message Message to log
+	 */
+	public void debug(String message) {
+		info("[DEBUG] " + message);
+	}
+
+	/**
+	 * Logs an exception
+	 *
+	 * @param message Message describing the error
+	 * @param e Exception that caused the error
+	 */
+	public void error(String message, Exception e) {
+		severe("------------------------------------------------------------");
+		severe("An error occurred: " + message);
+		severe("");
+		printThrowable(e, false);
+		severe("------------------------------------------------------------");
+	}
+
+	/**
+	 * Prints a stack trace for a Throwable
+	 *
+	 * @param t Throwable to print stack trace for
+	 * @param isCause Whether or not this throwable is the cause of another
+	 */
+	private void printThrowable(Throwable t, boolean isCause) {
+		if (isCause) {
+			severe("Caused by: " + t.getClass().getName());
+		} else {
+			severe(t.getClass().getName() + ": " + t.getMessage());
+		}
+
+		for (StackTraceElement element : t.getStackTrace()) {
+			severe("\tat " + element.toString());
+		}
+
+		Throwable cause = t.getCause();
+		if (cause != null) {
+			printThrowable(cause, true);
+		}
+	}
+
 }

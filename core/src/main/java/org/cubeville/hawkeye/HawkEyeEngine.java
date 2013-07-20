@@ -18,8 +18,6 @@
 
 package org.cubeville.hawkeye;
 
-import java.util.logging.Logger;
-
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandManager;
 import org.cubeville.hawkeye.command.CommandPermissionException;
@@ -62,7 +60,7 @@ public class HawkEyeEngine implements PluginEngine {
 	/**
 	 * Logger
 	 */
-	private final Logger logger;
+	private final HawkEyeLogger logger;
 
 	/**
 	 * Server compatibility layer
@@ -191,7 +189,7 @@ public class HawkEyeEngine implements PluginEngine {
 	}
 
 	@Override
-	public Logger getLogger() {
+	public HawkEyeLogger getLogger() {
 		return logger;
 	}
 

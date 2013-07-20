@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
@@ -125,7 +126,7 @@ public class SimpleQueryManager implements QueryManager {
 			// Exceptions thrown by the parser get wrapped in
 			// InvocationTargetException
 			if (e.getCause() instanceof CommandException) throw (CommandException) e.getCause();
-			else e.printStackTrace();
+			else HawkEye.getLogger().error("Error parsing parameter: " + prefix, e);
 		}
 
 		throw new CommandException("Error parsing parameter: &7" + prefix);

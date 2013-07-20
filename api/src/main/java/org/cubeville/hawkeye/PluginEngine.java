@@ -18,8 +18,6 @@
 
 package org.cubeville.hawkeye;
 
-import java.util.logging.Logger;
-
 import org.cubeville.hawkeye.command.CommandManager;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
@@ -29,6 +27,7 @@ import org.cubeville.hawkeye.location.World;
 import org.cubeville.hawkeye.search.QueryManager;
 import org.cubeville.hawkeye.session.SessionManager;
 import org.cubeville.hawkeye.sql.Database;
+import org.cubeville.hawkeye.util.HawkEyeLogger;
 
 /**
  * Main plugin engine interface
@@ -47,7 +46,7 @@ public interface PluginEngine {
 	 *
 	 * @return Logger
 	 */
-	Logger getLogger();
+	HawkEyeLogger getLogger();
 
 	/**
 	 * Gets the server compatibility layer
