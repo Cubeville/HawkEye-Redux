@@ -20,6 +20,7 @@ package org.cubeville.hawkeye.item.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,13 @@ import org.cubeville.hawkeye.NBT;
 import org.cubeville.hawkeye.item.ItemData;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.ListTag;
+import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
 
 public class BaseItemData implements ItemData {
+
+	private final String name;
+	private final List<String> lore;
 
 	private final List<Enchantment> enchantments;
 
@@ -39,8 +44,31 @@ public class BaseItemData implements ItemData {
 	 * @param tag Tag to deserialize from
 	 */
 	public BaseItemData(CompoundTag tag) {
+		lore = new LinkedList<String>();
 		enchantments = new ArrayList<Enchantment>();
+
 		Map<String, Tag> data = tag.getValue();
+
+		// Name and lore are nested in the display tag
+		if (data.containsKey(NBT.ITEM.DISPLAY_TAG)) {
+			Map<String, Tag> display = ((CompoundTag) data.get(NBT.ITEM.DISPLAY_TAG)).getValue();
+
+			if (display.containsKey(NBT.ITEM.DISPLAY.NAME)) {
+				name = ((StringTag) display.get(NBT.ITEM.DISPLAY.NAME)).getValue();
+			} else {
+				name = null;
+			}
+
+			if (display.containsKey(NBT.ITEM.DISPLAY.LORE)) {
+				List<Tag> list = ((ListTag) display.get(NBT.ITEM.DISPLAY.LORE)).getValue();
+
+				for (Tag t : list) {
+					lore.add(((StringTag) t).getValue());
+				}
+			}
+		} else {
+			name = null;
+		}
 
 		if (data.containsKey(NBT.ITEM.ENCHANTMENTS)) {
 			List<Tag> enchants = ((ListTag) data.get(NBT.ITEM.ENCHANTMENTS)).getValue();
@@ -52,8 +80,24 @@ public class BaseItemData implements ItemData {
 	}
 
 	public BaseItemData() {
+		name = null;
+		lore = new LinkedList<String>();
 		enchantments = new ArrayList<Enchantment>();
-		// TODO Get enchantments
+		// TODO Get item data
+	}
+
+	/**
+	 * Gets whether or not this item has a custom name
+	 */
+	public boolean hasName() {
+		return name != null;
+	}
+
+	/**
+	 * Gets whether or not this item has lore
+	 */
+	public boolean hasLore() {
+		return !lore.isEmpty();
 	}
 
 	/**
@@ -71,15 +115,40 @@ public class BaseItemData implements ItemData {
 	}
 
 	protected void serialize(Map<String, Tag> map) {
-		List<Tag> data = new ArrayList<Tag>();
+		Map<String, Tag> display;
 
-		if (hasEnchantments()) {
-			for (Enchantment enchantment : enchantments) {
-				data.add(enchantment.serialize());
-			}
+		// Don't want to overwrite the display tag if it's already there
+		if (map.containsKey(NBT.ITEM.DISPLAY_TAG)) {
+			display = ((CompoundTag) map.get(NBT.ITEM.DISPLAY_TAG)).getValue();
+		} else {
+			display = new HashMap<String, Tag>();
 		}
 
-		map.put(NBT.ITEM.ENCHANTMENTS, new ListTag(NBT.ITEM.ENCHANTMENTS, CompoundTag.class, data));
+		if (hasName()) {
+			display.put(NBT.ITEM.DISPLAY.NAME, new StringTag(NBT.ITEM.DISPLAY.NAME, name));
+		}
+
+		if (hasLore()) {
+			List<Tag> list = new LinkedList<Tag>();
+
+			for (String line : lore) {
+				list.add(new StringTag("", line));
+			}
+
+			display.put(NBT.ITEM.DISPLAY.LORE, new ListTag(NBT.ITEM.DISPLAY.LORE, StringTag.class, list));
+		}
+
+		map.put(NBT.ITEM.DISPLAY_TAG, new CompoundTag(NBT.ITEM.DISPLAY_TAG, display));
+
+		if (hasEnchantments()) {
+			List<Tag> enchants = new ArrayList<Tag>();
+
+			for (Enchantment enchantment : enchantments) {
+				enchants.add(enchantment.serialize());
+			}
+
+			map.put(NBT.ITEM.ENCHANTMENTS, new ListTag(NBT.ITEM.ENCHANTMENTS, CompoundTag.class, enchants));
+		}
 	}
 
 }

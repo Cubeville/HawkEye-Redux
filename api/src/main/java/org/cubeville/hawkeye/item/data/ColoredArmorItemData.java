@@ -18,9 +18,12 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import org.cubeville.hawkeye.NBT;
 import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.IntTag;
 import org.cubeville.lib.jnbt.Tag;
 
 /**
@@ -28,15 +31,58 @@ import org.cubeville.lib.jnbt.Tag;
  */
 public class ColoredArmorItemData extends BaseItemData {
 
+	/**
+	 * Default color for leather armor
+	 */
+	private static final int defaultColor = 0xA06540;
+
+	// TODO Utility class for managing colors?
+	private final int color;
+
 	public ColoredArmorItemData(CompoundTag tag) {
 		super(tag);
-		// TODO Auto-generated constructor stub
+
+		Map<String, Tag> data = tag.getValue();
+
+		// Color tag is nested in the display tag
+		if (data.containsKey(NBT.ITEM.DISPLAY_TAG)) {
+			Map<String, Tag> display = ((CompoundTag) data.get(NBT.ITEM.DISPLAY_TAG)).getValue();
+
+			if (display.containsKey(NBT.ITEM.DISPLAY.COLOR)) {
+				color = ((IntTag) display.get(NBT.ITEM.DISPLAY.COLOR)).getValue();
+			} else {
+				color = defaultColor;
+			}
+		} else {
+			color = defaultColor;
+		}
+	}
+
+	/**
+	 * Gets whether or not this armor has a color set on it
+	 */
+	public boolean hasColor() {
+		return color != defaultColor;
 	}
 
 	@Override
 	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
-		// TODO
+
+		if (!hasColor()) return;
+
+		Map<String, Tag> display;
+
+		// Don't want to overwrite the display tag if it's already there
+		if (map.containsKey(NBT.ITEM.DISPLAY_TAG)) {
+			display = ((CompoundTag) map.get(NBT.ITEM.DISPLAY_TAG)).getValue();
+		} else {
+			display = new HashMap<String, Tag>();
+		}
+
+		display.put(NBT.ITEM.DISPLAY.COLOR, new IntTag(NBT.ITEM.DISPLAY.COLOR, color));
+
+		map.put(NBT.ITEM.DISPLAY_TAG, new CompoundTag(NBT.ITEM.DISPLAY_TAG, display));
 	}
 
 

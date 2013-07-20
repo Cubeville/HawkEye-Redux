@@ -19,10 +19,12 @@
 package org.cubeville.hawkeye.item.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.cubeville.hawkeye.NBT;
+import org.cubeville.lib.jnbt.ByteTag;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.ListTag;
 import org.cubeville.lib.jnbt.Tag;
@@ -32,7 +34,7 @@ import org.cubeville.lib.jnbt.Tag;
  */
 public class FireworkItemData extends BaseItemData {
 
-	// TODO Flight level
+	private final byte power;
 	private final List<FireworkExplosion> explosions;
 
 	/**
@@ -46,13 +48,26 @@ public class FireworkItemData extends BaseItemData {
 		explosions = new ArrayList<FireworkExplosion>();
 
 		Map<String, Tag> data = tag.getValue();
-		if (data.containsKey(NBT.ITEM.FIREWORK.EFFECTS)) {
 
-			List<Tag> list = ((ListTag) data.get(NBT.ITEM.FIREWORK.EFFECTS)).getValue();
-			for (Tag t : list) {
-				FireworkExplosion explosion = new FireworkExplosion((CompoundTag) t);
-				explosions.add(explosion);
+		// Firework data is nested in the fireworks tag
+		if (data.containsKey(NBT.ITEM.FIREWORKS)) {
+			Map<String, Tag> fireworks = ((CompoundTag) data.get(NBT.ITEM.FIREWORKS)).getValue();
+
+			if (fireworks.containsKey(NBT.ITEM.FIREWORK.POWER)) {
+				power = ((ByteTag) fireworks.get(NBT.ITEM.FIREWORK.POWER)).getValue();
+			} else {
+				power = 0;
 			}
+
+			if (fireworks.containsKey(NBT.ITEM.FIREWORK.EFFECTS)) {
+				List<Tag> list = ((ListTag) fireworks.get(NBT.ITEM.FIREWORK.EFFECTS)).getValue();
+				for (Tag t : list) {
+					FireworkExplosion explosion = new FireworkExplosion((CompoundTag) t);
+					explosions.add(explosion);
+				}
+			}
+		} else {
+			power = 0;
 		}
 	}
 
@@ -63,9 +78,29 @@ public class FireworkItemData extends BaseItemData {
 		return !(explosions == null || explosions.isEmpty());
 	}
 
+	/**
+	 * Gets whether or not this firework has a power level
+	 */
+	public boolean hasPower() {
+		return power != 0;
+	}
+
 	@Override
 	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
+
+		Map<String, Tag> fireworks;
+
+		// Don't overwrite the firework tag if it already exists
+		if (map.containsKey(NBT.ITEM.FIREWORKS)) {
+			fireworks = ((CompoundTag) map.get(NBT.ITEM.FIREWORKS)).getValue();
+		} else {
+			fireworks = new HashMap<String, Tag>();
+		}
+
+		if (hasPower()) {
+			fireworks.put(NBT.ITEM.FIREWORK.POWER, new ByteTag(NBT.ITEM.FIREWORK.POWER, power));
+		}
 
 		List<Tag> data = new ArrayList<Tag>();
 
@@ -75,7 +110,9 @@ public class FireworkItemData extends BaseItemData {
 			}
 		}
 
-		map.put(NBT.ITEM.FIREWORK.EFFECTS, new ListTag(NBT.ITEM.FIREWORK.EFFECTS, CompoundTag.class, data));
+		fireworks.put(NBT.ITEM.FIREWORK.EFFECTS, new ListTag(NBT.ITEM.FIREWORK.EFFECTS, CompoundTag.class, data));
+
+		map.put(NBT.ITEM.FIREWORKS, new CompoundTag(NBT.ITEM.FIREWORKS, fireworks));
 	}
 
 

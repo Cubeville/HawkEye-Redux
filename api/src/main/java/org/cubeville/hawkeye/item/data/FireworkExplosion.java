@@ -34,6 +34,8 @@ public class FireworkExplosion implements NBTSerializable {
 	private final boolean flicker;
 	private final boolean trail;
 
+	// TODO Add colors
+
 	/**
 	 * Deserialization constructor
 	 *

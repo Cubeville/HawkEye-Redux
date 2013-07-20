@@ -32,12 +32,13 @@ public class NBT {
 		public static final String ENCHANTMENTS = "ench";
 		public static final String STORED_ENCHANTMENTS = "StoredEnchantments";
 		public static final String REPAIR_COST = "RepairCost";
-		public static final String DISPLAY = "display";
+		public static final String DISPLAY_TAG = "display";
 		public static final String ATTRIBUTE_MODIFIERS = "AttributeModifiers";
+		public static final String FIREWORKS = "Fireworks";
 
 		public class DISPLAY {
 			public static final String NAME = "Name";
-			public static final String DESCRIPTION = "Lore";
+			public static final String LORE = "Lore";
 			public static final String COLOR = "color";
 		}
 
