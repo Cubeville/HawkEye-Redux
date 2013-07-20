@@ -118,12 +118,6 @@ public class Convert {
 		return new BukkitBlockState(blockState);
 	}
 
-	public static org.bukkit.block.BlockState blockState(BlockState blockState) {
-		if (blockState instanceof BukkitBlockState) return ((BukkitBlockState) blockState).getBukkitBlockState();
-		// TODO Reconstruct it somehow
-		else return null;
-	}
-
 	/**
 	 * BlockState to BlockData
 	 */
