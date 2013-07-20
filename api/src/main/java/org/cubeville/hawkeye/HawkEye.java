@@ -20,6 +20,7 @@ package org.cubeville.hawkeye;
 
 import java.util.logging.Logger;
 
+import org.cubeville.hawkeye.command.CommandManager;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.PluginConfig;
 import org.cubeville.hawkeye.entity.Player;
@@ -132,6 +133,24 @@ public class HawkEye {
 	 */
 	public static QueryManager getQueryManager() {
 		return engine.getQueryManager();
+	}
+
+	/**
+	 * Gets the command manager
+	 *
+	 * @return Command manager
+	 */
+	public static CommandManager getCommandManager() {
+		return engine.getCommandManager();
+	}
+
+	/**
+	 * Gets the display manager
+	 *
+	 * @return Display manager
+	 */
+	public static DisplayManager getDisplayManager() {
+		return engine.getDisplayManager();
 	}
 
 	/**

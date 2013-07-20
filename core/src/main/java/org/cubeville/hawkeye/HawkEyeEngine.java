@@ -37,10 +37,12 @@ import org.cubeville.hawkeye.config.PluginConfig;
 import org.cubeville.hawkeye.editor.WorldEditor;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
+import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.search.QueryManager;
 import org.cubeville.hawkeye.search.SimpleQueryManager;
 import org.cubeville.hawkeye.search.SimpleSearchQuery;
 import org.cubeville.hawkeye.search.parsers.RadiusParser;
+import org.cubeville.hawkeye.session.Session;
 import org.cubeville.hawkeye.session.SessionManager;
 import org.cubeville.hawkeye.session.SimpleSessionFactory;
 import org.cubeville.hawkeye.session.SimpleSessionManager;
@@ -101,6 +103,11 @@ public class HawkEyeEngine implements PluginEngine {
 	 */
 	private final CommandManager commandManager;
 
+	/**
+	 * Display managers
+	 */
+	private final DisplayManager displayManager;
+
 	public HawkEyeEngine(ServerInterface server, PluginConfig config) {
 		HawkEye.setEngine(this);
 		logger = new HawkEyeLogger(this);
@@ -129,6 +136,13 @@ public class HawkEyeEngine implements PluginEngine {
 		dataManager = new SimpleDataManager();
 		queryManager = new SimpleQueryManager();
 		commandManager = new SimpleCommandManager();
+
+		displayManager = new AbstractDisplayManager(6) {
+			@Override
+			public void displayEntry(Session session, Entry entry) {
+				session.sendMessage(entry.getOutput());
+			}
+		};
 
 		server.loadExistingData();
 
@@ -206,6 +220,11 @@ public class HawkEyeEngine implements PluginEngine {
 	@Override
 	public CommandManager getCommandManager() {
 		return commandManager;
+	}
+
+	@Override
+	public DisplayManager getDisplayManager() {
+		return displayManager;
 	}
 
 	@Override

@@ -106,6 +106,13 @@ public interface PluginEngine {
 	CommandManager getCommandManager();
 
 	/**
+	 * Gets the display manager
+	 *
+	 * @return Display manager
+	 */
+	DisplayManager getDisplayManager();
+
+	/**
 	 * Gets the server's console sender
 	 *
 	 * @return Console sender

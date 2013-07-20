@@ -20,6 +20,7 @@ package org.cubeville.hawkeye.search.callbacks;
 
 import java.util.List;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.session.Session;
 
@@ -33,7 +34,7 @@ public class SearchCallback extends AbstractCallback {
 	public void execute(List<Entry> results) {
 		super.execute(results);
 
-		// TODO Display first page
+		HawkEye.getDisplayManager().displayResults(session, 1);
 	}
 
 }
