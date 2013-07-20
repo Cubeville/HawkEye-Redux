@@ -31,7 +31,9 @@ public class SearchCommands {
 
 	@Command(command = "hawkeye search",
 			aliases = {"hawkeye s"},
-			description = "Search the HawkEye database")
+			usage = "/hawkeye search <parameters>",
+			description = "Search the HawkEye database",
+			min = 1)
 	public void search(CommandSender sender, CommandData data) throws CommandException {
 		Session session = HawkEye.getSessionManager().getSession(sender);
 		String params = data.getFullString(0);
@@ -44,6 +46,7 @@ public class SearchCommands {
 
 	@Command(command = "hawkeye page",
 			aliases = {"hawkeye pg"},
+			usage = "/hawkeye page <number>",
 			description = "Display a separate page of your results",
 			max = 1)
 	public void page(CommandSender sender, CommandData data) throws CommandException {
@@ -54,14 +57,18 @@ public class SearchCommands {
 
 	@Command(command = "hawkeye tpto",
 			aliases = {"hawkeye tp", "hawkeye teleport"},
-			description = "Teleports to a specified record")
+			usage = "/hawkeye tpto <id>",
+			description = "Teleports to a specified record",
+			min = 1, max = 1)
 	public void tpto(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye here",
 			aliases = {"hawkeye near"},
-			description = "Alias for a radius search")
+			usage = "/hawkeye here <radius> [parameters]",
+			description = "Alias for a radius search",
+			min = 1)
 	public void here(CommandSender sender, CommandData data) {
 
 	}

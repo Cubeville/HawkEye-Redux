@@ -26,21 +26,27 @@ public class ToolCommands {
 
 	@Command(command = "hawkeye tool",
 			aliases = {"hawkeye t"},
-			description = "Toggles the search tool")
+			usage = "/hawkeye tool",
+			description = "Toggles the search tool",
+			max = 0)
 	public void tool(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye tool bind",
 			aliases = {"hawkeye t bind"},
-			description = "Binds custom search parameters to your tool")
+			usage = "/hawkeye tool bind <parameters>",
+			description = "Binds custom search parameters to your tool",
+			min = 1)
 	public void bind(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye tool reset",
 			aliases = {"hawkeye t reset"},
-			description = "Resets any custom parameters on your tool")
+			usage = "/hawkeye tool reset",
+			description = "Resets any custom parameters on your tool",
+			max = 0)
 	public void reset(CommandSender sender, CommandData data) {
 
 	}

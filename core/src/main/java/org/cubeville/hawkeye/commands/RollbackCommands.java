@@ -26,48 +26,62 @@ public class RollbackCommands {
 
 	@Command(command = "hawkeye rollback",
 			aliases = {"hawkeye rb", "hawkeye roll"},
-			description = "Rolls back changes")
+			usage = "/hawkeye rollback <parameters>",
+			description = "Rolls back changes",
+			min = 1)
 	public void rollback(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye preview rollback",
 			aliases = {"hawkeye preview rb", "hawkeye preview roll"},
-			description = "Previews rollback changes")
+			usage = "/hawkeye preview rollback <parameters>",
+			description = "Previews rollback changes",
+			min = 1)
 	public void previewRollback(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye rebuild",
 			aliases = {"hawkeye re", "hawkeye build", },
-			description = "Rebuilds changes")
+			usage = "/hawkeye rebuild <parameters>",
+			description = "Rebuilds changes",
+			min = 1)
 	public void rebuild(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye preview rebuild",
 			aliases = {"hawkeye preview re", "hawkeye preview build"},
-			description = "Previews rebuild changes")
+			usage = "/hawkeye preview rebuild <parameters>",
+			description = "Previews rebuild changes",
+			min = 1)
 	public void previewRebuild(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye preview apply",
 			aliases = {"hawkeye preview go"},
-			description = "Applies the previewed changes")
+			usage = "/hawkeye preview apply",
+			description = "Applies the previewed changes",
+			max = 0)
 	public void applyRebuild(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye preview cancel",
 			aliases = {"hawkeye preview stop"},
-			description = "Cancels the previewed changes")
+			usage = "/hawkeye preview cancel",
+			description = "Cancels the previewed changes",
+			max = 0)
 	public void cancelRebuild(CommandSender sender, CommandData data) {
 
 	}
 
 	@Command(command = "hawkeye undo",
-			description = "Undoes the previous rollback/rebuild")
+			usage = "/hawkeye undo",
+			description = "Undoes the previous rollback/rebuild",
+			max = 0)
 	public void undo(CommandSender sender, CommandData data) {
 
 	}

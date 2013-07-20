@@ -260,13 +260,13 @@ public class HawkEyeEngine implements PluginEngine {
 		try {
 			commandManager.execute(command, sender);
 		} catch (CommandPermissionException e) {
-			sender.sendMessage("You do not have permission to do that.");
+			sender.sendMessage(Chat.RED + "You do not have permission to do that.");
 		} catch (CommandPlayerException e) {
-			sender.sendMessage("That command can only be used by ingame players.");
+			sender.sendMessage(Chat.RED + "That command can only be used by ingame players.");
 		} catch (CommandUsageException e) {
-			sender.sendMessage(new String[] { e.getMessage(), e.getUsage() });
+			sender.sendMessage(Chat.RED + e.getMessage(), Chat.RED + e.getUsage());
 		} catch (CommandException e) {
-			sender.sendMessage(e.getMessage());
+			sender.sendMessage(Chat.RED + e.getMessage());
 		}
 	}
 
