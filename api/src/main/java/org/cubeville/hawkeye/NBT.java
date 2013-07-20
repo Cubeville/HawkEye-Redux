@@ -123,7 +123,7 @@ public class NBT {
 		}
 
 		public class MOB_SPAWNER {
-			// TODO
+			public static final String ENTITY = "EntityId";
 		}
 
 		public class NOTE_BLOCK {
@@ -131,6 +131,7 @@ public class NBT {
 		}
 
 		public class JUKEBOX {
+			public static final String RECORD_ID = "Record";
 			public static final String RECORD = "RecordItem";
 		}
 

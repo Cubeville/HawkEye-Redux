@@ -23,6 +23,9 @@ import org.cubeville.hawkeye.block.BlockData;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.block.data.BaseBlockData;
 import org.cubeville.hawkeye.block.data.CommandBlock;
+import org.cubeville.hawkeye.block.data.Jukebox;
+import org.cubeville.hawkeye.block.data.MobSpawner;
+import org.cubeville.hawkeye.block.data.NoteBlock;
 import org.cubeville.hawkeye.block.data.Sign;
 import org.cubeville.hawkeye.block.data.Skull;
 import org.cubeville.hawkeye.bukkit.block.BukkitBlockState;
@@ -123,43 +126,29 @@ public class Convert {
 	 */
 	public static BlockData blockData(org.bukkit.block.BlockState blockState) {
 		if (blockState instanceof org.bukkit.block.Beacon) {
-
-		} else if (blockState instanceof org.bukkit.block.BrewingStand) {
-
-		} else if (blockState instanceof org.bukkit.block.Chest) {
-
+			// Bukkit has no beacon API yet
+			return new BaseBlockData();
 		} else if (blockState instanceof org.bukkit.block.CommandBlock) {
 			org.bukkit.block.CommandBlock block = (org.bukkit.block.CommandBlock) blockState;
-
 			return new CommandBlock(block.getName(), block.getCommand());
 		} else if (blockState instanceof org.bukkit.block.CreatureSpawner) {
-
-		} else if (blockState instanceof org.bukkit.block.Dispenser) {
-
-		} else if (blockState instanceof org.bukkit.block.Dropper) {
-
-		} else if (blockState instanceof org.bukkit.block.Furnace) {
-
-		} else if (blockState instanceof org.bukkit.block.Hopper) {
-
+			org.bukkit.block.CreatureSpawner spawner = (org.bukkit.block.CreatureSpawner) blockState;
+			return new MobSpawner(spawner.getCreatureTypeName());
 		} else if (blockState instanceof org.bukkit.block.Jukebox) {
-
+			org.bukkit.block.Jukebox jukebox = (org.bukkit.block.Jukebox) blockState;
+			return new Jukebox(jukebox.getPlaying().getId());
 		} else if (blockState instanceof org.bukkit.block.NoteBlock) {
-
+			org.bukkit.block.NoteBlock noteBlock = (org.bukkit.block.NoteBlock) blockState;
+			return new NoteBlock(noteBlock.getRawNote());
 		} else if (blockState instanceof org.bukkit.block.Sign) {
 			org.bukkit.block.Sign sign = (org.bukkit.block.Sign) blockState;
-
 			return new Sign(sign.getLines());
 		} else if (blockState instanceof org.bukkit.block.Skull) {
 			org.bukkit.block.Skull skull = (org.bukkit.block.Skull) blockState;
-
 			return new Skull(skull.getRawData(), skull.getOwner(), rotation(skull.getRotation()));
 		} else {
 			return new BaseBlockData();
 		}
-
-		// TODO Implement all these
-		return null;
 	}
 
 	/**

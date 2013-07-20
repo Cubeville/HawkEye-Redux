@@ -21,51 +21,40 @@ package org.cubeville.hawkeye.block.data;
 import java.util.Map;
 
 import org.cubeville.hawkeye.NBT;
+import org.cubeville.lib.jnbt.ByteTag;
 import org.cubeville.lib.jnbt.CompoundTag;
-import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
 
-public class CommandBlock extends Renamable {
+public class NoteBlock extends BaseBlockData {
 
-	private final String command;
+	private final byte note;
 
 	/**
 	 * Deserialization constructor
 	 *
 	 * @param tag Tag to deserialize from
 	 */
-	public CommandBlock(CompoundTag tag) {
-		super(tag);
-
+	public NoteBlock(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();
 
-		if (data.containsKey(NBT.BLOCK.COMMAND_BLOCK.COMMAND)) {
-			command = ((StringTag) data.get(NBT.BLOCK.COMMAND_BLOCK.COMMAND)).getValue();
-		} else {
-			command = "";
-		}
+		note = ((ByteTag) data.get(NBT.BLOCK.NOTE_BLOCK.NOTE)).getValue();
 	}
 
-	public CommandBlock(String name, String command) {
-		super(name);
-		this.command = command;
-	}
-
-	public CommandBlock(String command) {
-		this(null, command);
+	public NoteBlock(byte note) {
+		this.note = note;
 	}
 
 	/**
-	 * Gets the command run by this command block
+	 * Gets the note this note block plays
 	 */
-	public String getCommand() {
-		return command;
+	public byte getNote() {
+		return note;
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
-		map.put(NBT.BLOCK.COMMAND_BLOCK.COMMAND, new StringTag(NBT.BLOCK.COMMAND_BLOCK.COMMAND, command));
+		map.put(NBT.BLOCK.NOTE_BLOCK.NOTE, new ByteTag(NBT.BLOCK.NOTE_BLOCK.NOTE, note));
 	}
 
 }

@@ -25,47 +25,43 @@ import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
 
-public class CommandBlock extends Renamable {
+public class MobSpawner extends BaseBlockData {
 
-	private final String command;
+	// TODO Store custom spawner data
+	private final String mob;
 
 	/**
 	 * Deserialization constructor
 	 *
 	 * @param tag Tag to deserialize from
 	 */
-	public CommandBlock(CompoundTag tag) {
-		super(tag);
-
+	public MobSpawner(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();
 
-		if (data.containsKey(NBT.BLOCK.COMMAND_BLOCK.COMMAND)) {
-			command = ((StringTag) data.get(NBT.BLOCK.COMMAND_BLOCK.COMMAND)).getValue();
+		if (data.containsKey(NBT.BLOCK.MOB_SPAWNER.ENTITY)) {
+			mob = ((StringTag) data.get(NBT.BLOCK.MOB_SPAWNER.ENTITY)).getValue();
 		} else {
-			command = "";
+			mob = null;
 		}
 	}
 
-	public CommandBlock(String name, String command) {
-		super(name);
-		this.command = command;
-	}
-
-	public CommandBlock(String command) {
-		this(null, command);
+	public MobSpawner(String mob) {
+		this.mob = mob;
 	}
 
 	/**
-	 * Gets the command run by this command block
+	 * Gets whether or not this spawner has a mob type
 	 */
-	public String getCommand() {
-		return command;
+	public boolean hasMob() {
+		return mob != null;
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
-		map.put(NBT.BLOCK.COMMAND_BLOCK.COMMAND, new StringTag(NBT.BLOCK.COMMAND_BLOCK.COMMAND, command));
+		if (hasMob()) {
+			map.put(NBT.BLOCK.MOB_SPAWNER.ENTITY, new StringTag(NBT.BLOCK.MOB_SPAWNER.ENTITY, mob));
+		}
 	}
 
 }

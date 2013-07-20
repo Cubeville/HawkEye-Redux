@@ -85,7 +85,8 @@ public class Skull extends BaseBlockData {
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
+		super.serialize(map);
 		map.put(NBT.BLOCK.SKULL.TYPE, new ByteTag(NBT.BLOCK.SKULL.TYPE, type));
 		map.put(NBT.BLOCK.SKULL.ROTATION, new ByteTag(NBT.BLOCK.SKULL.ROTATION, rotation));
 

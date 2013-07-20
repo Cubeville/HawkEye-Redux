@@ -78,7 +78,8 @@ public class Sign extends BaseBlockData {
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
+		super.serialize(map);
 		map.put(NBT.BLOCK.SIGN.LINE1, new StringTag(NBT.BLOCK.SIGN.LINE1, lines[0]));
 		map.put(NBT.BLOCK.SIGN.LINE2, new StringTag(NBT.BLOCK.SIGN.LINE2, lines[1]));
 		map.put(NBT.BLOCK.SIGN.LINE3, new StringTag(NBT.BLOCK.SIGN.LINE3, lines[2]));

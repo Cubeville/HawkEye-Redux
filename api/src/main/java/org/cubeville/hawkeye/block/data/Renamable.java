@@ -36,6 +36,7 @@ public abstract class Renamable extends BaseBlockData {
 	 */
 	public Renamable(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();
+
 		if (data.containsKey(NBT.BLOCK.NAME)) {
 			name = ((StringTag) data.get(NBT.BLOCK.NAME)).getValue();
 		} else {
@@ -62,7 +63,8 @@ public abstract class Renamable extends BaseBlockData {
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
+		super.serialize(map);
 		if (hasName()) {
 			map.put(NBT.BLOCK.NAME, new StringTag(NBT.BLOCK.NAME, name));
 		}

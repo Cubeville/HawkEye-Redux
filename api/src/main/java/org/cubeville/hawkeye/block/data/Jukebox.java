@@ -22,50 +22,53 @@ import java.util.Map;
 
 import org.cubeville.hawkeye.NBT;
 import org.cubeville.lib.jnbt.CompoundTag;
-import org.cubeville.lib.jnbt.StringTag;
+import org.cubeville.lib.jnbt.IntTag;
 import org.cubeville.lib.jnbt.Tag;
 
-public class CommandBlock extends Renamable {
+public class Jukebox extends BaseBlockData {
 
-	private final String command;
+	// TODO Store the record item
+	private final int record;
 
 	/**
 	 * Deserialization constructor
 	 *
 	 * @param tag Tag to deserialize from
 	 */
-	public CommandBlock(CompoundTag tag) {
-		super(tag);
-
+	public Jukebox(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();
 
-		if (data.containsKey(NBT.BLOCK.COMMAND_BLOCK.COMMAND)) {
-			command = ((StringTag) data.get(NBT.BLOCK.COMMAND_BLOCK.COMMAND)).getValue();
+		if (data.containsKey(NBT.BLOCK.JUKEBOX.RECORD_ID)) {
+			record = ((IntTag) data.get(NBT.BLOCK.JUKEBOX.RECORD_ID)).getValue();
 		} else {
-			command = "";
+			record = 0;
 		}
 	}
 
-	public CommandBlock(String name, String command) {
-		super(name);
-		this.command = command;
-	}
-
-	public CommandBlock(String command) {
-		this(null, command);
+	public Jukebox(int record) {
+		this.record = record;
 	}
 
 	/**
-	 * Gets the command run by this command block
+	 * Gets whether or not this jukebox has a record
 	 */
-	public String getCommand() {
-		return command;
+	public boolean hasRecord() {
+		return record != 0;
+	}
+
+	/**
+	 * Gets the id of the record this jukebox is playing
+	 */
+	public int getRecordId() {
+		return record;
 	}
 
 	@Override
-	public void serialize(Map<String, Tag> map) {
+	protected void serialize(Map<String, Tag> map) {
 		super.serialize(map);
-		map.put(NBT.BLOCK.COMMAND_BLOCK.COMMAND, new StringTag(NBT.BLOCK.COMMAND_BLOCK.COMMAND, command));
+		if (hasRecord()) {
+			map.put(NBT.BLOCK.JUKEBOX.RECORD_ID, new IntTag(NBT.BLOCK.JUKEBOX.RECORD_ID, record));
+		}
 	}
 
 }
