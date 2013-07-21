@@ -44,9 +44,9 @@ import org.cubeville.hawkeye.session.Session;
 import org.cubeville.hawkeye.session.SessionManager;
 import org.cubeville.hawkeye.session.SimpleSessionFactory;
 import org.cubeville.hawkeye.session.SimpleSessionManager;
+import org.cubeville.hawkeye.sql.BoneCPDatabase;
 import org.cubeville.hawkeye.sql.Database;
 import org.cubeville.hawkeye.sql.DatabaseException;
-import org.cubeville.hawkeye.sql.MySqlDatabase;
 import org.cubeville.hawkeye.util.HawkEyeLogger;
 import org.cubeville.util.Chat;
 
@@ -113,7 +113,7 @@ public class HawkEyeEngine implements PluginEngine {
 		this.server = server;
 		this.config = config;
 
-		database = new MySqlDatabase(config.getString(Var.DB_PREFIX, "hawkeye"));
+		database = new BoneCPDatabase(config.getString(Var.DB_PREFIX, "hawkeye"));
 		consumer = new SimpleConsumer();
 
 		try {
