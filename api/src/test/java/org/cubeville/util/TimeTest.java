@@ -36,4 +36,32 @@ public class TimeTest {
 		TimeUtil.parseTime("8g");
 	}
 
+	@Test
+	public void testReadable() {
+		String expected;
+		int length;
+		int test;
+
+		expected = "3h27m ago";
+		length = 3 * TimeUtil.HOUR
+				+ 27 * TimeUtil.MINUTE
+				+ 32 * TimeUtil.SECOND;
+		test = TimeUtil.now() - length;
+
+		assertEquals(expected, TimeUtil.getReadable(test));
+
+		expected = "Just now";
+		length = 0;
+		test = TimeUtil.now();
+
+		assertEquals(expected, TimeUtil.getReadable(test));
+
+		expected = "23m50s ago";
+		length = 23 * TimeUtil.MINUTE
+				+ 50 * TimeUtil.SECOND;
+		test = TimeUtil.now() - length;
+
+		assertEquals(expected, TimeUtil.getReadable(test));
+	}
+
 }

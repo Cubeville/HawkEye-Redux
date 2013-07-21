@@ -89,6 +89,47 @@ public class TimeUtil {
 	}
 
 	/**
+	 * Converts a duration of time into a human readable format
+	 *
+	 * @param timestamp Unix timestamp to get a readable format of
+	 * @return Human readable time string (i.e. "15m ago")
+	 */
+	public static String getReadable(int timestamp) {
+		int duration = now() - timestamp;
+		StringBuilder time = new StringBuilder();
+
+		if (duration < DAY) {
+			int hours = duration / HOUR;
+			duration -= hours * HOUR;
+
+			int minutes = duration / MINUTE;
+			duration -= minutes * MINUTE;
+
+			int seconds = duration;
+
+			if (hours > 0) {
+				time.append(hours).append("h");
+			}
+
+			if (minutes > 0) {
+				time.append(minutes).append("m");
+			}
+
+			if (seconds > 0 && minutes <= 30 && hours == 0) {
+				time.append(seconds).append("s");
+			}
+
+			if (time.length() == 0) {
+				time.append("Just now");
+			} else {
+				time.append(" ago");
+			}
+		}
+
+		return time.toString();
+	}
+
+	/**
 	 * Parses a time string
 	 *
 	 * Time is specified in the format #y#mo#w#d#h#m#s, such that 3d8h is equal
