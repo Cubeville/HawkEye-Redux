@@ -20,6 +20,7 @@ package org.cubeville.hawkeye.search.callbacks;
 
 import java.util.List;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.search.Callback;
 import org.cubeville.hawkeye.session.Session;
@@ -40,7 +41,7 @@ public abstract class AbstractCallback implements Callback {
 	@Override
 	public void error(Exception e) {
 		session.getOwner().sendMessage("An error has occurred, unable to get search results.");
-		e.printStackTrace();
+		HawkEye.getLogger().error("Unable to get search results", e);
 	}
 
 }

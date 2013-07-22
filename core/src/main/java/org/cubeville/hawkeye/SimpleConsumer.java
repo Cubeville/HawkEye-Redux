@@ -141,7 +141,7 @@ public class SimpleConsumer implements Consumer {
 		} catch (FileNotFoundException e) {
 			HawkEye.getLogger().error("Unable to create data file", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			HawkEye.getLogger().error("Unable to create data file", e);
 		} finally {
 			try {
 				if (nbt != null) nbt.close();

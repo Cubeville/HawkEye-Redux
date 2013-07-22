@@ -210,10 +210,8 @@ public class SimpleCommandManager implements CommandManager {
 		// Execute command
 		try {
 			method.invoke(info.getRight(), sender, data);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
+		} catch (IllegalArgumentException ignore) {
+		} catch (IllegalAccessException ignore) {
 		} catch (InvocationTargetException e) {
 			if (e.getCause() instanceof CommandException) {
 				throw (CommandException) e.getCause();

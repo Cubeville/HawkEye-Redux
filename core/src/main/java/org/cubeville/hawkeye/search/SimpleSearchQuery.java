@@ -29,6 +29,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.CommandUsageException;
@@ -128,7 +129,7 @@ public class SimpleSearchQuery extends SearchQuery {
 		try {
 			stmt = new NamedParameterStatement(connection, sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			HawkEye.getLogger().error("Unable to create SQL statement", e);
 			return null;
 		}
 
