@@ -30,7 +30,6 @@ import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.lib.jnbt.ByteArrayTag;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.DoubleTag;
-import org.cubeville.lib.jnbt.IntTag;
 import org.cubeville.lib.jnbt.NBTInputStream;
 import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
@@ -95,17 +94,20 @@ public class EntryImporter implements Runnable {
 	private Entry createEntry(CompoundTag tag) {
 		Map<String, Tag> tags = tag.getValue();
 
-		int player = ((IntTag) tags.get("player_id")).getValue();
+		String player = ((StringTag) tags.get("player")).getValue();
 		String action = ((StringTag) tags.get("action")).getValue();
 		Timestamp date = Timestamp.valueOf(((StringTag) tags.get("date")).getValue());
-		int world = ((IntTag) tags.get("world")).getValue();
+		String world = ((StringTag) tags.get("world")).getValue();
 		double x = ((DoubleTag) tags.get("x")).getValue();
 		double y = ((DoubleTag) tags.get("y")).getValue();
 		double z = ((DoubleTag) tags.get("z")).getValue();
 		String data = ((StringTag) tags.get("data")).getValue();
 		byte[] nbt = ((ByteArrayTag) tags.get("nbt")).getValue();
 
-		DatabaseEntry entry = new DatabaseEntry(-1, player, action, date, world, x, y, z, data, nbt);
+		int playerId = HawkEye.getDataManager().getPlayerId(player);
+		int worldId = HawkEye.getDataManager().getWorldId(world);
+
+		DatabaseEntry entry = new DatabaseEntry(-1, playerId, action, date, worldId, x, y, z, data, nbt);
 		return entry.toEntry();
 	}
 

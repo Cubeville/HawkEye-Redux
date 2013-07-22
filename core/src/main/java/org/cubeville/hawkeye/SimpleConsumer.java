@@ -42,7 +42,6 @@ import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.lib.jnbt.ByteArrayTag;
 import org.cubeville.lib.jnbt.CompoundTag;
 import org.cubeville.lib.jnbt.DoubleTag;
-import org.cubeville.lib.jnbt.IntTag;
 import org.cubeville.lib.jnbt.NBTOutputStream;
 import org.cubeville.lib.jnbt.StringTag;
 import org.cubeville.lib.jnbt.Tag;
@@ -107,10 +106,10 @@ public class SimpleConsumer implements Consumer {
 				Entry entry = queue.poll();
 				Map<String, Tag> data = new HashMap<String, Tag>();
 
-				data.put("player_id", new IntTag("player_id", getPlayerId(entry.getPlayer())));
+				data.put("player", new StringTag("player", entry.getPlayer()));
 				data.put("action", new StringTag("action", entry.getAction().getName()));
 				data.put("date", new StringTag("date", entry.getTime().toString()));
-				data.put("world_id", new IntTag("world_id", getWorldId(entry.getLocation().getWorld().getName())));
+				data.put("world", new StringTag("world", entry.getLocation().getWorld().getName()));
 				data.put("x", new DoubleTag("x", entry.getLocation().getX()));
 				data.put("y", new DoubleTag("y", entry.getLocation().getY()));
 				data.put("z", new DoubleTag("z", entry.getLocation().getZ()));
