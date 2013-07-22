@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye;
 
+import java.util.logging.Logger;
+
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
@@ -30,6 +32,13 @@ public interface ServerInterface {
 	 * @return Server implementation
 	 */
 	ServerImplementation getImplementation();
+
+	/**
+	 * Gets the Logger used by the server
+	 *
+	 * @return Server logger
+	 */
+	Logger getServerLogger();
 
 	/**
 	 * Schedules a task to run on the main server thread

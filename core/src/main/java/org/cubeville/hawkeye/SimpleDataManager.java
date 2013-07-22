@@ -223,7 +223,6 @@ public class SimpleDataManager implements DataManager {
 			}
 		} catch (SQLException e) {
 			HawkEye.getLogger().error("Could not load worlds", e);
-			e.printStackTrace();
 		} finally {
 			close(conn);
 			close(ps);
@@ -251,7 +250,6 @@ public class SimpleDataManager implements DataManager {
 			}
 		} catch (SQLException e) {
 			HawkEye.getLogger().error("Could not load players", e);
-			e.printStackTrace();
 		} finally {
 			close(conn);
 			close(ps);

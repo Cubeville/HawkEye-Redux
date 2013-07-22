@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.bukkit;
 
+import java.util.logging.Logger;
+
 import org.bukkit.Server;
 
 import org.cubeville.hawkeye.AbstractServerInterface;
@@ -79,6 +81,11 @@ public class BukkitServer extends AbstractServerInterface {
 	@Override
 	public ServerImplementation getImplementation() {
 		return ServerImplementation.BUKKIT;
+	}
+
+	@Override
+	public Logger getServerLogger() {
+		return server.getLogger();
 	}
 
 	@Override

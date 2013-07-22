@@ -33,6 +33,7 @@ public class HawkEyeLogger extends Logger {
 
 	public HawkEyeLogger(PluginEngine engine) {
 		super(engine.getClass().getCanonicalName(), null);
+		setParent(engine.getServerInterface().getServerLogger());
 		setLevel(Level.ALL);
 	}
 
@@ -73,7 +74,7 @@ public class HawkEyeLogger extends Logger {
 	 */
 	private void printThrowable(Throwable t, boolean isCause) {
 		if (isCause) {
-			severe("Caused by: " + t.getClass().getName());
+			severe("Caused by: " + t.getClass().getName() + ": " + t.getMessage());
 		} else {
 			severe(t.getClass().getName() + ": " + t.getMessage());
 		}
