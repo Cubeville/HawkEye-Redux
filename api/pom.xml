@@ -12,14 +12,6 @@
     <version>2.0.0-SNAPSHOT</version>
   </parent>
 
-  <dependencies>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>${mysql-version}</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <finalName>${project.name}</finalName>
     <defaultGoal>clean package install</defaultGoal>

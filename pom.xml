@@ -40,13 +40,6 @@
     <!-- <module>impl/workbench</module> -->
   </modules>
 
-  <repositories>
-    <repository>
-      <id>sk89q-repo</id>
-      <url>http://maven.sk89q.com/repo</url>
-    </repository>
-  </repositories>
-
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
