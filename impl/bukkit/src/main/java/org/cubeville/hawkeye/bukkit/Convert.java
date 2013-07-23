@@ -38,6 +38,7 @@ import org.cubeville.hawkeye.bukkit.data.BukkitItemStack;
 import org.cubeville.hawkeye.bukkit.entity.BukkitPlayer;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
+import org.cubeville.hawkeye.entity.Entity;
 import org.cubeville.hawkeye.entity.EntityType;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.item.ItemData;
@@ -307,6 +308,17 @@ public class Convert {
 		}
 
 		return list;
+	}
+
+	/**
+	 * Entity
+	 */
+	public static Entity entity(org.bukkit.entity.Entity entity) {
+		EntityType type = entityType(entity.getType());
+
+		// TODO Entity data
+		if (type != null) return new Entity(type);
+		else return new Entity(entity.getType().getName());
 	}
 
 	/**

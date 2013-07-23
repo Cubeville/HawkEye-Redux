@@ -19,7 +19,14 @@
 package org.cubeville.hawkeye.bukkit.listeners;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -32,7 +39,10 @@ import org.cubeville.hawkeye.bukkit.HawkEyeListener;
 import org.cubeville.hawkeye.bukkit.HawkEyePlugin;
 import org.cubeville.hawkeye.model.ChatEntry;
 import org.cubeville.hawkeye.model.CommandEntry;
+import org.cubeville.hawkeye.model.PlayerDeathEntry;
+import org.cubeville.hawkeye.model.PlayerKillEntry;
 import org.cubeville.hawkeye.model.PlayerLogEntry;
+import org.cubeville.hawkeye.model.PlayerPvpDeathEntry;
 
 public class PlayerListener extends HawkEyeListener {
 
@@ -72,6 +82,54 @@ public class PlayerListener extends HawkEyeListener {
 		Location loc = player.getLocation();
 
 		log(new CommandEntry(player.getName(), Convert.location(loc), event.getMessage()));
+	}
+
+	@HawkEvent(action = {DefaultActions.PLAYER_DEATH_PVP, DefaultActions.PLAYER_DEATH_OTHER})
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		Player player = event.getEntity();
+		Entity killer = resolveDamager(player.getLastDamageCause());
+		Location loc = player.getLocation();
+
+		if (killer instanceof Player) {
+			// PVP Death
+			log(new PlayerPvpDeathEntry(player.getName(), Convert.location(loc), Convert.player((Player) killer)));
+		} else if (killer != null) {
+			// Other death
+			log(new PlayerDeathEntry(DefaultActions.PLAYER_DEATH_OTHER, player.getName(), Convert.location(loc), Convert.entity(killer)));
+		} else {
+			// TODO Non-entity kills
+			// Should be PlayerDeathEntry but I apparently made that an
+			// EntityEntry for some reason
+		}
+	}
+
+	@HawkEvent(action = DefaultActions.PLAYER_MOB_KILL)
+	public void onEntityDeath(EntityDeathEvent event) {
+		if (event.getEntityType() == EntityType.PLAYER) return;
+
+		Entity dead = event.getEntity();
+		Entity killer = resolveDamager(dead.getLastDamageCause());
+
+		if (killer instanceof Player) {
+			Player player = (Player) killer;
+			Location loc = player.getLocation();
+
+			log(new PlayerKillEntry(player.getName(), Convert.location(loc), Convert.entity(dead)));
+		}
+	}
+
+	private Entity resolveDamager(EntityDamageEvent event) {
+		Entity damager = null;
+
+		if (event instanceof EntityDamageByEntityEvent) {
+			damager = ((EntityDamageByEntityEvent) event).getDamager();
+		}
+
+		if (damager instanceof Projectile) {
+			damager = ((Projectile) damager).getShooter();
+		}
+
+		return damager;
 	}
 
 }
