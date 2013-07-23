@@ -28,6 +28,7 @@ import org.bukkit.plugin.PluginManager;
 
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.HawkEye;
+import org.cubeville.hawkeye.model.Entry;
 
 public abstract class HawkEyeListener implements Listener {
 
@@ -35,6 +36,10 @@ public abstract class HawkEyeListener implements Listener {
 
 	public HawkEyeListener(HawkEyePlugin plugin) {
 		this.plugin = plugin;
+	}
+
+	protected final void log(Entry entry) {
+		HawkEye.getConsumer().addEntry(entry);
 	}
 
 	public final void registerEvents() {

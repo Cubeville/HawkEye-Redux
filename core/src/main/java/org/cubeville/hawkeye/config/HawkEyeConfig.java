@@ -55,16 +55,21 @@ public class HawkEyeConfig extends YamlConfiguration implements PluginConfig {
 		}
 	}
 
+	/**
+	 * Checks the config for an action and adds it if it isn't defined
+	 *
+	 * @param action Action to check
+	 */
+	private void process(Action action) {
+		String name = action.getName();
+		actions.put(name, getBoolean("logging." + name, true));
+	}
+
 	@Override
 	public boolean isLogging(Action action) {
 		String name = action.getName();
 		if (!actions.containsKey(name)) process(action);
 		return actions.get(name);
-	}
-
-	private void process(Action action) {
-		String name = action.getName();
-		actions.put(name, getBoolean("logging." + name, true));
 	}
 
 	/**
@@ -91,7 +96,7 @@ public class HawkEyeConfig extends YamlConfiguration implements PluginConfig {
 
 		IGNORED_WORLDS("general.ignored.worlds", Arrays.asList(new String[]{"ignored-world", "also-ignored"})),
 		IGNORED_PLAYERS("general.ignored.players", Collections.emptySet()),
-		IGNORED_COMMANDS("general.ignored.commands", Arrays.asList(new String[]{"ignoredcmd", "ignoreme"}));
+		IGNORED_COMMANDS("general.ignored.commands", Arrays.asList(new String[]{"/ignoredcmd", "/ignoreme"}));
 
 		private final String path;
 		private final Object def;

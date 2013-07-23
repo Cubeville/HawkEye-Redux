@@ -32,6 +32,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.cubeville.hawkeye.HawkEyeEngine;
 import org.cubeville.hawkeye.PluginEngine;
 import org.cubeville.hawkeye.bukkit.entity.BukkitPlayer;
+import org.cubeville.hawkeye.bukkit.listeners.PlayerListener;
 import org.cubeville.hawkeye.config.HawkEyeConfig;
 import org.cubeville.util.StringUtil;
 
@@ -62,8 +63,8 @@ public class HawkEyePlugin extends JavaPlugin implements Listener {
 		engine = new HawkEyeEngine(server, config);
 
 		getServer().getPluginManager().registerEvents(this, this);
-		// TODO Custom event registration based on events logged in config
-		// a la HawkEye v1
+
+		new PlayerListener(this).registerEvents();
 	}
 
 	@Override

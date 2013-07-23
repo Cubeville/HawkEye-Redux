@@ -58,9 +58,24 @@ public class SimpleConsumer implements Consumer {
 
 	public SimpleConsumer() {
 		PluginConfig config = HawkEye.getConfig();
-		ignoredWorlds = Collections.unmodifiableList(config.getStringList(Var.IGNORED_WORLDS, new ArrayList<String>()));
-		ignoredPlayers = Collections.unmodifiableList(config.getStringList(Var.IGNORED_PLAYERS, new ArrayList<String>()));
-		ignoredCommands = Collections.unmodifiableList(config.getStringList(Var.IGNORED_COMMANDS, new ArrayList<String>()));
+
+		List<String> tmp = new ArrayList<String>();
+		for (String s : config.getStringList(Var.IGNORED_WORLDS)) {
+			tmp.add(s.toLowerCase());
+		}
+		ignoredWorlds = Collections.unmodifiableList(tmp);
+
+		tmp.clear();
+		for (String s : config.getStringList(Var.IGNORED_PLAYERS)) {
+			tmp.add(s.toLowerCase());
+		}
+		ignoredPlayers = Collections.unmodifiableList(tmp);
+
+		tmp.clear();
+		for (String s : config.getStringList(Var.IGNORED_COMMANDS)) {
+			tmp.add(s.toLowerCase());
+		}
+		ignoredCommands = Collections.unmodifiableList(tmp);
 	}
 
 	@Override

@@ -109,9 +109,9 @@ public class HawkEyeEngine implements PluginEngine {
 
 	public HawkEyeEngine(ServerInterface server, PluginConfig config) {
 		HawkEye.setEngine(this);
-		logger = new HawkEyeLogger(this);
 		this.server = server;
 		this.config = config;
+		logger = new HawkEyeLogger(this);
 
 		database = new BoneCPDatabase(config.getString(Var.DB_PREFIX, "hawkeye"));
 		consumer = new SimpleConsumer();
