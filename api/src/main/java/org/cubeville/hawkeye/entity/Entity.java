@@ -84,7 +84,7 @@ public class Entity {
 
 	@Override
 	public String toString() {
-		return String.valueOf(type);
+		return type;
 	}
 
 }
