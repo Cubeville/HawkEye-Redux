@@ -32,4 +32,9 @@ public class BlockBucketEntry extends AbstractBlockEntry {
 		super(action, player, location, old, liquid);
 	}
 
+	@Override
+	public String getOutput() {
+		return super.format(getNewBlockState());
+	}
+
 }

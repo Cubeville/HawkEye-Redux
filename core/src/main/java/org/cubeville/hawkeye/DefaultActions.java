@@ -105,11 +105,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player used lava bucket
 	 */
-	LAVA_BUCKET(BlockBucketEntry.class, "lava-place"), // TODO
+	LAVA_BUCKET(BlockBucketEntry.class, "lava-place"),
 	/**
 	 * Player used water bucket
 	 */
-	WATER_BUCKET(BlockBucketEntry.class, "water-place"), // TODO
+	WATER_BUCKET(BlockBucketEntry.class, "water-place"),
 	/**
 	 * Player used flint & steel
 	 */
