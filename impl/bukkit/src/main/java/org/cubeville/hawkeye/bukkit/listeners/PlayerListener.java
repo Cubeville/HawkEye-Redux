@@ -22,6 +22,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.bukkit.Convert;
@@ -30,11 +32,30 @@ import org.cubeville.hawkeye.bukkit.HawkEyeListener;
 import org.cubeville.hawkeye.bukkit.HawkEyePlugin;
 import org.cubeville.hawkeye.model.ChatEntry;
 import org.cubeville.hawkeye.model.CommandEntry;
+import org.cubeville.hawkeye.model.PlayerLogEntry;
 
 public class PlayerListener extends HawkEyeListener {
 
 	public PlayerListener(HawkEyePlugin plugin) {
 		super(plugin);
+	}
+
+	@HawkEvent(action = DefaultActions.PLAYER_JOIN)
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		Player player = event.getPlayer();
+		Location loc = player.getLocation();
+		String ip = player.getAddress().getAddress().getHostAddress();
+
+		log(new PlayerLogEntry(DefaultActions.PLAYER_JOIN, player.getName(), Convert.location(loc), ip));
+	}
+
+	@HawkEvent(action = DefaultActions.PLAYER_QUIT)
+	public void onPlayerQuit(PlayerQuitEvent event) {
+		Player player = event.getPlayer();
+		Location loc = player.getLocation();
+		String ip = player.getAddress().getAddress().getHostAddress();
+
+		log(new PlayerLogEntry(DefaultActions.PLAYER_QUIT, player.getName(), Convert.location(loc), ip));
 	}
 
 	@HawkEvent(action = DefaultActions.PLAYER_CHAT)
