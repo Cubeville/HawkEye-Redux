@@ -31,6 +31,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -142,6 +143,15 @@ public class PlayerListener extends HawkEyeListener {
 		ItemStack item = event.getItemDrop().getItemStack();
 
 		log(new PlayerItemEntry(DefaultActions.PLAYER_ITEM_DROP, player.getName(), Convert.location(loc), Convert.itemStack(item)));
+	}
+
+	@HawkEvent(action = DefaultActions.PLAYER_ITEM_PICKUP)
+	public void onPlayerPickupItem(PlayerPickupItemEvent event) {
+		Player player = event.getPlayer();
+		Location loc = player.getLocation();
+		ItemStack item = event.getItem().getItemStack();
+
+		log(new PlayerItemEntry(DefaultActions.PLAYER_ITEM_PICKUP, player.getName(), Convert.location(loc), Convert.itemStack(item)));
 	}
 
 }
