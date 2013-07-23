@@ -133,16 +133,31 @@ public class BlockState {
 	}
 
 	@Override
+	public int hashCode() {
+		int hash = 1;
+
+		hash = 31 * hash + id;
+		hash = 31 * hash + data;
+
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (!(obj instanceof BlockState)) return false;
+		BlockState other = (BlockState) obj;
+
+		if (id != other.id) return false;
+		if (data != other.data) return false;
+		// TODO Compare block data
+
+		return true;
+	}
+
+	@Override
 	public String toString() {
-		StringBuilder ret = new StringBuilder();
-
-		Item type = getType();
-		if (type != null) {
-			ret.append(type.toString());
-		} else {
-			ret.append(id);
-		}
-
+		StringBuilder ret = new StringBuilder().append(id);
 		if (data != 0) ret.append(":").append(data);
 		return ret.toString();
 	}

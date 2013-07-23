@@ -18,9 +18,14 @@
 
 package org.cubeville.hawkeye.commands;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.Command;
 import org.cubeville.hawkeye.command.CommandData;
+import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandSender;
+import org.cubeville.hawkeye.search.SearchQuery;
+import org.cubeville.hawkeye.search.callbacks.RollbackCallback;
+import org.cubeville.hawkeye.session.Session;
 
 public class RollbackCommands {
 
@@ -29,8 +34,14 @@ public class RollbackCommands {
 			usage = "/hawkeye rollback <parameters>",
 			description = "Rolls back changes",
 			min = 1)
-	public void rollback(CommandSender sender, CommandData data) {
+	public void rollback(CommandSender sender, CommandData data) throws CommandException {
+		Session session = HawkEye.getSessionManager().getSession(sender);
+		String params = data.getFullString(0);
 
+		SearchQuery query = HawkEye.getQueryManager().createQuery(sender, params, new RollbackCallback(session));
+		HawkEye.getServerInterface().scheduleAsyncTask(1L, query);
+
+		sender.sendMessage("&cSearching for records to rollback...");
 	}
 
 	@Command(command = "hawkeye preview rollback",

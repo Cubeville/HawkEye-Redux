@@ -34,7 +34,7 @@ public class BlockBreakEntry extends AbstractBlockEntry {
 
 	@Override
 	public String getOutput() {
-		return getOldBlockState().toString();
+		return super.format(getOldBlockState());
 	}
 
 }

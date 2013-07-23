@@ -126,4 +126,19 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 		return false;
 	}
 
+	protected String format(BlockState state) {
+		StringBuilder output = new StringBuilder();
+
+		Item type = state.getType();
+		if (type != null) {
+			output.append(type.toString());
+		} else {
+			output.append(state.getTypeId());
+		}
+
+		if (state.getData() != 0) output.append(":").append(state.getData());
+
+		return output.toString();
+	}
+
 }

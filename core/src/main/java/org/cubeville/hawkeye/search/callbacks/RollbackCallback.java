@@ -23,6 +23,7 @@ import java.util.List;
 import org.cubeville.hawkeye.editor.Rollback;
 import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.hawkeye.session.Session;
+import org.cubeville.util.Chat;
 
 public class RollbackCallback extends AbstractCallback {
 
@@ -33,6 +34,11 @@ public class RollbackCallback extends AbstractCallback {
 	@Override
 	public void execute(List<Entry> results) {
 		super.execute(results);
+
+		if (results.size() == 0) {
+			session.sendMessage(Chat.RED + "No records found to rollback.");
+			return;
+		}
 
 		new Rollback(session).start();
 	}

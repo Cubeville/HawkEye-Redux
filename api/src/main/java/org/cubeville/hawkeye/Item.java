@@ -546,7 +546,7 @@ public enum Item {
 		try {
 			return getById(Integer.parseInt(input));
 		} catch (NumberFormatException e) {
-			input = input.trim().toLowerCase().replace("[ -_]", "");
+			input = input.trim().toLowerCase().replaceAll("[ -_]", "");
 			return nameMap.containsKey(input) ? nameMap.get(input) : null;
 		}
 	}

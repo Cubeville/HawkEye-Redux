@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.editor;
 
 import org.cubeville.hawkeye.session.Session;
+import org.cubeville.util.Chat;
 
 public class Rollback extends WorldEditor {
 
@@ -28,14 +29,12 @@ public class Rollback extends WorldEditor {
 
 	@Override
 	public void onStart() {
-		// TODO Auto-generated method stub
-
+		session.sendMessage(Chat.RED + "Attempting to rollback " + session.getSearchResults().size() + " records...");
 	}
 
 	@Override
 	public void onComplete() {
-		// TODO Auto-generated method stub
-
+		session.sendMessage(Chat.RED + "Rolled back " + count + " records.");
 	}
 
 }

@@ -58,14 +58,12 @@ public class BukkitWorld implements World {
 
 	@Override
 	public Block getBlockAt(double x, double y, double z) {
-		// TODO Auto-generated method stub
-		return null;
+		return Convert.block(world.getBlockAt((int) x, (int) y, (int) z));
 	}
 
 	@Override
 	public Block getBlockAt(int x, int y, int z) {
-		// TODO Auto-generated method stub
-		return null;
+		return Convert.block(world.getBlockAt(x, y, z));
 	}
 
 	@Override

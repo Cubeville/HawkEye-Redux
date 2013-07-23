@@ -57,14 +57,12 @@ public class BukkitBlock extends Block {
 
 	@Override
 	public BlockState getState() {
-		// TODO Auto-generated method stub
-		return null;
+		return Convert.blockState(block.getState());
 	}
 
 	@Override
 	public void setState(BlockState state) {
-		// TODO Auto-generated method stub
-
+		block.setTypeIdAndData(state.getTypeId(), state.getData(), true);
 	}
 
 	@Override

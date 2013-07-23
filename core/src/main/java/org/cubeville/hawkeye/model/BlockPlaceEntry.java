@@ -34,7 +34,7 @@ public class BlockPlaceEntry extends AbstractBlockEntry {
 
 	@Override
 	public String getOutput() {
-		return getNewBlockState().toString();
+		return super.format(getNewBlockState());
 	}
 
 }
