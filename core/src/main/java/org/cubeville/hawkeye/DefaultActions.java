@@ -57,11 +57,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Hanging entity (painting, item frame) broken
 	 */
-	HANGING_BREAK(HangingBreakEntry.class, "painting-break"),
+	HANGING_BREAK(HangingBreakEntry.class, "painting-break"), // TODO
 	/**
 	 * Hanging entity (painting, item frame) placed
 	 */
-	HANGING_PLACE(HangingPlaceEntry.class, "painting-place"),
+	HANGING_PLACE(HangingPlaceEntry.class, "painting-place"), // TODO
 	/**
 	 * Player login
 	 */
@@ -97,7 +97,7 @@ public enum DefaultActions implements Action {
 	/**
 	 * Items dropped on death
 	 */
-	PLAYER_DEATH_ITEMS(PlayerItemEntry.class, "item-death"),
+	PLAYER_DEATH_ITEMS(PlayerItemEntry.class, "item-death"), // TODO
 	/**
 	 * Player killed a mob
 	 */
@@ -105,88 +105,88 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player used lava bucket
 	 */
-	LAVA_BUCKET(BlockBucketEntry.class, "lava-place"),
+	LAVA_BUCKET(BlockBucketEntry.class, "lava-place"), // TODO
 	/**
 	 * Player used water bucket
 	 */
-	WATER_BUCKET(BlockBucketEntry.class, "water-place"),
+	WATER_BUCKET(BlockBucketEntry.class, "water-place"), // TODO
 	/**
 	 * Player used flint & steel
 	 */
-	FLINT_AND_STEEL(BlockFireEntry.class, "lighter", "flint-steel"),
+	FLINT_AND_STEEL(BlockFireEntry.class, "lighter", "flint-steel"), // TODO
 	/**
 	 * Player interacted with door
 	 */
-	INTERACT_DOOR(PlayerInteractEntry.class, "door"),
+	INTERACT_DOOR(PlayerInteractEntry.class, "door"), // TODO
 	/**
 	 * Player interacted with lever
 	 */
-	INTERACT_LEVER(PlayerInteractEntry.class, "lever"),
+	INTERACT_LEVER(PlayerInteractEntry.class, "lever"), // TODO
 	/**
 	 * Player (or arrow) interacted with button
 	 */
-	INTERACT_BUTTON(PlayerInteractEntry.class, "button"),
+	INTERACT_BUTTON(PlayerInteractEntry.class, "button"), // TODO
 	/**
 	 * Player ate cake
 	 */
-	CAKE_EAT(PlayerInteractEntry.class, "eat-cake"),
+	CAKE_EAT(PlayerInteractEntry.class, "eat-cake"), // TODO
 	/**
 	 * Putting item in an inventory (chest, furnace, dispenser, etc)
 	 */
-	INVENTORY_ADD(PlayerItemEntry.class, "item-deposit"),
+	INVENTORY_ADD(PlayerItemEntry.class, "item-deposit"), // TODO
 	/**
 	 * Taking an item from an inventory
 	 */
-	INVENTORY_TAKE(PlayerItemEntry.class, "item-take"),
+	INVENTORY_TAKE(PlayerItemEntry.class, "item-take"), // TODO
 	/**
 	 * Creeper explosion
 	 */
-	EXPLOSION_CREEPER(BlockExplosionEntry.class, "creeper", "creeper-explode"),
+	EXPLOSION_CREEPER(BlockExplosionEntry.class, "creeper", "creeper-explode"), // TODO
 	/**
 	 * TNT explosion
 	 */
-	EXPLOSION_TNT(BlockExplosionEntry.class, "tnt", "tnt-explode"),
+	EXPLOSION_TNT(BlockExplosionEntry.class, "tnt", "tnt-explode"), // TODO
 	/**
 	 * Ghast explosion
 	 */
-	EXPLOSION_GHAST(BlockExplosionEntry.class, "ghast", "ghast-explode"),
+	EXPLOSION_GHAST(BlockExplosionEntry.class, "ghast", "ghast-explode"), // TODO
 	/**
 	 * Miscellaneous explosion
 	 */
-	EXPLOSION_OTHER(BlockExplosionEntry.class, "explosion"),
+	EXPLOSION_OTHER(BlockExplosionEntry.class, "explosion"), // TODO
 	/**
 	 * Block fade (i.e. snow melt, leaf decay, ice melt)
 	 */
-	BLOCK_FADE(BlockModifyEntry.class, "melt", "decay"),
+	BLOCK_FADE(BlockModifyEntry.class, "melt", "decay"), // TODO
 	/**
 	 * Block form (i.e. snow/ice forming)
 	 */
-	BLOCK_FORM(BlockModifyEntry.class, "form"),
+	BLOCK_FORM(BlockModifyEntry.class, "form"), // TODO
 	/**
 	 * Crop growth
 	 */
-	BLOCK_GROW(BlockModifyEntry.class, "grow"),
+	BLOCK_GROW(BlockModifyEntry.class, "grow"), // TODO
 	/**
 	 * Block moved by piston
 	 */
-	BLOCK_PISTON(BlockPistonEntry.class, "piston"),
+	BLOCK_PISTON(BlockPistonEntry.class, "piston"), // TODO
 	/**
 	 * Block spread (i.e. mushroom growth/fire spread)
 	 */
-	BLOCK_SPREAD(BlockModifyEntry.class, "spread"),
+	BLOCK_SPREAD(BlockModifyEntry.class, "spread"), // TODO
 	/**
 	 * Block changed by entity (i.e. enderman moving blocks, zombie breaking
 	 * doors, snow golems leaving snow, wither, etc)
 	 */
-	ENTITY_BLOCK_MODIFY(BlockEntityEntry.class, "entity-modify", "enderman"),
+	ENTITY_BLOCK_MODIFY(BlockEntityEntry.class, "entity-modify", "enderman"), // TODO
 	/**
 	 * Structure grown (tree/mushroom) naturally
 	 */
-	STRUCTURE_GROW(BlockGrowEntry.class, "grow"),
+	STRUCTURE_GROW(BlockGrowEntry.class, "grow"), // TODO
 	/**
 	 * Structure grown by bonemeal
 	 */
-	STRUCTURE_BONEMEAL(BlockGrowEntry.class, "bonemeal");
+	STRUCTURE_BONEMEAL(BlockGrowEntry.class, "bonemeal"); // TODO
 
 	/**
 	 * Log entry data class

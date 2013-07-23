@@ -134,9 +134,17 @@ public class BlockState {
 
 	@Override
 	public String toString() {
-		String ret = String.valueOf(id);
-		if (data != 0) ret += ":" + String.valueOf(data);
-		return ret;
+		StringBuilder ret = new StringBuilder();
+
+		Item type = getType();
+		if (type != null) {
+			ret.append(type.toString());
+		} else {
+			ret.append(id);
+		}
+
+		if (data != 0) ret.append(":").append(data);
+		return ret.toString();
 	}
 
 }

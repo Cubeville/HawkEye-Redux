@@ -32,4 +32,9 @@ public class BlockBreakEntry extends AbstractBlockEntry {
 		super(DefaultActions.BLOCK_BREAK, player, location, broken, BlockState.NOTHING);
 	}
 
+	@Override
+	public String getOutput() {
+		return getOldBlockState().toString();
+	}
+
 }

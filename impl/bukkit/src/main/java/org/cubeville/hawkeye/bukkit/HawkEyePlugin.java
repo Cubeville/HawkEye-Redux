@@ -32,6 +32,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.cubeville.hawkeye.HawkEyeEngine;
 import org.cubeville.hawkeye.PluginEngine;
 import org.cubeville.hawkeye.bukkit.entity.BukkitPlayer;
+import org.cubeville.hawkeye.bukkit.listeners.BlockListener;
 import org.cubeville.hawkeye.bukkit.listeners.PlayerListener;
 import org.cubeville.hawkeye.config.HawkEyeConfig;
 import org.cubeville.util.StringUtil;
@@ -66,6 +67,7 @@ public class HawkEyePlugin extends JavaPlugin implements Listener {
 
 		getServer().getPluginManager().registerEvents(this, this);
 
+		new BlockListener(this).registerEvents();
 		new PlayerListener(this).registerEvents();
 	}
 

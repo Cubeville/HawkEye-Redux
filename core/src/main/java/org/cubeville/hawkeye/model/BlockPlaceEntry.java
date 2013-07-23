@@ -32,4 +32,9 @@ public class BlockPlaceEntry extends AbstractBlockEntry {
 		super(DefaultActions.BLOCK_PLACE, player, location, old, placed);
 	}
 
+	@Override
+	public String getOutput() {
+		return getNewBlockState().toString();
+	}
+
 }
