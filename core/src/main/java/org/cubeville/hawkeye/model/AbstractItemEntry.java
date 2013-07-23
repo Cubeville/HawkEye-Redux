@@ -57,4 +57,10 @@ public class AbstractItemEntry extends AbstractEntry implements ItemEntry {
 		return nbt;
 	}
 
+	@Override
+	public String getOutput() {
+		// Change amount indicator to x for readability
+		return item.toString().replace("@", "x");
+	}
+
 }

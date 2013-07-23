@@ -18,12 +18,17 @@
 
 package org.cubeville.hawkeye;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.cubeville.hawkeye.block.BlockData;
 import org.cubeville.hawkeye.block.data.CommandBlock;
 import org.cubeville.hawkeye.block.data.Sign;
 import org.cubeville.hawkeye.block.data.Skull;
+import org.cubeville.hawkeye.item.ItemData;
+import org.cubeville.hawkeye.item.data.BaseItemData;
 import org.cubeville.hawkeye.item.data.BookItemData;
 import org.cubeville.hawkeye.item.data.ColoredArmorItemData;
 import org.cubeville.hawkeye.item.data.EnchantmentStorageItemData;
@@ -33,6 +38,7 @@ import org.cubeville.hawkeye.item.data.MapItemData;
 import org.cubeville.hawkeye.item.data.MobHeadItemData;
 import org.cubeville.hawkeye.item.data.PotionItemData;
 import org.cubeville.hawkeye.model.NBTSerializable;
+import org.cubeville.lib.jnbt.CompoundTag;
 
 public enum Item {
 
@@ -395,6 +401,8 @@ public enum Item {
 	 */
 	private final Class<? extends NBTSerializable> dataClass;
 
+	private final Constructor<? extends NBTSerializable> constructor;
+
 	/**
 	 * Mapping of ids to item for quick access
 	 */
@@ -420,7 +428,24 @@ public enum Item {
 	private Item(int id, int flags, Class<? extends NBTSerializable> dataClass) {
 		this.id = (short) id;
 		this.flags = flags;
+
+		if (dataClass == null && ItemType.isItem(id)) dataClass = BaseItemData.class;
 		this.dataClass = dataClass;
+
+		Constructor<? extends NBTSerializable> tmp = null;
+
+		if (dataClass != null) {
+			try {
+				tmp = dataClass.getConstructor(CompoundTag.class);
+				tmp.setAccessible(true);
+			} catch (SecurityException e) {
+				HawkEye.getLogger().error("Could not get CompoundTag constructor for " + dataClass.getCanonicalName(), e);
+			} catch (NoSuchMethodException e) {
+				HawkEye.getLogger().error("Could not get CompoundTag constructor for " + dataClass.getCanonicalName(), e);
+			}
+		}
+
+		constructor = tmp;
 	}
 
 	/**
@@ -433,19 +458,72 @@ public enum Item {
 	}
 
 	/**
+	 * Gets whether or not this item has an attribute
+	 */
+	public boolean hasAttribute(int attribute) {
+		return (flags & attribute) == attribute;
+	}
+
+	/**
 	 * Gets whether or not this item stores custom item data
 	 *
 	 * @return True if item has custom data to store, false if not
 	 */
 	public boolean hasItemData() {
-		return dataClass != null;
+		return dataClass != null && ItemData.class.isAssignableFrom(dataClass);
 	}
 
 	/**
-	 * Gets whether or not this item has an attribute
+	 * Constructs item data from a serialized NBT tag
+	 *
+	 * @param tag NBT Tag to reconstruct from
+	 * @return ItemData or null if unable to reconstruct
 	 */
-	public boolean hasAttribute(int attribute) {
-		return (flags & attribute) == attribute;
+	public ItemData getItemData(CompoundTag tag) {
+		if (!ItemData.class.isAssignableFrom(dataClass)) return null;
+		if (constructor == null) return null;
+
+		try {
+			return (ItemData) constructor.newInstance(tag);
+		} catch (IllegalArgumentException ignore) {
+		} catch (InstantiationException ignore) {
+		} catch (IllegalAccessException ignore) {
+		} catch (InvocationTargetException e) {
+			HawkEye.getLogger().error("Error reconstructing item data '" + toString() + "'", e);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Gets whether or not this item stores custom block data
+	 *
+	 * @return True if block has custom data to store, false if not
+	 */
+	public boolean hasBlockData() {
+		return dataClass != null && BlockData.class.isAssignableFrom(dataClass);
+	}
+
+	/**
+	 * Constructs block data from a serialized NBT tag
+	 *
+	 * @param tag NBT Tag to reconstruct from
+	 * @return BlockData or null if unable to reconstruct
+	 */
+	public BlockData getBlockData(CompoundTag tag) {
+		if (!BlockData.class.isAssignableFrom(dataClass)) return null;
+		if (constructor == null) return null;
+
+		try {
+			return (BlockData) constructor.newInstance(tag);
+		} catch (IllegalArgumentException ignore) {
+		} catch (InstantiationException ignore) {
+		} catch (IllegalAccessException ignore) {
+		} catch (InvocationTargetException e) {
+			HawkEye.getLogger().error("Error reconstructing block data '" + toString() + "'", e);
+		}
+
+		return null;
 	}
 
 	/**

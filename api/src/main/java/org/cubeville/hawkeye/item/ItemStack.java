@@ -20,6 +20,8 @@ package org.cubeville.hawkeye.item;
 
 import org.cubeville.hawkeye.Item;
 import org.cubeville.hawkeye.item.data.BaseItemData;
+import org.cubeville.lib.jnbt.CompoundTag;
+import org.cubeville.lib.jnbt.NBTUtils;
 
 /**
  * Represents a stack of items
@@ -122,8 +124,8 @@ public class ItemStack {
 		this.durability = durability;
 
 		if (nbt != null && nbt.length > 0) {
-			// TODO Get real item data
-			this.data = new BaseItemData(null, null, null);
+			CompoundTag tag = (CompoundTag) NBTUtils.fromByteArray(nbt);
+			this.data = getType().getItemData(tag);
 		} else {
 			this.data = new BaseItemData(null, null, null);
 		}
@@ -180,10 +182,10 @@ public class ItemStack {
 
 	@Override
 	public String toString() {
-		String ret = String.valueOf(id);
-		if (durability != 0) ret += ":" + String.valueOf(durability);
-		if (amount != 0) ret += "@" + String.valueOf(amount);
-		return ret;
+		StringBuilder ret = new StringBuilder().append(id);
+		if (durability != 0) ret.append(":").append(durability);
+		if (amount > 1) ret.append("@").append(amount);
+		return ret.toString();
 	}
 
 }

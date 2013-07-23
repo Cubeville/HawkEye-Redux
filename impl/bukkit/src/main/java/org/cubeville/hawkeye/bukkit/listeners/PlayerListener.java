@@ -29,8 +29,10 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.bukkit.Convert;
@@ -40,6 +42,7 @@ import org.cubeville.hawkeye.bukkit.HawkEyePlugin;
 import org.cubeville.hawkeye.model.ChatEntry;
 import org.cubeville.hawkeye.model.CommandEntry;
 import org.cubeville.hawkeye.model.PlayerDeathEntry;
+import org.cubeville.hawkeye.model.PlayerItemEntry;
 import org.cubeville.hawkeye.model.PlayerKillEntry;
 import org.cubeville.hawkeye.model.PlayerLogEntry;
 import org.cubeville.hawkeye.model.PlayerPvpDeathEntry;
@@ -130,6 +133,15 @@ public class PlayerListener extends HawkEyeListener {
 		}
 
 		return damager;
+	}
+
+	@HawkEvent(action = DefaultActions.PLAYER_ITEM_DROP)
+	public void onPlayerDropItem(PlayerDropItemEvent event) {
+		Player player = event.getPlayer();
+		Location loc = player.getLocation();
+		ItemStack item = event.getItemDrop().getItemStack();
+
+		log(new PlayerItemEntry(DefaultActions.PLAYER_ITEM_DROP, player.getName(), Convert.location(loc), Convert.itemStack(item)));
 	}
 
 }
