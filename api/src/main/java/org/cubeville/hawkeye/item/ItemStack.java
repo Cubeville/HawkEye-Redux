@@ -182,7 +182,15 @@ public class ItemStack {
 
 	@Override
 	public String toString() {
-		StringBuilder ret = new StringBuilder().append(id);
+		StringBuilder ret = new StringBuilder();
+
+		Item type = getType();
+		if (type != null) {
+			ret.append(type.toString());
+		} else {
+			ret.append(id);
+		}
+
 		if (durability != 0) ret.append(":").append(durability);
 		if (amount > 1) ret.append("@").append(amount);
 		return ret.toString();
