@@ -33,8 +33,7 @@ public class PlayerInteractEntry extends AbstractInteractEntry {
 
 	@Override
 	public String getData() {
-		// TODO Auto-generated method stub
-		return null;
+		return getAction().getName();
 	}
 
 }

@@ -112,15 +112,15 @@ public enum DefaultActions implements Action {
 	/**
 	 * Player interacted with door
 	 */
-	INTERACT_DOOR(PlayerInteractEntry.class, "door"), // TODO
+	INTERACT_DOOR(PlayerInteractEntry.class, "door"),
 	/**
 	 * Player interacted with lever
 	 */
-	INTERACT_LEVER(PlayerInteractEntry.class, "lever"), // TODO
+	INTERACT_LEVER(PlayerInteractEntry.class, "lever"),
 	/**
 	 * Player (or arrow) interacted with button
 	 */
-	INTERACT_BUTTON(PlayerInteractEntry.class, "button"), // TODO
+	INTERACT_BUTTON(PlayerInteractEntry.class, "button"),
 	/**
 	 * Player ate cake
 	 */
