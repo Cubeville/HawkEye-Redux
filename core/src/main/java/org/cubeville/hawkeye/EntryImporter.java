@@ -55,6 +55,7 @@ public class EntryImporter implements Runnable {
 				Tag tag = readFile(file);
 				if (!(tag instanceof CompoundTag)) return;
 				readTag((CompoundTag) tag);
+				file.delete();
 			}
 		}
 	}

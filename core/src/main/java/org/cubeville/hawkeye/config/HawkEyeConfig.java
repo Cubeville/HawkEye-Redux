@@ -95,7 +95,7 @@ public class HawkEyeConfig extends YamlConfiguration implements PluginConfig {
 		DEFAULT_HERE_RADIUS("general.here-radius", 5),
 
 		IGNORED_WORLDS("general.ignored.worlds", Arrays.asList(new String[]{"ignored-world", "also-ignored"})),
-		IGNORED_PLAYERS("general.ignored.players", Collections.emptySet()),
+		IGNORED_PLAYERS("general.ignored.players", Collections.emptyList()),
 		IGNORED_COMMANDS("general.ignored.commands", Arrays.asList(new String[]{"/ignoredcmd", "/ignoreme"}));
 
 		private final String path;
