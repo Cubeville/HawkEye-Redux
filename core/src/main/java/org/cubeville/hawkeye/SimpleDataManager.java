@@ -46,6 +46,11 @@ public class SimpleDataManager implements DataManager {
 	private final Map<String, Action> actions = new CaseInsensitiveMap<Action>();
 
 	/**
+	 * Map containing action aliases
+	 */
+	private final Map<String, Action> aliases = new CaseInsensitiveMap<Action>();
+
+	/**
 	 * Map containing player ids and their names
 	 */
 	private final Map<Integer, String> players = new HashMap<Integer, String>();
@@ -71,8 +76,12 @@ public class SimpleDataManager implements DataManager {
 	private final LRUCache<Integer, Entry> entryCache = new LRUCache<Integer, Entry>(5000);
 
 	public SimpleDataManager() {
-		for (Action action : DefaultActions.values()) {
+		for (DefaultActions action : DefaultActions.values()) {
 			registerAction(action);
+
+			for (String alias : action.getAliases()) {
+				registerActionAlias(action, alias);
+			}
 		}
 
 		if (HawkEye.getDatabase().hasConnection()) {
@@ -88,15 +97,29 @@ public class SimpleDataManager implements DataManager {
 
 	@Override
 	public Action getAction(String name) {
-		return actions.get(name);
+		if (actions.containsKey(name)) return actions.get(name);
+		if (aliases.containsKey(name)) return aliases.get(name);
+		return null;
 	}
 
 	@Override
 	public boolean registerAction(Action action) {
-		String name = action.getName().toLowerCase();
+		String name = action.getName();
 		if (actions.containsKey(name)) return false;
 
+		// Real names overwrite aliases
+		if (aliases.containsKey(name)) aliases.remove(name);
 		actions.put(name, action);
+		return true;
+	}
+
+	@Override
+	public boolean registerActionAlias(Action action, String alias) {
+		// Don't register aliases for an action that isn't registered
+		if (!getActions().contains(action)) return false;
+		if (actions.containsKey(alias) || aliases.containsKey(alias)) return false;
+
+		aliases.put(alias, action);
 		return true;
 	}
 

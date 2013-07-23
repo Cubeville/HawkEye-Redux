@@ -50,6 +50,15 @@ public interface DataManager {
 	boolean registerAction(Action action);
 
 	/**
+	 * Registers an alias for an action
+	 *
+	 * @param action Action to register alias for
+	 * @param alias Alias to register
+	 * @return True if alias was registered, false if not
+	 */
+	boolean registerActionAlias(Action action, String alias);
+
+	/**
 	 * Gets a player by their id number
 	 *
 	 * @param id Player id number

@@ -49,144 +49,144 @@ public enum DefaultActions implements Action {
 	/**
 	 * Block placed by player
 	 */
-	BLOCK_PLACE(BlockPlaceEntry.class),
+	BLOCK_PLACE(BlockPlaceEntry.class, "place"),
 	/**
 	 * Block broken by player
 	 */
-	BLOCK_BREAK(BlockBreakEntry.class),
+	BLOCK_BREAK(BlockBreakEntry.class, "break"),
 	/**
 	 * Hanging entity (painting, item frame) broken
 	 */
-	HANGING_BREAK(HangingBreakEntry.class),
+	HANGING_BREAK(HangingBreakEntry.class, "painting-break"),
 	/**
 	 * Hanging entity (painting, item frame) placed
 	 */
-	HANGING_PLACE(HangingPlaceEntry.class),
+	HANGING_PLACE(HangingPlaceEntry.class, "painting-place"),
 	/**
 	 * Player login
 	 */
-	PLAYER_JOIN(PlayerLogEntry.class),
+	PLAYER_JOIN(PlayerLogEntry.class, "login", "join"),
 	/**
 	 * Player logout
 	 */
-	PLAYER_QUIT(PlayerLogEntry.class),
+	PLAYER_QUIT(PlayerLogEntry.class, "logout", "quit"),
 	/**
 	 * Player chat
 	 */
-	PLAYER_CHAT(ChatEntry.class),
+	PLAYER_CHAT(ChatEntry.class, "chat"),
 	/**
 	 * Player executed command
 	 */
-	PLAYER_COMMAND(CommandEntry.class),
+	PLAYER_COMMAND(CommandEntry.class, "command"),
 	/**
 	 * Player dropped item
 	 */
-	PLAYER_ITEM_DROP(PlayerItemEntry.class),
+	PLAYER_ITEM_DROP(PlayerItemEntry.class, "item-drop"),
 	/**
 	 * Player picked up item
 	 */
-	PLAYER_ITEM_PICKUP(PlayerItemEntry.class),
+	PLAYER_ITEM_PICKUP(PlayerItemEntry.class, "item-pickup"),
 	/**
 	 * Player died in PvP
 	 */
-	PLAYER_DEATH_PVP(PlayerPvpDeathEntry.class),
+	PLAYER_DEATH_PVP(PlayerPvpDeathEntry.class, "pvp-death"),
 	/**
 	 * Player died from a non-pvp cause
 	 */
-	PLAYER_DEATH_OTHER(PlayerDeathEntry.class),
+	PLAYER_DEATH_OTHER(PlayerDeathEntry.class, "death"),
 	/**
 	 * Items dropped on death
 	 */
-	PLAYER_DEATH_ITEMS(PlayerItemEntry.class),
+	PLAYER_DEATH_ITEMS(PlayerItemEntry.class, "item-death"),
 	/**
 	 * Player killed a mob
 	 */
-	PLAYER_MOB_KILL(PlayerKillEntry.class),
+	PLAYER_MOB_KILL(PlayerKillEntry.class, "kill", "mob-kill", "entity-kill"),
 	/**
 	 * Player used lava bucket
 	 */
-	LAVA_BUCKET(BlockBucketEntry.class),
+	LAVA_BUCKET(BlockBucketEntry.class, "lava-place"),
 	/**
 	 * Player used water bucket
 	 */
-	WATER_BUCKET(BlockBucketEntry.class),
+	WATER_BUCKET(BlockBucketEntry.class, "water-place"),
 	/**
 	 * Player used flint & steel
 	 */
-	FLINT_AND_STEEL(BlockFireEntry.class),
+	FLINT_AND_STEEL(BlockFireEntry.class, "lighter", "flint-steel"),
 	/**
 	 * Player interacted with door
 	 */
-	INTERACT_DOOR(PlayerInteractEntry.class),
+	INTERACT_DOOR(PlayerInteractEntry.class, "door"),
 	/**
 	 * Player interacted with lever
 	 */
-	INTERACT_LEVER(PlayerInteractEntry.class),
+	INTERACT_LEVER(PlayerInteractEntry.class, "lever"),
 	/**
 	 * Player (or arrow) interacted with button
 	 */
-	INTERACT_BUTTON(PlayerInteractEntry.class),
+	INTERACT_BUTTON(PlayerInteractEntry.class, "button"),
 	/**
 	 * Player ate cake
 	 */
-	CAKE_EAT(PlayerInteractEntry.class),
+	CAKE_EAT(PlayerInteractEntry.class, "eat-cake"),
 	/**
 	 * Putting item in an inventory (chest, furnace, dispenser, etc)
 	 */
-	INVENTORY_ADD(PlayerItemEntry.class),
+	INVENTORY_ADD(PlayerItemEntry.class, "item-deposit"),
 	/**
 	 * Taking an item from an inventory
 	 */
-	INVENTORY_TAKE(PlayerItemEntry.class),
+	INVENTORY_TAKE(PlayerItemEntry.class, "item-take"),
 	/**
 	 * Creeper explosion
 	 */
-	EXPLOSION_CREEPER(BlockExplosionEntry.class),
+	EXPLOSION_CREEPER(BlockExplosionEntry.class, "creeper", "creeper-explode"),
 	/**
 	 * TNT explosion
 	 */
-	EXPLOSION_TNT(BlockExplosionEntry.class),
+	EXPLOSION_TNT(BlockExplosionEntry.class, "tnt", "tnt-explode"),
 	/**
 	 * Ghast explosion
 	 */
-	EXPLOSION_GHAST(BlockExplosionEntry.class),
+	EXPLOSION_GHAST(BlockExplosionEntry.class, "ghast", "ghast-explode"),
 	/**
 	 * Miscellaneous explosion
 	 */
-	EXPLOSION_OTHER(BlockExplosionEntry.class),
+	EXPLOSION_OTHER(BlockExplosionEntry.class, "explosion"),
 	/**
 	 * Block fade (i.e. snow melt, leaf decay, ice melt)
 	 */
-	BLOCK_FADE(BlockModifyEntry.class),
+	BLOCK_FADE(BlockModifyEntry.class, "melt", "decay"),
 	/**
 	 * Block form (i.e. snow/ice forming)
 	 */
-	BLOCK_FORM(BlockModifyEntry.class),
+	BLOCK_FORM(BlockModifyEntry.class, "form"),
 	/**
 	 * Crop growth
 	 */
-	BLOCK_GROW(BlockModifyEntry.class),
+	BLOCK_GROW(BlockModifyEntry.class, "grow"),
 	/**
 	 * Block moved by piston
 	 */
-	BLOCK_PISTON(BlockPistonEntry.class),
+	BLOCK_PISTON(BlockPistonEntry.class, "piston"),
 	/**
 	 * Block spread (i.e. mushroom growth/fire spread)
 	 */
-	BLOCK_SPREAD(BlockModifyEntry.class),
+	BLOCK_SPREAD(BlockModifyEntry.class, "spread"),
 	/**
 	 * Block changed by entity (i.e. enderman moving blocks, zombie breaking
 	 * doors, snow golems leaving snow, wither, etc)
 	 */
-	ENTITY_BLOCK_MODIFY(BlockEntityEntry.class),
+	ENTITY_BLOCK_MODIFY(BlockEntityEntry.class, "entity-modify", "enderman"),
 	/**
 	 * Structure grown (tree/mushroom) naturally
 	 */
-	STRUCTURE_GROW(BlockGrowEntry.class),
+	STRUCTURE_GROW(BlockGrowEntry.class, "grow"),
 	/**
 	 * Structure grown by bonemeal
 	 */
-	STRUCTURE_BONEMEAL(BlockGrowEntry.class);
+	STRUCTURE_BONEMEAL(BlockGrowEntry.class, "bonemeal");
 
 	/**
 	 * Log entry data class
@@ -194,9 +194,14 @@ public enum DefaultActions implements Action {
 	private final Class<? extends Entry> entryClass;
 
 	/**
+	 * Action aliases
+	 */
+	private final String[] aliases;
+
+	/**
 	 * Data class constructor
 	 */
-	private Constructor<? extends Entry> constructor;
+	private final Constructor<? extends Entry> constructor;
 
 	/**
 	 * Default fallback until entry classes are implemented
@@ -206,17 +211,25 @@ public enum DefaultActions implements Action {
 	}
 
 	private DefaultActions(Class<? extends Entry> entryClass) {
+		this(entryClass, new String[0]);
+	}
+
+	private DefaultActions(Class<? extends Entry> entryClass, String... aliases) {
 		this.entryClass = entryClass;
-		constructor = null;
+		this.aliases = aliases;
+
+		Constructor<? extends Entry> tmp = null;
 
 		try {
-			constructor = entryClass.getConstructor(DatabaseEntry.class);
-			constructor.setAccessible(true);
+			tmp = entryClass.getConstructor(DatabaseEntry.class);
+			tmp.setAccessible(true);
 		} catch (SecurityException e) {
 			HawkEye.getLogger().error("Could not get DatabaseEntry constructor for " + entryClass.getCanonicalName(), e);
 		} catch (NoSuchMethodException e) {
 			HawkEye.getLogger().error("Could not get DatabaseEntry constructor for " + entryClass.getCanonicalName(), e);
 		}
+
+		constructor = tmp;
 	}
 
 	@Override
@@ -259,5 +272,10 @@ public enum DefaultActions implements Action {
 	public boolean isLogged() {
 		return HawkEye.getConfig().isLogging(this);
 	}
+
+	public String[] getAliases() {
+		return aliases;
+	}
+
 
 }
