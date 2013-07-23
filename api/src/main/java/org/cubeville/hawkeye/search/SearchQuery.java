@@ -128,7 +128,14 @@ public abstract class SearchQuery implements Runnable {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				results.add(createEntry(rs));
+				Entry entry = createEntry(rs);
+
+				// Results with NBT data are most likely to be looked up later
+				if (entry.getNbt().length > 0) {
+					HawkEye.getDataManager().cacheEntry(entry);
+				}
+
+				results.add(entry);
 			}
 
 			processResults(results);

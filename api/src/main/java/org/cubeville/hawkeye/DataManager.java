@@ -22,6 +22,7 @@ import java.util.Collection;
 
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
+import org.cubeville.hawkeye.model.Entry;
 
 public interface DataManager {
 
@@ -111,5 +112,20 @@ public interface DataManager {
 	 * @return The world's new id
 	 */
 	int registerWorld(World world);
+
+	/**
+	 * Gets an entry by its database id
+	 *
+	 * @param id Entry id
+	 * @return Entry or null if it doesn't exist
+	 */
+	Entry getEntry(int id);
+
+	/**
+	 * Caches an entry for later retrieval
+	 *
+	 * @param entry Entry to cache
+	 */
+	void cacheEntry(Entry entry);
 
 }

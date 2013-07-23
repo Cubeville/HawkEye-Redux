@@ -26,13 +26,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
+import org.cubeville.hawkeye.model.DatabaseEntry;
+import org.cubeville.hawkeye.model.Entry;
 import org.cubeville.util.CaseInsensitiveMap;
+import org.cubeville.util.LRUCache;
 
 public class SimpleDataManager implements DataManager {
 
@@ -60,6 +64,11 @@ public class SimpleDataManager implements DataManager {
 	 * Reverse player map for getting world id from name
 	 */
 	private final Map<String, Integer> worldIds = new CaseInsensitiveMap<Integer>();
+
+	/**
+	 * Entry cache
+	 */
+	private final LRUCache<Integer, Entry> entryCache = new LRUCache<Integer, Entry>(5000);
 
 	public SimpleDataManager() {
 		for (Action action : DefaultActions.values()) {
@@ -203,6 +212,55 @@ public class SimpleDataManager implements DataManager {
 		}
 
 		return id;
+	}
+
+	@Override
+	public Entry getEntry(int id) {
+		if (entryCache.containsKey(id)) return entryCache.get(id);
+
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		String sql = "SELECT * FROM " + table("data") + " WHERE id = ? LIMIT 1";
+
+		Entry entry = null;
+
+		try {
+			conn = HawkEye.getDatabase().getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				id = rs.getInt("id");
+				int player = rs.getInt("player_id");
+				String action = rs.getString("action");
+				Timestamp date = rs.getTimestamp("date");
+				int world = rs.getInt("world_id");
+				double x = rs.getDouble("x");
+				double y = rs.getDouble("y");
+				double z = rs.getDouble("z");
+				String data = rs.getString("data");
+				byte[] nbt = rs.getBytes("nbt");
+
+				DatabaseEntry dbEntry = new DatabaseEntry(id, player, action, date, world, x, y, z, data, nbt);
+				entry = dbEntry.toEntry();
+			}
+		} catch (SQLException e) {
+			HawkEye.getLogger().error("Could not retrieve entry #" + id, e);
+		} finally {
+			close(conn);
+			close(ps);
+			close(rs);
+		}
+
+		if (entry != null) entryCache.put(id, entry);
+		return entry;
+	}
+
+	@Override
+	public void cacheEntry(Entry entry) {
+		entryCache.put(entry.getId(), entry);
 	}
 
 	private void loadWorlds() {
