@@ -18,7 +18,7 @@
 
 package org.cubeville.hawkeye.model;
 
-import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.entity.Entity;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Location;
@@ -30,8 +30,8 @@ public class HangingBreakEntry extends AbstractEntityEntry implements Modifiable
 		super(entry.getAction(), entry);
 	}
 
-	public HangingBreakEntry(Action action, String player, Location location, Entity entity) {
-		super(action, player, location, entity);
+	public HangingBreakEntry(String player, Location location, Entity entity) {
+		super(DefaultActions.HANGING_BREAK, player, location, entity);
 	}
 
 	@Override

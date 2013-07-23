@@ -57,11 +57,11 @@ public enum DefaultActions implements Action {
 	/**
 	 * Hanging entity (painting, item frame) broken
 	 */
-	HANGING_BREAK(HangingBreakEntry.class, "painting-break"), // TODO
+	HANGING_BREAK(HangingBreakEntry.class, "painting-break"),
 	/**
 	 * Hanging entity (painting, item frame) placed
 	 */
-	HANGING_PLACE(HangingPlaceEntry.class, "painting-place"), // TODO
+	HANGING_PLACE(HangingPlaceEntry.class, "painting-place"),
 	/**
 	 * Player login
 	 */

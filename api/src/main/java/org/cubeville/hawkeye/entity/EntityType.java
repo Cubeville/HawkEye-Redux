@@ -127,13 +127,18 @@ public enum EntityType {
 	}
 
 	/**
-	 * Gets an entity type by name
+	 * Attempts to match an entity by name or user input
 	 *
-	 * @param name Name of entity type
-	 * @return Entity type with specified name or null if it doesn't exist
+	 * @param input Input to match against
+	 * @return EntityType or null if no match was found
 	 */
-	public static EntityType match(String name) {
-		return nameMap.get(name.toLowerCase());
+	public static EntityType match(String input) {
+		try {
+			return getById(Integer.parseInt(input));
+		} catch (NumberFormatException e) {
+			input = input.trim().toLowerCase().replaceAll("[ -_]", "");
+			return nameMap.containsKey(input) ? nameMap.get(input) : null;
+		}
 	}
 
 	static {
