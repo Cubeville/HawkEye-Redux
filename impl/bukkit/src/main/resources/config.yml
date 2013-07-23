@@ -1,0 +1,65 @@
+database:
+    hostname: localhost
+    port: 3306
+    username: dbuser
+    password: dbpassword
+    database: minecraft
+    prefix: hawkeye
+general:
+    ignored:
+        commands:
+        - /ignoredcmd
+        - /ignoreme
+        players:
+        - playername
+        worlds:
+        - ignored-world
+        - also-ignored
+    here-radius: 5
+    update-interval: 10
+    delete-on-rollback: false
+limits:
+    search-results: -1
+    max-radius: -1
+    rollback:
+        per-tick: 500
+        max-entries: -1
+    database:
+        entry-age: 60d
+        max-entries: -1
+logging:
+    lava-bucket: true
+    player-chat: true
+    explosion-ghast: true
+    player-quit: true
+    interact-button: true
+    player-join: true
+    block-fade: true
+    player-item-pickup: true
+    structure-bonemeal: true
+    player-death-pvp: true
+    inventory-add: true
+    structure-grow: true
+    block-form: true
+    hanging-break: true
+    player-command: true
+    player-item-drop: true
+    water-bucket: true
+    explosion-tnt: true
+    player-death-items: true
+    explosion-other: true
+    block-break: true
+    player-death-other: true
+    flint-and-steel: true
+    interact-lever: true
+    block-spread: true
+    block-place: true
+    cake-eat: true
+    block-grow: true
+    inventory-take: true
+    explosion-creeper: true
+    entity-block-modify: true
+    player-mob-kill: true
+    block-piston: true
+    hanging-place: true
+    interact-door: true

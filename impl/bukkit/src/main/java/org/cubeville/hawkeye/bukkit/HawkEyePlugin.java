@@ -54,6 +54,8 @@ public class HawkEyePlugin extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
+		saveResource("config.yml", false);
+
 		BukkitServer server = new BukkitServer(this, getServer());
 
 		File configFile = new File(getDataFolder(), "config.yml");
