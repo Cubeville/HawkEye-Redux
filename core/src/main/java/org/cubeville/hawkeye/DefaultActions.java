@@ -25,7 +25,6 @@ import org.cubeville.hawkeye.model.BlockBreakEntry;
 import org.cubeville.hawkeye.model.BlockBucketEntry;
 import org.cubeville.hawkeye.model.BlockEntityEntry;
 import org.cubeville.hawkeye.model.BlockExplosionEntry;
-import org.cubeville.hawkeye.model.BlockFireEntry;
 import org.cubeville.hawkeye.model.BlockGrowEntry;
 import org.cubeville.hawkeye.model.BlockModifyEntry;
 import org.cubeville.hawkeye.model.BlockPistonEntry;
@@ -110,10 +109,6 @@ public enum DefaultActions implements Action {
 	 * Player used water bucket
 	 */
 	WATER_BUCKET(BlockBucketEntry.class, "water-place"),
-	/**
-	 * Player used flint & steel
-	 */
-	FLINT_AND_STEEL(BlockFireEntry.class, "lighter", "flint-steel"), // TODO
 	/**
 	 * Player interacted with door
 	 */
