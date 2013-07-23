@@ -66,8 +66,10 @@ public class SimpleDataManager implements DataManager {
 			registerAction(action);
 		}
 
-		loadWorlds();
-		loadPlayers();
+		if (HawkEye.getDatabase().hasConnection()) {
+			loadWorlds();
+			loadPlayers();
+		}
 	}
 
 	@Override
@@ -107,7 +109,7 @@ public class SimpleDataManager implements DataManager {
 	@Override
 	public int registerPlayer(Player player) {
 		int id = getPlayerId(player);
-		if (id != -1) return id;
+		if (id != -1 || !HawkEye.getDatabase().hasConnection()) return id;
 
 		String name = player.getName();
 
@@ -164,7 +166,7 @@ public class SimpleDataManager implements DataManager {
 	@Override
 	public int registerWorld(World world) {
 		int id = getWorldId(world);
-		if (id != -1) return id;
+		if (id != -1 || !HawkEye.getDatabase().hasConnection()) return id;
 
 		String name = world.getName();
 

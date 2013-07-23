@@ -37,12 +37,18 @@ public class BoneCPDatabase implements Database {
 	private BoneCP pool;
 
 	/**
+	 * Whether or not the database is connected
+	 */
+	private boolean connected;
+
+	/**
 	 * Table prefix
 	 */
 	private final String prefix;
 
 	public BoneCPDatabase(String prefix) {
 		this.prefix = prefix;
+		connected = false;
 	}
 
 	@Override
@@ -65,6 +71,7 @@ public class BoneCPDatabase implements Database {
 		// Attempt to establish a connection
 		try {
 			pool = new BoneCP(config);
+			connected = true;
 			return true;
 		} catch (SQLException e) {
 			throw new DatabaseException("Could not connect to database", e);
@@ -72,8 +79,13 @@ public class BoneCPDatabase implements Database {
 	}
 
 	@Override
+	public boolean hasConnection() {
+		return connected && pool != null;
+	}
+
+	@Override
 	public Connection getConnection() throws SQLException {
-		if (pool == null) {
+		if (!connected || pool == null) {
 			throw new SQLException("Database connection is not established");
 		}
 
@@ -91,6 +103,7 @@ public class BoneCPDatabase implements Database {
 			pool.shutdown();
 		}
 
+		connected = false;
 		pool = null;
 	}
 

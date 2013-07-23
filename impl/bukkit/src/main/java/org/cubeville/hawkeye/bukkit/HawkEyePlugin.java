@@ -69,7 +69,7 @@ public class HawkEyePlugin extends JavaPlugin implements Listener {
 
 	@Override
 	public void onDisable() {
-		engine.getDatabase().close();
+		engine.shutdown();
 	}
 
 	@Override

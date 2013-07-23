@@ -44,4 +44,9 @@ public interface Consumer extends Runnable {
 	 */
 	void dumpToFile();
 
+	/**
+	 * Shuts down the consumer and saves any remaining data
+	 */
+	void shutdown();
+
 }

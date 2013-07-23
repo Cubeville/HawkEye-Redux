@@ -50,7 +50,6 @@ public class SimpleConsumer implements Consumer {
 
 	private final LinkedBlockingQueue<Entry> queue = new LinkedBlockingQueue<Entry>();
 	private final ReentrantLock lock = new ReentrantLock();
-	private boolean database = true;
 
 	private final List<String> ignoredWorlds;
 	private final List<String> ignoredPlayers;
@@ -86,22 +85,6 @@ public class SimpleConsumer implements Consumer {
 	@Override
 	public int size() {
 		return queue.size();
-	}
-
-	/**
-	 * Disables database inserts and instead dumps to files
-	 */
-	public void disableDatabase() {
-		database = false;
-	}
-
-	/**
-	 * Checks if the database is enabled
-	 *
-	 * @return True if database is available, false if not
-	 */
-	public boolean hasDatabase() {
-		return database;
 	}
 
 	@Override
@@ -147,9 +130,16 @@ public class SimpleConsumer implements Consumer {
 		}
 	}
 
+	/**
+	 * Dumps an NBT tag to file
+	 *
+	 * @param entries Entry tag to dump
+	 * @param file Name of file to save to
+	 */
 	private void saveToFile(Tag entries, String file) {
 		NBTOutputStream nbt = null;
 		try {
+			// TODO get the right data folder based on server implementation
 			File f = new File("plugins/HawkEye/data/" + file);
 			nbt = new NBTOutputStream(new FileOutputStream(f));
 			nbt.writeTag(entries);
@@ -172,7 +162,7 @@ public class SimpleConsumer implements Consumer {
 
 		try {
 			// Dump to file if the database is not available
-			if (!database) {
+			if (!hasConnection()) {
 				if (queue.size() > 900) dumpToFile();
 				return;
 			}
@@ -223,6 +213,21 @@ public class SimpleConsumer implements Consumer {
 		} finally {
 			lock.unlock();
 		}
+	}
+
+	@Override
+	public void shutdown() {
+		if (queue.isEmpty()) return;
+
+		if (!hasConnection()) dumpToFile();
+		else run();
+	}
+
+	/**
+	 * Shorthand methods
+	 */
+	private boolean hasConnection() {
+		return HawkEye.getDatabase().hasConnection();
 	}
 
 	private int getPlayerId(String player) {

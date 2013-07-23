@@ -125,8 +125,6 @@ public class HawkEyeEngine implements PluginEngine {
 				config.getString(Var.DB_PASS, "password")
 			);
 		} catch (DatabaseException e) {
-			// Tell the consumer to log to file if the database fails
-			((SimpleConsumer) consumer).disableDatabase();
 			logger.error("Could not connect to database", e);
 		}
 
@@ -169,7 +167,8 @@ public class HawkEyeEngine implements PluginEngine {
 
 		server.scheduleAsyncRepeatingTask(1L, config.getInt(Var.UPDATE_INTERVAL, 10) * TPS, consumer);
 
-		if (((SimpleConsumer) consumer).hasDatabase()) {
+		// Import entries from file if we have a connection
+		if (HawkEye.getDatabase().hasConnection()) {
 			server.scheduleAsyncTask(1L, new EntryImporter());
 		}
 
@@ -178,6 +177,13 @@ public class HawkEyeEngine implements PluginEngine {
 		RadiusParser.setMaxRadius(config.getInt(Var.LIMIT_SEARCH_RADIUS, -1));
 		WorldEditor.setLimit(config.getInt(Var.LIMIT_ROLLBACK_ENTRIES, -1));
 		WorldEditor.setTickLimit(config.getInt(Var.LIMIT_ROLLBACK_PER_TICK, 500));
+	}
+
+	@Override
+	public void shutdown() {
+		consumer.shutdown();
+		server.cancelAllTasks();
+		database.close();
 	}
 
 	@Override

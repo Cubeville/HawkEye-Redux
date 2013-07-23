@@ -35,6 +35,11 @@ import org.cubeville.hawkeye.util.HawkEyeLogger;
 public interface PluginEngine {
 
 	/**
+	 * Shuts down the plugin
+	 */
+	void shutdown();
+
+	/**
 	 * Gets the HawkEye version
 	 *
 	 * @return HawkEye version

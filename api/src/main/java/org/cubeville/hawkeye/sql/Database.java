@@ -37,6 +37,13 @@ public interface Database {
 	boolean connect(String hostname, String port, String database, String username, String password) throws DatabaseException;
 
 	/**
+	 * Returns whether or not a database connection is established
+	 *
+	 * @return True if there is a valid database connection, false if not
+	 */
+	boolean hasConnection();
+
+	/**
 	 * Attempts to get a database connection
 	 *
 	 * @return Database connection
