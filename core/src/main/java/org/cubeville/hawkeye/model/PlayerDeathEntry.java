@@ -22,7 +22,6 @@ import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.entity.Entity;
 import org.cubeville.hawkeye.location.Location;
 
-
 public class PlayerDeathEntry extends AbstractEntityEntry {
 
 	public PlayerDeathEntry(DatabaseEntry entry) {

@@ -49,12 +49,17 @@ public abstract class AbstractEntityEntry extends AbstractEntry implements Entit
 
 	@Override
 	public String getData() {
-		return entity.toString();
+		return entity.getType().toString();
 	}
 
 	@Override
 	public byte[] getNbt() {
 		return nbt;
+	}
+
+	@Override
+	public String getOutput() {
+		return entity.getType().toString();
 	}
 
 }

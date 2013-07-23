@@ -25,7 +25,7 @@ public class Entity {
 	/**
 	 * Entity type
 	 */
-	private final int type;
+	private final String type;
 
 	/**
 	 * Custom entity data
@@ -33,18 +33,18 @@ public class Entity {
 	private final EntityData data;
 
 	public Entity(EntityType type) {
-		this(type.getId(), null);
+		this(type.toString(), (EntityData) null);
 	}
 
 	public Entity(EntityType type, EntityData data) {
-		this(type.getId(), data);
+		this(type.toString(), data);
 	}
 
-	public Entity(int type) {
-		this(type, null);
+	public Entity(String type) {
+		this(type, (EntityData) null);
 	}
 
-	public Entity(int type, EntityData data) {
+	public Entity(String type, EntityData data) {
 		this.type = type;
 		this.data = data;
 	}
@@ -56,24 +56,12 @@ public class Entity {
 	 * @param nbt Entity nbt data byte array
 	 */
 	public Entity(String str, byte[] nbt) {
-		int type;
-
-		try {
-			type = Integer.parseInt(str);
-		} catch (NumberFormatException e) {
-			type = -1;
-		}
-
-		this.type = type;
+		type = str;
 		data = null;
 
 		if (nbt != null && nbt.length > 0) {
 			// TODO Entity data support
 		}
-	}
-
-	public Entity(String str) {
-		this(str, null);
 	}
 
 	/**
@@ -82,16 +70,7 @@ public class Entity {
 	 * @return Entity type
 	 */
 	public EntityType getType() {
-		return EntityType.getById(type);
-	}
-
-	/**
-	 * Gets the id of the type of this entity
-	 *
-	 * @return Entity type id
-	 */
-	public int getTypeId() {
-		return type;
+		return EntityType.match(type);
 	}
 
 	/**
