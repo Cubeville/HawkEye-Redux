@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.item.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,10 +34,10 @@ import org.cubeville.lib.jnbt.Tag;
 
 public class BaseItemData implements ItemData {
 
-	private final String name;
-	private final List<String> lore;
+	protected final String name;
+	protected final List<String> lore;
 
-	private final List<Enchantment> enchantments;
+	protected final List<Enchantment> enchantments;
 
 	/**
 	 * Deserialization constructor
@@ -79,11 +80,14 @@ public class BaseItemData implements ItemData {
 		}
 	}
 
-	public BaseItemData() {
-		name = null;
-		lore = new LinkedList<String>();
-		enchantments = new ArrayList<Enchantment>();
-		// TODO Get item data
+	public BaseItemData(String name, List<String> lore, List<Enchantment> enchantments) {
+		this.name = name;
+
+		if (lore == null) lore = Collections.emptyList();
+		this.lore = Collections.unmodifiableList(lore);
+
+		if (enchantments == null) enchantments = Collections.emptyList();
+		this.enchantments = Collections.unmodifiableList(enchantments);
 	}
 
 	/**

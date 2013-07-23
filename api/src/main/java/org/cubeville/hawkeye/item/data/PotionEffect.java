@@ -49,6 +49,13 @@ public class PotionEffect implements NBTSerializable {
 		ambient = (((ByteTag) data.get(NBT.POTION_EFFECT.AMBIENT)).getValue() == 1);
 	}
 
+	public PotionEffect(byte effectId, byte amplifier, int duration, boolean ambient) {
+		this.effectId = effectId;
+		this.amplifier = amplifier;
+		this.duration = duration;
+		this.ambient = ambient;
+	}
+
 	/**
 	 * Gets the type of effect this potion effect has
 	 */

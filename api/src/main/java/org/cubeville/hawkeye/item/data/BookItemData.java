@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye.item.data;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -66,14 +67,17 @@ public class BookItemData extends BaseItemData {
 		}
 	}
 
-	public BookItemData(List<String> pages) {
-		this(null, null, pages);
+	public BookItemData(BaseItemData data, List<String> pages) {
+		this(data, null, null, pages);
 	}
 
-	public BookItemData(String title, String author, List<String> pages) {
+	public BookItemData(BaseItemData data, String title, String author, List<String> pages) {
+		super(data.name, data.lore, data.enchantments);
 		this.title = title;
 		this.author = author;
-		this.pages = pages;
+
+		if (pages == null) pages = Collections.emptyList();
+		this.pages = Collections.unmodifiableList(pages);
 	}
 
 	/**

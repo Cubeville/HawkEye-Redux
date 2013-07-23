@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.item;
 
 import org.cubeville.hawkeye.Item;
+import org.cubeville.hawkeye.item.data.BaseItemData;
 
 /**
  * Represents a stack of items
@@ -29,30 +30,60 @@ public class ItemStack {
 	private final byte amount;
 	private final short durability;
 
+	/**
+	 * Custom data associated with the item
+	 */
+	private final ItemData data;
+
 	public ItemStack(Item type) {
 		this(type.getId());
+	}
+
+	public ItemStack(Item type, ItemData data) {
+		this(type.getId(), data);
 	}
 
 	public ItemStack(short id) {
 		this(id, (byte) 1, (short) 0);
 	}
 
+	public ItemStack(short id, ItemData data) {
+		this(id, (byte) 1, (short) 0, data);
+	}
+
 	public ItemStack(Item type, byte amount) {
 		this(type.getId(), amount);
+	}
+
+	public ItemStack(Item type, byte amount, ItemData data) {
+		this(type.getId(), amount, data);
 	}
 
 	public ItemStack(short id, byte amount) {
 		this(id, amount, (short) 0);
 	}
 
+	public ItemStack(short id, byte amount, ItemData data) {
+		this(id, amount, (short) 0, data);
+	}
+
 	public ItemStack(Item type, byte amount, short durability) {
 		this(type.getId(), amount, durability);
 	}
 
+	public ItemStack(Item type, byte amount, short durability, ItemData data) {
+		this(type.getId(), amount, durability, data);
+	}
+
 	public ItemStack(short id, byte amount, short durability) {
+		this(id, amount, durability, null);
+	}
+
+	public ItemStack(short id, byte amount, short durability, ItemData data) {
 		this.id = id;
 		this.amount = amount;
 		this.durability = durability;
+		this.data = data;
 	}
 
 	/**
@@ -91,7 +122,10 @@ public class ItemStack {
 		this.durability = durability;
 
 		if (nbt != null && nbt.length > 0) {
-			// TODO Item data support
+			// TODO Get real item data
+			this.data = new BaseItemData(null, null, null);
+		} else {
+			this.data = new BaseItemData(null, null, null);
 		}
 	}
 
@@ -141,8 +175,7 @@ public class ItemStack {
 	 * @return Item data
 	 */
 	public ItemData getData() {
-		// TODO
-		return null;
+		return data;
 	}
 
 	@Override

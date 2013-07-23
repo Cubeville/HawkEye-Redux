@@ -44,6 +44,11 @@ public class Enchantment implements NBTSerializable {
 		level = ((ShortTag) data.get(NBT.ENCHANTMENT.LEVEL)).getValue();
 	}
 
+	public Enchantment(short enchantmentId, short level) {
+		this.enchantmentId = enchantmentId;
+		this.level = level;
+	}
+
 	/**
 	 * Gets the type of enchantment this is
 	 */

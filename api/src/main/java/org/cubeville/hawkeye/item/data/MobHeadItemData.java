@@ -52,7 +52,8 @@ public class MobHeadItemData extends BaseItemData {
 		}
 	}
 
-	public MobHeadItemData(String owner) {
+	public MobHeadItemData(BaseItemData data, String owner) {
+		super(data.name, data.lore, data.enchantments);
 		this.owner = owner;
 	}
 

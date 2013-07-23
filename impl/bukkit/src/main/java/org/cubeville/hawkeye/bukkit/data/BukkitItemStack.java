@@ -16,22 +16,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.cubeville.hawkeye.bukkit.block;
+package org.cubeville.hawkeye.bukkit.data;
 
-import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.bukkit.Convert;
+import org.cubeville.hawkeye.item.ItemStack;
 
-public class BukkitBlockState extends BlockState {
+public class BukkitItemStack extends ItemStack {
 
-	private final org.bukkit.block.BlockState blockState;
+	private final org.bukkit.inventory.ItemStack itemStack;
 
-	public BukkitBlockState(org.bukkit.block.BlockState blockState) {
-		super((short) blockState.getTypeId(), blockState.getRawData(), Convert.blockData(blockState));
-		this.blockState = blockState;
+	public BukkitItemStack(org.bukkit.inventory.ItemStack itemStack) {
+		super((short) itemStack.getTypeId(), (byte) itemStack.getAmount(), itemStack.getDurability(), Convert.itemData(itemStack.getItemMeta()));
+		this.itemStack = itemStack;
 	}
 
-	public org.bukkit.block.BlockState getBukkitBlockState() {
-		return blockState;
+	public org.bukkit.inventory.ItemStack getBukkitItemStack() {
+		return itemStack;
 	}
 
 }

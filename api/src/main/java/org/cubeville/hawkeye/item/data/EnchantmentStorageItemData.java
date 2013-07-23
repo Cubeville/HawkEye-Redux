@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.item.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -52,6 +53,13 @@ public class EnchantmentStorageItemData extends BaseItemData {
 				storedEnchantments.add(enchant);
 			}
 		}
+	}
+
+	public EnchantmentStorageItemData(BaseItemData data, List<Enchantment> enchantments) {
+		super(data.name, data.lore, data.enchantments);
+
+		if (enchantments == null) enchantments = Collections.emptyList();
+		storedEnchantments = Collections.unmodifiableList(enchantments);
 	}
 
 	/**

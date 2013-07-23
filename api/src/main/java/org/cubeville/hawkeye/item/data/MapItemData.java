@@ -48,6 +48,11 @@ public class MapItemData extends BaseItemData {
 		}
 	}
 
+	public MapItemData(BaseItemData data, byte scaling) {
+		super(data.name, data.lore, data.enchantments);
+		this.scaling = scaling;
+	}
+
 	/**
 	 * Gets whether or not this map has custom scaling set
 	 */

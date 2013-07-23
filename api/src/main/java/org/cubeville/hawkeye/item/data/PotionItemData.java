@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.item.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +50,13 @@ public class PotionItemData extends BaseItemData {
 				customEffects.add(effect);
 			}
 		}
+	}
+
+	public PotionItemData(BaseItemData data, List<PotionEffect> effects) {
+		super(data.name, data.lore, data.enchantments);
+
+		if (effects == null) effects = Collections.emptyList();
+		customEffects = Collections.unmodifiableList(effects);
 	}
 
 	/**

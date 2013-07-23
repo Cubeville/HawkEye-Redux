@@ -45,6 +45,11 @@ public class FireworkChargeItemData extends BaseItemData {
 		}
 	}
 
+	public FireworkChargeItemData(BaseItemData data, FireworkExplosion explosion) {
+		super(data.name, data.lore, data.enchantments);
+		this.explosion = explosion;
+	}
+
 	/**
 	 * Gets whether or not this firework has an explosion attached to it
 	 */

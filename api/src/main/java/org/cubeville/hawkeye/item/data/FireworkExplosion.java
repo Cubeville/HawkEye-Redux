@@ -48,6 +48,12 @@ public class FireworkExplosion implements NBTSerializable {
 		trail = (((ByteTag) data.get(NBT.FIREWORK_EFFECT.TRAIL)).getValue() == 1);
 	}
 
+	public FireworkExplosion(byte shapeId, boolean flicker, boolean trail) {
+		this.shapeId = shapeId;
+		this.flicker = flicker;
+		this.trail = trail;
+	}
+
 	/**
 	 * Gets the shape of this firework explosion
 	 */

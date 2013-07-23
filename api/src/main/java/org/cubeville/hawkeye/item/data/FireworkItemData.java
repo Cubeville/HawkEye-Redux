@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.item.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,14 @@ public class FireworkItemData extends BaseItemData {
 		} else {
 			power = 0;
 		}
+	}
+
+	public FireworkItemData(BaseItemData data, byte power, List<FireworkExplosion> explosions) {
+		super(data.name, data.lore, data.enchantments);
+		this.power = power;
+
+		if (explosions == null) explosions = Collections.emptyList();
+		this.explosions = Collections.unmodifiableList(explosions);
 	}
 
 	/**

@@ -58,6 +58,11 @@ public class ColoredArmorItemData extends BaseItemData {
 		}
 	}
 
+	public ColoredArmorItemData(BaseItemData data, int color) {
+		super(data.name, data.lore, data.enchantments);
+		this.color = color;
+	}
+
 	/**
 	 * Gets whether or not this armor has a color set on it
 	 */
