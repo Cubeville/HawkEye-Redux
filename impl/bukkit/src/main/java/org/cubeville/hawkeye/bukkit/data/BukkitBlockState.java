@@ -26,7 +26,7 @@ public class BukkitBlockState extends BlockState {
 	private final org.bukkit.block.BlockState blockState;
 
 	public BukkitBlockState(org.bukkit.block.BlockState blockState) {
-		super((short) blockState.getTypeId(), blockState.getRawData(), Convert.blockData(blockState));
+		super(Convert.material(blockState.getType()), blockState.getRawData(), Convert.blockData(blockState));
 		this.blockState = blockState;
 	}
 

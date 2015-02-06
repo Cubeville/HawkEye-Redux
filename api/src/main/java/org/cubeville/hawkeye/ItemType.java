@@ -59,15 +59,4 @@ public enum ItemType {
 		return id > 255;
 	}
 
-	/**
-	 * Checks if the specified item is an existing item (in vanilla minecraft)
-	 *
-	 * @param id Item id to check
-	 * @return True if specified id is a vanilla minecraft item, false if not
-	 */
-	public static boolean exists(int id) {
-		Item item = Item.getById(id);
-		return item != null;
-	}
-
 }

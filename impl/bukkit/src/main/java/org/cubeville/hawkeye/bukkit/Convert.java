@@ -19,10 +19,13 @@
 package org.cubeville.hawkeye.bukkit;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.cubeville.hawkeye.DefaultItems;
 import org.cubeville.hawkeye.HawkEye;
+import org.cubeville.hawkeye.Item;
 import org.cubeville.hawkeye.block.BlockData;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.block.data.BaseBlockData;
@@ -243,6 +246,35 @@ public class Convert {
 		} else {
 			return base;
 		}
+	}
+
+	/**
+	 * Material/item types
+	 */
+	private static final Map<org.bukkit.Material, Item> materialMap = new HashMap<org.bukkit.Material, Item>();
+	private static final Map<Item, org.bukkit.Material> itemMap = new HashMap<Item, org.bukkit.Material>();
+
+	static {
+		for (org.bukkit.Material material : org.bukkit.Material.values()) {
+			Item item = DefaultItems.valueOf(material.toString());
+			if (item == null) continue;
+			materialMap.put(material, item);
+			itemMap.put(item, material);
+		}
+	}
+
+	public static void registerConversion(org.bukkit.Material material, Item item) {
+		if (material == null || item == null) return;
+		materialMap.put(material, item);
+		itemMap.put(item, material);
+	}
+
+	public static Item material(org.bukkit.Material material) {
+		return materialMap.get(material);
+	}
+
+	public static org.bukkit.Material material(Item item) {
+		return itemMap.get(item);
 	}
 
 	/**

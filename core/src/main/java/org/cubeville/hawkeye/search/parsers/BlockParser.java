@@ -68,13 +68,13 @@ public class BlockParser extends ParameterParser {
 		for (int i = 0; i < parameters.size(); i++) {
 			String[] value = parameters.get(i).split(":", 2);
 
-			Item item = Item.match(value[0]);
+			Item item = HawkEye.getDataManager().matchItem(value[0]);
 			if (item == null) throw new CommandException("Invalid item specified: &7" + value[0]);
-			String id = String.valueOf(item.getId());
+			String name = item.getName();
 
 			short data = -1;
 			if (value.length == 2) {
-				id += ":" + value[1];
+				name += ":" + value[1];
 
 				try {
 					data = Short.parseShort(value[1]);
@@ -82,7 +82,7 @@ public class BlockParser extends ParameterParser {
 				}
 			}
 
-			blocks.add(id);
+			blocks.add(name);
 			items.add(new ItemStack(item, (byte) 1, data));
 		}
 	}
@@ -143,14 +143,14 @@ public class BlockParser extends ParameterParser {
 	}
 
 	private boolean compareBlockState(ItemStack item, BlockState state) {
-		if (item.getTypeId() != state.getTypeId()) return false;
+		if (item.getType().getId() != state.getType().getId()) return false;
 		if (item.getDurability() != -1 && item.getDurability() != state.getData()) return false;
 
 		return true;
 	}
 
 	private boolean compareItemStack(ItemStack item, ItemStack test) {
-		if (item.getTypeId() != test.getTypeId()) return false;
+		if (item.getType().getId() != test.getType().getId()) return false;
 		if (item.getDurability() != -1 && item.getDurability() != test.getDurability()) return false;
 
 		return true;

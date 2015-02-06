@@ -29,7 +29,7 @@ public class BlockExplosionEntry extends AbstractBlockEntry {
 	}
 
 	public BlockExplosionEntry(Action action, String player, Location location, BlockState broken) {
-		super(action, player, location, broken, BlockState.NOTHING);
+		super(action, player, location, broken, NOTHING);
 	}
 
 }

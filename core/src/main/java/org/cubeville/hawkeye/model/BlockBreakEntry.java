@@ -29,7 +29,7 @@ public class BlockBreakEntry extends AbstractBlockEntry {
 	}
 
 	public BlockBreakEntry(String player, Location location, BlockState broken) {
-		super(DefaultActions.BLOCK_BREAK, player, location, broken, BlockState.NOTHING);
+		super(DefaultActions.BLOCK_BREAK, player, location, broken, NOTHING);
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class BukkitItemStack extends ItemStack {
 	private final org.bukkit.inventory.ItemStack itemStack;
 
 	public BukkitItemStack(org.bukkit.inventory.ItemStack itemStack) {
-		super((short) itemStack.getTypeId(), (byte) itemStack.getAmount(), itemStack.getDurability(), Convert.itemData(itemStack.getItemMeta()));
+		super(Convert.material(itemStack.getType()), (byte) itemStack.getAmount(), itemStack.getDurability(), Convert.itemData(itemStack.getItemMeta()));
 		this.itemStack = itemStack;
 	}
 

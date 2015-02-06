@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,9 +67,14 @@ public class SimpleDataManager implements DataManager {
 	private final Map<Integer, String> worlds = new HashMap<Integer, String>();
 
 	/**
-	 * Reverse player map for getting world id from name
+	 * Reverse world map for getting world id from name
 	 */
 	private final Map<String, Integer> worldIds = new CaseInsensitiveMap<Integer>();
+
+	/**
+	 * Map containing all registered items keyed by their names
+	 */
+	private final Map<String, Item> items = new CaseInsensitiveMap<Item>();
 
 	/**
 	 * Entry cache
@@ -84,6 +90,10 @@ public class SimpleDataManager implements DataManager {
 			}
 		}
 
+		for (Item item : DefaultItems.values()) {
+			registerItem(item);
+		}
+
 		if (HawkEye.getDatabase().hasConnection()) {
 			loadWorlds();
 			loadPlayers();
@@ -92,7 +102,7 @@ public class SimpleDataManager implements DataManager {
 
 	@Override
 	public Collection<Action> getActions() {
-		return actions.values();
+		return Collections.unmodifiableCollection(actions.values());
 	}
 
 	@Override
@@ -235,6 +245,36 @@ public class SimpleDataManager implements DataManager {
 		}
 
 		return id;
+	}
+
+	@Override
+	public Collection<Item> getItems() {
+		return Collections.unmodifiableCollection(items.values());
+	}
+
+	@Override
+	public Item getItem(String name) {
+		return items.get(name);
+	}
+
+	@Override
+	public boolean registerItem(Item item) {
+		if (items.containsKey(item.getName())) return false;
+
+		items.put(item.getName(), item);
+		return true;
+	}
+
+	/**
+	 * Attempts to match an item from user input
+	 *
+	 * @param input The user's input
+	 * @return Item or null if no match was found
+	 */
+	@Override
+	public Item matchItem(String input) {
+		input = input.trim().replaceAll("[ -_]", "");
+		return getItem(input);
 	}
 
 	@Override

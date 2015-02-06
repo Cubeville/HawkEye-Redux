@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.model;
 
 import org.cubeville.hawkeye.Action;
+import org.cubeville.hawkeye.DefaultItems;
 import org.cubeville.hawkeye.Item;
 import org.cubeville.hawkeye.block.BlockData;
 import org.cubeville.hawkeye.block.BlockState;
@@ -28,6 +29,9 @@ import org.cubeville.hawkeye.location.Location;
 import org.cubeville.lib.jnbt.NBTUtils;
 
 public abstract class AbstractBlockEntry extends AbstractEntry implements BlockEntry, Modifiable {
+
+	// Convenient access for an empty (i.e. air) block state
+	protected static final BlockState NOTHING = new BlockState(DefaultItems.AIR, (byte) 0);
 
 	private final Block block;
 	private final BlockState oldState;
@@ -57,7 +61,7 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 		this.oldState = oldState;
 		this.newState = newState;
 
-		BlockData data = newState.getType() == Item.AIR ? oldState.getBlockData() : newState.getBlockData();
+		BlockData data = newState.getType() == DefaultItems.AIR ? oldState.getBlockData() : newState.getBlockData();
 		nbt = NBTUtils.toByteArray(data);
 	}
 
@@ -131,9 +135,7 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 
 		Item type = state.getType();
 		if (type != null) {
-			output.append(type.toString());
-		} else {
-			output.append(state.getTypeId());
+			output.append(type.getName());
 		}
 
 		if (state.getData() != 0) output.append(":").append(state.getData());

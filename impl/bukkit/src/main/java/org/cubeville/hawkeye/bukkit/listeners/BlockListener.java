@@ -19,7 +19,6 @@
 package org.cubeville.hawkeye.bukkit.listeners;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
@@ -34,6 +33,8 @@ import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.DefaultActions;
+import org.cubeville.hawkeye.DefaultItems;
+import org.cubeville.hawkeye.Item;
 import org.cubeville.hawkeye.bukkit.Convert;
 import org.cubeville.hawkeye.bukkit.HawkEvent;
 import org.cubeville.hawkeye.bukkit.HawkEyeListener;
@@ -104,17 +105,17 @@ public class BlockListener extends HawkEyeListener {
 	@HawkEvent(action = {DefaultActions.LAVA_BUCKET, DefaultActions.WATER_BUCKET})
 	public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
 		Action action;
-		int type;
+		Item type;
 
 		switch (event.getBucket()) {
 			case LAVA_BUCKET:
 				action = DefaultActions.LAVA_BUCKET;
-				type = Material.LAVA.getId();
+				type = DefaultItems.LAVA;
 				break;
 			case WATER_BUCKET:
 			default:
 				action = DefaultActions.WATER_BUCKET;
-				type = Material.WATER.getId();
+				type = DefaultItems.WATER;
 				break;
 		}
 
@@ -122,7 +123,7 @@ public class BlockListener extends HawkEyeListener {
 		Block block = event.getBlockClicked().getRelative(event.getBlockFace());
 		Location loc = block.getLocation();
 		BlockState old = block.getState();
-		org.cubeville.hawkeye.block.BlockState liquid = new org.cubeville.hawkeye.block.BlockState((short) type, (byte) 0);
+		org.cubeville.hawkeye.block.BlockState liquid = new org.cubeville.hawkeye.block.BlockState(type, (byte) 0);
 
 		log(new BlockBucketEntry(action, player.getName(), Convert.location(loc), Convert.blockState(old), liquid));
 	}

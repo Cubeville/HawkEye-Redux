@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye.bukkit;
 
+import org.cubeville.hawkeye.Item;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Block;
@@ -36,13 +37,13 @@ public class BukkitBlock extends Block {
 	}
 
 	@Override
-	public int getType() {
-		return block.getTypeId();
+	public Item getType() {
+		return Convert.material(block.getType());
 	}
 
 	@Override
-	public void setType(int id) {
-		block.setTypeId(id);
+	public void setType(Item type) {
+		block.setType(Convert.material(type));
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class BukkitBlock extends Block {
 
 	@Override
 	public void setState(BlockState state) {
-		block.setTypeIdAndData(state.getTypeId(), state.getData(), true);
+		block.setTypeIdAndData(state.getType().getId(), state.getData(), true);
 	}
 
 	@Override

@@ -18,24 +18,25 @@
 
 package org.cubeville.hawkeye.location;
 
+import org.cubeville.hawkeye.Item;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.entity.Player;
 
 public abstract class Block {
 
 	/**
-	 * Gets this block's type ID
+	 * Gets this block's type
 	 *
-	 * @return Block ID
+	 * @return Block type
 	 */
-	public abstract int getType();
+	public abstract Item getType();
 
 	/**
-	 * Sets this block's type ID
+	 * Sets this block's type
 	 *
-	 * @param id New block type ID
+	 * @param type New block type
 	 */
-	public abstract void setType(int id);
+	public abstract void setType(Item type);
 
 	/**
 	 * Gets this block's metadata value

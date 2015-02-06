@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye.item;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.Item;
 import org.cubeville.hawkeye.item.data.BaseItemData;
 import org.cubeville.lib.jnbt.CompoundTag;
@@ -28,7 +29,7 @@ import org.cubeville.lib.jnbt.NBTUtils;
  */
 public class ItemStack {
 
-	private final short id;
+	private final Item type;
 	private final byte amount;
 	private final short durability;
 
@@ -38,51 +39,27 @@ public class ItemStack {
 	private final ItemData data;
 
 	public ItemStack(Item type) {
-		this(type.getId());
+		this(type, (byte) 1, (short) 0);
 	}
 
 	public ItemStack(Item type, ItemData data) {
-		this(type.getId(), data);
-	}
-
-	public ItemStack(short id) {
-		this(id, (byte) 1, (short) 0);
-	}
-
-	public ItemStack(short id, ItemData data) {
-		this(id, (byte) 1, (short) 0, data);
+		this(type, (byte) 1, (short) 0, data);
 	}
 
 	public ItemStack(Item type, byte amount) {
-		this(type.getId(), amount);
+		this(type, amount, (short) 0);
 	}
 
 	public ItemStack(Item type, byte amount, ItemData data) {
-		this(type.getId(), amount, data);
-	}
-
-	public ItemStack(short id, byte amount) {
-		this(id, amount, (short) 0);
-	}
-
-	public ItemStack(short id, byte amount, ItemData data) {
-		this(id, amount, (short) 0, data);
+		this(type, amount, (short) 0, data);
 	}
 
 	public ItemStack(Item type, byte amount, short durability) {
-		this(type.getId(), amount, durability);
+		this(type, amount, durability, null);
 	}
 
 	public ItemStack(Item type, byte amount, short durability, ItemData data) {
-		this(type.getId(), amount, durability, data);
-	}
-
-	public ItemStack(short id, byte amount, short durability) {
-		this(id, amount, durability, null);
-	}
-
-	public ItemStack(short id, byte amount, short durability, ItemData data) {
-		this.id = id;
+		this.type = type;
 		this.amount = amount;
 		this.durability = durability;
 		this.data = data;
@@ -95,17 +72,12 @@ public class ItemStack {
 	 * @param nbt Item nbt data byte array
 	 */
 	public ItemStack(String str, byte[] nbt) {
-		short id;
 		byte amount;
 		short durability;
 		String[] parts = str.split("@");
 		String[] data = parts[0].split(":");
 
-		try {
-			id = Short.parseShort(data[0]);
-		} catch (NumberFormatException e) {
-			id = 1;
-		}
+		String name = data[0];
 
 		try  {
 			durability = data.length > 1 ? Short.parseShort(data[1]) : 0;
@@ -119,7 +91,7 @@ public class ItemStack {
 			amount = 1;
 		}
 
-		this.id = id;
+		type = HawkEye.getDataManager().getItem(name);
 		this.amount = amount;
 		this.durability = durability;
 
@@ -141,16 +113,7 @@ public class ItemStack {
 	 * @return Item type
 	 */
 	public Item getType() {
-		return Item.getById(id);
-	}
-
-	/**
-	 * Gets the id of this stack's item type
-	 *
-	 * @return Item type id
-	 */
-	public short getTypeId() {
-		return id;
+		return type;
 	}
 
 	/**
@@ -182,14 +145,7 @@ public class ItemStack {
 
 	@Override
 	public String toString() {
-		StringBuilder ret = new StringBuilder();
-
-		Item type = getType();
-		if (type != null) {
-			ret.append(type.toString());
-		} else {
-			ret.append(id);
-		}
+		StringBuilder ret = new StringBuilder().append(type.getName());
 
 		if (durability != 0) ret.append(":").append(durability);
 		if (amount > 1) ret.append("@").append(amount);

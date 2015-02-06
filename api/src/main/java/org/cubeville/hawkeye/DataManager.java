@@ -123,6 +123,37 @@ public interface DataManager {
 	int registerWorld(World world);
 
 	/**
+	 * Gets a collection of all registered items
+	 *
+	 * @return Collection of all known items
+	 */
+	Collection<Item> getItems();
+
+	/**
+	 * Gets an item by its name
+	 *
+	 * @param name Name of block/item
+	 * @return Corresponding item
+	 */
+	Item getItem(String name);
+
+	/**
+	 * Registers a block/item
+	 *
+	 * @param item Item to register
+	 * @return True if item was registered, false if not
+	 */
+	boolean registerItem(Item item);
+
+	/**
+	 * Attempts to match an item from user input
+	 *
+	 * @param input The user's input
+	 * @return Item or null if no match was found
+	 */
+	Item matchItem(String input);
+
+	/**
 	 * Gets an entry by its database id
 	 *
 	 * @param id Entry id

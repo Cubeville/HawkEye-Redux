@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye.block;
 
+import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.Item;
 
 /**
@@ -25,12 +26,10 @@ import org.cubeville.hawkeye.Item;
  */
 public class BlockState {
 
-	public static final BlockState NOTHING = new BlockState(Item.AIR, (byte) 0);
-
 	/**
 	 * Block type
 	 */
-	private final short id;
+	private final Item type;
 
 	/**
 	 * Block data value
@@ -47,15 +46,7 @@ public class BlockState {
 	}
 
 	public BlockState(Item type, byte data, BlockData blockData) {
-		this(type.getId(), data, null);
-	}
-
-	public BlockState(short id, byte data) {
-		this(id, data, null);
-	}
-
-	public BlockState(short id, byte data, BlockData blockData) {
-		this.id = id;
+		this.type = type;
 		this.data = data;
 		this.blockData = blockData;
 	}
@@ -67,15 +58,10 @@ public class BlockState {
 	 * @param nbt Block nbt data byte array
 	 */
 	public BlockState(String str, byte[] nbt) {
-		short id;
 		byte data;
 		String[] parts = str.split(":");
 
-		try {
-			id = Short.parseShort(parts[0]);
-		} catch (NumberFormatException e) {
-			id = 0;
-		}
+		String name = parts[0];
 
 		try {
 			data = parts.length > 1 ? Byte.parseByte(parts[1]) : 0;
@@ -83,7 +69,7 @@ public class BlockState {
 			data = 0;
 		}
 
-		this.id = id;
+		type = HawkEye.getDataManager().getItem(name);
 		this.data = data;
 		blockData = null;
 
@@ -102,16 +88,7 @@ public class BlockState {
 	 * @return Block type
 	 */
 	public Item getType() {
-		return Item.getById(id);
-	}
-
-	/**
-	 * Gets the id of this block state's type
-	 *
-	 * @return Block type id
-	 */
-	public short getTypeId() {
-		return id;
+		return type;
 	}
 
 	/**
@@ -136,7 +113,7 @@ public class BlockState {
 	public int hashCode() {
 		int hash = 1;
 
-		hash = 31 * hash + id;
+		hash = 31 * hash + type.getName().hashCode();
 		hash = 31 * hash + data;
 
 		return hash;
@@ -148,7 +125,8 @@ public class BlockState {
 		if (!(obj instanceof BlockState)) return false;
 		BlockState other = (BlockState) obj;
 
-		if (id != other.id) return false;
+		if (type.getId() != other.type.getId()) return false;
+		if (!type.getName().equals(other.type.getName())) return false;
 		if (data != other.data) return false;
 		// TODO Compare block data
 
@@ -157,7 +135,7 @@ public class BlockState {
 
 	@Override
 	public String toString() {
-		StringBuilder ret = new StringBuilder().append(id);
+		StringBuilder ret = new StringBuilder().append(type.getName());
 		if (data != 0) ret.append(":").append(data);
 		return ret.toString();
 	}
