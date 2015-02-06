@@ -29,26 +29,26 @@ public interface Item {
 	 *
 	 * @return This item's id
 	 */
-	public short getId();
+	short getId();
 
 	/**
 	 * Gets the name of this item
 	 *
 	 * @return This item's name
 	 */
-	public String getName();
+	String getName();
 
 	/**
 	 * Gets whether or not this item has an attribute
 	 */
-	public boolean hasAttribute(Attribute attribute);
+	boolean hasAttribute(Attribute attribute);
 
 	/**
 	 * Gets whether or not this item stores custom item data
 	 *
 	 * @return True if item has custom data to store, false if not
 	 */
-	public boolean hasItemData();
+	boolean hasItemData();
 
 	/**
 	 * Constructs item data from a serialized NBT tag
@@ -56,14 +56,14 @@ public interface Item {
 	 * @param tag NBT Tag to reconstruct from
 	 * @return ItemData or null if unable to reconstruct
 	 */
-	public ItemData getItemData(CompoundTag tag);
+	ItemData getItemData(CompoundTag tag);
 
 	/**
 	 * Gets whether or not this item stores custom block data
 	 *
 	 * @return True if block has custom data to store, false if not
 	 */
-	public boolean hasBlockData();
+	boolean hasBlockData();
 
 	/**
 	 * Constructs block data from a serialized NBT tag
@@ -71,7 +71,7 @@ public interface Item {
 	 * @param tag NBT Tag to reconstruct from
 	 * @return BlockData or null if unable to reconstruct
 	 */
-	public BlockData getBlockData(CompoundTag tag);
+	BlockData getBlockData(CompoundTag tag);
 
 	/**
 	 * Block/item attributes
