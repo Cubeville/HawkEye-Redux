@@ -68,7 +68,7 @@ public class BlockParser extends ParameterParser {
 		for (int i = 0; i < parameters.size(); i++) {
 			String[] value = parameters.get(i).split(":", 2);
 
-			Item item = HawkEye.getDataManager().matchItem(value[0]);
+			Item item = HawkEye.getItemManager().matchItem(value[0]);
 			if (item == null) throw new CommandException("Invalid item specified: &7" + value[0]);
 			String name = item.getName();
 

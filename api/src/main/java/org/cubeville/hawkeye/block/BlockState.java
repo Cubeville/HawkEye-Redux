@@ -69,7 +69,7 @@ public class BlockState {
 			data = 0;
 		}
 
-		type = HawkEye.getDataManager().getItem(name);
+		type = HawkEye.getItemManager().getItem(name);
 		this.data = data;
 		blockData = null;
 

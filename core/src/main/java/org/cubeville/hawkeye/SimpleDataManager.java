@@ -72,11 +72,6 @@ public class SimpleDataManager implements DataManager {
 	private final Map<String, Integer> worldIds = new CaseInsensitiveMap<Integer>();
 
 	/**
-	 * Map containing all registered items keyed by their names
-	 */
-	private final Map<String, Item> items = new CaseInsensitiveMap<Item>();
-
-	/**
 	 * Entry cache
 	 */
 	private final LRUCache<Integer, Entry> entryCache = new LRUCache<Integer, Entry>(5000);
@@ -88,10 +83,6 @@ public class SimpleDataManager implements DataManager {
 			for (String alias : action.getAliases()) {
 				registerActionAlias(action, alias);
 			}
-		}
-
-		for (Item item : DefaultItems.values()) {
-			registerItem(item);
 		}
 
 		if (HawkEye.getDatabase().hasConnection()) {
@@ -245,36 +236,6 @@ public class SimpleDataManager implements DataManager {
 		}
 
 		return id;
-	}
-
-	@Override
-	public Collection<Item> getItems() {
-		return Collections.unmodifiableCollection(items.values());
-	}
-
-	@Override
-	public Item getItem(String name) {
-		return items.get(name);
-	}
-
-	@Override
-	public boolean registerItem(Item item) {
-		if (items.containsKey(item.getName())) return false;
-
-		items.put(item.getName(), item);
-		return true;
-	}
-
-	/**
-	 * Attempts to match an item from user input
-	 *
-	 * @param input The user's input
-	 * @return Item or null if no match was found
-	 */
-	@Override
-	public Item matchItem(String input) {
-		input = input.trim().replaceAll("[ -_]", "");
-		return getItem(input);
 	}
 
 	@Override

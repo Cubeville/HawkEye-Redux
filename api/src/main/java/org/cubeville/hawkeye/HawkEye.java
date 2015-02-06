@@ -126,6 +126,15 @@ public class HawkEye {
 	}
 
 	/**
+	 * Gets the item manager
+	 *
+	 * @return Item manager
+	 */
+	public static ItemManager getItemManager() {
+		return engine.getItemManager();
+	}
+
+	/**
 	 * Gets the query manager
 	 *
 	 * @return Query manager

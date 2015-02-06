@@ -91,7 +91,7 @@ public class ItemStack {
 			amount = 1;
 		}
 
-		type = HawkEye.getDataManager().getItem(name);
+		type = HawkEye.getItemManager().getItem(name);
 		this.amount = amount;
 		this.durability = durability;
 

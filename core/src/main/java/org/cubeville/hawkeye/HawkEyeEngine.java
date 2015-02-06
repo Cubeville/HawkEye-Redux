@@ -93,6 +93,11 @@ public class HawkEyeEngine implements PluginEngine {
 	private final DataManager dataManager;
 
 	/**
+	 * Item manager
+	 */
+	private final ItemManager itemManager;
+
+	/**
 	 * Query manager
 	 */
 	private final QueryManager queryManager;
@@ -130,6 +135,7 @@ public class HawkEyeEngine implements PluginEngine {
 
 		sessionManager = new SimpleSessionManager(new SimpleSessionFactory());
 		dataManager = new SimpleDataManager();
+		itemManager = new SimpleItemManager();
 		queryManager = new SimpleQueryManager();
 		commandManager = new SimpleCommandManager();
 
@@ -225,6 +231,11 @@ public class HawkEyeEngine implements PluginEngine {
 	@Override
 	public DataManager getDataManager() {
 		return dataManager;
+	}
+
+	@Override
+	public ItemManager getItemManager() {
+		return itemManager;
 	}
 
 	@Override

@@ -96,6 +96,13 @@ public interface PluginEngine {
 	DataManager getDataManager();
 
 	/**
+	 * Gets the item manager
+	 *
+	 * @return Item manager
+	 */
+	ItemManager getItemManager();
+
+	/**
 	 * Gets the query manager
 	 *
 	 * @return Query manager
