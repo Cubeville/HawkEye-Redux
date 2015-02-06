@@ -30,6 +30,7 @@ import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.projectiles.ProjectileSource;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.DefaultActions;
@@ -82,7 +83,8 @@ public class BlockListener extends HawkEyeListener {
 			Entity entity = ((HangingBreakByEntityEvent) event).getRemover();
 
 			if (entity instanceof Projectile) {
-				entity = ((Projectile) entity).getShooter();
+				ProjectileSource source = ((Projectile) entity).getShooter();
+				if (source instanceof Entity) entity = (Entity) source;
 			}
 
 			if (entity instanceof Player) {

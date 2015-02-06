@@ -34,6 +34,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.projectiles.ProjectileSource;
 
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.bukkit.Convert;
@@ -130,7 +131,8 @@ public class PlayerListener extends HawkEyeListener {
 		}
 
 		if (damager instanceof Projectile) {
-			damager = ((Projectile) damager).getShooter();
+			ProjectileSource source = ((Projectile) damager).getShooter();
+			if (source instanceof Entity) damager = (Entity) source;
 		}
 
 		return damager;
