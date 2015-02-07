@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.entity;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.location.Location;
 import org.cubeville.hawkeye.location.World;
@@ -27,6 +29,13 @@ public abstract class Player extends Entity implements CommandSender {
 	public Player() {
 		super(EntityType.PLAYER);
 	}
+
+	/**
+	 * Gets this player's UUID
+	 *
+	 * @return Player's UUID
+	 */
+	public abstract UUID getUUID();
 
 	/**
 	 * Gets this player's position

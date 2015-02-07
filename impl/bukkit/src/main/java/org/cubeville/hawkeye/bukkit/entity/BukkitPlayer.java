@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.bukkit.entity;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.bukkit.Convert;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Location;
@@ -44,6 +46,11 @@ public class BukkitPlayer extends Player {
 	@Override
 	public boolean hasPermission(String permission) {
 		return player.hasPermission(permission);
+	}
+
+	@Override
+	public UUID getUUID() {
+		return player.getUniqueId();
 	}
 
 	@Override
