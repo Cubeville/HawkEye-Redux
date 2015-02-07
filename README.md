@@ -1,4 +1,4 @@
-HawkEye Redux
+HawkEye Redux [![Build Status](https://api.travis-ci.org/Cubeville/HawkEye-Redux.svg?branch=master)](https://travis-ci.org/Cubeville/HawkEye-Redux)
 =============
 
 HawkEye Redux is a complete rewrite of the [original plugin](https://github.com/oliverwoodings/HawkEye) for Bukkit.  Features include:
@@ -12,7 +12,7 @@ HawkEye Redux is a complete rewrite of the [original plugin](https://github.com/
 Compilation
 -----------
 
-HawkEye Redux is build on Java 6 through [Maven](http://maven.apache.org/).  Dependencies will be automatically handled by Maven.
+HawkEye Redux is built on Java 7 through [Maven](http://maven.apache.org/).  Dependencies will be automatically handled by Maven.
 
 * Install [Maven 3](http://maven.apache.org/download.cgi)
 * Checkout this repo
@@ -22,7 +22,7 @@ Contribution Guidelines
 -----------------------
 
 * Please use **tabs** for indentation.
-* Code must compile under **Java 6**.
+* Code must compile under **Java 7**.
 * Provide **JavaDocs** wherever possible.
 * Test your code **before** submitting a pull request!
 * Make use of unit tests where possible.
@@ -49,3 +49,9 @@ Contribution Guidelines
     import org.cubeville.hawkeye.config.HawkEyeConfig;
     import org.cubeville.util.StringUtil;
     ```
+
+Links
+-----
+* [Development Builds](http://ci.gethawkeye.org)
+* [Documentation](http://docs.gethawkeye.org)
+* [Issue Tracking](https://github.com/Cubeville/HawkEye-Redux/issues)
