@@ -18,29 +18,32 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.Location;
 
 public class PlayerPvpDeathEntry extends PlayerDeathEntry {
 
-	private final String killer;
+	private final UUID killer;
 
 	public PlayerPvpDeathEntry(DatabaseEntry entry) {
 		super(entry);
 
-		killer = entry.getData();
+		killer = UUID.fromString(entry.getData());
 	}
 
-	public PlayerPvpDeathEntry(String player, Location location, Player killer) {
+	public PlayerPvpDeathEntry(UUID player, Location location, Player killer) {
 		super(DefaultActions.PLAYER_DEATH_PVP, player, location, killer);
 
-		this.killer = killer.getName();
+		this.killer = killer.getUUID();
 	}
 
 	@Override
 	public String getData() {
-		return killer;
+		// TODO Integrate name lookup
+		return killer.toString();
 	}
 
 }

@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.model;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.HawkEye;
@@ -28,7 +29,7 @@ import org.cubeville.hawkeye.location.World;
 public class DatabaseEntry {
 
 	private final int id;
-	private final String player;
+	private final UUID player;
 	private final Action action;
 	private final Timestamp time;
 	private final World world;
@@ -61,7 +62,7 @@ public class DatabaseEntry {
 	 *
 	 * @return Player name
 	 */
-	public String getPlayer() {
+	public UUID getPlayer() {
 		return player;
 	}
 

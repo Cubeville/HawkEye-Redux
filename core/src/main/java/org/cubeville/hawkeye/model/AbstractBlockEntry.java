@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.DefaultItems;
 import org.cubeville.hawkeye.Item;
@@ -55,7 +57,7 @@ public abstract class AbstractBlockEntry extends AbstractEntry implements BlockE
 		newState = after.equals("0") ? new BlockState(after) : new BlockState(after, nbt);
 	}
 
-	public AbstractBlockEntry(Action action, String player, Location location, BlockState oldState, BlockState newState) {
+	public AbstractBlockEntry(Action action, UUID player, Location location, BlockState oldState, BlockState newState) {
 		super(action, player, location);
 		block = location.toBlock();
 		this.oldState = oldState;

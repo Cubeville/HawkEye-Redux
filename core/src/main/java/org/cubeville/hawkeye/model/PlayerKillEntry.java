@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.entity.Entity;
 import org.cubeville.hawkeye.location.Location;
@@ -28,7 +30,7 @@ public class PlayerKillEntry extends AbstractEntityEntry {
 		super(DefaultActions.PLAYER_MOB_KILL, entry);
 	}
 
-	public PlayerKillEntry(String player, Location location, Entity killed) {
+	public PlayerKillEntry(UUID player, Location location, Entity killed) {
 		super(DefaultActions.PLAYER_MOB_KILL, player, location, killed);
 	}
 

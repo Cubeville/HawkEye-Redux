@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.location.Location;
 
@@ -27,7 +29,7 @@ public class PlayerLogEntry extends AbstractTextEntry {
 		super(entry.getAction(), entry);
 	}
 
-	public PlayerLogEntry(Action action, String player, Location location, String ip) {
+	public PlayerLogEntry(Action action, UUID player, Location location, String ip) {
 		super(action, player, location, ip);
 	}
 

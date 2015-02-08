@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.location.Location;
 
@@ -27,7 +29,7 @@ public class ChatEntry extends AbstractTextEntry {
 		super(DefaultActions.PLAYER_CHAT, entry);
 	}
 
-	public ChatEntry(String player, Location location, String text) {
+	public ChatEntry(UUID player, Location location, String text) {
 		super(DefaultActions.PLAYER_CHAT, player, location, text);
 	}
 

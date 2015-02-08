@@ -31,6 +31,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
@@ -52,14 +53,14 @@ public class SimpleDataManager implements DataManager {
 	private final Map<String, Action> aliases = new CaseInsensitiveMap<Action>();
 
 	/**
-	 * Map containing player ids and their names
+	 * Map containing player ids and their UUIDs
 	 */
-	private final Map<Integer, String> players = new HashMap<Integer, String>();
+	private final Map<Integer, UUID> players = new HashMap<Integer, UUID>();
 
 	/**
-	 * Reverse player map for getting player id from name
+	 * Reverse player map for getting player id from uuid
 	 */
-	private final Map<String, Integer> playerIds = new CaseInsensitiveMap<Integer>();
+	private final Map<UUID, Integer> playerIds = new HashMap<UUID, Integer>();
 
 	/**
 	 * Map containing world ids and their names
@@ -125,18 +126,18 @@ public class SimpleDataManager implements DataManager {
 	}
 
 	@Override
-	public String getPlayer(int id) {
+	public UUID getPlayer(int id) {
 		return players.get(id);
 	}
 
 	@Override
-	public int getPlayerId(String player) {
+	public int getPlayerId(UUID player) {
 		return playerIds.containsKey(player) ? playerIds.get(player) : -1;
 	}
 
 	@Override
 	public int getPlayerId(Player player) {
-		return getPlayerId(player.getName());
+		return getPlayerId(player.getUUID());
 	}
 
 	@Override
@@ -144,17 +145,17 @@ public class SimpleDataManager implements DataManager {
 		int id = getPlayerId(player);
 		if (id != -1 || !HawkEye.getDatabase().hasConnection()) return id;
 
-		String name = player.getName();
+		UUID uuid = player.getUUID();
 
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String sql = "INSERT INTO " + table("players") + " (name) VALUES (?)";
+		String sql = "INSERT INTO " + table("players") + " (uuid) VALUES (?)";
 
 		try {
 			conn = HawkEye.getDatabase().getConnection();
 			ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(1, name);
+			ps.setString(1, uuid.toString());
 			if (ps.executeUpdate() == 0) {
 				throw new SQLException("Database player insert failed");
 			}
@@ -166,7 +167,7 @@ public class SimpleDataManager implements DataManager {
 				throw new SQLException("Could not obtain user id");
 			}
 		} catch (SQLException e) {
-			HawkEye.getLogger().error("Could not register player '" + name + "'", e);
+			HawkEye.getLogger().error("Could not register player '" + uuid + "'", e);
 		} finally {
 			close(conn);
 			close(ps);
@@ -174,8 +175,8 @@ public class SimpleDataManager implements DataManager {
 		}
 
 		if (id != -1) {
-			players.put(id, name);
-			playerIds.put(name, id);
+			players.put(id, uuid);
+			playerIds.put(uuid, id);
 		}
 
 		return id;
@@ -327,10 +328,10 @@ public class SimpleDataManager implements DataManager {
 
 			while (rs.next()) {
 				int id = rs.getInt("id");
-				String name = rs.getString("name");
+				UUID uuid = UUID.fromString(rs.getString("uuid"));
 
-				players.put(id, name);
-				playerIds.put(name, id);
+				players.put(id, uuid);
+				playerIds.put(uuid, id);
 			}
 		} catch (SQLException e) {
 			HawkEye.getLogger().error("Could not load players", e);

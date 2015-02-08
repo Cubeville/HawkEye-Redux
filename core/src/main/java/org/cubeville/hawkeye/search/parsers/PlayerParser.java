@@ -21,6 +21,7 @@ package org.cubeville.hawkeye.search.parsers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.cubeville.hawkeye.HawkEye;
 import org.cubeville.hawkeye.command.CommandException;
@@ -55,7 +56,9 @@ public class PlayerParser extends ParameterParser {
 				param = param.substring(1);
 			}
 
-			int id = HawkEye.getDataManager().getPlayerId(param);
+			// TODO Name/uuid conversion
+
+			int id = HawkEye.getDataManager().getPlayerId(UUID.fromString(param));
 			if (id == -1) throw new CommandException("Could not find player: &7" + param);
 
 			if (not) playersNot.add(String.valueOf(id));

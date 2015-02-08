@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.model;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.location.Location;
@@ -51,9 +52,9 @@ public interface Entry {
 	/**
 	 * Gets the player who performed this action
 	 *
-	 * @return Player's name
+	 * @return Player's uuid
 	 */
-	String getPlayer();
+	UUID getPlayer();
 
 	/**
 	 * Gets the location this action was performed at

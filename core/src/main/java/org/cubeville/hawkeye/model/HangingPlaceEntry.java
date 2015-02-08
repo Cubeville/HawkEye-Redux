@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.entity.Entity;
 import org.cubeville.hawkeye.entity.Player;
@@ -29,7 +31,7 @@ public class HangingPlaceEntry extends AbstractEntityEntry implements Modifiable
 		super(entry.getAction(), entry);
 	}
 
-	public HangingPlaceEntry(String player, Location location, Entity entity) {
+	public HangingPlaceEntry(UUID player, Location location, Entity entity) {
 		super(DefaultActions.HANGING_PLACE, player, location, entity);
 	}
 

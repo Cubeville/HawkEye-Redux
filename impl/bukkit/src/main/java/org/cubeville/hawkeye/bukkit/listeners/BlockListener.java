@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.bukkit.listeners;
 
+import java.util.UUID;
+
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -59,7 +61,7 @@ public class BlockListener extends HawkEyeListener {
 		BlockState old = event.getBlockReplacedState();
 		BlockState placed = event.getBlockPlaced().getState();
 
-		log(new BlockPlaceEntry(player.getName(), Convert.location(loc), Convert.blockState(old), Convert.blockState(placed)));
+		log(new BlockPlaceEntry(player.getUniqueId(), Convert.location(loc), Convert.blockState(old), Convert.blockState(placed)));
 	}
 
 	@HawkEvent(action = DefaultActions.BLOCK_BREAK)
@@ -68,7 +70,7 @@ public class BlockListener extends HawkEyeListener {
 		Location loc = event.getBlock().getLocation();
 		BlockState broken = event.getBlock().getState();
 
-		log(new BlockBreakEntry(player.getName(), Convert.location(loc), Convert.blockState(broken)));
+		log(new BlockBreakEntry(player.getUniqueId(), Convert.location(loc), Convert.blockState(broken)));
 	}
 
 	@HawkEvent(action = DefaultActions.HANGING_BREAK)
@@ -77,7 +79,8 @@ public class BlockListener extends HawkEyeListener {
 		Location loc = removed.getLocation();
 
 		// Removed by environment unless we can find a player
-		String remover = "Environment";
+		// TODO Environment UUID
+		UUID remover = null;
 
 		if (event instanceof HangingBreakByEntityEvent) {
 			Entity entity = ((HangingBreakByEntityEvent) event).getRemover();
@@ -88,7 +91,7 @@ public class BlockListener extends HawkEyeListener {
 			}
 
 			if (entity instanceof Player) {
-				remover = ((Player) entity).getName();
+				remover = ((Player) entity).getUniqueId();
 			}
 		}
 
@@ -101,7 +104,7 @@ public class BlockListener extends HawkEyeListener {
 		Entity placed = event.getEntity();
 		Location loc = placed.getLocation();
 
-		log(new HangingPlaceEntry(player.getName(), Convert.location(loc), Convert.entity(placed)));
+		log(new HangingPlaceEntry(player.getUniqueId(), Convert.location(loc), Convert.entity(placed)));
 	}
 
 	@HawkEvent(action = {DefaultActions.LAVA_BUCKET, DefaultActions.WATER_BUCKET})
@@ -127,7 +130,7 @@ public class BlockListener extends HawkEyeListener {
 		BlockState old = block.getState();
 		org.cubeville.hawkeye.block.BlockState liquid = new org.cubeville.hawkeye.block.BlockState(type, (byte) 0);
 
-		log(new BlockBucketEntry(action, player.getName(), Convert.location(loc), Convert.blockState(old), liquid));
+		log(new BlockBucketEntry(action, player.getUniqueId(), Convert.location(loc), Convert.blockState(old), liquid));
 	}
 
 }

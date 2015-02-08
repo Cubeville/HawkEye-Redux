@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.item.ItemStack;
 import org.cubeville.hawkeye.location.Location;
@@ -28,7 +30,7 @@ public class PlayerItemEntry extends AbstractItemEntry {
 		super(entry.getAction(), entry);
 	}
 
-	public PlayerItemEntry(Action action, String player, Location location, ItemStack item) {
+	public PlayerItemEntry(Action action, UUID player, Location location, ItemStack item) {
 		super(action, player, location ,item);
 	}
 

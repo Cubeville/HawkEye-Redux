@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.location.Location;
@@ -28,7 +30,7 @@ public class BlockGrowEntry extends AbstractBlockEntry {
 		super(entry.getAction(), entry);
 	}
 
-	public BlockGrowEntry(Action action, String player, Location location, BlockState old, BlockState grown) {
+	public BlockGrowEntry(Action action, UUID player, Location location, BlockState old, BlockState grown) {
 		super(action, player, location, old, grown);
 	}
 

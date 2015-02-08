@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye.model;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.location.Location;
@@ -33,7 +34,7 @@ public abstract class AbstractEntry implements Entry {
 
 	private final int id;
 	private final Action action;
-	private final String player;
+	private final UUID player;
 	private final Location location;
 	private final Timestamp time;
 	private final byte[] nbt;
@@ -47,7 +48,7 @@ public abstract class AbstractEntry implements Entry {
 		nbt = entry.getNbt();
 	}
 
-	public AbstractEntry(Action action, String player, Location location) {
+	public AbstractEntry(Action action, UUID player, Location location) {
 		id = -1;
 		this.action = action;
 		this.player = player;
@@ -67,7 +68,7 @@ public abstract class AbstractEntry implements Entry {
 	}
 
 	@Override
-	public String getPlayer() {
+	public UUID getPlayer() {
 		return player;
 	}
 

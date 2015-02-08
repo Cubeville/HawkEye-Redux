@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.entity.Entity;
 import org.cubeville.hawkeye.location.Location;
@@ -35,7 +37,7 @@ public abstract class AbstractEntityEntry extends AbstractEntry implements Entit
 		entity = new Entity(entry.getData(), nbt);
 	}
 
-	public AbstractEntityEntry(Action action, String player, Location location, Entity entity) {
+	public AbstractEntityEntry(Action action, UUID player, Location location, Entity entity) {
 		super(action, player, location);
 
 		this.entity = entity;

@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.location.Location;
 
@@ -27,7 +29,7 @@ public class PlayerInteractEntry extends AbstractInteractEntry {
 		super(entry.getAction(), entry);
 	}
 
-	public PlayerInteractEntry(Action type, String player, Location location) {
+	public PlayerInteractEntry(Action type, UUID player, Location location) {
 		super(type, player, location);
 	}
 

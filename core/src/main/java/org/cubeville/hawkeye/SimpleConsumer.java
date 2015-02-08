@@ -33,6 +33,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -104,7 +105,7 @@ public class SimpleConsumer implements Consumer {
 				Entry entry = queue.poll();
 				Map<String, Tag> data = new HashMap<String, Tag>();
 
-				data.put("player", new StringTag("player", entry.getPlayer()));
+				data.put("player", new StringTag("player", entry.getPlayer().toString()));
 				data.put("action", new StringTag("action", entry.getAction().getName()));
 				data.put("date", new StringTag("date", entry.getTime().toString()));
 				data.put("world", new StringTag("world", entry.getLocation().getWorld().getName()));
@@ -230,7 +231,7 @@ public class SimpleConsumer implements Consumer {
 		return HawkEye.getDatabase().hasConnection();
 	}
 
-	private int getPlayerId(String player) {
+	private int getPlayerId(UUID player) {
 		return HawkEye.getDataManager().getPlayerId(player);
 	}
 

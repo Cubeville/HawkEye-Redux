@@ -19,6 +19,7 @@
 package org.cubeville.hawkeye;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import org.cubeville.hawkeye.entity.Player;
 import org.cubeville.hawkeye.location.World;
@@ -64,7 +65,7 @@ public interface DataManager {
 	 * @param id Player id number
 	 * @return Player's name
 	 */
-	String getPlayer(int id);
+	UUID getPlayer(int id);
 
 	/**
 	 * Gets a player's id number
@@ -72,7 +73,7 @@ public interface DataManager {
 	 * @param player Player whose id to get
 	 * @return Player's id number
 	 */
-	int getPlayerId(String player);
+	int getPlayerId(UUID player);
 
 	/**
 	 * Gets a player's id number

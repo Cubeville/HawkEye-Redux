@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `hawkeye_data` (
 
 CREATE TABLE IF NOT EXISTS `hawkeye_players` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `uuid` char(36) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE utf8_unicode_ci;

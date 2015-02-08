@@ -29,7 +29,8 @@ public class BlockModifyEntry extends AbstractBlockEntry {
 	}
 
 	public BlockModifyEntry(Action action, Location location, BlockState from, BlockState to) {
-		super(action, "Environment", location, from, to);
+		// TODO Have an environment UUID
+		super(action, null, location, from, to);
 	}
 
 }

@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Map;
+import java.util.UUID;
 
 import org.cubeville.hawkeye.model.DatabaseEntry;
 import org.cubeville.hawkeye.model.Entry;
@@ -95,7 +96,7 @@ public class EntryImporter implements Runnable {
 	private Entry createEntry(CompoundTag tag) {
 		Map<String, Tag> tags = tag.getValue();
 
-		String player = ((StringTag) tags.get("player")).getValue();
+		UUID player = UUID.fromString(((StringTag) tags.get("player")).getValue());
 		String action = ((StringTag) tags.get("action")).getValue();
 		Timestamp date = Timestamp.valueOf(((StringTag) tags.get("date")).getValue());
 		String world = ((StringTag) tags.get("world")).getValue();

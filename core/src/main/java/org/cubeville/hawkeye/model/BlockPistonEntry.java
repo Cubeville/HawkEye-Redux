@@ -29,7 +29,8 @@ public class BlockPistonEntry extends AbstractBlockEntry {
 	}
 
 	public BlockPistonEntry(Location location, BlockState old, BlockState replaced) {
-		super(DefaultActions.BLOCK_PISTON, "Piston", location, old, replaced);
+		// TODO Piston UUID
+		super(DefaultActions.BLOCK_PISTON, null, location, old, replaced);
 	}
 
 }

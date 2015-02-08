@@ -61,7 +61,7 @@ public class PlayerListener extends HawkEyeListener {
 		Location loc = player.getLocation();
 		String ip = player.getAddress().getAddress().getHostAddress();
 
-		log(new PlayerLogEntry(DefaultActions.PLAYER_JOIN, player.getName(), Convert.location(loc), ip));
+		log(new PlayerLogEntry(DefaultActions.PLAYER_JOIN, player.getUniqueId(), Convert.location(loc), ip));
 	}
 
 	@HawkEvent(action = DefaultActions.PLAYER_QUIT)
@@ -70,7 +70,7 @@ public class PlayerListener extends HawkEyeListener {
 		Location loc = player.getLocation();
 		String ip = player.getAddress().getAddress().getHostAddress();
 
-		log(new PlayerLogEntry(DefaultActions.PLAYER_QUIT, player.getName(), Convert.location(loc), ip));
+		log(new PlayerLogEntry(DefaultActions.PLAYER_QUIT, player.getUniqueId(), Convert.location(loc), ip));
 	}
 
 	@HawkEvent(action = DefaultActions.PLAYER_CHAT)
@@ -78,7 +78,7 @@ public class PlayerListener extends HawkEyeListener {
 		Player player = event.getPlayer();
 		Location loc = player.getLocation();
 
-		log(new ChatEntry(player.getName(), Convert.location(loc), event.getMessage()));
+		log(new ChatEntry(player.getUniqueId(), Convert.location(loc), event.getMessage()));
 	}
 
 	@HawkEvent(action = DefaultActions.PLAYER_COMMAND, ignoreCancelled = false)
@@ -86,7 +86,7 @@ public class PlayerListener extends HawkEyeListener {
 		Player player = event.getPlayer();
 		Location loc = player.getLocation();
 
-		log(new CommandEntry(player.getName(), Convert.location(loc), event.getMessage()));
+		log(new CommandEntry(player.getUniqueId(), Convert.location(loc), event.getMessage()));
 	}
 
 	@HawkEvent(action = {DefaultActions.PLAYER_DEATH_PVP, DefaultActions.PLAYER_DEATH_OTHER})
@@ -97,10 +97,10 @@ public class PlayerListener extends HawkEyeListener {
 
 		if (killer instanceof Player) {
 			// PVP Death
-			log(new PlayerPvpDeathEntry(player.getName(), Convert.location(loc), Convert.player((Player) killer)));
+			log(new PlayerPvpDeathEntry(player.getUniqueId(), Convert.location(loc), Convert.player((Player) killer)));
 		} else if (killer != null) {
 			// Other death
-			log(new PlayerDeathEntry(DefaultActions.PLAYER_DEATH_OTHER, player.getName(), Convert.location(loc), Convert.entity(killer)));
+			log(new PlayerDeathEntry(DefaultActions.PLAYER_DEATH_OTHER, player.getUniqueId(), Convert.location(loc), Convert.entity(killer)));
 		} else {
 			// TODO Non-entity kills
 			// Should be PlayerDeathEntry but I apparently made that an
@@ -119,7 +119,7 @@ public class PlayerListener extends HawkEyeListener {
 			Player player = (Player) killer;
 			Location loc = player.getLocation();
 
-			log(new PlayerKillEntry(player.getName(), Convert.location(loc), Convert.entity(dead)));
+			log(new PlayerKillEntry(player.getUniqueId(), Convert.location(loc), Convert.entity(dead)));
 		}
 	}
 
@@ -144,7 +144,7 @@ public class PlayerListener extends HawkEyeListener {
 		Location loc = player.getLocation();
 		ItemStack item = event.getItemDrop().getItemStack();
 
-		log(new PlayerItemEntry(DefaultActions.PLAYER_ITEM_DROP, player.getName(), Convert.location(loc), Convert.itemStack(item)));
+		log(new PlayerItemEntry(DefaultActions.PLAYER_ITEM_DROP, player.getUniqueId(), Convert.location(loc), Convert.itemStack(item)));
 	}
 
 	@HawkEvent(action = DefaultActions.PLAYER_ITEM_PICKUP)
@@ -153,7 +153,7 @@ public class PlayerListener extends HawkEyeListener {
 		Location loc = player.getLocation();
 		ItemStack item = event.getItem().getItemStack();
 
-		log(new PlayerItemEntry(DefaultActions.PLAYER_ITEM_PICKUP, player.getName(), Convert.location(loc), Convert.itemStack(item)));
+		log(new PlayerItemEntry(DefaultActions.PLAYER_ITEM_PICKUP, player.getUniqueId(), Convert.location(loc), Convert.itemStack(item)));
 	}
 
 }

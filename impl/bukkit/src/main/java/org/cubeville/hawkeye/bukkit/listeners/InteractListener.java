@@ -62,7 +62,7 @@ public class InteractListener extends HawkEyeListener {
 		Player player = event.getPlayer();
 		Location loc = event.getClickedBlock().getLocation();
 
-		log(new PlayerInteractEntry(action, player.getName(), Convert.location(loc)));
+		log(new PlayerInteractEntry(action, player.getUniqueId(), Convert.location(loc)));
 	}
 
 }

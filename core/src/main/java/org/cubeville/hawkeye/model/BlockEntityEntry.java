@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.block.BlockState;
@@ -29,7 +31,8 @@ public class BlockEntityEntry extends AbstractBlockEntry {
 		super(DefaultActions.ENTITY_BLOCK_MODIFY, entry);
 	}
 
-	public BlockEntityEntry(Action action, String entity, Location location, BlockState old, BlockState replaced) {
+	public BlockEntityEntry(Action action, UUID entity, Location location, BlockState old, BlockState replaced) {
+		// TODO Handle entity UUIDs
 		super(action, entity, location, old, replaced);
 	}
 

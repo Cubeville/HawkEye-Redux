@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.DefaultActions;
 import org.cubeville.hawkeye.location.Location;
 
@@ -27,7 +29,7 @@ public class CommandEntry extends AbstractTextEntry {
 		super(DefaultActions.PLAYER_COMMAND, entry);
 	}
 
-	public CommandEntry(String player, Location location, String command) {
+	public CommandEntry(UUID player, Location location, String command) {
 		super(DefaultActions.PLAYER_COMMAND, player, location, command);
 	}
 

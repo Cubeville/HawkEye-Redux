@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye.model;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.Action;
 import org.cubeville.hawkeye.block.BlockState;
 import org.cubeville.hawkeye.location.Location;
@@ -28,7 +30,7 @@ public class BlockBucketEntry extends AbstractBlockEntry {
 		super(entry.getAction(), entry);
 	}
 
-	public BlockBucketEntry(Action action, String player, Location location, BlockState old, BlockState liquid) {
+	public BlockBucketEntry(Action action, UUID player, Location location, BlockState old, BlockState liquid) {
 		super(action, player, location, old, liquid);
 	}
 
