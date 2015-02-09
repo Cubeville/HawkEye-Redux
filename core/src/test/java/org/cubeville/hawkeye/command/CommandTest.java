@@ -30,17 +30,17 @@ public class CommandTest {
 	}
 
 	@Test
-	public void testValidCommand() throws CommandException {
+	public void testRegValidCommand() throws CommandException {
 		manager.registerCommands(new ValidCommand());
 	}
 
 	@Test(expected = CommandException.class)
-	public void testInvalidCommand() throws CommandException {
+	public void testRegInvalidCommand() throws CommandException {
 		manager.registerCommands(new InvalidCommand());
 	}
 
 	@Test(expected = CommandException.class)
-	public void testInvalidCommandArgs() throws CommandException {
+	public void testRegInvalidCommandArgs() throws CommandException {
 		manager.registerCommands(new InvalidArgsCommand());
 	}
 
@@ -54,13 +54,11 @@ public class CommandTest {
 	}
 
 	@Test
-	public void testPermission() throws CommandException {
+	public void testPermissions() throws CommandException {
 		manager.execute("permtest", new TestPlayer("perm2"));
 		verify(callback).called("permtest");
-	}
 
-	@Test(expected = CommandPermissionException.class)
-	public void testNoPermission() throws CommandException {
+		exception.expect(CommandPermissionException.class);
 		manager.execute("permtest", new TestPlayer("perm3"));
 	}
 
@@ -73,11 +71,15 @@ public class CommandTest {
 	public void testFlags() throws CommandException {
 		manager.execute("flagtest -ac arg1 -d", console);
 		verify(callback).called("flagtest");
+
 		verify(callback).hasFlag('a');
-		verify(callback, never()).hasFlag('b');
 		verify(callback).hasFlag('c');
 		verify(callback).hasFlag('d');
+
+		verify(callback, never()).hasFlag('b');
 		verify(callback, never()).hasFlag('e');
+		verify(callback, never()).hasFlag('z');
+
 		verify(callback).args("arg1");
 	}
 
@@ -103,6 +105,7 @@ public class CommandTest {
 		verify(callback).args("arg2");
 
 		exception.expect(CommandException.class);
+		exception.expectMessage("Unknown command");
 		manager.execute("other", sender);
 	}
 
@@ -186,7 +189,7 @@ public class CommandTest {
 	 */
 	private interface Callback {
 		void called(String cmd);
-		void hasFlag(char... ch);
+		void hasFlag(char ch);
 		void args(String args);
 	}
 
