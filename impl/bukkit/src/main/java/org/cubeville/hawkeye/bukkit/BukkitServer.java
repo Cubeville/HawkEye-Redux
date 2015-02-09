@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye.bukkit;
 
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.bukkit.Server;
@@ -57,7 +58,7 @@ public class BukkitServer extends AbstractServerInterface {
 
 		for (org.bukkit.entity.Player player : server.getOnlinePlayers()) {
 			// AbstractServerInterface will cache it
-			HawkEye.getDataManager().registerPlayer(getPlayer(player.getName()));
+			HawkEye.getDataManager().registerPlayer(getPlayer(player.getUniqueId()));
 		}
 	}
 
@@ -67,8 +68,8 @@ public class BukkitServer extends AbstractServerInterface {
 	}
 
 	@Override
-	protected Player loadPlayer(String name) {
-		org.bukkit.entity.Player player = server.getPlayerExact(name);
+	protected Player loadPlayer(UUID uuid) {
+		org.bukkit.entity.Player player = server.getPlayer(uuid);
 		return player == null ? null : new BukkitPlayer(player);
 	}
 

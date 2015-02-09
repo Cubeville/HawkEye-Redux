@@ -20,6 +20,7 @@ package org.cubeville.hawkeye;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.entity.Player;
@@ -38,7 +39,7 @@ public abstract class AbstractServerInterface implements ServerInterface {
 	/**
 	 * Cached player objects
 	 */
-	private final Map<String, Player> playerCache = new HashMap<String, Player>();
+	private final Map<UUID, Player> playerCache = new HashMap<UUID, Player>();
 
 	/**
 	 * Cached world objects
@@ -59,12 +60,12 @@ public abstract class AbstractServerInterface implements ServerInterface {
 	protected abstract ConsoleCommandSender loadConsoleSender();
 
 	@Override
-	public Player getPlayer(String name) {
-		Player player = playerCache.get(name.toLowerCase());
+	public Player getPlayer(UUID uuid) {
+		Player player = playerCache.get(uuid);
 		if (player != null) return player;
 
-		player = loadPlayer(name);
-		if (player != null) playerCache.put(name.toLowerCase(), player);
+		player = loadPlayer(uuid);
+		if (player != null) playerCache.put(uuid, player);
 
 		return player;
 	}
@@ -72,7 +73,7 @@ public abstract class AbstractServerInterface implements ServerInterface {
 	@Override
 	public void handleLogin(Player player) {
 		HawkEye.getDataManager().registerPlayer(player);
-		playerCache.put(player.getName().toLowerCase(), player);
+		playerCache.put(player.getUUID(), player);
 	}
 
 	@Override
@@ -83,10 +84,10 @@ public abstract class AbstractServerInterface implements ServerInterface {
 	/**
 	 * Loads a player directly from the server
 	 *
-	 * @param name Name of player to load
+	 * @param uuid UUID of player to load
 	 * @return Server's player implementation
 	 */
-	protected abstract Player loadPlayer(String name);
+	protected abstract Player loadPlayer(UUID uuid);
 
 	@Override
 	public World getWorld(String name) {

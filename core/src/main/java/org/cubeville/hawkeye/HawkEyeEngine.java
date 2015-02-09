@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.command.CommandException;
 import org.cubeville.hawkeye.command.CommandManager;
 import org.cubeville.hawkeye.command.CommandPermissionException;
@@ -259,8 +261,8 @@ public class HawkEyeEngine implements PluginEngine {
 	}
 
 	@Override
-	public Player getPlayer(String name) {
-		return server.getPlayer(name);
+	public Player getPlayer(UUID uuid) {
+		return server.getPlayer(uuid);
 	}
 
 	@Override

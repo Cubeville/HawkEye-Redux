@@ -82,7 +82,7 @@ public class Convert {
 	 * Player
 	 */
 	public static Player player(org.bukkit.entity.Player player) {
-		return HawkEye.getServerInterface().getPlayer(player.getName());
+		return HawkEye.getServerInterface().getPlayer(player.getUniqueId());
 	}
 
 	public static org.bukkit.entity.Player player(Player player) {

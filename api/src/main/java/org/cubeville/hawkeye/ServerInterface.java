@@ -18,6 +18,7 @@
 
 package org.cubeville.hawkeye;
 
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
@@ -99,10 +100,10 @@ public interface ServerInterface {
 	/**
 	 * Gets the specified player
 	 *
-	 * @param name Name of player to get
+	 * @param uuid UUID of player to get
 	 * @return Player
 	 */
-	Player getPlayer(String name);
+	Player getPlayer(UUID uuid);
 
 	/**
 	 * Handles a login from the specified player

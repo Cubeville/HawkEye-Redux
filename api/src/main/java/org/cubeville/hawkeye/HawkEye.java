@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.command.CommandManager;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
 import org.cubeville.hawkeye.config.PluginConfig;
@@ -173,11 +175,11 @@ public class HawkEye {
 	/**
 	 * Gets the specified player
 	 *
-	 * @param name Name of player to get
+	 * @param uuid UUID of player to get
 	 * @return Player
 	 */
-	public static Player getPlayer(String name) {
-		return engine.getPlayer(name);
+	public static Player getPlayer(UUID uuid) {
+		return engine.getPlayer(uuid);
 	}
 
 	/**

@@ -18,6 +18,8 @@
 
 package org.cubeville.hawkeye;
 
+import java.util.UUID;
+
 import org.cubeville.hawkeye.command.CommandManager;
 import org.cubeville.hawkeye.command.CommandSender;
 import org.cubeville.hawkeye.command.ConsoleCommandSender;
@@ -133,10 +135,10 @@ public interface PluginEngine {
 	/**
 	 * Gets the specified player
 	 *
-	 * @param name Name of player to get
+	 * @param uuid UUID of player to get
 	 * @return Player
 	 */
-	Player getPlayer(String name);
+	Player getPlayer(UUID uuid);
 
 	/**
 	 * Gets the specified world
