@@ -27,11 +27,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.cubeville.hawkeye.HawkEye;
+import org.cubeville.hawkeye.ServerInterface;
 import org.cubeville.util.Pair;
 import org.cubeville.util.Triplet;
 
 public class SimpleCommandManager implements CommandManager {
+
+	/**
+	 * Server interface to register commands with
+	 */
+	private final ServerInterface server;
 
 	/**
 	 * Mapping of commands to their execution info
@@ -57,7 +62,8 @@ public class SimpleCommandManager implements CommandManager {
 	 */
 	private final List<String> roots;
 
-	public SimpleCommandManager() {
+	public SimpleCommandManager(ServerInterface server) {
+		this.server = server;
 		commands = new HashMap<String, Triplet<Command, Method, Object>>();
 		aliases = new HashMap<String, String>();
 		nested = new HashMap<String, Set<String>>();
@@ -89,7 +95,7 @@ public class SimpleCommandManager implements CommandManager {
 
 		roots.clear();
 
-		for (Method method : clazz.getMethods()) {
+		for (Method method : clazz.getDeclaredMethods()) {
 			// Check if it's a command handler
 			if (!method.isAnnotationPresent(Command.class)) continue;
 
@@ -122,13 +128,13 @@ public class SimpleCommandManager implements CommandManager {
 
 	protected void registerCommands(List<String> commands) {
 		for (String command : commands) {
-			HawkEye.getServerInterface().registerCommand(command);
+			server.registerCommand(command);
 		}
 	}
 
 	@Override
 	public void registerRootAlias(String command, String alias) throws CommandException {
-		if (!HawkEye.getServerInterface().registerCommandAlias(command, alias)) throw new CommandException();
+		if (!server.registerCommandAlias(command, alias)) throw new CommandException();
 	}
 
 	/**
@@ -168,7 +174,7 @@ public class SimpleCommandManager implements CommandManager {
 		String[] args = cmdData.getRight();
 
 		// Command not registered
-		if (!commands.containsKey(base)) return;
+		if (!commands.containsKey(base)) throw new CommandException("Unknown command");
 
 		// Get command details
 		CommandData data = new CommandData(base, args);
@@ -224,12 +230,10 @@ public class SimpleCommandManager implements CommandManager {
 	/**
 	 * Parses a command string into a base and arguments
 	 *
-	 * This method is protected rather than private to allow access from tests
-	 *
 	 * @param command Command input to parse
 	 * @return Pair containing the base command on left and arguments on right
 	 */
-	protected Pair<String, String[]> parseCommand(String command) {
+	private Pair<String, String[]> parseCommand(String command) {
 		// Strip extra spaces
 		command = command.trim().replaceAll(" +", " ");
 

@@ -9,7 +9,7 @@ public class EnchantmentTest {
 	@Test
 	public void getEnchantmentById() {
 		for (Enchantments enchantment : Enchantments.values()) {
-			assertEquals(Enchantments.getById(enchantment.getId()), enchantment);
+			assertEquals(enchantment.toString(), Enchantments.getById(enchantment.getId()), enchantment);
 		}
 	}
 

@@ -48,20 +48,20 @@ public class TimeTest {
 				+ 32 * TimeUtil.SECOND;
 		test = TimeUtil.now() - length;
 
-		assertEquals(expected, TimeUtil.getReadable(test));
+		assertEquals("3h27m", expected, TimeUtil.getReadable(test));
 
 		expected = "Just now";
 		length = 0;
 		test = TimeUtil.now();
 
-		assertEquals(expected, TimeUtil.getReadable(test));
+		assertEquals("Now", expected, TimeUtil.getReadable(test));
 
 		expected = "23m50s ago";
 		length = 23 * TimeUtil.MINUTE
 				+ 50 * TimeUtil.SECOND;
 		test = TimeUtil.now() - length;
 
-		assertEquals(expected, TimeUtil.getReadable(test));
+		assertEquals("23m50s", expected, TimeUtil.getReadable(test));
 	}
 
 }

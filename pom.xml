@@ -21,6 +21,7 @@
 
     <!-- Dependency versions -->
     <junit-version>4.11</junit-version>
+    <mockito-version>2.0.3-beta</mockito-version>
     <snakeyaml-version>1.12</snakeyaml-version>
     <mysql-version>5.1.25</mysql-version>
     <bonecp-version>0.8.0.RELEASE</bonecp-version>
@@ -43,6 +44,13 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit-version}</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito-version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

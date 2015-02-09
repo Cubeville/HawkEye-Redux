@@ -139,7 +139,7 @@ public class HawkEyeEngine implements PluginEngine {
 		dataManager = new SimpleDataManager();
 		itemManager = new SimpleItemManager();
 		queryManager = new SimpleQueryManager();
-		commandManager = new SimpleCommandManager();
+		commandManager = new SimpleCommandManager(server);
 
 		// TODO Different allow users to choose from different display manager
 		// implementations with different output formats

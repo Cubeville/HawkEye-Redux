@@ -10,7 +10,7 @@ public class EntityTest {
 	public void getEntityById() {
 		for (EntityType entity : EntityType.values()) {
 			if (entity.getId() == -1) continue;
-			assertEquals(EntityType.getById(entity.getId()), entity);
+			assertEquals(entity.toString(), EntityType.getById(entity.getId()), entity);
 		}
 	}
 
