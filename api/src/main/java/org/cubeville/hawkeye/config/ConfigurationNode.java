@@ -291,7 +291,7 @@ public class ConfigurationNode implements Configuration {
 
 	@Override
 	public boolean writeDefaults() {
-		return writeDefaults();
+		return writeDefaults;
 	}
 
 	@Override
