@@ -35,7 +35,7 @@ public class Skull extends BaseBlockData {
 	/**
 	 * Deserialization constructor
 	 *
-	 * @param data Tag to deserialize from
+	 * @param tag Tag to deserialize from
 	 */
 	public Skull(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();

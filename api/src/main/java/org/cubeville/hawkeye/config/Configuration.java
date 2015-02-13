@@ -45,7 +45,7 @@ public interface Configuration {
 	/**
 	 * Gets an object at the specified node
 	 *
-	 * @param node Path to node (in dot notation)
+	 * @param path Path to node (in dot notation)
 	 * @return Value at the node, or null if it doesn't exist
 	 */
 	Object get(String path);
@@ -54,7 +54,7 @@ public interface Configuration {
 	/**
 	 * Gets an object at the specified node
 	 *
-	 * @param node Path to node
+	 * @param path Path to node
 	 * @param def Default value to return if object is null
 	 * @return Object
 	 */
@@ -64,7 +64,7 @@ public interface Configuration {
 	/**
 	 * Sets a value at the specified node
 	 *
-	 * @param node Path to node (in dot notation)
+	 * @param path Path to node (in dot notation)
 	 * @param value Value to set at node
 	 */
 	void set(String path, Object value);

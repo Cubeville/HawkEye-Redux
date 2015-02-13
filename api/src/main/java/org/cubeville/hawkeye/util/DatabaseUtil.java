@@ -113,7 +113,7 @@ public class DatabaseUtil {
 	/**
 	 * Wrapper method to close a statement
 	 *
-	 * @param conn Statement to close
+	 * @param stmt Statement to close
 	 */
 	public static void close(Statement stmt) {
 		if (stmt != null) {
@@ -127,7 +127,7 @@ public class DatabaseUtil {
 	/**
 	 * Wrapper method to close a result set
 	 *
-	 * @param conn Result set to close
+	 * @param rs Result set to close
 	 */
 	public static void close(ResultSet rs) {
 		if (rs != null) {

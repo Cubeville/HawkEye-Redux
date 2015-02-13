@@ -79,7 +79,6 @@ public abstract class ParameterParser {
 	 *   "action": "block-break"
 	 *   "filter": "%98%"
 	 *
-	 * @param parameters Parameters to search for
 	 * @return Pair containing SQL query and mapping of parameters to values
 	 *            left value - SQL where clause to use a database query
 	 *            right value - Map of named parameters and their values

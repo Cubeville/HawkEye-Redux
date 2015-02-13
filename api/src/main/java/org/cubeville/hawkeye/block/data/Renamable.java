@@ -32,7 +32,7 @@ public abstract class Renamable extends BaseBlockData {
 	/**
 	 * Deserialization constructor
 	 *
-	 * @param data Tag to deserialize from
+	 * @param tag Tag to deserialize from
 	 */
 	public Renamable(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();

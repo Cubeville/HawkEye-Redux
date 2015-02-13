@@ -26,9 +26,8 @@ public interface SessionManager {
 	/**
 	 * Gets a user's session
 	 *
-	 * @param type Type of session to get
 	 * @param owner Session owner
-	 * @return Owner's session of specified type
+	 * @return Owner's session
 	 */
 	Session getSession(CommandSender owner);
 

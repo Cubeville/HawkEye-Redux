@@ -38,8 +38,6 @@ public class HawkEyeConfig extends YamlConfiguration implements PluginConfig {
 
 	/**
 	 * Loads data from the config
-	 *
-	 * @param config Plugin configuration
 	 */
 	@Override
 	public void load() {

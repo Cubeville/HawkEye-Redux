@@ -59,7 +59,7 @@ public class NamedParameterStatement {
 
 	/**
 	 * Creates a NamedParameterStatement.  Wraps a call to
-	 * {@link Connection#prepareStatement(java.lang.String)prepareStatement}
+	 * {@link Connection#prepareStatement(java.lang.String)}
 	 *
 	 * @param connection the database connection
 	 * @param query	  the parameterized query

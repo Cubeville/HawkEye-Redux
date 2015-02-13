@@ -44,9 +44,8 @@ public interface QueryManager {
 	 * POST_QUERY parsers should implement PostParameterParser. PRE_POST_QUERY
 	 * parsers should implement both.
 	 *
-	 * @param prefix Search parameter prefix
+	 * @param parameter Search parameter prefix
 	 * @param parser Class that parses this parameter value
-	 * @param stage The parsing stage this parameter is registered on
 	 * @return True if parameter was registered, false if it was already taken
 	 */
 	boolean registerParameter(String parameter, Class<? extends ParameterParser> parser);

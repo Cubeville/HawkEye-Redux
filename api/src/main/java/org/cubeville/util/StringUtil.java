@@ -28,7 +28,7 @@ public class StringUtil {
 	 *
 	 * @param args Array of strings to join
 	 * @param separator Delimiter to separate each string with
-	 * @return
+	 * @return Full string
 	 */
 	public static String buildString(String[] args, String separator) {
 		return buildString(args, separator, 0);
@@ -52,7 +52,7 @@ public class StringUtil {
 	 * @param args Array of strings to join
 	 * @param separator Delimiter to separate each string with
 	 * @param startIndex Index of array to start at
-	 * @return
+	 * @return Full string
 	 */
 	public static String buildString(String[] args, String separator, int startIndex) {
 		StringBuilder output = new StringBuilder();

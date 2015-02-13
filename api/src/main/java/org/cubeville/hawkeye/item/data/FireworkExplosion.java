@@ -39,7 +39,7 @@ public class FireworkExplosion implements NBTSerializable {
 	/**
 	 * Deserialization constructor
 	 *
-	 * @param data Tag to deserialize from
+	 * @param tag Tag to deserialize from
 	 */
 	public FireworkExplosion(CompoundTag tag) {
 		Map<String, Tag> data = tag.getValue();

@@ -35,7 +35,7 @@ public class Sign extends BaseBlockData {
 	/**
 	 * Deserialization constructor
 	 *
-	 * @param data Tag to deserialize from
+	 * @param tag Tag to deserialize from
 	 */
 	public Sign(CompoundTag tag) {
 		lines = new String[] { "", "", "", "" };

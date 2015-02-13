@@ -61,7 +61,6 @@ public abstract class SearchQuery implements Runnable {
 	/**
 	 * SearchQuery constructor
 	 *
-	 * @param id Id of this search query for internal use
 	 * @param sender CommandSender running this query
 	 * @param parameters Query search parameters
 	 * @param callback Query callback handler

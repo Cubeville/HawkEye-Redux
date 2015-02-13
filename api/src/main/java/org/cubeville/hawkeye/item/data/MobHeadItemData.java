@@ -38,7 +38,7 @@ public class MobHeadItemData extends BaseItemData {
 	/**
 	 * Deserialization constructor
 	 *
-	 * @param data Tag to deserialize from
+	 * @param tag Tag to deserialize from
 	 */
 	public MobHeadItemData(CompoundTag tag) {
 		super(tag);
